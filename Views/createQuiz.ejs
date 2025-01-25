@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap4/bootstrap.min.css" />
+    <link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css" />
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css" />
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+    <link rel="stylesheet" href="/css-file/createQuiz.css">
+  
+    <!-- External resources -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+
+
+
+
+
+
+
+
+
+  </head>
+<body>
+
+    <div class="super_container">
+        <!-- Header Section -->
+        <header class="header">
+          <!-- Top Bar -->
+          <div class="top_bar">
+            <div class="top_bar_container">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
+                      <ul class="top_bar_contact_list">
+                        <li>
+                          <div class="question">
+                            <img src="/images/R.jpeg" class="rounded" alt="logo" height="30px" width="30px">
+                          </div>
+                        </li>
+                        <li>
+                          <i class="fa" aria-hidden="true"></i>
+                          <div>Comsats University Islamabad Attock Campus</div>
+                        </li>
+                      </ul>
+                      <div class="top_bar_login ml-auto">
+                        <!-- <div class="login_button"><a href="/tchr/Profile">Profile</a></div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Header Content -->
+          <div class="header_container">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                    <div class="logo_container">
+                      <a href="#">
+                        <div class="logo_text">Physics<span>Verse</span></div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+    
+    <!-- Form to input the number of questions -->
+
+   <!-- Modal for Experiment Selection -->
+   <div id="questionModal" class="modal">
+    <div class="modal-content">
+      <form id="questionNumberForm" name="questionNumberForm" method="get" action="/tchr/submit-quiz">
+          <label for="experimentNo">Experiment Number:</label>
+          <input type="number" id="exp_no" name="exp_no" oninput="updateTitle()" required>
+          <label for="exp_title">Experiment Title:</label>
+          <input type="text" id="exp_title" name="exp_title" readonly>
+          <label for="total_questions">Total Questions:</label>
+          <input type="number" id="total_questions" name="total_questions" required>
+          <button type="button" onclick="startQuizCreation()" >Start</button>
+        </form>
+  </div>
+  </div>
+  
+  <div id="quizForm" style="display: none;" class="quizForm" name="quizForm">
+      <form id="quizQuestionForm" method="POST" action="/tchr/submit-quiz" name="quizQuestionForm">
+          <!-- <input type="hidden" id="hidden_exp_no" name="exp_no" value="">
+          <input type="hidden" id="hidden_exp_title" name="exp_title" value="">
+          <input type="hidden" id="hidden_total_questions" name="total_questions" value=""> -->
+  
+      </form>
+  </div>
+
+  
+
+    <footer class="footer">
+        <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+        <div class="container">
+          <div class="row footer_row">
+            <div class="col">
+              <div class="footer_content">
+                <div class="row">
+                  <div class="col-lg-3 footer_col">
+                    <div class="footer_section footer_about">
+                      <div class="footer_logo_container">
+                        <a href="#">
+                          <div class="footer_logo_text">Physics<span>Verse</span></div>
+                        </a>
+                      </div>
+                      <div class="footer_about_text">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                      </div>
+                      <div class="footer_social">
+                        <ul>
+                          <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                          <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                          <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                          <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Additional footer content here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Local JavaScript files -->
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/bootstrap4/popper.js"></script>
+    <script src="/bootstrap4/bootstrap.min.js"></script>
+    <script src="/plugins/greensock/TweenMax.min.js"></script>
+    <script src="/plugins/greensock/TimelineMax.min.js"></script>
+    <script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="/plugins/greensock/animation.gsap.min.js"></script>
+    <script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="/plugins/easing/easing.js"></script>
+    <script src="/plugins/parallax-js-master/parallax.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="/js/custom.js"></script>
+    <script src="/js/quiz.js"></script>
+</body>
+</html>

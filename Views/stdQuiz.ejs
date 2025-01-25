@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home </title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="Unicat project" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- CSS files -->
+  <link rel="stylesheet" type="text/css" href="/bootstrap4/bootstrap.min.css" />
+  <link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css" />
+  <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css" />
+  <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css" />
+  <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+  <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+
+  <!-- External resources -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+<link rel="stylesheet" href="/css-file/QuizStyle.css">
+<style>
+ .home{
+  padding-top: 50px;
+  padding-bottom: 40px;
+  margin-top: 80px;
+  margin-bottom: 40;
+ }
+</style>
+
+</head>
+
+<body>
+  <div class="super_container">
+    <!-- Header Section -->
+    <header class="header">
+      <!-- Top Bar -->
+      <div class="top_bar">
+        <div class="top_bar_container">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
+                  <ul class="top_bar_contact_list">
+                    <li>
+                      <div class="question">
+                        <img src="/images/R.jpeg" class="rounded" alt="logo" height="30px" width="30px">
+                      </div>
+                    </li>
+                    <li>
+                      <i class="fa" aria-hidden="true"></i>
+                      <div>Comsats University Islamabad Attock Campus</div>
+                    </li>
+                    
+                  </ul>
+                  <div class="top_bar_login ml-auto">
+                    <div class="login_button"><a href="/signups">Profile</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Header Content -->
+      <div class="header_container">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                <div class="logo_container">
+                  <a href="#">
+                    <div class="logo_text">Physics<span>Verse</span></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Home Section -->
+    <div class="home">
+      <!-- Button to open modal -->
+      <button id="openModalBtn">Select Experiment</button>
+  
+      <!-- Modal -->
+      <div id="experimentModal" class="modal">
+          <div class="modal-content">
+              <span class="close" id="closeModalBtn">&times;</span>
+              <h1>Quiz</h1>
+              <form id="expForm" method="POST" action="/std/get-quiz">
+                <label for="exp_no">Experiment Number:</label>
+                <select name="exp_no" id="exp_no" required>
+                  <option value="">Select</option>
+                  <% experiments.forEach(function(experiment) { %>
+                    <option value="<%= experiment.exp_no %>"><%= experiment.exp_title %></option>
+                  <% }) %>
+                </select>
+                <button type="submit">Load Quiz</button>
+              </form>
+              
+          </div>
+      </div>
+  
+      <!-- Quiz Form -->
+      <div class="quizContainer" id="quizContainer">
+          <% if (quizData && quizData.length > 0) { %>
+              <h2>Quiz for Experiment <%= quizData[0].exp_no %></h2>
+              <form id="quizForm" method="POST" action='/std/submit-quiz' class="quizForm">
+                  <% quizData.forEach(function(question, index) { %>
+                      <div>
+                          <p><%= index + 1 %>. <%= question.Question %></p>
+                          <label><input type="checkbox" name="answers[<%= index %>]" value="option1"> <%= question.option1 %></label><br>
+                          <label><input type="checkbox" name="answers[<%= index %>]" value="option2"> <%= question.option2 %></label><br>
+                          <label><input type="checkbox" name="answers[<%= index %>]" value="option3"> <%= question.option3 %></label><br>
+                          <label><input type="checkbox" name="answers[<%= index %>]" value="option4"> <%= question.option4 %></label><br>
+                      </div>
+                  <% }) %>
+                  <input type="hidden" name="exp_no" value="<%= quizData[0].exp_no %>">
+                  <button type="submit">Submit Quiz</button>
+              </form>
+          <% } else { %>
+              <p>No questions available for this experiment.</p>
+          <% } %>
+      </div>
+  </div>
+  
+  
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+      <div class="container">
+        <div class="row footer_row">
+          <div class="col">
+            <div class="footer_content">
+              <div class="row">
+                <div class="col-lg-3 footer_col">
+                  <div class="footer_section footer_about">
+                    <div class="footer_logo_container">
+                      <a href="#">
+                        <div class="footer_logo_text">Physics<span>Verse</span></div>
+                      </a>
+                    </div>
+                    <div class="footer_about_text">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    <div class="footer_social">
+                      <ul>
+                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- Additional footer content here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- jQuery (make sure this is above Bootstrap JS) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Local JavaScript files -->
+  <script src="/js/jquery-3.2.1.min.js"></script>
+  <script src="/bootstrap4/popper.js"></script>
+  <script src="/bootstrap4/bootstrap.min.js"></script>
+  <script src="/plugins/greensock/TweenMax.min.js"></script>
+  <script src="/plugins/greensock/TimelineMax.min.js"></script>
+  <script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+  <script src="/plugins/greensock/animation.gsap.min.js"></script>
+  <script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+  <script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+  <script src="/plugins/easing/easing.js"></script>
+  <script src="/plugins/parallax-js-master/parallax.min.js"></script>
+  
+  <!-- Custom JavaScript -->
+  <script src="/js/custom.js"></script>
+  <!-- Local JavaScript files -->
+<script>
+  // Get modal elements
+var modal = document.getElementById("experimentModal");
+var openModalBtn = document.getElementById("openModalBtn");
+var closeModalBtn = document.getElementById("closeModalBtn");
+
+// Open the modal when the button is clicked
+openModalBtn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// Close the modal when the 'X' is clicked
+closeModalBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Close the modal when clicking outside the modal content
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Automatically close the modal when the form is submitted
+document.getElementById("expForm").onsubmit = function(event) {
+    event.preventDefault(); // Prevent form from submitting immediately
+
+    // Add logic to submit the form via AJAX (optional) or use a regular form submission
+    var exp_no = document.getElementById('exp_no').value;
+    if (exp_no) {
+        modal.style.display = "none"; // Close the modal
+
+      
+        this.submit(); // Proceed with regular form submission
+    } else {
+        alert("Please select an experiment.");
+    }
+}
+
+</script>
+</body>
+</html>

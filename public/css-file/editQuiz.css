@@ -1,0 +1,87 @@
+
+    /* Styling for the container */
+    .superContainer {
+        margin: 20px auto; /* Center horizontally */
+        max-width: 90%; /* Adjust width for responsiveness */
+        padding: 20px; /* Adjust padding */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        justify-content: center;
+        background-color: #f9f9f9;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    /* Styling for the form heading */
+    .superContainer h1 {
+        text-align: center;
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    /* Styling for labels and input fields */
+    .superContainer label {
+        display: block;
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .superContainer input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    /* Styling for the submit button */
+    .superContainer button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .superContainer button:hover {
+        background-color: #45a049;
+    }
+
+    /* Responsive Design */
+    @media screen and (min-width: 600px) {
+        .superContainer {
+            max-width: 500px; /* Restrict width on larger screens */
+        }
+
+        .superContainer h1 {
+            font-size: 28px;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        .superContainer input[type="text"], 
+        .superContainer button {
+            font-size: 14px; /* Adjust font size for small screens */
+            padding: 8px;
+        }
+    }
+    .table{
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: collapse;
+        margin-top: 40px;
+    }
+    .table th td{
+      /* background-color: #007bff; */
+      color: rgb(10, 10, 10);
+      font-weight: 600;
+    } table td {
+      color: #0e0d0d;
+    }

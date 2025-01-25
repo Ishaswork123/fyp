@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guided mass-Spring experiment</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/introjs.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/intro.min.js"></script>
+
+  
+  <link rel="stylesheet" href="/css-file/mass-spring.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
+</head>
+<body>
+    <div id="tourContainer">
+        <button id="startTourBtn" class="tour-button">Start Tour</button>
+      </div>
+    <div class="massInput" data-intro="Adjust the mass slider to change the mass of the bob." data-step="1">
+        <div>
+          <label for="massSlider" >Mass (g):</label>
+          <input type="range" id="massSlider" min="100" max="1000" value="100" step="10" />
+          <span id="massValue">500 g</span>
+        </div>
+      </div>
+      <div class="springInput" data-intro="Adjust the spring constant slider to change the stiffness of the spring." data-step="2">
+        <label for="springSlider">Spring Constant:</label>
+        <input type="range" id="springSlider" min="0.1" max="1.0" value="0.5" step="0.1" />
+        <span id="springValue">0.5</span>
+      </div>
+  <canvas id="simulationCanvas" data-intro="This is the simulation canvas where the mass-spring system is displayed." data-step="3"></canvas>
+
+      <div class="button-controls"  data-intro="Use these buttons to control the simulation." data-step="4">
+        <button id="controlButton" data-intro="Click the button to start animation" data-step="11">
+          <img id="buttonIcon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAACI0lEQVR4nO3ZMU8bMRgG4E/+yp2zMDC3apd2aH8BY38BDO3auR2CDR0YT7HVioEFCQlYQGJkQ5EqBqQsNHa6goh9UdUtWRlYyMChIyKpIiqR5nKxo3ulb430yL43Ph9AkSJFigwnlOYLlfaUSnMQRL/fgI8pCbNMpU3+mptANBlECQGfEgh7MgTpjbC14PulP6tDK/b4UUgP0w2l3YCtOATXQ4Xd/idkADqnldYieA+RKcbcUmn2IIrnwWuI7E0obLskmh/Adwjtj6mWovg5+A+x6Xa7cqaq6TiQh+0m7VnwLX7rPYS6UNU0K8hg4rDSfD8LkCSt6lDYw/noYsFviOw/Ox0q7CfvIYMxVSpbL2YAYtMyuKbCrMNRgn5D5MN2M/U50XrnPYT2VqcbSrMJ0R/qN0T2n51OGDVfzQDEplW9mwkEmdpGrpOpDVM73kMI0234+vOlxxDVRa43Iapl97DnDSFc1ed4I/v6zQ3C1DVhah0+Hk3mDzEPCOGqCmu/JntEmSiEqQ5hOp9D42Qg6haZOoTVen7HeMweEuOqzv/FCjOD3FfqBpR/TOdVFzOAEKbPoKyne/mA40CYuiJcuXEdhP8Jua/Usnbngg5HhTDVRq7duzLFJ0PSStV7UNZuXmLjEyCEq/NnrOH2ZwWyoo+drdRRQrg6eXwVdA3WGv58ekOul4ZW4caZSh01hDc+E65Okel9WFGvR/6BIkWKFIExcwd2JeL9HIdFQwAAAABJRU5ErkJggg==" />
+        </button>
+        <label id></label>
+      <!-- <button class="startBtn" id="startBtn">Start</button> -->
+        <button id="resetBtn" class="resetBtn">Reset</button>
+    </div>
+    <div class="gravity-container" data-intro="Change the gravity from here." data-step="5">
+        <input type="button" id="gravityBtn" value="+" />
+        <label for="gravity">Gravity</label>
+  
+        <div id="gravity-control">
+          <div class="input-group">
+            <label for="gravity">Gravity (m/s²): </label>
+            <div class="limits">
+              <span>0.0</span>
+              <span>25.0</span>
+            </div>
+            <div class="arrow-buttons">
+              <button id="gravity-decrease">◄</button>
+              <input type="range" id="gravity" min="0" max="25" step="0.1" value="9.8" />
+              <button id="gravity-increase">►</button>
+            </div>
+            <div class="input-value" id="gravity-value">9.8 m/s²</div>
+          </div>
+  
+          <div class="input-group">
+            <select id="gravitySelect">
+              <option value="9.8">Earth (9.8 m/s²)</option>
+              <option value="1.62">Moon (1.62 m/s²)</option>
+              <option value="3.71">Mars (3.71 m/s²)</option>
+              <option value="24.79">Jupiter (24.79 m/s²)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="checkBoxex" data-intro="Click to Hide/Unhide scale" data-step="6">
+        <label>
+          <input type="checkbox" id="showScale" checked /> Show Scale</label>
+      </div>
+      <div class="playback-controls" data-intro="Select different controls for the spring's animations" data-step="10">
+        <button id="playNormal">Normal</button>
+        <button id="playSlow">Slow</button>
+      </div>
+      <div class="canvasButton" data-intro="Click to show the table." data-step="9">
+        <button id="addValuesBtn">Add Values</button>
+      </div>
+
+  
+  <div class="weights" data-intro="Select different weights." data-step="7">
+    <div class="weight" id="weight1" data-weight="100">100 g</div>
+    <div class="weight" id="weight2" data-weight="350">350 g</div>
+    <div class="weight" id="weight3" data-weight="250">250 g</div>
+    <div class="weight" id="weight4" data-weight="500">500 g</div>
+  </div>
+
+<!-- ------------------------------------------------------------------------------------------------------------ -->
+
+
+  <div class="stopwatch-container" data-intro="Stop watch" data-step="8">
+<label>Stop Watch</label>
+
+    <div class="stopwatch-display" id="stopwatch-display">00:00:00:00</div>
+    <div class="buttons">
+      <button id="start-btn"><i class="fas fa-play"></i></button>
+      <button id="pause-resume-btn" disabled>
+        <i class="fas fa-pause"></i>
+      </button>
+      <button id="reset-btn" disabled><i class="fas fa-redo"></i></button>
+    </div>
+  </div>
+<!-- ------------------------------------------------------------------------------------------------------------ -->
+<!-- Table values -->
+
+<div id="tableContainer" style="display: none;">
+  <table>
+    <thead>
+      <tr>
+        <th>mass(weight)</th>
+        <th>Initial length 'x₁' cm</th>
+        <th>Final length'x₂' cm</th>
+        <th>Extension (x=x₂-x₁) cm </th>
+        <th>Time of Trial 1 (t₁) sec</th>
+        <th>Time of Trial 2 (t₂) sec</th>
+        <th>Mean Time (t=(t₁+t₂)/2) sec</th>
+        <th>Time Period(T= t/20) sec</th>
+        <th>Gravity (G=4π(x/T²)) cm/s²</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="number" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+      </tr>
+      <tr>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+      </tr>
+      <tr>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+        <td><input type="text" placeholder="Enter value"></td>
+      </tr>
+    </tbody>
+  </table>
+  <button id="saveInDB" >Save Data</button>
+</div>
+<script src="/js/mass-spring.js"></script>
+<script src="/js/start-tour.js"></script>
+</body>
+</html>

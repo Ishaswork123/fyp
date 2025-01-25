@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Quiz</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/bootstrap4/bootstrap.min.css"
+    />
+    <link
+      href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/plugins/OwlCarousel2-2.2.1/animate.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+    <link rel="stylesheet" href="/css-file/createQuiz.css" />
+
+    <!-- External resources -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"
+    />  
+    <link rel="stylesheet" href="/css-file/editQuiz.css">
+  </head>
+  <body>
+    <div class="super_container">
+      <!-- Header Section -->
+      <header class="header">
+        <!-- Top Bar -->
+        <div class="top_bar">
+          <div class="top_bar_container">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div
+                    class="top_bar_content d-flex flex-row align-items-center justify-content-start"
+                  >
+                    <ul class="top_bar_contact_list">
+                      <li>
+                        <div class="question">
+                          <img
+                            src="/images/R.jpeg"
+                            class="rounded"
+                            alt="logo"
+                            height="30px"
+                            width="30px"
+                          />
+                        </div>
+                      </li>
+                      <li>
+                        <i class="fa" aria-hidden="true"></i>
+                        <div>Comsats University Islamabad Attock Campus</div>
+                      </li>
+                    </ul>
+                    <div class="top_bar_login ml-auto">
+                      <div class="login_button">
+                        <a href="/tchr/quiz">Home</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header Content -->
+        <div class="header_container">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div
+                  class="header_content d-flex flex-row align-items-center justify-content-start"
+                >
+                  <div class="logo_container">
+                    <a href="#">
+                      <div class="logo_text">Physics<span>Verse</span></div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+    <div class="superContainer">
+      <h1 style="font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Edit Quiz</h1>
+    <form action="/tchr/quizedit/<%= quiz._id %>" method="POST" class="form">
+      <label>Experiment Number:</label>
+      <input type="text" name="exp_no" value="<%= quiz.exp_no %>" readonly required><br>
+  
+      <label>Experiment Title:</label>
+      <input type="text" name="exp_title" value="<%= quiz.exp_title %>" readonly required><br>
+  
+        <label>Question Number:</label>
+        <input type="text" name="question_no" value="<%= quiz.question_no %>" required><br>
+
+        <label>Question:</label>
+        <input type="text" name="Question" value="<%= quiz.Question %>" required><br>
+
+        <label>Option 1:</label>
+        <input type="text" name="option1" value="<%= quiz.option1 %>" required><br>
+
+        <label>Option 2:</label>
+        <input type="text" name="option2" value="<%= quiz.option2 %>" required><br>
+
+        <label>Option 3:</label>
+        <input type="text" name="option3" value="<%= quiz.option3 %>" required><br>
+
+        <label>Option 4:</label>
+        <input type="text" name="option4" value="<%= quiz.option4 %>" required><br>
+
+        <label>Answer:</label>
+        <input type="text" name="Answer" value="<%= quiz.Answer %>" required><br>
+
+        <button type="submit">Update Quiz</button>
+    </form>
+    </div>
+    
+
+      <footer class="footer">
+        <div
+          class="footer_background"
+          style="background-image: url(/images/footer_background.png)"
+        ></div>
+        <div class="container">
+          <div class="row footer_row">
+            <div class="col">
+              <div class="footer_content">
+                <div class="row">
+                  <div class="col-lg-3 footer_col">
+                    <div class="footer_section footer_about">
+                      <div class="footer_logo_container">
+                        <a href="#">
+                          <div class="footer_logo_text">
+                            Physics<span>Verse</span>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="footer_about_text">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit.
+                        </p>
+                      </div>
+                      <div class="footer_social">
+                        <ul>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-facebook" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i
+                                class="fa fa-google-plus"
+                                aria-hidden="true"
+                              ></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-instagram" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-twitter" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Additional footer content here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Local JavaScript files -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="/bootstrap4/popper.js"></script>
+    <script src="/bootstrap4/bootstrap.min.js"></script>
+    <script src="/plugins/greensock/TweenMax.min.js"></script>
+    <script src="/plugins/greensock/TimelineMax.min.js"></script>
+    <script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="/plugins/greensock/animation.gsap.min.js"></script>
+    <script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="/plugins/easing/easing.js"></script>
+    <script src="/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="/js/quiz.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="/js/custom.js"></script>
+    <!-- <script src="/js/quiz.js"></script> -->
+  </body>
+</html>

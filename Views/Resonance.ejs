@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resonance system</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="/css-file/Resonance.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+  <canvas id="ResonanceTubeCanvas"></canvas>
+   <div class="controls">
+    <div class="input-group">
+      <label for="tubePosition">Tube position: </label>
+      <div class="limits">
+        <span>100</span>
+        <span>260</span>
+      </div>
+      <div class="arrow-buttons">
+        <button id="tubePosition-decrease">◄</button>
+        <input type="range" id="tubePosition" min="100" max="260" value="100" step="5" />
+        <button id="tubePosition-increase">►</button>
+      </div>
+      <div class="input-value" id="tubePosition-value">150</div>
+    </div>
+
+    <div class="input-group">
+      <label for="tube-diameter">Tube Diameter(cm): </label>
+      <div class="limits">
+        <span>1</span>
+        <span>40</span>
+      </div>
+      <div class="arrow-buttons">
+        <button id="diameter-decrease">◄</button>
+        <input type="range" id="tube-diameter" min="1" max="40" value="5" step="1" />
+        <button id="diameter-increase">►</button>
+      </div>
+      <div class="input-value" id="diameter-value">1 cm</div>
+    </div>
+
+    <div class="input-group">
+      <label for="frequency">Fork frequency(Hz): </label>
+      <div class="limits">
+        <span>1</span>
+        <span>512</span>
+      </div>
+      <div class="arrow-buttons">
+        <button id="frequency-decrease">◄</button>
+        <input type="range" id="Frequency" value="230" min="1" max="512" step="1">
+        <button id="frequency-increase">►</button>
+      </div>
+      <div class="input-value" id="frequency-value">230 cm</div>
+    </div>
+      
+    <button class="controls-button" id="startVibration">Vibrate</button>
+    <button id="reset" class="reset-button">Reset</button>
+  </div>
+  <div class="output-container">
+    <div class="display">
+      Length: <span id="length">0.0 cm</span>
+    </div>
+    <div class="display">
+      Diameter:  <span id="diameterDis">0.0 cm</span>
+    </div>
+    <div class="display">Calculated frequency: <span id="Cal-freq">0 Hz</span></div>
+    <div class="display">Sound Velocity: <span id="sound-velocity">0 cm/s</span></div>
+  </div>
+  <div class="exp-tools">
+    <div class="clamp-stand"></div>
+    <div class="clamp-holder" id="clampHolder"></div>
+    <div class="beaker">
+      <div class="water"></div>
+    </div>
+    <div class="tube" id="tube">
+      <div class="tube-water" id="tubeWater"></div>
+    </div>
+    <div class="base"></div>
+  </div>
+
+      <div class="tuning-fork" id="tuningFork">
+          <div class="prong-container">
+              <div class="prong"></div>
+              <div class="prong"></div>
+          </div>
+          <div class="handle"></div>
+      </div>
+      
+
+  <!-- <div class="graph-container">
+    <canvas id="lengthFreqChart"></canvas>
+  </div> -->
+;
+  <div id="length-vs-freq-chart" >
+    <canvas id="lengthFreqChart"></canvas>
+</div>
+
+ 
+  
+  <div class="checkBoxex">
+    <img
+    id="rulerIcon"
+    src="/images/scale.jpg"
+    alt="Ruler Icon"
+    style="cursor: pointer; width: 32px;"
+  />
+  
+  </div>
+
+  <div class="canvasButton">
+    <button id="addValuesBtn">Add Values</button>
+  </div>
+
+  
+  <div class="forks">
+    <div class="tuning-fork3" id="fork1" frequency="320">
+      <label>320</label>
+      <div class="prong-container">
+          <div class="prong"></div>
+          <div class="prong"></div>
+      </div>
+      <div class="handle"></div>
+
+    </div>
+    <div class="tuning-fork2" id="fork2" frequency="256">
+      <label>256</label>
+      <div class="prong-container">
+          <div class="prong"></div>
+          <div class="prong"></div>
+      </div>
+      <div class="handle"></div>
+    </div>
+    <div class="tuning-fork1" id="fork3" frequency="150">
+      <label>150</label>
+      <div class="prong-container">
+          <div class="prong"></div>
+          <div class="prong"></div>
+      </div>
+      <div class="handle"></div>
+    </div>
+    <div class="tuning-fork4" id="fork4" frequency="512">
+      <label>512</label>
+      <div class="prong-container">
+          <div class="prong"></div>
+          <div class="prong"></div>
+      </div>
+      <div class="handle"></div>
+    </div>
+  </div>
+
+  <div id="tableContainer" style="display: none">
+    <table>
+      <thead>
+        <tr>
+          <th>Frequency of tunning fork(Hz)</th>
+          <th>Position of water Level(Y):</th>
+          <th>Diameter of tube(D):</th>
+          <th>Length of airColumn(l1=y-x):</th>
+          <th>Length of Rosonant air(l= l1+0.3D)</th>
+          <th>WaveLength(λ=4l): </th>
+          <th>Room temperature(t):</th>
+          <th>Velocity at t°(V=fλ):</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="number" name ="freq1" placeholder="Enter value"  min="0" 
+            max="1000" step="0.01" /></td>
+          <td><input type="number" name="waterLevel1" placeholder="Enter value"  min="0" 
+            max="100" step="1"/></td>
+          <td><input type="number" name="diameter1" placeholder="Enter value"  min="0" 
+            max="100" step="0.01" /></td>
+          <td><input type="number" name="airColumn1" placeholder="Enter value"  min="0" 
+            max="150" step="0.01" /></td>
+          <td><input type="number" name="correctLength1" placeholder="Enter value"  min="0" 
+            max="500" step="0.01" /></td>
+          <td><input type="number" name="waveLength1" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01" /></td>
+          <td><input type="number" name="temp1" placeholder="Enter value"  min="-100" 
+            max="100" step="0.01" /></td>
+          <td><input type="number" name="velocity1" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01" /></td>
+        </tr>
+        <tr>
+          <td><input type="number" name ="freq2" placeholder="Enter value"  min="0" 
+            max="1000" step="0.01" /></td>
+          <td><input type="number" name="waterLeve2" placeholder="Enter value"  min="0" 
+            max="100" step="1"/></td>
+          <td><input type="number" name="diameter2" placeholder="Enter value"  min="0" 
+            max="100" step="0.01" /></td>
+          <td><input type="number" name="airColumn2" placeholder="Enter value"  min="0" 
+            max="150" step="0.01" /></td>
+          <td><input type="number" name="correctLength2" placeholder="Enter value"  min="0" 
+            max="500" step="0.01" /></td>
+          <td><input type="number" name="waveLength2" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01" /></td>
+          <td><input type="number" name="temp2" placeholder="Enter value"  min="-100" 
+            max="100" step="0.01" /></td>
+          <td><input type="number" name="velocity2" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01" /></td>
+        </tr>
+        <tr>
+          <td><input type="number" name ="freq3" placeholder="Enter value"  min="0" 
+            max="1000" step="0.01" /></td>
+          <td><input type="number" name="waterLevel3" placeholder="Enter value"  min="0" 
+            max="100" step="1"/></td>
+          <td><input type="number" name="diameter3" placeholder="Enter value"  min="0" 
+            max="100" step="0.01" /></td>
+          <td><input type="number" name="airColumn3" placeholder="Enter value"  min="0" 
+            max="150" step="0.01" /></td>
+          <td><input type="number" name="correctLength3" placeholder="Enter value"  min="0" 
+            max="500" step="0.01" /></td>
+          <td><input type="number" name="waveLength3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01" /></td>
+          <td><input type="number" name="temp3" placeholder="Enter value"  min="-100" 
+            max="100" step="0.01" /></td>
+          <td><input type="number" name="velocity3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <button id="saveInDB">Save Data</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="chart-config.js"></script>
+  <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
+<script src="/js/Resonance.js"></script>
+</body>
+</html>
+

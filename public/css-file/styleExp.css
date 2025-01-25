@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .row1, .row-Exp, .row-Footer {
+    width: 100%;
+  }
+  
+  .navbar {
+    background: radial-gradient(farthest-side, rgba(137, 158, 216, 0.788) 2%, rgba(9, 2, 48, 0.888) 98%);
+    text-align: center;
+  }
+  
+  .navbar h3 {
+    font-family: 'Times New Roman', serif;
+    color: white;
+  }
+  
+  .row-Footer {
+    background: radial-gradient(farthest-side, rgba(122, 163, 240, 0.932) 0%, rgba(11, 2, 69, 0.895) 100%);
+  }
+  
+  .row-Footer h4 {
+    color: white;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  /* Styling for experiment layout */
+  #row-Exp {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columns of equal width */
+    gap: 20px;
+    width: 100%;
+    padding: 20px;
+    align-items: start; /* Align items to the start of the grid area */
+  }
+  
+  .Expcanvas {
+    background-color: #f0f0f0; /* Optional: To visually distinguish the canvas area */
+    min-height: 400px; /* Minimum height for visibility */
+  }
+  
+  .form {
+    background-color: rgba(161, 171, 224, 0.806);
+    /* color: antiquewhite; */
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form .form-group input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(27, 16, 120, 0.74);
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .timeP{
+    background-color: #fff;
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .btn:hover {
+    background-color: rgba(27, 16, 120, 0.9);
+  }
+  

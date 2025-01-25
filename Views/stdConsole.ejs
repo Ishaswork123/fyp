@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Student Console</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Unicat project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/bootstrap4/bootstrap.min.css">
+<link rel="stylesheet" href="/node_modules/material-icons/iconfont/material-icons.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="/css-file/tchrConsole.css">
+<link rel="stylesheet" href="/assets/css/fontawesome.css">
+<link rel="stylesheet" href="/assets/css/templatemo-seo-dream.css">
+<link rel="stylesheet" href="/assets/css/animated.css">
+<link rel="stylesheet" href="/assets/css/owl.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/node_modules/material-icons/iconfont/material-icons.css">
+<link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<!-- <link rel="stylesheet" href="/css-file/expModel.css"> -->
+<link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+<link rel="stylesheet" href="/css-file/tchrConsole.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<header class="header">
+			
+		<!-- Top Bar -->
+		<!-- <div class="top_bar">
+			<div class="top_bar_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
+								<ul class="top_bar_contact_list">
+									<li><div class="question"><img src="/images/R.jpeg" class="rounded  "alt="logo" height="30px" width="30px"></div></li>
+									<li>
+										<i class="fa" aria-hidden="true"></i>
+										<div>Comsats University Islamabad Attock Campus</div>
+									</li>
+									
+								</ul>
+								<div class="top_bar_login ml-auto">
+									<div class="login_button"><a href="/profile">Profile</a></div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>				
+		</div> -->
+
+		<!-- Header Content -->
+		<!-- <div class="header_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="header_content d-flex flex-row align-items-center justify-content-start">
+							<div class="logo_container">
+								<a href="#">
+									<div class="logo_text">Physics<span>Verse</span></div>
+								</a>
+							</div>
+							<nav class="main_nav_contaner ml-auto">
+								<ul class="main_nav mb-0">
+									<li><a href="/home">Home</a></li>
+									<li><a href="/std/quiz">Quizes</a></li>
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										  Experiment
+										</a>
+										<div class="dropdown-menu" aria-labelledby="experimentDropdown">
+										  <a class="dropdown-item" href="/penExp">Experiment 1</a>
+										  <a class="dropdown-item" href="/exp/massExp">Experiment 2</a>
+										</div>
+									  </li>
+									
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="communityDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											  Community
+											</a>
+											<div class="dropdown-menu dropdown-menu-right" aria-labelledby="communityDropdown">
+											  <div class="dropdown-item" id="myBtn">Community Login</div>
+											  <div id="communityModal" class="modal">
+												<div class="modal-content">
+												  <span class="close">&times;</span>
+												  <div class="content">
+													<form action="/login-com" method="post">
+													  <header>Login Form</header>
+													  <div class="field">
+														<span class="fa fa-user"></span>
+														<input type="text" required placeholder="User Name" id="username" name="username">
+													  </div>
+													  <div class="field selectCommunity">
+														<label>Select a community</label>
+														<select id="room" name="room">
+														  <option id="option" disabled selected>Select a room</option>
+														</select>
+													  </div>
+													  <div class="field createCommunity">
+														<label>Create new community</label>
+														<input type="text" id="new_room" name="new_room">
+													  </div>
+													  <button id="login">Join</button>
+													</form>
+												  </div>
+												</div>
+											  </div>
+											</div>
+										  </li>
+									</li>
+									<li><a href="/logout">Logout</a></li>
+
+								</ul>
+
+								<div class="hamburger menu_mm">
+									<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
+								</div>
+							</nav>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+		<div class="header_container">
+			<div class="container">
+			  <div class="row">
+				<div class="col">
+				  <div class="header_content d-flex flex-row align-items-center justify-content-start">
+					<img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
+									<!-- <li>
+										<i class="fa" aria-hidden="true"></i>
+										<div>Comsats University Islamabad Attock Campus</div>
+									</li> -->
+					<div class="logo_container">
+					  <a href="#">
+						<div class="logo_text">Physics<span>Verse</span></div>
+					  </a>
+					</div>
+					<nav class="main_nav_contaner ml-auto">
+					  <ul class="main_nav mb-0">
+						<li><a href="/home">Home</a></li>
+						<li><a href="/std/get-quiz">Quizes</a></li>
+						<!-- Experiment Dropdown -->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Guided  Experiment
+							</a>
+							<div class="dropdown-menu" aria-labelledby="experimentDropdown">
+							  <a class="dropdown-item" href="/guided/penExp" >Experiment 1</a>
+							  <a class="dropdown-item" href="/guided/massExp" >Experiment 2</a>
+							  <a class="dropdown-item" href="/guided/resonance" >Experiment 3</a>
+						
+							</div>
+						  </li>
+						  <!-- Trigger Button
+<li>
+<a href="#" id="openModalButton"> Experiments</a>
+</li> -->
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+Experiment
+</a>
+<div class="dropdown-menu" aria-labelledby="experimentDropdown">
+<a class="dropdown-item" href="/exp/penExp" >Experiment 1</a>
+<a class="dropdown-item" href="/exp/massExp" >Experiment 2</a>
+<a class="dropdown-item" href="/exp/resonance" >Experiment 3</a>
+
+</div>
+</li>
+						  
+						
+						  <!-- Modal -->
+						  <!-- <div id="modal" class="modal">
+							<div class="modal-content">
+							  <button class="close">&times;</button>
+							  <div class="content">
+								<header>Select an Option</header>
+								<div class="options">
+								  <div class="option">
+									<img src="images/customized-experiment.jpg" alt="Customized Experiment">
+									<button class="option-button">Customized Experiment</button>
+								  </div>
+								  <div class="option">
+									<img src="images/guided-experiment.jpg" alt="Guided Experiment">
+									<button class="option-button">Guided Experiment</button>
+								  </div>
+								  <div class="option">
+									<img src="images/quiz.jpg" alt="Quiz">
+									<button class="option-button">Quiz</button>
+								  </div>
+								  <div class="option">
+									<img src="images/details.jpg" alt="Details">
+									<button class="option-button">Details</button>
+								  </div>
+								</div>
+							  </div>
+							</div>
+						  </div>
+						   -->
+						<!-- Community Dropdown -->
+						<li class="nav-item">
+							<a class="nav-link" href="#" id="communityLink">
+							  Community
+							</a>
+						  </li>
+						  
+						  <div id="communityModal" class="modal">
+							<div class="modal-content">
+							  <div class="content">
+								<button class="close">&times;</button>
+								<form action="/login-com" method="post">
+								  <header>Join Community</header>
+						  
+								  <!-- Username Input -->
+								  <div class="field">
+									<span class="fa fa-user"></span>
+									<input type="text" required placeholder="User Name" id="username" name="username">
+								  </div>
+						  
+								  <!-- Select Community Dropdown -->
+								  <div class="field selectCommunity">
+									<label for="room"></label>
+									<select id="room" name="room">
+									  <option id="option" disabled selected>Select a Community</option>
+									</select>
+								  </div>
+						  
+								  <!-- Create New Community Checkbox -->
+								  <div class="field">
+									<label>
+									  <input type="checkbox" id="createNewCommunityCheckbox" />
+									  Create New Community
+									</label>
+								  </div>
+						  
+								  <!-- Create Community Fields (Initially Hidden) -->
+								  <div id="createCommunityFields" style="display: none;">
+									<div class="field createCommunity">
+									  <span class="fa-solid fa-plus"></span>
+									  <input placeholder="New Community Name" type="text" id="new_room" name="new_room">
+									</div>
+									<div class="field">
+									  <span class="fa fa-info-circle"></span>
+									  <input placeholder="Community Bio" type="text" id="community_bio" name="community_bio">
+									</div>
+									<!-- <div class="field">
+									  <span class="fa fa-users"></span>
+									  <input placeholder="Number of Members (Optional)" type="number" id="community_members" name="community_members">
+									</div> -->
+								  </div>
+						  
+								  <!-- Submit Button -->
+								  <button class="submit" type="submit" id="login">Join</button>
+								</form>
+							  </div>
+							</div>
+						  </div>
+						  
+						  
+						<li>
+					  <div class="profile-icon" onclick="openSideMenu()">
+						<i class="fa fa-user"></i>
+					</div>		
+						</li>
+					  </ul>
+					  <div class="hamburger menu_mm">
+						<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
+					</div>
+					</nav>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <!-- header side menu -->
+		<!-- Side Menu -->
+<!-- Sidebar Menu -->
+<div id="sideMenu" class="side-menu">
+    <!-- Close Button -->
+    <button class="close-btn"  onclick="closeSideMenu()">x</button>
+
+	<div class="side-menu-header">
+		<div class="profile-image-container_mm">
+			<a href="/std/setting">
+				<img src="<%= profilePic %>" alt="Profile Picture" class="profile-image_mm" />
+				<i class="fas fa-edit editIconImage_mm" title="Edit Profile"></i>
+			</a>
+		</div>
+        <h3><%= name %></h3>
+        <span>Online</span>
+    </div>
+
+    <div class="side-menu-content">
+        <ul class="profile-details">
+            <li class="profile-detail">
+                <i class="fa-solid fa-envelope"></i>
+                <span><%= email %></span>
+            </li>
+            <li class="profile-detail">
+                <i class="fas fa-id-card"></i>
+                <span>Student</span> <!-- Since role is static for now -->
+            </li>
+            <li class="profile-detail">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Joined <%= joinDate.toDateString() %></span>
+            </li>
+
+            <li class="profile-detail">
+                <a href="/std/logout">
+                    <i class="fa-solid fa-power-off logOut"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+ </div>
+		  
+	</header>
+
+	 <div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
+
+		<nav class="menu_nav">
+			<ul class="menu_mm">
+				<li class="menu_mm"><a href="/stdConsole">Home</a></li>
+				<li class="menu_mm"><a href="/std/get-quiz">Quizes</a></li>
+				<li class="menu_mm"><li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  Experiment
+					</a>
+					<div class="dropdown-menu" aria-labelledby="experimentDropdown">
+					  <a class="dropdown-item" href="/penExp">Experiment 1</a>
+					  <a class="dropdown-item" href="/exp/massExp">Experiment 2</a>
+					</div>
+				  </li>
+				</li>				  
+				<!-- <li class="menu_mm"><a href="#">Manage Student </a></li> -->
+				<li class="menu_mm">
+					<a class="nav-link" href="#" id="communityLink">
+						Community
+					  </a>
+				</li>
+				<li class="menu_mm">
+					<a class="nav-link dropdown-toggle" href="#" id="profileDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-user"></i>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="profileDropDown">
+						<div class="profile-dropdown-content">
+							<!-- Profile Content inside Dropdown -->
+							<div class="profile-image-container_mm">
+								<img src="<%= profilePic %>" alt="Profile Picture" class="profile-image_mm" />
+							</div>
+							<i class="fas fa-edit editIconImage_mm"></i>
+							
+							<div class="profile-details_mm">
+								<div class="profile-detail_mm">
+									<span><%= name %></span>
+									<span>Online</span>
+									<i class="fas fa-edit editIcon_mm"></i>
+								</div>
+								<div class="profile-detail_mm">
+									<label>Email:</label>
+									<span><%= email %></span>
+									<i class="fas fa-edit editIcon_mm"></i>
+								</div>
+							
+								<div class="profile-detail_mm">
+									<label>Joined:</label>
+									<span><%= joinDate.toDateString() %></span>
+								</div>
+								<div class="profile-detail_mm">
+									<a href="/std/logout">
+										<i class="fa-solid fa-power-off logOut_mm"></i>
+										<label>Logout</label>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+                       
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+	 <!-- Home -->
+
+ 
+	<div class="Home">
+		<div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+		  <div class="container">
+			<div class="row">
+			  <div class="col-lg-12">
+				<div class="row">
+				  <div class="col-lg-6 align-self-center">
+					<div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+					  <div class="row">
+						<div class="col-lg-4 col-sm-4">
+						 
+						</div>
+						<div class="col-lg-4 col-sm-4">
+						  
+						</div>
+						<div class="col-lg-4 col-sm-4">
+						  
+						</div>
+						<div class="col-lg-12">
+						  <h2 class="head">Welcome to PhysicsVerse</h2>
+						</div>
+						<div class="col-lg-12">
+							<div class="main-green-button scroll-to-section">
+								<a href="#contact">Physics Virtual Lab</a>
+							  </div>
+							  
+							  </div></div>
+					  </div>
+					</div>
+				  </div>
+				  <div class="col-lg-6">
+					<div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+					  <img src="/assets/images/banner-right-image.png" alt="">
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	   
+	  </div>
+  
+
+	<!-- Features -->
+
+	<div class="features">
+		
+	<!-- Popular Courses -->
+
+	<div class="courses">
+		<div class="section_background parallax-window" data-parallax="scroll" data-image-src="images/courses_background.jpg" data-speed="0.8"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title_container text-center">
+						<h2 class="section_title">Experiments</h2>
+						
+					</div>
+				</div>
+			</div>
+			<div class="row courses_row">
+				
+				<!-- Course -->
+				<div class="col-lg-4 course_col">
+					<div class="course">
+						<div class="course_image"><img src="/images/course_1.jpg" alt=""></div>
+						<div class="course_body">
+							<h3 class="course_title"><a href="course.html">pendulum </a></h3>
+							<div class="course_text">
+								<p>Verification of the laws of simple pendulum: </p>
+							</div>
+						</div>
+						<div class="course_footer">
+							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
+								
+								<div class="course_info">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<span>5 Ratings</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Course -->
+				<div class="col-lg-4 course_col">
+					<div class="course">
+						<div class="course_image"><img src="/images/course_2.jpg" alt=""></div>
+						<div class="course_body">
+							<h3 class="course_title"><a href="course.html">Mass Spring system</a></h3>
+							<div class="course_text">
+								<p>Determine the acceleration due to the gravity by oscillating mass spring system </p>
+							</div>
+						</div>
+						<div class="course_footer">
+							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
+								
+								<div class="course_info">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<span>5 Ratings</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Course -->
+				<div class="col-lg-4 course_col">
+					<div class="course">
+						<div class="course_image"><img src="/images/course_3.jpg" alt=""></div>
+						<div class="course_body">
+							<h3 class="course_title"><a href="course.html">Meter rod Method</a></h3>
+							<div class="course_text">
+								<p>Verify the conditions of equilibrium by suspended meter rod method</p>
+							</div>
+						</div>
+						<div class="course_footer">
+							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
+								
+								<div class="course_info">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<span>5 Ratings</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="courses_button trans_200"><a href="#">view Experiments</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Counter -->
+
+
+
+	<!-- Events -->
+
+	
+
+	<!-- Team -->
+
+	<div class="team">
+		<div class="team_background parallax-window" data-parallax="scroll" data-image-src="images/team_background.jpg" data-speed="0.8"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title_container text-center">
+						<h2 class="section_title">Tutors</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row team_row">
+				<% teachers.forEach(function(teacher) { %>
+					<!-- Team Item -->
+					<div class="col-lg-6 col-md-6 team_col">
+						<div class="team_item">
+							<div class="team_image">
+								<img src="<%= teacher.pic ? `data:image/jpeg;base64,${teacher.pic}` : '/images/profile.jpg' %>" alt="profile-image-teacher">
+							</div>
+							<div class="team_body">
+								<div class="team_title"><a href="#"><%= teacher.fname + ' ' + teacher.lname %></a></div>
+								<div class="team_subtitle"><%= teacher.role %></div>
+								<div class="social_list">
+									<ul>
+										<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+										<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+										<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				<% }); %>
+			</div>
+		</div>
+	</div>
+	
+
+				<!-- Team Item -->
+				
+      
+	
+
+	<!-- Footer -->
+
+	<footer class="footer">
+		<div class="footer_background" style="background-image:url(/images/footer_background.png)"></div>
+		<div class="container">
+			<div class="row footer_row">
+				<div class="col">
+					<div class="footer_content">
+						<div class="row">
+
+							<div class="col-lg-3 footer_col">
+					
+								<!-- Footer About -->
+								<div class="footer_section footer_about">
+									<div class="footer_logo_container">
+										<a href="#">
+											<div class="footer_logo_text">Physics<span>Verse</span></div>
+										</a>
+									</div>
+									<div class="footer_about_text ">
+										<p class="text-start">An interactive physics virtual lab .</p>
+									</div>
+									<div class="footer_social">
+										<ul class="p-0">
+											<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+										</ul>
+									</div>
+								</div>
+								
+							</div>
+
+							<div class="col-lg-3 footer_col">
+					
+								<!-- Footer Contact -->
+								<div class="footer_section footer_contact">
+									<div class="footer_title">Contact Us</div>
+									<div class="footer_contact_info">
+										<ul class="p-0">
+											<li>Email: Info.deercreative@gmail.com</li>
+											<li>Phone:  +(88) 111 555 666</li>
+											<li>40 Baria Sreet 133/2 New York City, United States</li>
+										</ul>
+									</div>
+								</div>
+								
+							</div>
+
+							<div class="col-lg-3 footer_col">
+					
+								<!-- Footer links -->
+								<div class="footer_section footer_links">
+									<div class="footer_title">Contact Us</div>
+									<div class="footer_links_container">
+										<ul class="p-0">
+											<li><a href="index.html">Home</a></li>
+											<li><a href="about.html">About</a></li>
+											<li><a href="contact.html">Contact</a></li>
+											<li><a href="#">Features</a></li>
+											<li><a href="courses.html">Courses</a></li>
+											<li><a href="#">Events</a></li>
+											<li><a href="#">Gallery</a></li>
+											<li><a href="#">FAQs</a></li>
+										</ul>
+									</div>
+								</div>
+								
+							</div>
+
+							<div class="col-lg-3 footer_col clearfix">
+					
+								<!-- Footer links -->
+								<div class="footer_section footer_mobile">
+									<div class="footer_title">Mobile</div>
+									<div class="footer_mobile_content">
+										<div class="footer_image"><a href="#"><img src="images/mobile_1.png" alt=""></a></div>
+										<div class="footer_image"><a href="#"><img src="images/mobile_2.png" alt=""></a></div>
+									</div>
+								</div>
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row copyright_row">
+				<div class="col">
+					<div class="copyright d-flex flex-lg-row flex-column align-items-center justify-content-start">
+						<div class="cr_text"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+						<div class="ml-lg-auto cr_links">
+							<ul class="cr_list p-0">
+								<li><a href="#">Copyright notification</a></li>
+								<li><a href="#">Terms of Use</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
+<script>
+	function openSideMenu() {
+		document.getElementById("sideMenu").classList.add("open");
+	}
+	
+	function closeSideMenu() {
+		document.getElementById("sideMenu").classList.remove("open");
+	}
+	document.getElementById("openModal").addEventListener("click", function (event) {
+  event.preventDefault();
+  document.getElementById("labModal").style.display = "block";
+});
+
+document.getElementById("closeModal").addEventListener("click", function () {
+  document.getElementById("labModal").style.display = "none";
+});
+
+// Optional: Close modal when clicking outside of it
+window.addEventListener("click", function (event) {
+  const modal = document.getElementById("labModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+});
+
+
+	</script>
+	
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/bootstrap4/popper.js"></script>
+<script src="/bootstrap4/bootstrap.min.js"></script>
+<script src="/plugins/greensock/TweenMax.min.js"></script>
+<script src="/plugins/greensock/TimelineMax.min.js"></script>
+<script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="/plugins/greensock/animation.gsap.min.js"></script>
+<script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="/plugins/easing/easing.js"></script>
+<script src="/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Animation -->
+<script src="/assets/js/animation.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script src="/assets/js/custom.js"></script>
+<script src="/js/chat.js"></script>
+</body>
+</html>

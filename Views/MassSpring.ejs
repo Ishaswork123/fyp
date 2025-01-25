@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mass-Spring systemunao</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  
+  <link rel="stylesheet" href="/css-file/mass-spring.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
+</head>
+<body>
+    <div class="massInput">
+        <div>
+          <label for="massSlider">Mass (g):</label>
+          <input type="range" id="massSlider" min="100" max="1000" value="100" step="10" />
+          <span id="massValue">500 g</span>
+        </div>
+      </div>
+      <div class="springInput">
+        <label for="springSlider">Spring Constant:</label>
+        <input type="range" id="springSlider" min="0.1" max="1.0" value="0.5" step="0.1" />
+        <span id="springValue">0.5</span>
+      </div>
+  <canvas id="simulationCanvas"></canvas>
+
+      <div class="button-controls">
+        <button id="controlButton">
+          <img id="buttonIcon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABMElEQVR4nO2ZsWpDIRSGjUJyl9zXa/MQiXbIHNBuTYeUC02f5A5ZQ3UNBKp5GYv7uehwQkP5Pzib/PLrt4hCAADA/yTn2dz+6M6msbPxRM3Cxb3Y3fpq1u7WL2x6n8rpbBrnr2lT9mTv0bm06lzK1bHxWM+KX01ZLq34i9j40VYkXepZ6dJ4KIc7FElD2ynGazXLxWvjoQwoMgVuhABqcQC1CKAWB1CLAGpxALUIoBYHUOvR1FLaD8qEXBupffU9Uta0ZCntUWQS3AgB1OIAahFALQ6gFgHU4gBqEUAtDqDWw6llwqHpPWJC9aOnrGkqYgL/R4988c+Np/hZy1LGHxsfaU/sRYTIM6n9RuowSh1O1Cjt38T2vKxGrUOvdNhP5ciyh/lelz3vUAQAAMTf8wuBrki0KqZ7PAAAAABJRU5ErkJggg==" />
+        </button>
+        <label id></label>
+      <button class="startBtn" id="startBtn">Start</button>
+        <button id="resetBtn" class="resetBtn">Reset</button>
+    </div>
+    <div class="gravity-container">
+        <input type="button" id="gravityBtn" value="+" />
+        <label for="gravity">Gravity</label>
+  
+        <div id="gravity-control">
+          <div class="input-group">
+            <label for="gravity">Gravity (m/s²): </label>
+            <div class="limits">
+              <span>0.0</span>
+              <span>25.0</span>
+            </div>
+            <div class="arrow-buttons">
+              <button id="gravity-decrease">◄</button>
+              <input type="range" id="gravity" min="0" max="25" step="0.1" value="9.8" />
+              <button id="gravity-increase">►</button>
+            </div>
+            <div class="input-value" id="gravity-value">9.8 m/s²</div>
+          </div>
+  
+          <div class="input-group">
+            <select id="gravitySelect">
+              <option value="9.8">Earth (9.8 m/s²)</option>
+              <option value="1.62">Moon (1.62 m/s²)</option>
+              <option value="3.71">Mars (3.71 m/s²)</option>
+              <option value="24.79">Jupiter (24.79 m/s²)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="checkBoxex">
+        <label>
+          <input type="checkbox" id="showScale" checked /> Show Scale</label>
+      </div>
+      <div class="playback-controls">
+        <button id="playNormal">Normal</button>
+        <button id="playSlow">Slow</button>
+      </div>
+      <div class="canvasButton">
+        <button id="addValuesBtn">Add Values</button>
+      </div>
+
+  
+  <div class="weights">
+    <div class="weight" id="weight1" data-weight="100">100 g</div>
+    <div class="weight" id="weight2" data-weight="350">350 g</div>
+    <div class="weight" id="weight3" data-weight="250">250 g</div>
+    <div class="weight" id="weight4" data-weight="500">500 g</div>
+  </div>
+
+<!-- ------------------------------------------------------------------------------------------------------------ -->
+
+
+  <div class="stopwatch-container">
+<label>Stop Watch</label>
+
+    <div class="stopwatch-display" id="stopwatch-display">00:00:00:00</div>
+    <div class="buttons">
+      <button id="start-btn"><i class="fas fa-play"></i></button>
+      <button id="pause-resume-btn" disabled>
+        <i class="fas fa-pause"></i>
+      </button>
+      <button id="reset-btn" disabled><i class="fas fa-redo"></i></button>
+    </div>
+  </div>
+<!-- ------------------------------------------------------------------------------------------------------------ -->
+<!-- Table values -->
+
+<div id="tableContainer" style="display: none;">
+  <form action="/exp/massExp" method="POST">
+    <table>
+      <thead>
+        <tr>
+          <th>mass(weight)</th>
+          <th>Initial length 'x₁' cm</th>
+          <th>Final length 'x₂' cm</th>
+          <th>Extension (x=x₂-x₁) cm</th>
+          <th>Time of Trial 1 (t₁) sec</th>
+          <th>Time of Trial 2 (t₂) sec</th>
+          <th>Mean Time (t=(t₁+t₂)/2) sec</th>
+          <th>Time Period (T= t/20) sec</th>
+          <th>Gravity (G=4π(x/T²)) cm/s²</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="number" name="mass1" placeholder="Enter value"></td>
+          <td><input type="number" name="initialLength1" placeholder="Enter value"></td>
+          <td><input type="number" name="finalLength1" placeholder="Enter value"></td>
+          <td><input type="number" name="extension1" placeholder="Enter value"></td>
+          <td><input type="number" name="trial1Time1" placeholder="Enter value"></td>
+          <td><input type="number" name="trial2Time1" placeholder="Enter value"></td>
+          <td><input type="number" name="meanTime1" placeholder="Enter value"></td>
+          <td><input type="number" name="timePeriod1" placeholder="Enter value"></td>
+          <td><input type="number" name="gravity1" placeholder="Enter value"></td>
+        </tr>
+
+        <tr>
+          <td><input type="number" name="mass2" placeholder="Enter value"   min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="initialLength2" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="finalLength2" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="extension2" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="trial1Time2" placeholder="Enter value" min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="trial2Time2" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="meanTime2" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="timePeriod2" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="gravity2" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+        </tr>
+
+
+        <tr>
+          <td><input type="number" name="mass3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="initialLength3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="finalLength3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="extension3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="text" name="trial1Time3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="trial2Time3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="meanTime3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="timePeriod3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+          <td><input type="number" name="gravity3" placeholder="Enter value"  min="-1000" 
+            max="1000" step="0.01"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="submit" id="saveInDB">Save Data</button>
+  </form>
+</div>
+<script src="/js/mass-spring.js"></script>
+</body>
+</html>

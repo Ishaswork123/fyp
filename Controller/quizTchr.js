@@ -1,0 +1,139 @@
+const Quiz = require('../Model/quiz');
+// const quizresult=require('../Model/QuizResult');
+const User=require('../Model/std');
+ // Import the Quiz model
+ const mongoose=require('mongoose');
+
+const ObjectId = mongoose.Types.ObjectId; // Import ObjectId from mongoose
+
+async function handleQuiz(req, res) {
+    console.log("Received a request at handleQuiz function.");
+
+    // Log the request body for debugging
+    if (!req.body || Object.keys(req.body).length === 0) {
+        console.error('Request body is empty. Please ensure the form submission is correct.');
+        return res.status(400).send('No data submitted');
+    }
+
+    console.log('Request Body:', req.body);
+
+    // Extract experiment details
+    const expNo = req.body.exp_no;
+    const expTitle = req.body.exp_title;
+    const totalQuestions = parseInt(req.body.total_questions);
+
+    if (!expNo || !expTitle || isNaN(totalQuestions)) {
+        console.error('Experiment details are missing or invalid.');
+        return res.status(400).send('Invalid experiment details.');
+    }
+
+    console.log(`Extracted experiment number: ${expNo}, title: ${expTitle}, total questions: ${totalQuestions}`);
+
+    // Prepare quiz data for insertion
+    let quizData = [];
+    for (let i = 1; i <= totalQuestions; i++) {
+        quizData.push({
+            exp_no: expNo,
+            exp_title: expTitle,
+            question_no: i,
+            Question: req.body[`question${i}`],
+            option1: req.body[`option1${i}`],
+            option2: req.body[`option2${i}`],
+            option3: req.body[`option3${i}`],
+            option4: req.body[`option4${i}`],
+            Answer: req.body[`answer${i}`],
+        });
+    }
+
+    // Save to the database (or handle it as needed)
+    try {
+        await Quiz.insertMany(quizData); // Assumes you have a Quiz model set up
+        console.log('Quiz data inserted successfully:', quizData);
+        res.send('Quiz created successfully!');
+    } catch (error) {
+        console.error('Error saving quiz data:', error);
+        res.status(500).send('Error saving quiz data.');
+    }
+}
+
+async function showQuiz(req,res){
+    // app.get('/quiz/manage-quizzes', async (req, res) => {
+        const quizData = await Quiz.find(); // Fetch quiz data from the database
+      
+        try {
+          // Fetch all quizzes from the database
+          if (quizData && quizData.length > 0) {
+            res.render('showQuiz', { quizData: quizData });
+         
+        }else {
+          res.render('showQuiz', { quizData: [] }); // Pass an empty array if no quiz data
+        }
+      
+      } catch (error) {
+          console.error(error);
+          res.status(500).send('Server Error');
+        }
+    }
+
+    async function getQuizEdit(req,res){
+        const quizId = req.params.id;
+
+        try {
+          const quiz = await Quiz.findById(quizId); // Fetch quiz data by ID
+          if (quiz) {
+            res.render('editQuiz', { quiz }); // Render editQuiz.ejs with quiz data
+          } else {
+            res.status(404).send('Quiz not found');
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Server Error');
+        }
+    }
+async function postQuizEdit(req,res){
+    const quizId = req.params.id;
+    const { exp_no,exp_title, question_no, Question, option1, option2, option3, option4, Answer } = req.body;
+  
+    try {
+      // Update quiz in the database
+      await Quiz.findByIdAndUpdate(quizId, {
+        exp_no,
+        exp_title,
+        question_no,
+        Question,
+        option1,
+        option2,
+        option3,
+        option4,
+        Answer
+      });
+      res.redirect('/tchr/manage-quizzes'); // Redirect to the quiz management page
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server Error');
+    }
+}
+async function handledeleteQuiz(req, res) {
+    const quizId = req.params.id;
+  
+    try {
+        // Check if the ID is a valid ObjectId
+        if (!ObjectId.isValid(quizId)) {
+            return res.redirect('/tchr/manage-quizzes?error=Invalid Quiz ID.');
+        }
+  
+        // Find and delete the student by ID
+        const deletedfile = await Quiz.findByIdAndDelete(quizId);
+  
+        if (!deletedfile) {
+            return res.redirect('/tchr/manage-quizzes?error=Data not found.');
+        }
+  
+        // Redirect to manage student screen with a success message
+        res.redirect('/tchr/manage-quizzes?success=Data deleted successfully.');
+    } catch (error) {
+        console.error(error);
+        res.redirect('/tchr/manage-quizzes?error=An error occurred while deleting the data.');
+    }
+  }
+module.exports={handleQuiz,showQuiz,getQuizEdit,postQuizEdit,handledeleteQuiz};

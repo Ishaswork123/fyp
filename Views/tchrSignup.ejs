@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Teacher Account</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="Unicat project" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" href="/bootstrap4/bootstrap.min.css" />
+  <link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css" />
+  <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css" />
+  <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css" />
+  <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+  <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+  <link rel="stylesheet" href="/css-file/signup.css">
+  <link rel="stylesheet" href="/assets/css/fontawesome.css">
+  <link rel="stylesheet" href="/assets/css/templatemo-seo-dream.css">
+  <link rel="stylesheet" href="/assets/css/animated.css">
+  <link rel="stylesheet" href="/assets/css/owl.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+
+</head>
+<body>
+  <div class="super_container">
+    <!-- Header -->
+    <header class="header">
+      <!-- Top Bar -->
+      <!-- <div class="top_bar">
+        <div class="top_bar_container">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div
+                  class="top_bar_content d-flex flex-row align-items-center justify-content-start"
+                >
+                <ul class="top_bar_contact_list">
+                  <li><div class="question"><img src="/images/R.jpeg" class="img-circle"alt="logo" height="30px" width="30px"></div></li>
+                  <li>
+                    <i class="fa " aria-hidden="true"></i>
+                    <div>Comsats University Islamabad Attock Campus</div>
+                  </li>
+                  
+                </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Header Content -->
+      <div class="header_container">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div
+                class="header_content d-flex flex-row align-items-center justify-content-start"
+              >
+              <li><div class="question"><img src="/images/R.jpeg" class="img-circle"alt="logo" height="30px" width="30px"></div></li>
+                <div class="logo_container">
+                  <a href="#">
+                    <div class="logo_text">Physics<span>Verse</span></div>
+                  </a>
+                </div>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Header Search Panel -->
+      <div class="header_search_container">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div
+                class="header_search_content d-flex flex-row align-items-center justify-content-end"
+              >
+                <form action="#" class="header_search_form">
+                  <input
+                    type="search"
+                    class="search_input"
+                    placeholder="Search"
+                    required="required"
+                  />
+                  <button
+                    class="header_search_button d-flex flex-column align-items-center justify-content-center"
+                  >
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Menu -->
+    <div
+      class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400"
+    >
+      <div class="menu_close_container">
+        <div class="menu_close">
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+      <div class="search">
+        <form action="#" class="header_search_form menu_mm">
+          <input
+            type="search"
+            class="search_input menu_mm"
+            placeholder="Search"
+            required="required"
+          />
+          <button
+            class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm"
+          >
+            <i class="fa fa-search menu_mm" aria-hidden="true"></i>
+          </button>
+        </form>
+      </div>
+      <nav class="menu_nav">
+        <ul class="menu_mm">
+          <li class="menu_mm"><a href="index.html">Home</a></li>
+          <li class="menu_mm"><a href="#">About</a></li>
+          <li class="menu_mm"><a href="#">Courses</a></li>
+          <li class="menu_mm"><a href="#">Blog</a></li>
+          <li class="menu_mm"><a href="#">Page</a></li>
+          <li class="menu_mm"><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Home -->
+  
+  <!--------Coursess-->
+
+  <!-- Team -->
+
+	
+    <!-- Features -->
+
+    <div class="features">
+      
+      <div class="container">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-md-8 col-sm-10 mx-auto p-0">
+               <div class="login-box">
+                  <div class="login-snip">
+                      <!-- Use a variable to set which tab is active based on form submission -->
+                      <input id="tab-1" type="radio" name="tab" class="sign-in" <% if (activeTab === 'login') { %> checked <% } %>>
+                      <label for="tab-1" class="tab">Login</label>
+                      <input id="tab-2" type="radio" name="tab" class="sign-up" <% if (activeTab === 'signup') { %> checked <% } %>>
+                      <label for="tab-2" class="tab">Sign Up</label>
+                      
+                      <div class="login-space">
+                        <div class="login">
+                          <!-- Login Form -->
+                          <form action="/tchr/login" method="post" autocomplete="off">
+                            <div class="group">
+                                <label for="email" class="label">Email</label>
+                                <input 
+                                    id="email" 
+                                    name="email" 
+                                    type="email" 
+                                    class="input form-control <% if (loginErrors && loginErrors.email) { %> is-invalid <% } %>" 
+                                    placeholder="Enter your email"
+                                    value="<%= email || '' %>"> 
+                        
+                                <!-- Show error message for email if any -->
+                                <% if (loginErrors && loginErrors.email) { %>
+                                    <div class="error-text"><%= loginErrors.email %></div>
+                                <% } %>
+                            </div>
+                        
+                            <div class="group">
+                                <label for="pwd" class="label">Password</label>
+                                <input 
+                                    id="pwd" 
+                                    name="pwd" 
+                                    type="password" 
+                                    class="input form-control <% if (loginErrors && loginErrors.pwd) { %> is-invalid <% } %>" 
+                                    placeholder="Enter your password">
+                                
+                                <!-- Show error message for password if any -->
+                                <% if (loginErrors && loginErrors.pwd) { %>
+                                    <div class="error-text"><%= loginErrors.pwd %></div>
+                                <% } %>
+                            </div>
+                        
+                            <!-- General error message for invalid credentials -->
+                            <% if (loginErrors && loginErrors.general) { %>
+                                <div class="error-text"><%= loginErrors.general %></div>
+                            <% } %>
+                        
+                            <div class="group">
+                                <input type="submit" class="button btn btn-primary w-100" value="Log In">
+                            </div>
+                        </form>
+                      </div>
+                          <!-- Sign Up Form -->
+                          <div class="sign-up-form">
+                            <form action="/tchr/signup" method="post" enctype="multipart/form-data" id="signupForm" autocomplete="off">
+                                <div class="group">
+                                    <label for="fname" class="label">First Name</label>
+                                    <input id="fname" name="fname" type="text" 
+                                        class="input form-control <% if (signupErrors && signupErrors.fname) { %> is-invalid <% } %>" 
+                                        placeholder="Enter your first name" 
+                                        value="<%= fname || '' %>">
+                                    <% if (signupErrors && signupErrors.fname) { %>
+                                        <div class="error-text"><%= signupErrors.fname %></div>
+                                    <% } %>
+                                </div>
+                                
+                                <div class="group">
+                                    <label for="lname" class="label">Last Name</label>
+                                    <input id="lname" name="lname" type="text" 
+                                        class="input form-control <% if (signupErrors && signupErrors.lname) { %> is-invalid <% } %>" 
+                                        placeholder="Enter your last name" 
+                                        value="<%= lname || '' %>">
+                                    <% if (signupErrors && signupErrors.lname) { %>
+                                        <div class="error-text"><%= signupErrors.lname %></div>
+                                    <% } %>
+                                </div>
+                                
+                                <div class="group">
+                                    <label for="email" class="label">Email</label>
+                                    <input id="email" name="email" type="email" 
+                                        class="input form-control <% if (signupErrors && signupErrors.email) { %> is-invalid <% } %>" 
+                                        placeholder="Enter your email" 
+                                        value="<%= email || '' %>">
+                                    <% if (signupErrors && signupErrors.email) { %>
+                                        <div class="error-text"><%= signupErrors.email %></div>
+                                    <% } %>
+                                </div>
+                                <div class="group" >
+                                    <label for="role" class="label">Select a Role</label><br>
+                                    <select class="roleSelect" id="roleSelect"  name="role" style="color: black;">
+                                        <option value="all">All Roles</option>
+                                        <option value="instructor">Instructor</option>
+                                        <option value="developer">Developer</option>
+                                        <option value="physics_expert">Physics Expert</option>
+                                    </select>
+                                  </div>
+                                <div class="group">
+                                    <label for="pwd" class="label">Password</label>
+                                    <div class="input-group">
+                                        <input id="pwd" name="pwd" type="password" 
+                                            class="input form-control <% if (signupErrors && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
+                                            placeholder="Enter your password">
+                                        <button type="button" class="btn btn-outline-secondary toggle-password" onclick="togglePasswordVisibility()">
+                                          <i id="eyeIcon" class="fa fa-eye"></i>
+                                        </button>
+                                    </div>
+                                
+                                    <% if (signupErrors && signupErrors.pwd) { %>
+                                        <div class="error-text"><%= signupErrors.pwd %></div>
+                                    <% } %>
+                                </div>
+                                
+                                <div class="group">
+                                    <label for="confirm_pwd" class="label">Repeat Password</label>
+                                      <div class="input-group">
+                                        <input id="confirm_pwd" name="confirm_pwd" type="password" 
+                                            class="input form-control <% if (signupErrors && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
+                                            placeholder="Repeat your password">
+                                      <button type="button" class="btn btn-outline-secondary toggle-password" onclick="togglePasswordVisibility()">
+                                        <i id="eyeIcon" class="fa fa-eye"></i>
+                                      </button>
+                                      </div>
+                                    
+                                    <% if (signupErrors && signupErrors.confirm_pwd) { %>
+                                        <div class="error-text"><%= signupErrors.confirm_pwd %></div>
+                                    <% } %>
+                                </div>
+                                
+                                <div class="group">
+                                    <label for="pic" class="label ">Upload Picture</label>
+                                    <input id="pic" name="pic" type="file" class="input form-control ">
+                                </div>
+                                
+                                <% if (signupErrors && signupErrors.general) { %>
+                                    <div class="error-text"><%= signupErrors.general %></div>
+                                <% } %>
+                                
+                                <div class="group">
+                                    <input type="submit" class="button btn btn-primary w-100" value="Sign Up">
+                                </div>
+                            </form>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+         </div>
+      </div>
+    </div>
+      <!-- Features -->
+        <!-- Partners -->
+      <div class="partners">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="partners_slider_container">
+						<div class="owl-carousel owl-theme partners_slider">
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_1.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_2.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_3.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_4.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_5.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_6.png" alt=""></div>
+
+						</div>
+                        <div class="social_list">
+                            <ul>
+                                <!-- <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li> -->
+                            </ul>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+      <!-- Popular Courses -->
+      <!-- Footer -->
+      <!-- <footer class="footer">
+        <div
+          class="footer_background"
+          style="background-image: url(images/footer_background.png)"
+        ></div>
+        <div class="container">
+          <div class="row footer_row">
+            <div class="col">
+              <div class="footer_content">
+                <div class="row">
+                  <div class="col-lg-3 footer_col"> -->
+                    <!-- Footer About -->
+                    <!-- <div class="footer_section footer_about">
+                      <div class="footer_logo_container">
+                        <a href="#">
+                          <div class="footer_logo_text">
+                            Physics<span>Verse</span>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="footer_about_text">
+                        <p>
+                          Lorem ipsum dolor sit ametium, consectetur adipiscing
+                          elit.
+                        </p>
+                      </div>
+                      <div class="footer_social">
+                        <ul>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-facebook" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i
+                                class="fa fa-google-plus"
+                                aria-hidden="true"
+                              ></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-instagram" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-twitter" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 footer_col"> -->
+                    <!-- Footer Contact -->
+                    <!-- <div class="footer_section footer_contact">
+                      <div class="footer_title">Contact Us</div>
+                      <div class="footer_contact_info">
+                        <ul>
+                          <li>Email: Info.deercreative@gmail.com</li>
+                          <li>Phone: +(88) 111 555 666</li>
+                          <li>
+                            40 Baria Sreet 133/2 New York City, United States
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- <div class="col-lg-3 footer_col"> -->
+                    <!-- Footer links -->
+                    <!-- <div class="footer_section footer_links">
+                      <div class="footer_title">Contact Us</div>
+                      <div class="footer_links_container">
+                        <ul>
+                          <li><a href="index.html">Home</a></li>
+                          <li><a href="about.html">About</a></li>
+                          <li><a href="contact.html">Contact</a></li>
+                          <li><a href="#">Features</a></li>
+                          <li><a href="courses.html">Courses</a></li>
+                          <li><a href="#">Events</a></li>
+                          <li><a href="#">Gallery</a></li>
+                          <li><a href="#">FAQs</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 footer_col clearfix"> -->
+                    <!-- Footer links -->
+                    <!-- <div class="footer_section footer_mobile">
+                      <div class="footer_title">Mobile</div>
+                      <div class="footer_mobile_content">
+                        <div class="footer_image">
+                          <a href="#"
+                            ><img src="/images/mobile_1.png" alt=""
+                          /></a>
+                        </div>
+                        <div class="footer_image">
+                          <a href="#"
+                            ><img src="/images/mobile_2.png" alt=""
+                          /></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row copyright_row">
+            <div class="col">
+              <div
+                class="copyright d-flex flex-lg-row flex-column align-items-center justify-content-start"
+              >
+                <div class="cr_text">
+                  Copyright ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  All rights reserved | This template is made with
+                  <i class="fa fa-heart-o" aria-hidden="true"></i> by
+                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                  
+                </div>
+                <div class="ml-lg-auto cr_links">
+                  <ul class="cr_list">
+                    <li><a href="#">Copyright notification</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/bootstrap4/popper.js"></script>
+    <script src="/bootstrap4/bootstrap.min.js"></script>
+    <script src="/plugins/greensock/TweenMax.min.js"></script>
+    <script src="/plugins/greensock/TimelineMax.min.js"></script>
+    <script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="/plugins/greensock/animation.gsap.min.js"></script>
+    <script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="/plugins/easing/easing.js"></script>
+    <script src="/plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="/js/custom.js"></script>
+
+    <script>
+    document.querySelectorAll('.toggle-password').forEach(item => {
+    item.addEventListener('click', function () {
+        const input = this.closest('.input-group').querySelector('input');
+        const icon = this.querySelector('i');
+        if (input.getAttribute('type') === 'password') {
+            input.setAttribute('type', 'text');
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.setAttribute('type', 'password');
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+});
+</script>
+  </body>
+</html>

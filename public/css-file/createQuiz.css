@@ -1,0 +1,132 @@
+/* Default state: Show the second header */
+.header_container {
+    display: block; /* Ensure the header is visible by default */
+    transition: all 0.3s ease-in-out;
+}
+
+/* When the second form is active, hide the header */
+.second-form-active .header_container {
+    display: none; /* Hide the header */
+}
+
+
+
+
+
+
+
+/* General Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    z-index: 1000;
+}
+
+/* Modal Content Styling */
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px;
+    height: auto; /* Adjust height dynamically based on content */
+    max-height: 80%; /* Prevents the modal from exceeding screen height */
+    overflow-y: auto; /* Adds scrolling if content overflows */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Form Elements Styling */
+.modal-content form label,
+.modal-content form input {
+    display: block;
+    margin: 10px auto;
+    width: 90%;
+    font-size: 14px;
+}
+
+.modal-content form input,
+.modal-content form button {
+    padding: 8px; /* Slightly reduced padding */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-content form button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content form button:hover {
+    background-color: #45a049;
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Quiz Form Styling */
+#quizForm {
+    display: none;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 90%;
+    margin: 40px auto;
+    text-align: center;
+}
+
+/* Input Fields and Buttons */
+#quizQuestionForm input,
+#quizQuestionForm button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: black;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* General Button Styling */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

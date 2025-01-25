@@ -1,0 +1,166 @@
+/* Modal Background Styling */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1050;
+  width: 100%;
+  height: 100%;
+  top: 100px;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background */
+  backdrop-filter: blur(8px); /* Ensure sufficient blur */
+  -webkit-backdrop-filter: blur(8px); /* Safari compatibility */
+  overflow: hidden; /* Prevent scroll when modal is open */
+}
+
+/* Modal Content */
+.modal-content {
+  background: #fff; /* Default fallback color */
+  background: url('project/project/image/community.jpeg') no-repeat center center / cover; /* Ensure path is correct */
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  max-width: 400px; /* Consistent width */
+  margin: 50px auto; /* Center modal horizontally */
+  position: relative;
+  max-height: 90%; /* Prevent exceeding viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+}
+
+/* Modal Content Area */
+.content {
+  background: rgba(255, 255, 255, 0.8); /* Slightly transparent white for readability */
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* Close Button */
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  border-radius: 50%; /* Circular button */
+  transition: background 0.3s, color 0.3s;
+}
+
+.modal-content .close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #ff0000;
+}
+
+/* Header */
+.content header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #444;
+  text-align: center;
+}
+
+/* Create Community Fields */
+#createCommunityFields {
+  display: none; /* Initially hidden */
+  margin-top: 16px;
+}
+
+/* Input Fields */
+.field {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 8px;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.field:hover {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+}
+
+.field span {
+  color: #888;
+  font-size: 16px;
+  width: 40px;
+  text-align: center;
+}
+
+.field input,
+.field select {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  background: transparent;
+  outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+}
+
+/* Submit Button */
+.submit {
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit:hover {
+  background-color: #0056b3;
+  transform: scale(1.02);
+}
+
+.submit:active {
+  transform: scale(0.98);
+}
+
+/* Dropdown Label */
+.field.selectCommunity label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 600px) {
+  .modal-content {
+    max-width: 90%; /* Adjust modal width for small screens */
+    padding: 16px;
+  }
+
+  .field input,
+  .field select {
+    font-size: 14px; /* Adjust font size for inputs */
+  }
+
+  .submit {
+    font-size: 14px; /* Adjust button font size */
+  }
+}

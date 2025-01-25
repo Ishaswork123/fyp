@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guided Pendulum Experiment</title>
+  <link rel="stylesheet" href="/css-file/pendulum.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/introjs.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/intro.min.js"></script>
+</head>
+
+<body >
+  <div id="tourContainer">
+    <button id="startTourBtn" class="tour-button">Start Tour</button>
+  </div>
+    <div class="container" data-intro="Welcome to the Pendulum Simulation! Follow the steps to understand the controls." data-step="1">
+    <div id="pendulum-container" class="pendulum-container">
+      <canvas id="pendulumCanvas" width="100%" height="80%"></canvas>
+      <div class="button-container">
+        <div class="control-button">
+          <button id="controlButton" data-intro="Click here to start or pause the pendulum animation." data-step="15" >
+            <img id="buttonIcon"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABMElEQVR4nO2ZsWpDIRSGjUJyl9zXa/MQiXbIHNBuTYeUC02f5A5ZQ3UNBKp5GYv7uehwQkP5Pzib/PLrt4hCAADA/yTn2dz+6M6msbPxRM3Cxb3Y3fpq1u7WL2x6n8rpbBrnr2lT9mTv0bm06lzK1bHxWM+KX01ZLq34i9j40VYkXepZ6dJ4KIc7FElD2ynGazXLxWvjoQwoMgVuhABqcQC1CKAWB1CLAGpxALUIoBYHUOvR1FLaD8qEXBupffU9Uta0ZCntUWQS3AgB1OIAahFALQ6gFgHU4gBqEUAtDqDWw6llwqHpPWJC9aOnrGkqYgL/R4988c+Np/hZy1LGHxsfaU/sRYTIM6n9RuowSh1O1Cjt38T2vKxGrUOvdNhP5ciyh/lelz3vUAQAAMTf8wuBrki0KqZ7PAAAAABJRU5ErkJggg==" />
+          </button>
+          <div class="label" id="buttonLabel">Pause</div>
+        </div>
+      </div>
+      <div class="checkBoxex" data-intro="Check the button to show the scale" data-step="2">
+        <label>
+          <input type="checkbox" id="showScale" checked /> Show Scale</label>
+      </div>
+    </div>
+
+    <div class="controls" data-intro="Controls of the experiments." data-step="3">
+      <div class="input-group">
+        <label for="length">Length (m): </label>
+        <div class="limits">
+          <span>0.0</span>
+          <span>1.0</span>
+        </div>
+        <div class="arrow-buttons">
+          <button id="length-decrease">◄</button>
+          <input type="range" id="length" min="0.0" max="1" step="0.01" value="0.5" />
+          <button id="length-increase">►</button>
+        </div>
+        <div class="input-value" id="length-value">0.5 m</div>
+      </div>
+ 
+      <div class="input-group">
+        <label for="radius">radius (cm): </label>
+        <div class="limits">
+          <span>0</span>
+          <span>40</span>
+        </div>
+        <div class="arrow-buttons">
+          <button id="radius-decrease">◄</button>
+          <input type="range" id="radius" min="0" max="40" step="0.01" value="0" />
+          <button id="radius-increase">►</button>
+        </div>
+        <div class="input-value" id="radius-value">1 cm</div>
+      </div>
+
+      <div class="input-group">
+        <label for="gravity">Gravity (m/s²): </label>
+        <div class="limits">
+          <span>0.0</span>
+          <span>25.0</span>
+        </div>
+        <div class="arrow-buttons">
+          <button id="gravity-decrease">◄</button>
+          <input type="range" id="gravity" min="0" max="25" step="0.1" value="9.8" />
+          <button id="gravity-increase">►</button>
+        </div>
+        <div class="input-value" id="gravity-value">9.8 m/s²</div>
+      </div>
+
+      <div class="input-group">
+        <label for="Iangle">Angle (°): </label>
+        <div class="limits">
+          <span>-60°</span>
+          <span>+60°</span>
+        </div>
+        <div class="arrow-buttons">
+          <button id="Iangle-decrease">◄</button>
+          <input type="range" id="Iangle" min="-60" max="60" step="1°" value="0" />
+          <button id="Iangle-increase">►</button>
+        </div>
+        <div class="input-value" id="Iangle-value">0°</div>
+      </div>
+      <div class="input-group">
+        <label for="damping">Dampping: </label>
+        <div class="limits">
+          <span>0.90</span>
+          <span>1.0</span>
+        </div>
+        <div class="arrow-buttons">
+          <button id="damping-decrease">◄</button>
+          <input type="range" id="damping" min="0.90" max="1" step="0.001" value="0.999" />
+
+          <button id="damping-increase">►</button>
+        </div>
+        <div class="input-value" id="damping-value">0.999</div>
+      </div>
+      <button class="controls-button" id="start" data-intro="Click this button to start the simulation." data-step="4"  >Start</button>
+      <button id="reset" class="reset-button" data-intro="Click this button to reset the experiment setup" data-step="5">Reset</button>
+    </div>
+  </div>
+
+  <div class="canvasButton">
+    <button id="saveGraphsBtn"  data-intro="Click the button to save the graph's data as csv" data-step="6">Save Graphs</button>
+    <button id="saveGraphsBtnimg" data-intro="Click the button to save the graph's images" data-step="7">
+      Save Graphs<br />
+      as Images
+    </button>
+    <button id="addValuesBtn" data-intro="Click the button to show the data table" data-step="8">Add Values</button>
+    <div class="dropdown">
+      <button class="dropbtn" data-intro="Click the button to show graphs" data-step="9">Show Graphs</button>
+      <div class="dropdown-content">
+        <label>
+          <input type="checkbox" id="showGraph" unchecked />All
+          variables</label>
+        <label><input type="checkbox" id="showDisGraph" unchecked />
+          Displacement</label>
+        <label><input type="checkbox" id="showVelGraph" unchecked />Velocity</label>
+        <label><input type="checkbox" id="showAccGraph" unchecked />Acceleration</label>
+        <label><input type="checkbox" id="showKineticGraph" unchecked />Kinetic
+          Energy</label>
+        <label><input type="checkbox" id="showPotentialGraph" unchecked />Potential Energy</label>
+        <label><input type="checkbox" id="showTotalEnergyGraph" unchecked />Total
+          Energy</label>
+      </div>
+    </div>
+  </div>
+
+  <div id="graphContainer" data-intro="Graphs will be shown here" data-step="16">
+    <canvas id="graphCanvas" width="1000" height="350"></canvas>
+  </div>
+  <div class="graphContainer2">
+    <canvas class="canvasParts" id="displacementCanvas"></canvas>
+    <canvas class="canvasParts" id="velocityCanvas"></canvas>
+    <canvas class="canvasParts" id="accelerationCanvas"></canvas>
+    <canvas class="canvasParts" id="KineticEnergy"></canvas>
+    <canvas class="canvasParts" id="potentialEnergy"></canvas>
+    <canvas class="canvasParts" id="TotalEnergy"></canvas>
+  </div>
+
+  <div class="output-container" data-intro="Outputs of experiment" data-step="10">
+    <div class="period-display">
+      Period: <span id="period">0.0000 s</span>
+    </div>
+    <div class="angle-display">Angle: <span id="angle">0</span>°</div>
+    <div class="period-display">
+      mass <span id="mass">0.000000 kg</span>
+    </div>
+  </div>
+
+  <div class="stopwatch-container" data-intro="Stop Watch" data-step="11">
+    <label>Stop Watch</label>
+
+    <div class="stopwatch-display" id="stopwatch-display">00:00:00:00</div>
+    <div class="buttons">
+      <button id="start-btn" data-intro="start Button" data-step="12"><i class="fas fa-play"></i></button>
+      <button id="pause-resume-btn" data-intro="Pause/resume Button" data-step="13" disabled>
+        <i class="fas fa-pause"></i>
+      </button>
+      <button id="reset-btn" data-intro="Reset Button" data-step="14" disabled><i class="fas fa-redo"></i></button>
+    </div>
+  </div>
+  <!-- ------------------------------------------------------------------------------------------------------------ -->
+  <!-- Table values -->
+
+  <div id="tableContainer" style="display: none">
+    <table>
+      <thead>
+        <tr>
+          <th>Mass of the Bob(m) Kg</th>
+          <th>Radius of bob(r) cm</th>
+          <th>Length of thread (l₁)cm</th>
+          <th>Length of Pendulum(L= l₁+ r) cm</th>
+          <th>Time of Trial (t₁)sec</th>
+          <th>Time of Trial (t₂)sec</th>
+          <th>Mean Time (t=(t₁+t₂)/2)</th>
+          <th>Time Period (T=2π√L/g) sec²</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+        </tr>
+        <tr>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+        </tr>
+        <tr>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+          <td><input type="text" placeholder="Enter value" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <button id="saveInDB">Save Data</button>
+  </div>
+
+  <script src="/js/pendulum.js"></script>
+  <script src="/js/start-tour.js"></script>
+</body>
+
+</html>

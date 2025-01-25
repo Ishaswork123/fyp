@@ -1,0 +1,76 @@
+.modal {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Darker semi-transparent background */
+  backdrop-filter: blur(10px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  z-index: 1000;
+  display: flex; /* Center the modal */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: 600px; /* Adjusted width */
+  max-width: 90%; /* Make responsive */
+  height: auto; /* Allow height to adjust based on content */
+  max-height: 80%; /* Limit maximum height */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Add scroll if content exceeds size */
+}
+
+/* Modal Buttons */
+.modal-content .dropdown {
+  margin: 10px 0; /* Add margin between dropdowns */
+}
+
+.modal-content a {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content a:hover {
+  background-color: #45a049;
+}
+
+.modal-content button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #e53935; /* Modified red color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #030a1b; /* Darker red for hover */
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
