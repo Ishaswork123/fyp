@@ -1,3 +1,6 @@
+<!-- views/manageStudents.ejs -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,18 +22,24 @@
   <!-- External resources -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
-<link rel="stylesheet" href="/css-file/QuizStyle.css">
-<style>
- .home{
-  padding-top: 50px;
-  padding-bottom: 40px;
-  margin-top: 80px;
-  margin-bottom: 40;
- }
-</style>
-
 </head>
-
+<style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table, th, td {
+    border: 1px solid black;
+  }
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  .text-center{
+    margin-top: 60px;  }
+  
+  
+  </style>
 <body>
   <div class="super_container">
     <!-- Header Section -->
@@ -52,10 +61,9 @@
                       <i class="fa" aria-hidden="true"></i>
                       <div>Comsats University Islamabad Attock Campus</div>
                     </li>
-                    
                   </ul>
                   <div class="top_bar_login ml-auto">
-                    <div class="login_button"><a href="/signups">Profile</a></div>
+                    <div class="login_button"><a href="/tchr/tchrConsole">Home</a></div>
                   </div>
                 </div>
               </div>
@@ -83,53 +91,55 @@
     </header>
 
     <!-- Home Section -->
-    <div class="home">
-      <!-- Button to open modal -->
-      <button id="openModalBtn">Select Experiment</button>
-  
-      <!-- Modal -->
-      <div id="experimentModal" class="modal">
-          <div class="modal-content">
-              <span class="close" id="closeModalBtn">&times;</span>
-              <h1>Quiz</h1>
-              <form id="expForm" method="POST" action="/std/get-quiz">
-                <label for="exp_no">Experiment Number:</label>
-                <select name="exp_no" id="exp_no" required>
-                  <option value="">Select</option>
-                  <% experiments.forEach(function(experiment) { %>
-                    <option value="<%= experiment.exp_no %>"><%= experiment.exp_title %></option>
-                  <% }) %>
-                </select>
-                <button type="submit">Load Quiz</button>
-              </form>
-              
-          </div>
-      </div>
-  
-      <!-- Quiz Form -->
-      <div class="quizContainer" id="quizContainer">
-          <% if (quizData && quizData.length > 0) { %>
-              <h2>Quiz for Experiment <%= quizData[0].exp_no %></h2>
-              <form id="quizForm" method="POST" action='/std/submit-quiz' class="quizForm">
-                  <% quizData.forEach(function(question, index) { %>
-                      <div>
-                          <p><%= index + 1 %>. <%= question.Question %></p>
-                          <label><input type="checkbox" name="answers[<%= index %>]" value="option1"> <%= question.option1 %></label><br>
-                          <label><input type="checkbox" name="answers[<%= index %>]" value="option2"> <%= question.option2 %></label><br>
-                          <label><input type="checkbox" name="answers[<%= index %>]" value="option3"> <%= question.option3 %></label><br>
-                          <label><input type="checkbox" name="answers[<%= index %>]" value="option4"> <%= question.option4 %></label><br>
-                      </div>
-                  <% }) %>
-                  <input type="hidden" name="exp_no" value="<%= quizData[0].exp_no %>">
-                  <button type="submit">Submit Quiz</button>
-              </form>
+    <div class="container mt-5" style="margin-top: 60px; padding-top: 20px;">
+        <h2 class="text-center">Quiz Results</h2>
+
+        <% if (quizResults && quizResults.length > 0) { %>
+            <table>
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Experiment No.</th>
+                  <th>Total Questions</th>
+                  <th>Answers Submitted</th>
+                  <th>Marks Obtained</th>
+
+                  <th>Date Submitted</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% quizResults.forEach(function(result) { %>
+                  <tr>
+                    <td><%= result.fname %></td>
+                    <td><%= result.exp_no %></td>
+                    <td><%= result.total_questions %></td>
+                    <td>
+                      <ul>
+                        <% result.answers_submitted.forEach(function(answer, index) { %>
+                          <li>Q<%= index + 1 %>: <%= answer %></li>
+                        <% }) %>
+                      </ul>
+                    </td>
+                    <td><%= result.marks_obtained %></td>
+
+                    <td><%= result.createdAt.toDateString() %></td>
+                     
+                        <td>
+                         
+                          <form action="/deleteResults/<%= result._id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button></form>
+                        </td>
+                    <% }); %>
+                    
+                  </tr>
+              </tbody>
+            </table>
           <% } else { %>
-              <!-- <p>No questions available for this experiment.</p> -->
+            <p>No quiz results available.</p>
           <% } %>
-      </div>
-  </div>
-  
-  
+    </div>
+</div>
     <!-- Footer Section -->
     <footer class="footer">
       <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
@@ -166,14 +176,14 @@
       </div>
     </footer>
   </div>
-
+ 
   <!-- jQuery (make sure this is above Bootstrap JS) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Bootstrap JS Bundle -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   
   <!-- Local JavaScript files -->
-  <script src="/js/jquery-3.2.1.min.js"></script>
+  <script src="js/jquery-3.2.1.min.js"></script>
   <script src="/bootstrap4/popper.js"></script>
   <script src="/bootstrap4/bootstrap.min.js"></script>
   <script src="/plugins/greensock/TweenMax.min.js"></script>
@@ -188,45 +198,5 @@
   <!-- Custom JavaScript -->
   <script src="/js/custom.js"></script>
   <!-- Local JavaScript files -->
-<script>
-  // Get modal elements
-var modal = document.getElementById("experimentModal");
-var openModalBtn = document.getElementById("openModalBtn");
-var closeModalBtn = document.getElementById("closeModalBtn");
-
-// Open the modal when the button is clicked
-openModalBtn.onclick = function() {
-    modal.style.display = "block";
-}
-
-// Close the modal when the 'X' is clicked
-closeModalBtn.onclick = function() {
-    modal.style.display = "none";
-}
-
-// Close the modal when clicking outside the modal content
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
-// Automatically close the modal when the form is submitted
-document.getElementById("expForm").onsubmit = function(event) {
-    event.preventDefault(); // Prevent form from submitting immediately
-
-    // Add logic to submit the form via AJAX (optional) or use a regular form submission
-    var exp_no = document.getElementById('exp_no').value;
-    if (exp_no) {
-        modal.style.display = "none"; // Close the modal
-
-      
-        this.submit(); // Proceed with regular form submission
-    } else {
-        alert("Please select an experiment.");
-    }
-}
-
-</script>
 </body>
 </html>

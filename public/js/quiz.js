@@ -43,25 +43,28 @@ function showQuestionForm() {
     const form = document.getElementById('quizQuestionForm');
     form.innerHTML = ''; // Clear previous content
     if (currentQuestion <= totalQuestions) {
+        const savedData = JSON.parse(localStorage.getItem(`question${currentQuestion}`)) || {};
+
         form.innerHTML += `
             <h3>Question ${currentQuestion}</h3>
             <label for="question">Question:</label>
-            <input type="text" id="question" name="question${currentQuestion}" required><br>
+            <input type="text" id="question" name="question${currentQuestion}" value="${savedData.question || ''}" required><br>
 
             <label for="option1">Option 1:</label>
-            <input type="text" id="option1" name="option1${currentQuestion}" required><br>
+            <input type="text" id="option1" name="option1${currentQuestion}" value="${savedData.option1 || ''}" required><br>
 
             <label for="option2">Option 2:</label>
-            <input type="text" id="option2" name="option2${currentQuestion}" required><br>
+            <input type="text" id="option2" name="option2${currentQuestion}" value="${savedData.option2 || ''}" required><br>
 
             <label for="option3">Option 3:</label>
-            <input type="text" id="option3" name="option3${currentQuestion}" required><br>
+            <input type="text" id="option3" name="option3${currentQuestion}" value="${savedData.option3 || ''}" required><br>
 
             <label for="option4">Option 4:</label>
-            <input type="text" id="option4" name="option4${currentQuestion}" required><br>
+            <input type="text" id="option4" name="option4${currentQuestion}" value="${savedData.option4 || ''}" required><br>
 
             <label for="answer">Correct Answer:</label>
-            <input type="text" id="answer" name="answer${currentQuestion}" required><br>
+            <input type="text" id="answer" name="answer${currentQuestion}" value="${savedData.answer || ''}" required><br>
+
 
             <div class="button-container">
                 ${currentQuestion > 1 ? `<button type="button" class="horizontal-button" onclick="previousQuestion()">Previous</button>` : ''}
@@ -123,6 +126,8 @@ function saveCurrentQuestionData() {
         option4,
         answer,
     };
+    localStorage.setItem('quizData', JSON.stringify(quizData));
+
 }
 
 function validateCurrentQuestion() {
@@ -221,12 +226,10 @@ function updateTitle() {
     const titles = {
         1: 'Pendulum',
         2: 'Mass Spring System',
-        3: 'Experiment 3',
-        4: 'Experiment 4',
-        5: 'Experiment 5'
-    };
-
-    titleInput.value = titles[experimentNo] || '';
+        3: 'Meter Rod Method',
+        4: 'Force Table',
+        5: 'Resonance Exp'
+    }; titleInput.value = titles[experimentNo] || '';
 }
 
 document.addEventListener("DOMContentLoaded", function () {

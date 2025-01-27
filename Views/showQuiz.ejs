@@ -79,10 +79,11 @@
         <table class="table table-bordered">
           <thead>
               <tr>
+                <th>Question No.</th>
+
                   <th>Experiment No.</th>
                   <th>Experiment Title.</th>
 
-                  <th>Question No.</th>
                   <th>Question</th>
                   <th>Options</th>
                   <th>Answer</th>
@@ -92,12 +93,13 @@
           </thead>
           <tbody>
             <% if (quizData.length > 0) { %>
-              <% quizData.forEach(quiz => { %>
-                  <tr>
-                      <td><%= quiz.exp_no %></td>
-                      <td><%= quiz.exp_title %></td>
+              <% quizData.forEach((quiz, index) => { %>
+                <tr>
+                  <td><%= index + 1 %></td>
 
-                      <td><%= quiz.question_no %></td>
+                  <td><%= quiz.exp_no %></td>
+                  <td><%= quiz.exp_title %></td>
+        
                       <td><%= quiz.Question %></td>
                       <td>
                           <ul>

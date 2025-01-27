@@ -5,6 +5,7 @@ const User=require('../Model/std');
  const mongoose=require('mongoose');
 
 const ObjectId = mongoose.Types.ObjectId; // Import ObjectId from mongoose
+const QuizResult=require('../Model/QuizResult');
 
 async function handleQuiz(req, res) {
     console.log("Received a request at handleQuiz function.");
@@ -49,7 +50,7 @@ async function handleQuiz(req, res) {
     try {
         await Quiz.insertMany(quizData); // Assumes you have a Quiz model set up
         console.log('Quiz data inserted successfully:', quizData);
-        res.send('Quiz created successfully!');
+        res.render('Quiz');
     } catch (error) {
         console.error('Error saving quiz data:', error);
         res.status(500).send('Error saving quiz data.');
@@ -136,4 +137,20 @@ async function handledeleteQuiz(req, res) {
         res.redirect('/tchr/manage-quizzes?error=An error occurred while deleting the data.');
     }
   }
-module.exports={handleQuiz,showQuiz,getQuizEdit,postQuizEdit,handledeleteQuiz};
+
+  async function quizResult(req,res){
+    try {
+      // Fetch all quiz results from the database
+      const quizResults = await QuizResult.find();
+      if (!quizResults || quizResults.length === 0) {
+        return res.status(404).send('No quiz results found');
+      }
+  
+      // Render the EJS file and pass the quiz results
+      res.render('tchrQuizResults', { quizResults });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  }
+module.exports={handleQuiz,showQuiz,getQuizEdit,postQuizEdit,handledeleteQuiz,quizResult};

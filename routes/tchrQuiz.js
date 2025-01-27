@@ -1,19 +1,29 @@
 const express=require('express');
 const router = require('./tchr');
 const Router=express.Router();
-const {handleQuiz,showQuiz,getQuizEdit,postQuizEdit,handledeleteQuiz}=require('../Controller/quizTchr');
+const {handleQuiz,showQuiz,getQuizEdit,postQuizEdit,handledeleteQuiz,quizResult}=require('../Controller/quizTchr');
 
 const { getTokenFromCookies } = require('../config/tchr');  
 
 
-function isAuthenticated(req, res, next) {
-  const tokenData = getTokenFromCookies(req);  // Extract the token from cookies
 
-  if (!tokenData) {
-      // Token is missing or invalid, redirect to the home page
-      return res.redirect('/');
+function isAuthenticated(req, res, next) {
+  console.log('Cookies in request:', req.cookies);
+
+  // Extract student token
+  const Teacher = getTokenFromCookies(req, 'teacher_token');
+
+  if (Teacher) {
+    console.log('Teacher authenticated:', Teacher);
+    req.user = Teacher; // Attach user info to the request
+    return next(); // Allow access to the intended route
+  } else {
+    console.log('No valid token found. Redirecting to login.');
+    res.clearCookie('teacher_token'); // Clear the student token if invalid
+    return res.redirect('/tchr/login'); // Redirect to the login page
   }
 }
+
 
 router.get('/quiz',(req,res)=>{
   res.render('Quiz');
@@ -33,6 +43,6 @@ router.post('/quizdelete/:id',handledeleteQuiz);
 
 router.get('/manage-quizzes',showQuiz);
 router.post('/submit-quiz', handleQuiz);
-
+router.get('/quiz-results',isAuthenticated,quizResult),
 
 module.exports=router;
