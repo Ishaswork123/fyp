@@ -138,27 +138,21 @@
 
 									<!-- <li><a href="/tchr/managestudent">Exp Results</a></li> -->
 
-									<li class="nav-item">
-										<a class="nav-link" href="#" id="communityLink">
+									<!-- <li class="nav-item">
+										<a class="nav-link" href="/tchr/comm-login" id="communityLink">
 										  Community
 										</a>
-									  </li>
+									  </li> -->
+									  <li><a href="/tchr/comm-login" id="communityLink">Community</a></li>
+
 
 									  						  
-						  <div id="communityModal" class="modal">
-							<div class="modal-content">
-							  <div class="content">
-								<button class="close">&times;</button>
-								<form action="/login-com" method="post">
-								  <header>Join Community</header>
-						  
-								  <!-- Username Input -->
-								  <div class="field">
+						
+								  <!-- <div class="field">
 									<span class="fa fa-user"></span>
 									<input type="text" required placeholder="User Name" id="username" name="username">
 								  </div>
 						  
-								  <!-- Select Community Dropdown -->
 								  <div class="field selectCommunity">
 									<label for="room"></label>
 									<select id="room" name="room">
@@ -166,7 +160,6 @@
 									</select>
 								  </div>
 						  
-								  <!-- Create New Community Checkbox -->
 								  <div class="field">
 									<label>
 									  <input type="checkbox" id="createNewCommunityCheckbox" />
@@ -174,7 +167,6 @@
 									</label>
 								  </div>
 						  
-								  <!-- Create Community Fields (Initially Hidden) -->
 								  <div id="createCommunityFields" style="display: none;">
 									<div class="field createCommunity">
 									  <span class="fa-solid fa-plus"></span>
@@ -184,17 +176,13 @@
 									  <span class="fa fa-info-circle"></span>
 									  <input placeholder="Community Bio" type="text" id="community_bio" name="community_bio">
 									</div>
-									<!-- <div class="field">
-									  <span class="fa fa-users"></span>
-									  <input placeholder="Number of Members (Optional)" type="number" id="community_members" name="community_members">
-									</div> -->
+								
 								  </div>
 						  
-								  <!-- Submit Button -->
 								  <button class="submit" type="submit" id="login">Join</button>
 								</form>
 							  </div>
-							</div>
+							</div> --> 
 						  </div>
 						  <li>
 							<div class="profile-icon" onclick="openSideMenu()">
@@ -301,8 +289,10 @@
 				<li class="menu_mm"><a href="/tchr/quiz">Quizes</a></li>
 				<li class="menu_mm"><a href="#">Guided Experiments</a></li>
 				<li><a href="/tchr/managestudent">Experiment Result</a></li>
+				<li><a href="/tchr/comm-login">Community</a></li>
+
 				<li class="menu_mm">
-					<a id="myBtn" href="/community">Community</a>
+					<a id="myBtn" href="/tchr/comm-login">Community</a>
 					
 					<li class="menu_mm">
 						<a class="nav-link" href="#" id="communityLink">

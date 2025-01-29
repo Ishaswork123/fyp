@@ -20,7 +20,7 @@ const bodyParser = require('body-parser');
 
 const {getTokenFromCookies
 } =require('./config/tchr');
-const { connectToMongoBb } = require("./connection");
+const { connectToMongo} = require("./connection");
 
 // router imports 
 
@@ -42,13 +42,19 @@ app.use(cookieParser());
 // app.use(bodyParser.urlencoded({ extended: true })); // For URL-encoded form submissions
 // app.use(bodyParser.json()); // For JSON bodies
   // Connect to MongoDB
-  connectToMongoBb("mongodb://127.0.0.1:27017/fyp")
-    .then(() => {
-      console.log("MongoDB connected");
-    })
-    .catch((error) => {
-      console.error("MongoDB connection error:", error);
-    });
+  connectToMongo();
+
+
+
+
+
+
+  //   .then(() => {
+  //     console.log("MongoDB connected");
+  //   })
+  //   .catch((error) => {
+  //     console.error("MongoDB connection error:", error);
+  //   });
 
 
     app.set("views", path.join(__dirname, "/Views")); 
@@ -143,6 +149,15 @@ app.use('/exp',expRoute);
 app.use('/tchr',tchrQUiz);
 app.use('/std',stdQuiz);
 app.use('/guided',guidedRoute);
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "index.html"));
+// });
+
+// Serve screen.html
+app.get("/screen", (req, res) => {
+  res.render('screen');
+});
+
 
 app.get('/stdConsole',isAuthenticated,handleProfile);
 app.get('/tchr/tchrConsole', isAuthenticated, (req, res) => {

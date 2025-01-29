@@ -77,5 +77,7 @@ router.get('/signup', (req, res) => {
   router.get('/logout',handleLogout);
   router.get('/setting', isAuthenticated,handlegetUpdate);
   router.post('/setting', upload.single('pic_1'), isAuthenticated,handleUpdateAccount);
-
+  router.get("/comm-login", (req, res) => {
+    res.render('tchrLogin');
+  });
   module.exports=router;
