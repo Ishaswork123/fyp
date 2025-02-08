@@ -4,6 +4,10 @@ const router=express.Router();
 const path = require('path');
 const {handle_Save_Spring_Exp,handle_pen_exp} = require('../Controller/exp');
 
+
+router.get('/expriment',(req,res)=>{
+    res.render('exp');
+})
 router.get('/penExp', (req, res) => {
     res.render("pendulumSystem");
 });

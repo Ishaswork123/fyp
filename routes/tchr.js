@@ -1,7 +1,9 @@
 
 const express=require('express');
 const router=express.Router();
-const { handleSignup,handleLogin,handleLogout,handleUpdateAccount,handlegetUpdate,verifyEmail}= require('../Controller/tchr');
+const { handleSignup,handleLogin,handleLogout,handleUpdateAccount,handlegetUpdate,verifyEmail
+    ,sendOTP, verifyOTP, resetPassword
+}= require('../Controller/tchr');
 const multer = require('multer');
 const { getTokenFromCookies } = require('../config/tchr');  
 
@@ -71,13 +73,33 @@ router.get('/signup', (req, res) => {
   router.get('/verifyemail',(req,res)=>{
     res.render('tchrOtp');
   });
+  router.get("/passreset", (req, res) => {
+    const email = req.query.email || ""; // Extract email from query params, default to empty string
+
+    res.render("resetPassTchr",{email}); // Load the EJS file
+})
+router.get("/verify-otp", (req, res) => {
+    const email = req.query.email || ""; // Extract email from query params, default to empty string
+
+    console.log("Received email in verify-otp route:", {email});
+    res.render("resetPassTchr", { email });
+});
+
+router.get("/reset-password", (req, res) => {
+    const email = req.query.email || ""; // Extract email from query params, default to empty string
+
+    console.log("Received email in reset-password route:", {email});
+    res.render("resetPassTchr", { email});
+});
+
   router.post('/verifyemail',verifyEmail);
   router.post('/signup', upload.single('pic'), handleSignup);
   router.post('/login', handleLogin);
   router.get('/logout',handleLogout);
   router.get('/setting', isAuthenticated,handlegetUpdate);
   router.post('/setting', upload.single('pic_1'), isAuthenticated,handleUpdateAccount);
-  router.get("/comm-login", (req, res) => {
-    res.render('tchrLogin');
-  });
+  router.post("/send-otp", sendOTP);
+router.post("/verify-otp", verifyOTP);
+router.post("/reset-password", resetPassword);
+
   module.exports=router;

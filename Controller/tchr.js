@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 const User_Tchr = require('../Model/tchr');
-const { sendVerificationEmail, sendWelcomeEmail } =require("../middlewares/Email.js")
+const { sendVerificationEmail, sendWelcomeEmail,  sendVerificationEmail_reset,
+    sendWelcomeEmail_reset, } =require("../middlewares/Email.js")
 const { generateTokenAndSetCookies } =require( "../middlewares/GenerateToken.js")
 const {generateTeacherToken,getTokenFromCookies,generateEmailToken, getEmailFromToken, }=require('../config/tchr')
 
@@ -67,7 +68,8 @@ async function handleSignup(req,res){
         });
       }
 
-}async function verifyEmail(req,res){
+}
+async function verifyEmail(req,res){
     try {
         const {code}=req.body 
         const user= await User_Tchr.findOne({
@@ -350,7 +352,104 @@ async function handleUpdateAccount(req, res) {
     }
 }
 
+const otpStorage = {};
+
+// Function to generate a 6-digit OTP
+function generateOTP  ()  {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+};
+
+// Send OTP to Email
+async function sendOTP (req, res)  {
+    const { email } = req.body;
+    if (!email) return res.status(400).send("Email is required");
+
+    const user = await User_Tchr.findOne({email});
+    if (!user) return res.status(404).send("User not found");
+
+    const otp = generateOTP();
+    otpStorage[email] = otp;
+
+    await sendVerificationEmail_reset(user.email, otp);
+    res.redirect(`/tchr/verify-otp?email=${encodeURIComponent(user.email)}`);
+};
+
+// Verify OTP and Send Welcome Email
+async function verifyOTP  (req, res) {
+    const { code } = req.body;
+    
+    const email = req.query.email; // Get email from query params
+console.log("email and otp",email,code )
+    if (!email || !code) return res.status(400).send("Email and OTP are required");
+
+    const user = await User_Tchr.findOne({ email }); // Ensure correct query
+    console.log("email from route2",user)
+
+
+    if (!user) return res.status(404).send("User not found");
+    if (otpStorage[email] !== code) return res.status(400).send("Invalid OTP");
+
+    delete otpStorage[email];
+    await sendWelcomeEmail_reset(user.email, user.fname);
+
+    res.redirect(`/tchr/reset-password?email=${encodeURIComponent(user.email)}`);
+};
+
+// Reset Password
+async function resetPassword  (req, res)  {
+    const { newPassword, confirmPassword } = req.body;
+    const email = req.query.email; // Get email from query params
+
+    if (!email || !newPassword || !confirmPassword) {
+        return res.status(400).send("All fields are required");
+    }
+
+    if (newPassword !== confirmPassword) {
+        return res.status(400).send("Passwords do not match");
+    }
+
+    const user = await User_Tchr.findOne({ email });
+    console.log("user from route3", user);
+    if (!user) return res.status(404).send("User not found");
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password in MongoDB
+    const updateResult = await User_Tchr.updateOne(
+        { email: email }, // Find user by email
+        { $set: { password: hashedPassword } } // Update the password field
+    );
+
+    if (updateResult.modifiedCount === 0) {
+        return res.status(500).send("Failed to update password");
+    }
+
+    res.redirect("/tchr/login"); // Redirect to login after successful reset}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports=
 { handleSignup,handleLogin,handleLogout,handleProfileTchr
-    ,handleUpdateAccount,handlegetUpdate,verifyEmail}
+    ,handleUpdateAccount,handlegetUpdate,verifyEmail
+,sendOTP, verifyOTP, resetPassword }

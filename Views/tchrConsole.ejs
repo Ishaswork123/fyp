@@ -28,7 +28,18 @@
 
 <!-- <link rel="stylesheet" href="/css-file/expModel.css"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+	.submenu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    display: none;
+}
+.dropdown-menu .dropdown-submenu:hover > .submenu {
+    display: block;
+}
 
+</style>
 </head>
 <body>
 
@@ -76,8 +87,38 @@
 							</div>
 							<nav class="main_nav_contaner ml-auto">
 								<ul class="main_nav mb-0">
-									<li class="active"><a href="/tchrConsole">Home</a></li>
+									<li class="active"><a href="/tchr/tchrConsole">Home</a></li>
 									<li><a href="/tchr/quiz">Quizes</a></li>
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+											Experiment
+										</a>
+										<ul class="dropdown-menu" aria-labelledby="experimentDropdown">
+											<!-- Guided Option -->
+											<li class="dropdown-submenu">
+												<a class="dropdown-item" href="#" onclick="toggleSubmenu(event, 'guidedMenu');">Guided</a>
+												<ul class="submenu dropdown-menu" id="guidedMenu" style="display: none;">
+													<a class="dropdown-item" href="/guided/penExp" >Experiment 1</a>
+													<a class="dropdown-item" href="/guided/massExp" >Experiment 2</a>
+													<a class="dropdown-item" href="/guided/resonance" >Experiment 3</a>
+													<!-- <li><a class="dropdown-item" href="/exp/guided4">Guided 4</a></li>
+													<li><a class="dropdown-item" href="/exp/guided5">Guided 5</a></li> -->
+												</ul>
+											</li>
+											<!-- Experiment Option -->
+											<li class="dropdown-submenu">
+												<a class="dropdown-item" href="#" onclick="toggleSubmenu(event, 'experimentMenu');">Experiment</a>
+												<ul class="submenu dropdown-menu" id="experimentMenu" style="display: none;">
+													<a href="/exp/penExp">Pendulum <i class="uil uil-arrow-right"></i></a>
+													<a href="/exp/massExp">Mass Spring System <i class="uil uil-arrow-right"></i></a>
+													<a href="/exp/resonance">Resonance <i class="uil uil-arrow-right"></i></a>
+													
+												</ul>
+											</li>
+										</ul>
+									</li>
+									
+<!-- 
 									<li class="nav-item dropdown">
 										<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Guided  Experiment
@@ -88,12 +129,15 @@
 										  <a class="dropdown-item" href="/guided/resonance" >Experiment 3</a>
 									
 										</div>
-									  </li>
+									  </li> -->
 									  <!-- Trigger Button
 <li>
 	<a href="#" id="openModalButton"> Experiments</a>
   </li> -->
-  <li class="nav-item dropdown">
+
+  <li><a href="/classroom/class">Classroom</a></li>
+
+  <!-- <li class="nav-item dropdown">
 	<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	  Experiment
 	</a>
@@ -103,7 +147,7 @@
 	  <a class="dropdown-item" href="/exp/resonance" >Experiment 3</a>
 
 	</div>
-  </li>
+  </li> -->
 
   
 
@@ -138,21 +182,27 @@
 
 									<!-- <li><a href="/tchr/managestudent">Exp Results</a></li> -->
 
-									<!-- <li class="nav-item">
-										<a class="nav-link" href="/tchr/comm-login" id="communityLink">
+									<li class="nav-item">
+										<a class="nav-link" href="#" id="communityLink">
 										  Community
 										</a>
-									  </li> -->
-									  <li><a href="/tchr/comm-login" id="communityLink">Community</a></li>
-
+									  </li>
 
 									  						  
-						
-								  <!-- <div class="field">
+						  <div id="communityModal" class="modal">
+							<div class="modal-content">
+							  <div class="content">
+								<button class="close">&times;</button>
+								<form action="/login-com" method="post">
+								  <header>Join Community</header>
+						  
+								  <!-- Username Input -->
+								  <div class="field">
 									<span class="fa fa-user"></span>
 									<input type="text" required placeholder="User Name" id="username" name="username">
 								  </div>
 						  
+								  <!-- Select Community Dropdown -->
 								  <div class="field selectCommunity">
 									<label for="room"></label>
 									<select id="room" name="room">
@@ -160,6 +210,7 @@
 									</select>
 								  </div>
 						  
+								  <!-- Create New Community Checkbox -->
 								  <div class="field">
 									<label>
 									  <input type="checkbox" id="createNewCommunityCheckbox" />
@@ -167,6 +218,7 @@
 									</label>
 								  </div>
 						  
+								  <!-- Create Community Fields (Initially Hidden) -->
 								  <div id="createCommunityFields" style="display: none;">
 									<div class="field createCommunity">
 									  <span class="fa-solid fa-plus"></span>
@@ -176,13 +228,17 @@
 									  <span class="fa fa-info-circle"></span>
 									  <input placeholder="Community Bio" type="text" id="community_bio" name="community_bio">
 									</div>
-								
+									<!-- <div class="field">
+									  <span class="fa fa-users"></span>
+									  <input placeholder="Number of Members (Optional)" type="number" id="community_members" name="community_members">
+									</div> -->
 								  </div>
 						  
+								  <!-- Submit Button -->
 								  <button class="submit" type="submit" id="login">Join</button>
 								</form>
 							  </div>
-							</div> --> 
+							</div>
 						  </div>
 						  <li>
 							<div class="profile-icon" onclick="openSideMenu()">
@@ -289,10 +345,8 @@
 				<li class="menu_mm"><a href="/tchr/quiz">Quizes</a></li>
 				<li class="menu_mm"><a href="#">Guided Experiments</a></li>
 				<li><a href="/tchr/managestudent">Experiment Result</a></li>
-				<li><a href="/tchr/comm-login">Community</a></li>
-
 				<li class="menu_mm">
-					<a id="myBtn" href="/tchr/comm-login">Community</a>
+					<a id="myBtn" href="/community">Community</a>
 					
 					<li class="menu_mm">
 						<a class="nav-link" href="#" id="communityLink">
@@ -467,7 +521,7 @@
 		<div class="text-center">
 			<% if (allExperiments) { %>
 				<!-- Show Less Button -->
-				<a href="/tchrConsole" class="btn btn-secondary">Show Less</a>
+				<a href="/tchr/tchrConsole" class="btn btn-secondary">Show Less</a>
 			<% } else { %>
 				<!-- View All Experiments Button -->
 				<a href="/view-all" class="btn btn-primary">View All Experiments</a>
@@ -630,6 +684,21 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="/assets/js/custom.js"></script>
 <script src="/js/chat.js"></script>
 <script>
+	 function toggleSubmenu(event, id) {
+        event.preventDefault(); // Prevent the default link action
+
+        let submenu = document.getElementById(id);
+        
+        // Close other submenus when opening a new one
+        document.querySelectorAll('.submenu').forEach(menu => {
+            if (menu.id !== id) {
+                menu.style.display = 'none';
+            }
+        });
+
+        // Toggle the clicked submenu
+        submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+    }
 // 	document.getElementById("openModal").addEventListener("click", function (event) {
 //   event.preventDefault();
 //   document.getElementById("labModal").style.display = "block";

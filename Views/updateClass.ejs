@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css-file/updateClass.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+</head>
+<body>
+    <div class="wrapper bg-white">
+        <div class="h2 text-center">Update Class Details</div>
+
+        <div class="classroom-item">
+            <h3><%= classroom.className %></h3>
+            <p><%= classroom.classDescription %></p>
+            <p>Class Code: <%= classroom.classCode %></p>
+        
+            <!-- Update Classroom Form -->
+            <form class="pt-3" action="/classroom/update-classroom/<%= classroom._id %>" method="POST">
+                
+                <div class="form-group py-2">
+                    <div class="input-field">
+                        <span class="far fa-user p-2"></span>
+                        <input type="text" name="className" value="<%= classroom.className %>" required>
+                    </div>
+                </div>
+        
+                <div class="form-group py-2">
+                    <div class="input-field">
+                        <span class="far fa-user p-2"></span>
+                        <input type="text" name="classDescription" value="<%= classroom.classDescription %>" required>
+                    </div>
+                </div>  
+        
+                <div class="form-group py-2">
+                    <div class="input-field">
+                        <span class="far fa-user p-2"></span>
+                    </div>
+                </div>
+        
+                <!-- Already Enrolled Students -->
+                <div class="form-group py-2">
+                    <label for="enrolled-select">Already Enrolled</label>
+                    <div class="select">
+                        <select id="enrolled-select" name="students" multiple>
+                            <% if (classroom.students && classroom.students.length > 0) { %>
+                                <% classroom.students.forEach(studentId => { %>
+                                    <% let student = students.find(s => s._id.toString() === studentId.toString()); %>
+                                    <% if (student) { %>
+                                        <option value="<%= student._id %>" selected><%= student.email %></option>
+                                    <% } %>
+                                <% }); %>
+                            <% } else { %>
+                                <option value="">No students enrolled</option>
+                            <% } %>
+                        </select>
+                        <span class="focus"></span>
+                    </div>
+                </div>
+        
+                <!-- Select a New Student to Enroll -->
+                <div class="form-group py-2">
+                    <label for="standard-select">Enroll New Student</label>
+                    <div class="select">
+                        <select name="newStudent">
+                            <option value="">Select a student</option>
+                            <% students.forEach(student => { %>
+                                <option value="<%= student._id %>"><%= student.fname %> - <%= student.email %></option>
+                            <% }) %>
+                        </select>
+                        <span class="focus"></span>
+                    </div>
+                </div>
+            </div>
+                <button class="btn btn-block text-center my-3" type="submit">Update</button>
+              
+
+            </form>
+        </div> <!-- Closing the loop properly -->
+        
+    <!-- <div class="wrapper bg-white">
+        <div class="h2 text-center">Creativity</div>
+        <div class="h4 text-muted text-center pt-2">Enter your login details</div>
+        <form class="pt-3">
+            <div class="form-group py-2">
+                <div class="input-field">
+                    <span class="far fa-user p-2"></span>
+                    <input type="text" placeholder="Username or Email Address" required class="">
+                </div>
+            </div>
+            <div class="form-group py-1 pb-2">
+                <div class="input-field">
+                    <span class="fas fa-lock p-2"></span>
+                    <input type="text" placeholder="Enter your Password" required class="">
+                    <button class="btn bg-white text-muted">
+                        <span class="far fa-eye-slash"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="d-flex align-items-start">
+                <div class="remember">
+                    <label class="option text-muted"> Remember me
+                        <input type="radio" name="radio">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="ml-auto">
+                    <a href="#" id="forgot">Forgot Password?</a>
+                </div>
+            </div>
+            <button class="btn btn-block text-center my-3">Log in</button>
+            <div class="text-center pt-3 text-muted">Not a member? <a href="#">Sign up</a></div>
+        </form>
+    </div> -->
+</body>
+</html>

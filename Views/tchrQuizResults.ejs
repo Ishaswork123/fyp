@@ -37,7 +37,117 @@ table {
   }
   .text-center{
     margin-top: 60px;  }
+  /* CSS */
+.button-86 {
+  all: unset;
+  width: 100px;
+  height: 30px;
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  position: relative;
+  color: #f0f0f0;
+  cursor: pointer;
+  z-index: 1;
+  padding: 10px 20px;
+  display: flex;
   
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-86::after,
+.button-86::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -99999;
+  transition: all .4s;
+}
+
+.button-86::before {
+  transform: translate(0%, 0%);
+  width: 100%;
+  height: 100%;
+  background: #061e3a;
+  border-radius: 10px;
+}
+
+.button-86::after {
+  transform: translate(10px, 10px);
+  width: 35px;
+  height: 35px;
+  background: #ffffff15;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 50px;
+}
+
+.button-86:hover::before {
+  transform: translate(5%, 20%);
+  width: 110%;
+  height: 110%;
+}
+
+.button-86:hover::after {
+  border-radius: 10px;
+  transform: translate(0, 0);
+  width: 100%;
+  height: 100%;
+}
+
+.button-86:active::after {
+  transition: 0s;
+  transform: translate(0, 5%);
+}
+.button-graph{
+  text-align: right;
+  float: right;
+  justify-content: right;
+  margin-bottom: 10px;
+}  .modal {
+      display: none; /* Hidden initially */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+      backdrop-filter: blur(5px); /* Blur background */
+      z-index: 1000;
+      /* Center modal content using flexbox */
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #000;
+    }
   
   </style>
 <body>
@@ -83,7 +193,19 @@ table {
                     <div class="logo_text">Physics<span>Verse</span></div>
                   </a>
                 </div>
+                <!-- <button class="button-86" role="button">Show grpah </button> -->
+
               </div>
+              <div class="button-graph">
+              <button class="button-86" role="button" >Show grpah </button>
+            </div>
+             <!-- Modal for the graph -->
+  <div id="graphModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+  </div>
             </div>
           </div>
         </div>
@@ -91,7 +213,7 @@ table {
     </header>
 
     <!-- Home Section -->
-    <div class="container mt-5" style="margin-top: 60px; padding-top: 20px;">
+    <div class="container mt-5" style="margin-top: 150px; padding-top: 80px; margin-bottom: 150px; padding-bottom: 60px;">
         <h2 class="text-center">Quiz Results</h2>
 
         <% if (quizResults && quizResults.length > 0) { %>
@@ -176,14 +298,83 @@ table {
       </div>
     </footer>
   </div>
- 
+ <!-- Pass the server-side data into JavaScript -->
+ <script>
+  const quizResults = <%- JSON.stringify(quizResults) %>;
+  // Prepare data for the chart:
+  // Use student name and experiment number as labels
+  const labels = quizResults.map(result => `${result.fname} (Exp ${result.exp_no})`);
+  // Use marks obtained for each quiz attempt
+  const marks = quizResults.map(result => result.marks_obtained);
+</script>
+
+<script>
+  // Get modal elements
+  const modal = document.getElementById('graphModal');
+  const btn = document.querySelector('.button-86');
+  const closeBtn = document.querySelector('.close');
+  let chartInitialized = false;
+
+  // Show modal and initialize chart when button is clicked
+  btn.addEventListener('click', function () {
+    modal.style.display = "block";
+
+    // Create chart only once
+    if (!chartInitialized) {
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels, // Using our labels from the server data
+          datasets: [{
+            label: 'Marks Obtained',
+            data: marks,  // Marks from the server data
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Marks'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Student (Experiment)'
+              }
+            }
+          }
+        }
+      });
+      chartInitialized = true;
+    }
+  });
+
+  // Close modal when clicking the close button
+  closeBtn.addEventListener('click', function () {
+    modal.style.display = "none";
+  });
+
+  // Close modal when clicking outside the modal content
+  window.addEventListener('click', function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+</script>
   <!-- jQuery (make sure this is above Bootstrap JS) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Bootstrap JS Bundle -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   
   <!-- Local JavaScript files -->
-  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="/js/jquery-3.2.1.min.js"></script>
   <script src="/bootstrap4/popper.js"></script>
   <script src="/bootstrap4/bootstrap.min.js"></script>
   <script src="/plugins/greensock/TweenMax.min.js"></script>
@@ -194,7 +385,8 @@ table {
   <script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
   <script src="/plugins/easing/easing.js"></script>
   <script src="/plugins/parallax-js-master/parallax.min.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <!-- Custom JavaScript -->
   <script src="/js/custom.js"></script>
   <!-- Local JavaScript files -->

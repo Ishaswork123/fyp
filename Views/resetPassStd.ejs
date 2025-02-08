@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Student  Account Reset</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Unicat project" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap4/bootstrap.min.css" />
+    <link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css" />
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css" />
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+	<!-- <link rel="stylesheet" href="/css-file/signup.css"> -->
+  <link rel="stylesheet" href="/assets/css/fontawesome.css">
+  <link rel="stylesheet" href="/assets/css/templatemo-seo-dream.css">
+  <link rel="stylesheet" href="/assets/css/animated.css">
+  <link rel="stylesheet" href="/assets/css/owl.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="/css-file/reset.css">
+  </head>
+  <body>
+    <div class="super_container">
+      <!-- Header -->
+
+      <header class="header">
+        <!-- Top Bar -->
+        <div class="top_bar">
+          <div class="top_bar_container">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div
+                    class="top_bar_content d-flex flex-row align-items-center justify-content-start"
+                  >
+                  <ul class="top_bar_contact_list">
+                    <li><div class="question"><img src="/images/R.jpeg" class="img-circle"alt="logo" height="30px" width="30px"></div></li>
+                    <li>
+                      <i class="fa " aria-hidden="true"></i>
+                      <div>Comsats University Islamabad Attock Campus</div>
+                    </li>
+                    
+                  </ul>
+                    <!-- <div class="top_bar_login ml-auto">
+                      <div class="login_button">
+                        <a href="#">Register or Login</a>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header Content -->
+        <div class="header_container">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div
+                  class="header_content d-flex flex-row align-items-center justify-content-start"
+                >
+                  <div class="logo_container">
+                    <a href="#">
+                      <div class="logo_text">Physics<span>Verse</span></div>
+                    </a>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header Search Panel -->
+        <div class="header_search_container">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div
+                  class="header_search_content d-flex flex-row align-items-center justify-content-end"
+                >
+                  <form action="#" class="header_search_form">
+                    <input
+                      type="search"
+                      class="search_input"
+                      placeholder="Search"
+                      required="required"
+                    />
+                    <button
+                      class="header_search_button d-flex flex-column align-items-center justify-content-center"
+                    >
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Menu -->
+
+      <div
+        class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400"
+      >
+        <div class="menu_close_container">
+          <div class="menu_close">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div class="search">
+          <form action="#" class="header_search_form menu_mm">
+            <input
+              type="search"
+              class="search_input menu_mm"
+              placeholder="Search"
+              required="required"
+            />
+            <button
+              class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm"
+            >
+              <i class="fa fa-search menu_mm" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
+        <nav class="menu_nav">
+          <ul class="menu_mm">
+            <li class="menu_mm"><a href="index.html">Home</a></li>
+            <li class="menu_mm"><a href="#">About</a></li>
+            <li class="menu_mm"><a href="#">Courses</a></li>
+            <li class="menu_mm"><a href="#">Blog</a></li>
+            <li class="menu_mm"><a href="#">Page</a></li>
+            <li class="menu_mm"><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Home -->
+     
+    <!--------Coursess-->
+
+  <!-- Team -->
+
+	
+    <!-- Features -->
+
+    <div class="features">
+      
+      <!-- First Modal: Email Input -->
+      <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <h2>Enter Your Email</h2>
+            <form action="/std/send-otp" method="POST" onsubmit="showModal('otpModal')">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <button type="submit" >Send OTP</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Second Modal: OTP Input -->
+    <div id="otpModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Enter OTP</h2>
+            <form action="/std/verify-otp?email=<%= email %>" method="POST" onsubmit="showModal('passwordModal')">
+              <input type="hidden" name="email" value="<%= email %>">
+              <div class="otp-inputs">
+                <input type="text" name="code" maxlength="6" required>
+                <!-- <input type="text" name="otp2" maxlength="1" required>
+                <input type="text" name="otp3" maxlength="1" required>
+                <input type="text" name="otp4" maxlength="1" required> -->
+              </div>
+              <!-- <button type="submit">Verify OTP</button> -->
+              <!-- <input type="email" name="email" placeholder="Enter your email" required> -->
+                <button type="submit" onclick="showPasswordModal(event)">Verify OTP</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Third Modal: Password Reset -->
+    <div id="passwordModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Reset Password</h2>
+            <form action="/std/reset-password?email=<%= email %>" method="POST">
+              <input type="hidden" name="email" value="<%= email %>">
+                <input type="password" name="newPassword" placeholder="New Password" required>
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+                <button type="submit" onclick="startNewProject()">Reset Password</button>
+            </form>
+        </div>
+    </div>
+
+		</div>  
+      <!-- Features -->
+
+
+      <div class="partners">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="partners_slider_container">
+						<div class="owl-carousel owl-theme partners_slider">
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_1.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_2.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_3.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_4.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_5.png" alt=""></div>
+
+							<!-- Partner Item -->
+							<div class="owl-item partner_item"><img src="/images/partner_6.png" alt=""></div>
+
+						</div>
+                        <div class="social_list">
+                            <ul>
+                                <!-- <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li> -->
+                            </ul>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+      <!-- Popular Courses -->
+
+      <!-- Footer -->
+
+      <footer class="footer">
+        <div
+          class="footer_background"
+          style="background-image: url(images/footer_background.png)"
+        ></div>
+        <div class="container">
+          <div class="row footer_row">
+            <div class="col">
+              <div class="footer_content">
+                <div class="row">
+                  <div class="col-lg-3 footer_col">
+                    <!-- Footer About -->
+                    <div class="footer_section footer_about">
+                      <div class="footer_logo_container">
+                        <a href="#">
+                          <div class="footer_logo_text">
+                            Physics<span>Verse</span>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="footer_about_text">
+                        <p>
+                          Lorem ipsum dolor sit ametium, consectetur adipiscing
+                          elit.
+                        </p>
+                      </div>
+                      <div class="footer_social">
+                        <ul>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-facebook" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i
+                                class="fa fa-google-plus"
+                                aria-hidden="true"
+                              ></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-instagram" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-twitter" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 footer_col">
+                    <!-- Footer Contact -->
+                    <div class="footer_section footer_contact">
+                      <div class="footer_title">Contact Us</div>
+                      <div class="footer_contact_info">
+                        <ul>
+                          <li>Email: Info.deercreative@gmail.com</li>
+                          <li>Phone: +(88) 111 555 666</li>
+                          <li>
+                            40 Baria Sreet 133/2 New York City, United States
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 footer_col">
+                    <!-- Footer links -->
+                    <div class="footer_section footer_links">
+                      <div class="footer_title">Contact Us</div>
+                      <div class="footer_links_container">
+                        <ul>
+                          <li><a href="index.html">Home</a></li>
+                          <li><a href="about.html">About</a></li>
+                          <li><a href="contact.html">Contact</a></li>
+                          <li><a href="#">Features</a></li>
+                          <li><a href="courses.html">Courses</a></li>
+                          <li><a href="#">Events</a></li>
+                          <li><a href="#">Gallery</a></li>
+                          <li><a href="#">FAQs</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 footer_col clearfix">
+                    <!-- Footer links -->
+                    <div class="footer_section footer_mobile">
+                      <div class="footer_title">Mobile</div>
+                      <div class="footer_mobile_content">
+                        <div class="footer_image">
+                          <a href="#"
+                            ><img src="/images/mobile_1.png" alt=""
+                          /></a>
+                        </div>
+                        <div class="footer_image">
+                          <a href="#"
+                            ><img src="/images/mobile_2.png" alt=""
+                          /></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row copyright_row">
+            <div class="col">
+              <div
+                class="copyright d-flex flex-lg-row flex-column align-items-center justify-content-start"
+              >
+                <div class="cr_text">
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  Copyright &copy;
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  All rights reserved | This template is made with
+                  <i class="fa fa-heart-o" aria-hidden="true"></i> by
+                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+                <div class="ml-lg-auto cr_links">
+                  <ul class="cr_list">
+                    <li><a href="#">Copyright notification</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Bootstrap JS Bundle -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+<!-- Local JavaScript files -->
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/bootstrap4/popper.js"></script>
+<script src="/bootstrap4/bootstrap.min.js"></script>
+<script src="/plugins/greensock/TweenMax.min.js"></script>
+<script src="/plugins/greensock/TimelineMax.min.js"></script>
+<script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="/plugins/greensock/animation.gsap.min.js"></script>
+<script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="/plugins/easing/easing.js"></script>
+<script src="/plugins/parallax-js-master/parallax.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/custom.js"></script>
+<script>
+    // function showOTPModal(event) {
+    //     event.preventDefault();
+    //     document.querySelector("#emailModal form").submit();
+    //     document.getElementById("emailModal").style.display = "none";
+    //     document.getElementById("otpModal").style.display = "block";
+    // }
+
+    // function showPasswordModal(event) {
+    //     event.preventDefault();
+    //     document.querySelector("#otpModal form").submit();
+    //     document.getElementById("otpModal").style.display = "none";
+    //     document.getElementById("passwordModal").style.display = "block";
+    // }
+      // Function to show modal
+//       window.addEventListener("beforeunload", function() {
+//     localStorage.removeItem("activeModal");
+// });
+      function showModal(modalId) {
+        document.getElementById("emailModal").style.display = "none";
+        document.getElementById("otpModal").style.display = "none";
+        document.getElementById("passwordModal").style.display = "none";
+
+        document.getElementById(modalId).style.display = "block";
+        localStorage.setItem("activeModal", modalId); // Store which modal is active
+    }
+
+    // Function to load the correct modal on page refresh
+    function loadModalState() {
+        const activeModal = localStorage.getItem("activeModal") || "emailModal"; // Default to emailModal
+        showModal(activeModal);
+    }function startNewProject() {
+    // Clear localStorage to reset the modal state
+    localStorage.removeItem("activeModal");}
+
+    window.onload = loadModalState; // Run on page load
+</script>
+
+  </body>
+</html>

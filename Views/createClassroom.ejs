@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Classroom</title>
+ <link rel="stylesheet" href="/css-file/createroom.css">
+ <link rel="stylesheet" href="/css-file/class.scss">
+</head>
+<body>
+  
+
+    
+    <div class="container">
+        <!-- Title section -->
+        <div class="title">Create Classroom</div>
+        <div class="content">
+            <form action="/classroom/create" method="POST">
+                <div class="user-details">
+                    <!-- Left Column: Class Name -->
+                    <div class="input-box">
+                        <span class="details">Class Name</span>
+                        <input type="text" id="className" name="className" placeholder="Enter class name" required>
+                      <br><br>  <% if (error) { %>
+                            <div style="color: red; font-weight: bold; padding: 10px; background: #ffebee; border: 1px solid red; margin-bottom: 10px;">
+                                <%= error %>
+                            </div>
+                        <% } %>
+                        <br><br>
+                        <div class="form__group field">
+                            <input type="input" class="form__field" placeholder="Class Details" name="About" id='name' required />
+                            <!-- <label for="name" class="form__label">About</label> -->
+                          </div>
+                         </div>
+                    <div class="checkbox-group">
+                        <span class="details">Select Students</span>
+                        <div class="checkbox-container">
+                            <% students.forEach(student => { %>
+                                <div class="checkbox-wrapper-11">
+                                    <input id="student-<%= student._id %>" type="checkbox" name="studentIds[]" value="<%= student._id %>">
+                                    <label for="student-<%= student._id %>"><%= student.fname %> (<%= student.email %>)</label>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Right Column: Checkbox Selection -->
+             
+               
+                <input type="hidden" name="teacherId" value="<%= teacherId %>">
+    
+                <!-- Submit button -->
+                <div class="button">
+                    <input type="submit" value="Create Classroom">
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+</body>
+</html>

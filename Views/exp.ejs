@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Quizes</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Unicat project" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/bootstrap4/bootstrap.min.css"
+    />
+    <link
+      href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/plugins/OwlCarousel2-2.2.1/animate.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"
+    />
+    <style>
+        [type="checkbox"]:checked,
+[type="checkbox"]:not(:checked){
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+.dark-light:checked + label,
+.dark-light:not(:checked) + label{
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  z-index: 20000;
+  display: block;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  cursor: pointer;
+  transition: all 200ms linear;
+  box-shadow: 0 0 25px rgba(255,235,167,.45);
+}
+.dark-light:checked + label{
+  transform: rotate(360deg);
+}
+.dark-light:checked + label:after,
+.dark-light:not(:checked) + label:after{
+  position: absolute;
+  content: '';
+  top: 1px;
+  left: 1px;
+  overflow: hidden;
+  z-index: 2;
+  display: block;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  background-color: #102770;
+  background-image: url('https://assets.codepen.io/1462889/moon.svg');
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 200ms linear;
+  opacity: 0;
+}
+.dark-light:checked + label:after {
+  opacity: 1;
+}
+.dark-light:checked + label:before,
+.dark-light:not(:checked) + label:before{
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1;
+  display: block;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  background-color: #48dbfb;
+  background-image: url('https://assets.codepen.io/1462889/sun.svg');
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 200ms linear;
+}
+.dark-light:checked + label:before{
+  background-color: #000;
+}
+.light-back{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #fff;
+  overflow: hidden;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat-back.svg');
+  background-position: center;
+  background-repeat: repeat;
+  background-size: 4%;
+  height: 100%;
+  width: 100%;
+  transition: all 200ms linear;
+  opacity: 0;
+}
+.dark-light:checked ~ .light-back{
+  opacity: 1;
+}
+.dropdown:checked + label,
+.dropdown:not(:checked) + label{
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 2;
+  height: 50px;
+  transition: all 200ms linear;
+  border-radius: 4px;
+  width: 220px;
+  letter-spacing: 1px;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  text-align: center;
+  border: none;
+  background-color: #ffeba7;
+  cursor: pointer;
+  color: #102770;
+  box-shadow: 0 12px 35px 0 rgba(255,235,167,.15);
+}
+.dark-light:checked ~ .sec-center .for-dropdown{
+  background-color: #102770;
+  color: #ffeba7;
+  box-shadow: 0 12px 35px 0 rgba(16,39,112,.25);
+}
+.dropdown:checked + label:before,
+.dropdown:not(:checked) + label:before{
+  position: fixed;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  cursor: auto;
+  pointer-events: none;
+}
+.dropdown:checked + label:before{
+  pointer-events: auto;
+}
+.dropdown:not(:checked) + label .uil {
+  font-size: 24px;
+  margin-left: 10px;
+  transition: transform 200ms linear;
+}
+.dropdown:checked + label .uil {
+  transform: rotate(180deg);
+  font-size: 24px;
+  margin-left: 10px;
+  transition: transform 200ms linear;
+}
+.section-dropdown {
+  position: absolute;
+  padding: 5px;
+  background-color: #111;
+  bottom: 50px; /* ✅ Move dropdown above the button */
+  left: 0;
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  box-shadow: 0 14px 35px 0 rgba(9,9,12,0.4);
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px); /* ✅ Slide up instead of down */
+  transition: all 200ms linear;
+}
+
+.dropdown:checked ~ .section-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0); /* ✅ Move into place */
+}
+
+/* Adjust the small arrow to point downward */
+.section-dropdown:after {
+  top: auto;
+  bottom: -7px; /* ✅ Move arrow below the dropdown */
+  left: 30px;
+  border-top: 8px solid #111; /* ✅ Change from border-bottom */
+  border-bottom: none;
+}
+.dark-light:checked ~ .sec-center .section-dropdown {
+  background-color: #fff;
+  box-shadow: 0 14px 35px 0 rgba(9,9,12,0.15);
+}
+.dropdown:checked ~ .section-dropdown{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.section-dropdown:before {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  content: '';
+  display: block;
+  z-index: 1;
+}
+.section-dropdown:after {
+  position: absolute;
+  top: -7px;
+  left: 30px;
+  width: 0; 
+  height: 0; 
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent; 
+  border-bottom: 8px solid #111;
+  content: '';
+  display: block;
+  z-index: 2;
+  transition: all 200ms linear;
+}
+.dark-light:checked ~ .sec-center .section-dropdown:after {
+  border-bottom: 8px solid #fff;
+}
+
+a {
+  position: relative;
+  color: #fff;
+  transition: all 200ms linear;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: 2px;
+  padding: 5px 0;
+  padding-left: 20px;
+  padding-right: 15px;
+  margin: 2px 0;
+  text-align: left;
+  text-decoration: none;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  justify-content: space-between;
+    -ms-flex-pack: distribute;
+}
+.dark-light:checked ~ .sec-center .section-dropdown a {
+  color: #102770;
+}
+a:hover {
+  color: #102770;
+  background-color: #ffeba7;
+}
+.dark-light:checked ~ .sec-center .section-dropdown a:hover {
+  color: #ffeba7;
+  background-color: #102770;
+}
+a .uil {
+  font-size: 22px;
+}
+.dropdown-sub:checked + label,
+.dropdown-sub:not(:checked) + label{
+  position: relative;
+  color: #fff;
+  transition: all 200ms linear;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: 2px;
+  padding: 5px 0;
+  padding-left: 20px;
+  padding-right: 15px;
+  text-align: left;
+  text-decoration: none;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  justify-content: space-between;
+    -ms-flex-pack: distribute;
+    cursor: pointer;
+}
+.dropdown-sub:checked + label .uil,
+.dropdown-sub:not(:checked) + label .uil{
+  font-size: 22px;
+}
+.dropdown-sub:not(:checked) + label .uil {
+  transition: transform 200ms linear;
+}
+.dropdown-sub:checked + label .uil {
+  transform: rotate(135deg);
+  transition: transform 200ms linear;
+}
+.dropdown-sub:checked + label:hover,
+.dropdown-sub:not(:checked) + label:hover{
+  color: #102770;
+  background-color: #ffeba7;
+}
+.dark-light:checked ~ .sec-center .section-dropdown .for-dropdown-sub{
+  color: #102770;
+}
+.dark-light:checked ~ .sec-center .section-dropdown .for-dropdown-sub:hover{
+  color: #ffeba7;
+  background-color: #102770;
+}
+
+.section-dropdown-sub {
+  position: relative;
+  display: block;
+  width: 100%;
+  pointer-events: none;
+  opacity: 0;
+  max-height: 0;
+  padding-left: 10px;
+  padding-right: 3px;
+  overflow: hidden;
+  transition: all 200ms linear;
+}
+.dropdown-sub:checked ~ .section-dropdown-sub{
+  pointer-events: auto;
+  opacity: 1;
+  max-height: 999px;
+}
+.section-dropdown-sub a {
+  font-size: 14px;
+}
+.section-dropdown-sub a .uil {
+  font-size: 20px;
+}
+.logo {
+	position: fixed;
+	top: 50px;
+	left: 40px;
+	display: block;
+	z-index: 11000000;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+	transition: all 250ms linear;
+}
+.logo:hover {
+  background-color: transparent;
+}
+.logo img {
+	height: 26px;
+	width: auto;
+	display: block;
+  transition: all 200ms linear;
+}
+.dark-light:checked ~ .logo img{
+  filter: brightness(10%);
+}
+
+@media screen and (max-width: 991px) {
+.logo {
+	top: 30px;
+	left: 20px;
+}
+.dark-light:checked + label,
+.dark-light:not(:checked) + label{
+  top: 20px;
+  right: 20px;
+}
+}
+    </style>
+  </head>
+  <body>
+    <div class="super_container">
+      <!-- Header -->
+
+      <header class="header">
+        <!-- Top Bar -->
+        <div class="top_bar">
+          <div class="top_bar_container">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div
+                    class="top_bar_content d-flex flex-row align-items-center justify-content-start"
+                  >
+                    <ul class="top_bar_contact_list">
+                      <li>
+                        <div class="question">
+                          <img
+                            src="/images/R.jpeg"
+                            class="rounded"
+                            alt="logo"
+                            height="30px"
+                            width="30px"
+                          />
+                        </div>
+                      </li>
+                      <li>
+                        <i class="fa" aria-hidden="true"></i>
+                        <div>Comsats University Islamabad Attock Campus</div>
+                      </li>
+                    </ul>
+                    <div class="top_bar_login ml-auto">
+                      <div class="login_button">
+                        <a href="/tchrConsole">Home</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header Content -->
+        <div class="header_container">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div
+                  class="header_content d-flex flex-row align-items-center justify-content-start"
+                >
+                  <div class="logo_container">
+                    <a href="#">
+                      <div class="logo_text">Physics<span>Verse</span></div>
+                    </a>
+                  </div>
+                  <!-- <nav class="main_nav_contaner ml-auto">
+                    <ul class="main_nav">
+                      <li class="active"><a href="#">Home</a></li>
+                      <li><a href="about.html">Quizes</a></li>
+                      <li><a href="courses.html">Experiment</a></li>
+                      <li><a href="blog.html">Manage Student </a></li>
+                      <li><a href="#">Community</a></li>
+                    </ul>
+                    <div class="search_button">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+
+\
+                    <div class="hamburger menu_mm">
+                      <i class="fa fa-bars menu_mm" aria-hidden="true"></i>
+                    </div>
+                  </nav> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header Search Panel -->
+        <div class="header_search_container">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div
+                  class="header_search_content d-flex flex-row align-items-center justify-content-end"
+                >
+                  <form action="#" class="header_search_form">
+                    <input
+                      type="search"
+                      class="search_input"
+                      placeholder="Search"
+                      required="required"
+                    />
+                    <button
+                      class="header_search_button d-flex flex-column align-items-center justify-content-center"
+                    >
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Menu -->
+
+      <div
+        class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400"
+      >
+        <div class="menu_close_container">
+          <div class="menu_close">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div class="search">
+          <form action="#" class="header_search_form menu_mm">
+            <input
+              type="search"
+              class="search_input menu_mm"
+              placeholder="Search"
+              required="required"
+            />
+            <button
+              class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm"
+            >
+              <i class="fa fa-search menu_mm" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
+        <!-- <nav class="menu_nav">
+          <ul class="menu_mm">
+            <li class="menu_mm"><a href="index.html">Home</a></li>
+            <li class="menu_mm"><a href="#">About</a></li>
+            <li class="menu_mm"><a href="#">Courses</a></li>
+            <li class="menu_mm"><a href="#">Blog</a></li>
+            <li class="menu_mm"><a href="#">Page</a></li>
+            <li class="menu_mm"><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav> -->
+      </div>
+
+      <!-- Home -->
+
+      <!--------Coursess-->
+
+      <!-- Team -->
+
+      <div class="team team-quiz">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="section_title_container text-center">
+                <h2 class="section_title">Assessment Corner</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row team_row d-flex justify-content-center align-items-center">
+            <!-- Team Item -->
+
+            <!-- Team Item -->
+            <div class="col-lg-3 col-md-6 team_col">
+              <div class="team_item">
+                <div class="team_image">
+                  <img src="/images/gallery_2.jpg" alt="" />
+                </div>
+                <div class="team_body">
+                    <div class="team_title">
+                        <a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Guided  Experiment
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="experimentDropdown">
+                              <a class="dropdown-item" href="/guided/penExp" >Experiment 1</a>
+                              <a class="dropdown-item" href="/guided/massExp" >Experiment 2</a>
+                              <a class="dropdown-item" href="/guided/resonance" >Experiment 3</a>
+                        
+                            </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            
+            <div class="col-lg-3 col-md-6 team_col">
+              <div class="team_item">
+                <div class="team_image">
+                  <img src="/images/gallery_2.jpg" alt="" />
+                </div>
+                <div class="team_body">
+                    <div class="team_title">
+                        <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+                        <label class="for-dropdown" for="dropdown">  Experiment <i class="uil uil-arrow-down"></i></label>
+                        <div class="section-dropdown">
+                            <!-- <a href="/tchr/submit-quiz">Create Quiz <i class="uil uil-arrow-right"></i></a> -->
+                            <input class="dropdown-sub" type="checkbox" id="dropdown-sub" name="dropdown-sub"/>
+                            <label class="for-dropdown-sub" for="dropdown-sub">Experiments <i class="uil uil-plus"></i></label>
+                            <div class="section-dropdown-sub">
+                                <a href="/exp/penExp">Pendulum <i class="uil uil-arrow-right"></i></a>
+                                <a href="/exp/massExp">Mass Spring System <i class="uil uil-arrow-right"></i></a>
+                                <a href="/exp/resonance">Resonance <i class="uil uil-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Team Item -->
+
+            <!-- Team Item -->
+            <div class="col-lg-3 col-md-6 team_col">
+              <div class="team_item">
+                <div class="team_image">
+                  <img src="/images/gallery_1.jpg" alt="" />
+                </div>
+                <div class="team_body">
+                    <div class="team_title">
+                        <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+                        <label class="for-dropdown" for="dropdown"> Custom Experiment <i class="uil uil-arrow-down"></i></label>
+                        <!-- <div class="section-dropdown">
+                            <input class="dropdown-sub" type="checkbox" id="dropdown-sub" name="dropdown-sub"/>
+                            <label class="for-dropdown-sub" for="dropdown-sub">Experiments <i class="uil uil-plus"></i></label>
+                            <div class="section-dropdown-sub">
+                                <a href="/tchr/submit-quiz?exp=1">Pendulum <i class="uil uil-arrow-right"></i></a>
+                                <a href="/tchr/submit-quiz?exp=2">Mass Spring System <i class="uil uil-arrow-right"></i></a>
+                                <a href="/tchr/submit-quiz?exp=3">Resonance <i class="uil uil-arrow-right"></i></a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-3 col-md-6 team_col">
+              <div class="team_item">
+                <div class="team_image">
+                  <img src="/images/gallery_1.jpg" alt="" />
+                </div>
+                <div class="team_body">
+                  <div class="team_title">
+                    <a href="/tchr/manage-quizzes">show Performance</a>
+                  </div>
+          </div>
+        </div>
+      </div> -->
+      <!-- Features -->
+
+      <!-- Features -->
+
+      <div class="partners">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="partners_slider_container">
+                <div class="owl-carousel owl-theme partners_slider">
+                  <!-- Partner Item -->
+                  <div class="owl-item partner_item">
+                    <img src="images/partner_1.png" alt="" />
+                  </div>
+
+                  <!-- Partner Item -->
+                  <div class="owl-item partner_item">
+                    <img src="images/partner_2.png" alt="" />
+                  </div>
+
+                  <!-- Partner Item -->
+                  <div class="owl-item partner_item">
+                    <img src="images/partner_3.png" alt="" />
+                  </div>
+
+                  <!-- Partner Item -->
+                  <div class="owl-item partner_item">
+                    <img src="images/partner_4.png" alt="" />
+                  </div>
+
+                  <!-- Partner Item -->
+                  <div class="owl-item partner_item">
+                    <img src="images/partner_5.png" alt="" />
+                  </div>
+
+                  <!-- Partner Item -->
+                  <div class="owl-item partner_item">
+                    <img src="images/partner_6.png" alt="" />
+                  </div>
+                </div>
+                <div class="social_list">
+                  <ul>
+                    <!-- <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li> -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popular Courses -->
+
+      <!-- Footer -->
+
+      <footer class="footer">
+        <div
+          class="footer_background"
+          style="background-image: url(/images/footer_background.png)"
+        ></div>
+        <div class="container">
+          <div class="row footer_row">
+            <div class="col">
+              <div class="footer_content">
+                <div class="row">
+                  <div class="col-lg-3 col-md-6 footer_col">
+                    <!-- Footer About -->
+                    <div class="footer_section footer_about">
+                      <div class="footer_logo_container">
+                        <a href="#">
+                          <div class="footer_logo_text">
+                            Physics<span>Verse</span>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="footer_about_text">
+                        <p>
+                          Lorem ipsum dolor sit ametium, consectetur adipiscing
+                          elit.
+                        </p>
+                      </div>
+                      <div class="footer_social">
+                        <ul>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-facebook" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i
+                                class="fa fa-google-plus"
+                                aria-hidden="true"
+                              ></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-instagram" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              ><i class="fa fa-twitter" aria-hidden="true"></i
+                            ></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-6 footer_col">
+                    <!-- Footer Contact -->
+                    <div class="footer_section footer_contact">
+                      <div class="footer_title">Contact Us</div>
+                      <div class="footer_contact_info">
+                        <ul>
+                          <li>Email: Info.deercreative@gmail.com</li>
+                          <li>Phone: +(88) 111 555 666</li>
+                          <li>
+                            40 Baria Sreet 133/2 New York City, United States
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-6 footer_col">
+                    <!-- Footer links -->
+                    <div class="footer_section footer_links">
+                      <div class="footer_title">Contact Us</div>
+                      <div class="footer_links_container">
+                        <ul>
+                          <li><a href="index.html">Home</a></li>
+                          <li><a href="about.html">About</a></li>
+                          <li><a href="contact.html">Contact</a></li>
+                          <li><a href="#">Features</a></li>
+                          <li><a href="courses.html">Courses</a></li>
+                          <li><a href="#">Events</a></li>
+                          <li><a href="#">Gallery</a></li>
+                          <li><a href="#">FAQs</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-6 footer_col clearfix">
+                    <!-- Footer links -->
+                    <div class="footer_section footer_mobile">
+                      <div class="footer_title">Mobile</div>
+                      <div class="footer_mobile_content">
+                        <div class="footer_image">
+                          <a href="#"
+                            ><img src="/images/mobile_1.png" alt=""
+                          /></a>
+                        </div>
+                        <div class="footer_image">
+                          <a href="#"
+                            ><img src="/images/mobile_2.png" alt=""
+                          /></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row copyright_row">
+            <div class="col">
+              <div
+                class="copyright d-flex flex-lg-row flex-column align-items-center justify-content-start"
+              >
+                <div class="cr_text">
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  Copyright &copy;
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  All rights reserved | This template is made with
+                  <i class="fa fa-heart-o" aria-hidden="true"></i> by
+                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+                <div class="ml-lg-auto cr_links">
+                  <ul class="cr_list">
+                    <li><a href="#">Copyright notification</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- jQuery (make sure this is above Bootstrap JS) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Local JavaScript files -->
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/bootstrap4/popper.js"></script>
+    <script src="/bootstrap4/bootstrap.min.js"></script>
+    <script src="/plugins/greensock/TweenMax.min.js"></script>
+    <script src="/plugins/greensock/TimelineMax.min.js"></script>
+    <script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="/plugins/greensock/animation.gsap.min.js"></script>
+    <script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="/plugins/easing/easing.js"></script>
+    <script src="/plugins/parallax-js-master/parallax.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="/js/custom.js"></script>
+  </body>
+</html>

@@ -20,7 +20,7 @@ const bodyParser = require('body-parser');
 
 const {getTokenFromCookies
 } =require('./config/tchr');
-const { connectToMongo} = require("./connection");
+const { connectToMongoBb } = require("./connection");
 
 // router imports 
 
@@ -30,31 +30,31 @@ const expRoute=require('./routes/exp');
 const tchrQUiz=require('./routes/tchrQuiz');
 const stdQuiz=require('./routes/stdQuiz');
 const guidedRoute=require('./routes/guidedExp')
+const classRoom=require('./routes/classroom')
+const stdClass=require('./routes/classStd');
+const stdRes=require('./routes/learningStd');
+
+const tchrUpload=require('./routes/learning');
 // Model Imports 
 const {handleProfile}=require('./Controller/std');
 const {handleProfileTchr}=require('./Controller/tchr');
 
 const cookieParser = require('cookie-parser');
 const tchr = require('./Model/tchr');
+const std = require('./Model/std');
 app.use(cookieParser());
 
 // Use cookie-parser middleware
 // app.use(bodyParser.urlencoded({ extended: true })); // For URL-encoded form submissions
 // app.use(bodyParser.json()); // For JSON bodies
   // Connect to MongoDB
-  connectToMongo();
-
-
-
-
-
-
-  //   .then(() => {
-  //     console.log("MongoDB connected");
-  //   })
-  //   .catch((error) => {
-  //     console.error("MongoDB connection error:", error);
-  //   });
+  connectToMongoBb("mongodb://127.0.0.1:27017/fyp")
+    .then(() => {
+      console.log("MongoDB connected");
+    })
+    .catch((error) => {
+      console.error("MongoDB connection error:", error);
+    });
 
 
     app.set("views", path.join(__dirname, "/Views")); 
@@ -149,17 +149,14 @@ app.use('/exp',expRoute);
 app.use('/tchr',tchrQUiz);
 app.use('/std',stdQuiz);
 app.use('/guided',guidedRoute);
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "index.html"));
-// });
-
-// Serve screen.html
-app.get("/screen", (req, res) => {
-  res.render('screen');
-});
-
-
+app.use('/classroom',classRoom);
 app.get('/stdConsole',isAuthenticated,handleProfile);
+app.use('/tchr',tchrUpload);
+app.use('/std',stdClass);
+app.use('/std',stdRes);
+
+
+
 app.get('/tchr/tchrConsole', isAuthenticated, (req, res) => {
   handleProfileTchr(req, res, false); // Pass `false` to show only 3 random experiments
 });
@@ -168,7 +165,9 @@ app.get('/tchr/tchrConsole', isAuthenticated, (req, res) => {
 app.get('/view-all', isAuthenticated, (req, res) => {
   handleProfileTchr(req, res, true); // Pass `true` to show all experiments
 });
-
+app.get('/std/view-all', isAuthenticated, (req, res) => {
+  handleProfile(req, res, true); // Pass `true` to show all experiments
+});
 // app.use((req, res, next) => {
 //   console.log(`Request received: ${req.method} ${req.url}`);
 //   next();

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Template Mo">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <title>Education - List of Meetings</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/vendor_1/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/assets_1/css/fontawesome.css">
+    <link rel="stylesheet" href="/assets_1/css/templatemo-edu-meeting.css">
+    <link rel="stylesheet" href="/assets_1/css/owl.css">
+    <link rel="stylesheet" href="/assets_1/css/lightbox.css">
+<!--
+
+TemplateMo 569 Edu Meeting
+
+https://templatemo.com/tm-569-edu-meeting
+
+-->
+<style>
+.grid .two-per-row {
+    width: 48%;          /* Slightly less than 50% for spacing */
+    float: left;        /* Float to create rows */
+    margin-right: 2%;   /* Spacing between elements */
+    margin-bottom: 20px; /* Vertical spacing */
+    box-sizing: border-box; /* Include padding/border in width */
+}
+
+/* Remove right margin from every 2nd element */
+.grid .two-per-row:nth-child(2n) {
+    margin-right: 0;
+}
+
+
+/* Styles for ONE per row layout */
+.grid.one-per-row-active .two-per-row {
+    width: 96%;          /* Nearly full width (allowing for margins) */
+    float: left;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+
+/*  Styles for ALL classes (reset to the original, two-per-row layout) */
+.grid.all-active .two-per-row {
+    width: 48%;
+    float: left;
+    margin-right: 2%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+
+/* Reset the right margin for 2-per-row */
+.grid.all-active .two-per-row:nth-child(2n) {
+    margin-right: 0;  /* Reset to 0 when all classes are active */
+}
+
+/* Correct width */
+.grid.all-active .two-per-row {
+    width: 48%; /* Original value for two-per-row, restored */
+
+}
+</style>
+  </head>
+
+<body>
+
+   
+
+  <!-- Sub Header -->
+  <!-- <div class="sub-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-sm-8">
+          <div class="left-content">
+            <p>This is an educational <em>HTML CSS</em> template by TemplateMo website.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4">
+          <div class="right-icons">
+            <ul>
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-behance"></i></a></li>
+              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                  <nav class="main-nav">
+                      <!-- ***** Logo Start ***** -->
+                      <a href="index.html" class="logo">
+                          Phy_Hub
+                      </a>
+                      <!-- ***** Logo End ***** -->
+                      <!-- ***** Menu Start ***** -->
+                      <ul class="nav">
+                          <li><a href="/std/class">Home</a></li>
+                          <!-- <li><a href="/classroom/list" class="active">Meetings</a></li> -->
+                          <!-- <li class="has-sub">
+                              <a href="javascript:void(0)">Meeting-details</a>
+                              <ul class="sub-menu">
+                                  <li><a href="meetings.html">Upcoming Meetings</a></li>
+                                  <li><a href="meeting-details.html">Meeting Details</a></li>
+                              </ul>
+                          </li> -->
+                         
+                      </ul>        
+                      <a class='menu-trigger'>
+                          <span>Menu</span>
+                      </a>
+                      <!-- ***** Menu End ***** -->
+                  </nav>
+              </div>
+          </div>
+      </div>
+  </header>
+ 
+  <section class="meetings-page" id="meetings">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="filters">
+                <ul>
+                    <li data-filter=".all-per-row" class="active">All Classes</li>
+                    <li data-filter=".two-per-row">Two Per Row</li>
+                    <li data-filter=".one-per-row">One Per Row</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="row grid">
+  
+                    <% if (classes.length > 0) { %>
+                        <% classes.forEach((classroom, index) => { %>
+                            <div class="col-lg-4 templatemo-item-col all two-per-row">
+                                <div class="meeting-item">
+                                    <div class="thumb">
+                                        <%
+                                            // Cycle image numbers from 1 to 10
+                                            const imageNumber = (index % 10) + 1;
+                                            const imageName = String(imageNumber).padStart(2, '0'); // Ensures "01", "02", etc.
+                                        %>
+                                        <a href="#"><img src="/assets_1/images/meeting-<%= imageName %>.jpg" alt="<%= classroom.className %>"></a>
+                                    </div>
+                                    <div class="down-content">
+                                        <div class="date">
+                                            <h6>Class Code: <span><%= classroom.classCode %></span></h6>
+                                        </div>
+                                        <a href="#"><h4><%= classroom.className %></h4></a>
+                                        <p><strong>Description:</strong> <%= classroom.classDescription %></p>
+                                        <p><strong>Teacher:</strong> <%= classroom.teacher ? classroom.teacher.fname : "Unknown" %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <p>You are not enrolled in any classes.</p>
+                    <% } %>
+                </div>
+            </div>
+        
+                          </form>
+                        </div>
+                      
+                      </div>
+                    </div>
+  
+                 
+  
+                </div>
+              </div>
+  
+  
+              <div class="col-lg-12">
+                <div class="pagination">
+                  <ul>
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Copyright © 2025 Phy_Meet_Hub Co., Ltd. All Rights Reserved.
+            <br>Design: <a href="https://templatemo.com/page/1" target="_parent" title="website templates">TemplateMo</a></p>
+      </div>
+    </section>
+    
+ <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor_1/jquery/jquery.min.js"></script>
+  <script src="/vendor_1/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script src="/assets_1/js/isotope.min.js"></script>
+  <script src="/assets_1/js/owl-carousel.js"></script>
+  <script src="/assets_1/js/lightbox.js"></script>
+  <script src="/assets_1/js/tabs.js"></script>
+  <script src="/assets_1/js/isotope.js"></script>
+  <script src="/assets_1/js/video.js"></script>
+  <script src="/assets_1/js/slick-slider.js"></script>
+  <script src="/assets_1/js/custom.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const filterList = document.querySelector('.filters ul');
+  const grid = document.querySelector('.grid');
+
+  // Ensure filterList and grid are found
+  if (!filterList || !grid) return; // Exit if the elements don't exist
+
+  filterList.addEventListener('click', function(event) {
+    // Check if clicked element is a list item (LI)
+    if (event.target.tagName === 'LI') {
+      const filter = event.target.dataset.filter;
+
+      // Remove 'active' class from all filter items
+      document.querySelectorAll('.filters ul li').forEach(item => item.classList.remove('active'));
+
+      // Add 'active' class to the clicked filter item
+      event.target.classList.add('active');
+
+      // Update the grid based on the selected filter
+      if (filter === '.one-per-row') {
+        grid.classList.remove('all-active');
+        grid.classList.add('one-per-row-active');
+      } else if (filter === '*') {
+        grid.classList.remove('one-per-row-active');
+        grid.classList.add('all-active');
+      } else {
+        grid.classList.remove('one-per-row-active', 'all-active');
+      }
+    }
+  });
+
+  // According to the Loftblog tutorial (handling scroll to sections)
+  $('.nav li:first').addClass('active');
+
+  var showSection = function(section, isAnimate) {
+    var direction = section.replace(/#/, '');
+    var reqSection = $('.section').filter('[data-section="' + direction + '"]');
+    var reqSectionPos = reqSection.offset().top;
+
+    if (isAnimate) {
+      $('body, html').animate({
+        scrollTop: reqSectionPos
+      }, 800);
+    } else {
+      $('body, html').scrollTop(reqSectionPos);
+    }
+  };
+
+  var checkSection = function() {
+    $('.section').each(function() {
+      var $this = $(this);
+      var topEdge = $this.offset().top - 80;
+      var bottomEdge = topEdge + $this.height();
+      var wScroll = $(window).scrollTop();
+      if (topEdge < wScroll && bottomEdge > wScroll) {
+        var currentId = $this.data('section');
+        var reqLink = $('a').filter('[href*=' + currentId + ']');
+        reqLink.closest('li').addClass('active').siblings().removeClass('active');
+      }
+    });
+  };
+
+  // Scroll and menu click handlers
+  $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function(e) {
+    e.preventDefault();
+    showSection($(this).attr('href'), true);
+  });
+
+  $(window).scroll(function() {
+    checkSection();
+  });
+});
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <title>File Upload</title>
+    <style>
+        body {
+            background-color: rgb(6, 26, 27);
+        }
+        * {
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 500px;
+            margin: 60px auto;
+        }
+        .container h1 {
+            text-align: center;
+            color: white;
+        }
+        form {
+            background-color: white;
+            padding: 30px;
+        }
+        form .input-group {
+            margin-bottom: 15px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        form input,
+        form select {
+            padding: 12px 20px;
+            width: 100%;
+            border: 1px solid #070707;
+            color: black;
+        }
+        .submit-btn {
+            width: 100%;
+            border: none;
+            background: rgb(37, 83, 3);
+            font-size: 18px;
+            color: white;
+            border-radius: 3px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>File Upload</h1>
+        <form id="form" action="/tchr/upload" method="post" enctype="multipart/form-data">
+            <!-- Document Title -->
+            <div class="input-group">
+                <label for="title">Document Name</label>
+                <input type="text" name="title" id="title" placeholder="Enter document name" required />
+            </div>
+
+            <!-- File Type Selection -->
+            <div class="input-group">
+                <label for="fileType">Select File Type</label>
+                <select name="fileType" id="fileType" required>
+                    <option value="pdf">PDF</option>
+                    <option value="video">Video</option>
+                    <option value="image">Image</option>
+                </select>
+            </div>
+
+            <!-- File Upload -->
+            <div class="input-group">
+                <label for="file">Upload File</label>
+                <input type="file" name="file" id="file" required accept=".pdf, .mp4, .jpg, .jpeg, .png" />
+            </div>
+
+            <!-- Access Selection -->
+            <div class="input-group">
+                <label for="access">File Access</label>
+                <select name="assignedTo" id="access" required>
+                    <option value="all">All Students</option>
+                    <option value="class">Specific Class</option>
+                </select>
+            </div>
+
+            <!-- Class ID Field (Only Used if 'class' is selected) -->
+            <div class="input-group" id="classField" style="display: none;">
+                <label for="classId">Select Class</label>
+                <select name="classId" id="classId">
+                    <% classes.forEach(classroom => { %>
+                        <option value="<%= classroom._id %>"><%= classroom.className %></option>
+                    <% }); %>
+                </select>
+            </div>
+
+           
+         
+            <input type="hidden" name="fileSize" id="fileSize" />
+
+            <button class="submit-btn" type="submit">Upload</button>
+        </form>
+    </div>
+
+    <script>
+        // Show class selection only when "Specific Class" is chosen
+        document.getElementById("access").addEventListener("change", function() {
+            let classField = document.getElementById("classField");
+            classField.style.display = this.value === "class" ? "block" : "none";
+        });
+
+        // Restrict accepted file types based on fileType selection
+        document.getElementById("fileType").addEventListener("change", function() {
+            let fileInput = document.getElementById("file");
+            if (this.value === "pdf") {
+                fileInput.accept = ".pdf";
+            } else if (this.value === "video") {
+                fileInput.accept = ".mp4";
+            } else if (this.value === "image") {
+                fileInput.accept = ".jpg, .jpeg, .png";
+            }
+        });
+        document.getElementById("file").addEventListener("change", function () {
+        const file = this.files[0];
+        const fileSize = file.size / (1024 * 1024); // Convert size to MB
+        document.getElementById("fileSize").value = file.size; // Save file size in hidden input
+
+        if (fileSize > 16) {
+            alert("File size exceeds 16MB. Please upload a smaller file.");
+            this.value = ''; // Reset file input field
+            document.getElementById("fileSize").value = ''; // Reset file size hidden field
+        }
+    });
+    </script>
+    
+</body>
+</html>

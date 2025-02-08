@@ -204,6 +204,9 @@
                             <div class="group">
                                 <input type="submit" class="button btn btn-primary w-100" value="Log In">
                             </div>
+                            <div class="group">
+                              <a href="/tchr/passreset" style="text-align: right; justify-content: right;"> reset-password</a>
+                            </div>
                         </form>
                       </div>
                           <!-- Sign Up Form -->
@@ -212,10 +215,10 @@
                                 <div class="group">
                                     <label for="fname" class="label">First Name</label>
                                     <input id="fname" name="fname" type="text" 
-                                        class="input form-control <% if (signupErrors && signupErrors.fname) { %> is-invalid <% } %>" 
+                                        class="input form-control <% if (typeof signupErrors !== 'undefined' && signupErrors.fname) { %> is-invalid <% } %>" 
                                         placeholder="Enter your first name" 
                                         value="<%= fname || '' %>">
-                                    <% if (signupErrors && signupErrors.fname) { %>
+                                    <% if (typeof signupErrors !== 'undefined' && signupErrors.fname) { %>
                                         <div class="error-text"><%= signupErrors.fname %></div>
                                     <% } %>
                                 </div>
@@ -223,10 +226,10 @@
                                 <div class="group">
                                     <label for="lname" class="label">Last Name</label>
                                     <input id="lname" name="lname" type="text" 
-                                        class="input form-control <% if (signupErrors && signupErrors.lname) { %> is-invalid <% } %>" 
+                                        class="input form-control <% if (typeof signupErrors !== 'undefined' && signupErrors.lname) { %> is-invalid <% } %>" 
                                         placeholder="Enter your last name" 
                                         value="<%= lname || '' %>">
-                                    <% if (signupErrors && signupErrors.lname) { %>
+                                    <% if (typeof signupErrors !== 'undefined' && signupErrors.lname) { %>
                                         <div class="error-text"><%= signupErrors.lname %></div>
                                     <% } %>
                                 </div>
@@ -234,10 +237,10 @@
                                 <div class="group">
                                     <label for="email" class="label">Email</label>
                                     <input id="email" name="email" type="email" 
-                                        class="input form-control <% if (signupErrors && signupErrors.email) { %> is-invalid <% } %>" 
+                                        class="input form-control <% if (typeof signupErrors !== 'undefined' && signupErrors.email) { %> is-invalid <% } %>" 
                                         placeholder="Enter your email" 
                                         value="<%= email || '' %>">
-                                    <% if (signupErrors && signupErrors.email) { %>
+                                    <% if (typeof signupErrors !== 'undefined' && signupErrors.email) { %>
                                         <div class="error-text"><%= signupErrors.email %></div>
                                     <% } %>
                                 </div>
@@ -254,14 +257,14 @@
                                     <label for="pwd" class="label">Password</label>
                                     <div class="input-group">
                                         <input id="pwd" name="pwd" type="password" 
-                                            class="input form-control <% if (signupErrors && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
+                                            class="input form-control <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
                                             placeholder="Enter your password">
                                         <button type="button" class="btn btn-outline-secondary toggle-password" onclick="togglePasswordVisibility()">
                                           <i id="eyeIcon" class="fa fa-eye"></i>
                                         </button>
                                     </div>
                                 
-                                    <% if (signupErrors && signupErrors.pwd) { %>
+                                    <% if (typeof signupErrors !== 'undefined' && signupErrors.pwd) { %>
                                         <div class="error-text"><%= signupErrors.pwd %></div>
                                     <% } %>
                                 </div>
@@ -270,14 +273,14 @@
                                     <label for="confirm_pwd" class="label">Repeat Password</label>
                                       <div class="input-group">
                                         <input id="confirm_pwd" name="confirm_pwd" type="password" 
-                                            class="input form-control <% if (signupErrors && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
+                                            class="input form-control <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
                                             placeholder="Repeat your password">
                                       <button type="button" class="btn btn-outline-secondary toggle-password" onclick="togglePasswordVisibility()">
                                         <i id="eyeIcon" class="fa fa-eye"></i>
                                       </button>
                                       </div>
                                     
-                                    <% if (signupErrors && signupErrors.confirm_pwd) { %>
+                                    <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %>
                                         <div class="error-text"><%= signupErrors.confirm_pwd %></div>
                                     <% } %>
                                 </div>
@@ -287,7 +290,7 @@
                                     <input id="pic" name="pic" type="file" class="input form-control ">
                                 </div>
                                 
-                                <% if (signupErrors && signupErrors.general) { %>
+                                <% if (typeof signupErrors !== 'undefined' && signupErrors.general) { %>
                                     <div class="error-text"><%= signupErrors.general %></div>
                                 <% } %>
                                 
