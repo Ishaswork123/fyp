@@ -259,3 +259,49 @@ color: #ada9a9;
         min-height: 600px;
     }
 }
+/* .group{
+    text-align: right;
+    float: right;
+} */
+.social{
+    margin-top: 30px;
+    display: flex;
+    float: right;
+  }
+  .social div{
+    background: red;
+    width: 150px;
+    border-radius: 3px;
+    padding: 5px 10px 10px 5px;
+    background-color: rgba(255,255,255,0.27);
+    color: #eaf0fb;
+    text-align: center;
+  }
+  .social div:hover{
+    background-color: rgba(15, 15, 15, 0.47);
+  }
+  .social .fb{
+    margin-left: 25px;
+  }
+
+  .input-container {
+    position: relative;
+    width: 100%;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px; /* Space for the icon */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-container i {
+    position: absolute;
+    right: 10px; /* Position the icon inside on the right */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #ffffff;
+}

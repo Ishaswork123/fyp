@@ -183,12 +183,16 @@
                         
                             <div class="group">
                                 <label for="pwd" class="label">Password</label>
+                                <div class="input-container">
+
                                 <input 
                                     id="pwd" 
                                     name="pwd" 
                                     type="password" 
                                     class="input form-control <% if (loginErrors && loginErrors.pwd) { %> is-invalid <% } %>" 
                                     placeholder="Enter your password">
+                                    <i class="far fa-eye" id="togglePassword" ></i>
+                                  </div>
                                 
                                 <!-- Show error message for password if any -->
                                 <% if (loginErrors && loginErrors.pwd) { %>
@@ -205,8 +209,10 @@
                                 <input type="submit" class="button btn btn-primary w-100" value="Log In">
                             </div>
                             <div class="group">
-                              <a href="/tchr/passreset" style="text-align: right; justify-content: right;"> reset-password</a>
-                            </div>
+                              <div class="social">
+
+                                <div class="fb"> <a href="/std/passreset" style="color: rgb(250, 250, 250); text-decoration: none; font-weight: bold;">Reset Password</a>
+                                </div></div>                            </div>
                         </form>
                       </div>
                           <!-- Sign Up Form -->
@@ -256,12 +262,13 @@
                                 <div class="group">
                                     <label for="pwd" class="label">Password</label>
                                     <div class="input-group">
+                                      <div class="input-container">
+
                                         <input id="pwd" name="pwd" type="password" 
                                             class="input form-control <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
                                             placeholder="Enter your password">
-                                        <button type="button" class="btn btn-outline-secondary toggle-password" onclick="togglePasswordVisibility()">
-                                          <i id="eyeIcon" class="fa fa-eye"></i>
-                                        </button>
+                                            <i class="far fa-eye" id="togglePassword" ></i>
+                                          </div>
                                     </div>
                                 
                                     <% if (typeof signupErrors !== 'undefined' && signupErrors.pwd) { %>
@@ -272,12 +279,15 @@
                                 <div class="group">
                                     <label for="confirm_pwd" class="label">Repeat Password</label>
                                       <div class="input-group">
+                                        <div class="input-container">
+
                                         <input id="confirm_pwd" name="confirm_pwd" type="password" 
                                             class="input form-control <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
                                             placeholder="Repeat your password">
-                                      <button type="button" class="btn btn-outline-secondary toggle-password" onclick="togglePasswordVisibility()">
-                                        <i id="eyeIcon" class="fa fa-eye"></i>
-                                      </button>
+                                            <i class="far fa-eye" id="togglePassword" ></i>
+                                          </div>
+
+                                     
                                       </div>
                                     
                                     <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %>
@@ -507,22 +517,27 @@
     <script src="/plugins/parallax-js-master/parallax.min.js"></script>
     <script src="/js/custom.js"></script>
 
-    <script>
-    document.querySelectorAll('.toggle-password').forEach(item => {
-    item.addEventListener('click', function () {
-        const input = this.closest('.input-group').querySelector('input');
-        const icon = this.querySelector('i');
-        if (input.getAttribute('type') === 'password') {
-            input.setAttribute('type', 'text');
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            input.setAttribute('type', 'password');
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        }
-    });
+ <script>
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#pwd');
+  const confirm_password = document.querySelector('#confirm_pwd');
+
+  
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+});
+togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = confirm_password.getAttribute('type') === 'password' ? 'text' : 'password';
+   confirm_password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
 });
 </script>
+
   </body>
 </html>

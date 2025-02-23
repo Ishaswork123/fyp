@@ -33,6 +33,7 @@ const guidedRoute=require('./routes/guidedExp')
 const classRoom=require('./routes/classroom')
 const stdClass=require('./routes/classStd');
 const stdRes=require('./routes/learningStd');
+const expRes=require('./routes/expResult');
 
 const tchrUpload=require('./routes/learning');
 // Model Imports 
@@ -154,7 +155,7 @@ app.get('/stdConsole',isAuthenticated,handleProfile);
 app.use('/tchr',tchrUpload);
 app.use('/std',stdClass);
 app.use('/std',stdRes);
-
+app.use('/tchr',expRes);
 
 
 app.get('/tchr/tchrConsole', isAuthenticated, (req, res) => {

@@ -30,9 +30,12 @@ function isAuthenticated(req, res, next) {
   }
 }
 router.post("/upload",isAuthenticated, upload.single("file"),  UploadFile);
-router.get("/upload", async (req, res) => {
-    const classes = await Classroom.find(); // Get class list
-    // console.log('classes',classes)
+router.get("/upload",isAuthenticated, async (req, res) => {
+  const teacherId=req.user.id;
+  console.log("teacher id",teacherId)
+  const classes = await Classroom.find({ teacher: new mongoose.Types.ObjectId(teacherId) });
+
+    console.log('classes',classes)
     res.render("Upload", { classes });
 });
 

@@ -1,11 +1,13 @@
 let currentQuestion = 1;
 let totalQuestions = 0;
-let quizData = [];
+let quizData = JSON.parse(localStorage.getItem('quizData')) || [];;
 let experimentNo;
 let experimentTitle;
 let exp_no;
 let exp_title;
 let totalQuestion_1;
+let assignedTo;
+let classId='';
 window.onload = function () {
     document.getElementById('questionModal').style.display = 'block';
 };
@@ -14,10 +16,13 @@ function startQuizCreation() {
     experimentNo = document.getElementById("exp_no").value;
     experimentTitle = document.getElementById("exp_title").value;
     const totalQuestionsInput = document.getElementById("total_questions").value;
+    assignedTo=document.getElementById('access').value;
+    classId=document.getElementById('classId').value;
     console.log("Experiment No:", experimentNo);
     console.log("Experiment Title:", experimentTitle);
     console.log("Total Questions:", totalQuestionsInput);
-
+    console.log("assigned to:", assignedTo);
+    console.log("class Id :", classId);
     if (!experimentNo || !experimentTitle || isNaN(totalQuestionsInput)) {
         alert("Please fill out all required fields!");
         return;
@@ -99,6 +104,7 @@ function previousQuestion() {
 }
 
 function saveCurrentQuestionData() {
+    console.log('save current question called ');
     const questionEl = document.getElementById('question');
     const option1El = document.getElementById('option1');
     const option2El = document.getElementById('option2');
@@ -132,6 +138,7 @@ function saveCurrentQuestionData() {
 
 function validateCurrentQuestion() {
     const question = document.getElementById('question').value;
+    console.log('show question',question);
     const options = [
         document.getElementById('option1').value,
         document.getElementById('option2').value,
@@ -139,7 +146,7 @@ function validateCurrentQuestion() {
         document.getElementById('option4').value
     ];
     const answer = document.getElementById('answer').value;
-
+console.log('answer')
     // Check if all fields are filled
     if (!question || options.some(opt => !opt) || !answer) {
         alert('Please fill out all fields before proceeding.');
@@ -176,10 +183,10 @@ function submitQuizForm() {
     console.log('totalQuestions:', totalQuestions);
 
 
-    if (quizData.length !== totalQuestions || quizData.some(data => Object.values(data).some(value => !value))) {
-        alert('Please ensure all questions are filled properly.');
-        return;
-    }
+    // if (quizData.length !== totalQuestions || quizData.some(data => Object.values(data).some(value => !value))) {
+    //     alert('Please ensure all questions are filled properly.');
+    //     return;
+    // }
 
     const form = document.getElementById('quizQuestionForm');
     if (!form) {
@@ -199,7 +206,12 @@ function submitQuizForm() {
         <input type="hidden" name="exp_no" value="${exp_no}">
         <input type="hidden" name="exp_title" value="${exp_title}">
         <input type="hidden" name="total_questions" value="${totalQuestion_1}">
+        <input type="hidden" name="assignedTo" value="${assignedTo}">
+        <input type="hidden" name="classId" value="${classId}">
+
     `;
+
+    console.log('expno,exp-title,totalquestion,assignedTo,classId',exp_no,exp_title,totalQuestion_1,assignedTo,classId)
     if (!exp_no || !exp_title || ! totalQuestion_1) {
         alert('Missing experiment details! Please try again.');
         return;
@@ -218,6 +230,7 @@ function submitQuizForm() {
 
     form.submit();
 }
+
 
 function updateTitle() {
     const experimentNo = document.getElementById('exp_no').value;

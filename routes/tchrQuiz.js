@@ -1,7 +1,9 @@
 const express=require('express');
-const router = require('./tchr');
-const Router=express.Router();
+// const router = require('./tchr');
+const router=express.Router();
+const mongoose=require('mongoose');
 const {handleQuiz,showQuiz,getQuizEdit,postQuizEdit,handledeleteQuiz,quizResult}=require('../Controller/quizTchr');
+const Classroom=require('../Model/classroom');
 
 const { getTokenFromCookies } = require('../config/tchr');  
 
@@ -28,13 +30,16 @@ function isAuthenticated(req, res, next) {
 router.get('/quiz',(req,res)=>{
   res.render('Quiz');
 })
-router.get('/submit-quiz',(req, res) => {
+router.get('/submit-quiz', isAuthenticated,async(req, res) => {
     const expNo = req.query.exp_no || ''; // Default value if not provided
     const expTitle = req.query.exp_title || '';
+    const teacherId=req.user.id;
+    const classes = await Classroom.find({ teacher: new mongoose.Types.ObjectId(teacherId) });
+        
     const totalQuestions = req.query.total_questions || 0;
-    console.log("extracted exp-title ,exp_no",{ expNo, expTitle, totalQuestions });
+    console.log("extracted exp-title ,exp_no",{ expNo, expTitle, totalQuestions});
 
-    res.render('createQuiz', { expNo, expTitle, totalQuestions });
+    res.render('createQuiz', { expNo, expTitle, totalQuestions ,classes});
 });
 router.get('/quizedit/:id', getQuizEdit);
 router.post('/quizedit/:id', postQuizEdit);

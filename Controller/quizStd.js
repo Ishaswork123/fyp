@@ -1,4 +1,6 @@
 const Quiz = require('../Model/quiz');
+const Classroom = require('../Model/classroom'); // Import Classroom model
+
 // const { postQuizEdit } = require('./quizTchr');
 const { getTokenFromCookies } = require('../config/tchr');
 const jwt = require('jsonwebtoken');
@@ -15,19 +17,25 @@ const titles = {
 
 async function getQuiz(req, res) {
   try {
+      // Check if the user is authenticated
+      if (!req.user) {
+          return res.status(401).send('Unauthorized');
+      }
+
       // Fetch unique experiment numbers from the database
       const expNumbers = await Quiz.distinct('exp_no');
 
-      // Map the numbers to titles using the `titles` object
+      // Map the experiment numbers to their titles
       const experiments = expNumbers.map(exp_no => ({
-          exp_no,
-          exp_title: titles[exp_no]
-      }));
+        exp_no,
+        exp_title: titles[exp_no]
+    }));
 
-      // Render the page with unique experiments
-      res.render('stdQuiz', { experiments, quizData: null, marksObtained: null });
+      // Render the selection page with experiment numbers
+      res.render('stdQuiz', { experiments, quizData: null , marksObtained: null });
+
   } catch (err) {
-      console.error('Error fetching experiments:', err);
+      console.error('Error fetching experiment numbers:', err);
       res.status(500).send('Error loading quiz page');
   }
 }
@@ -36,25 +44,51 @@ async function postQuiz(req, res) {
   const exp_no = req.body.exp_no; // Fetch the selected experiment number
 
   try {
-      // Fetch quiz data for the selected experiment
-      const quizData = await Quiz.find({ exp_no });
+      // Check if the user is authenticated
+      if (!req.user) {
+          return res.status(401).send('Unauthorized');
+      }
 
-      // Fetch unique experiment numbers from the database
+      const studentId = req.user.id; // Extract student ID from token
+console.log('enter 1 ')
+      // Fetch all quizzes for the selected experiment
+      const quizzes = await Quiz.find({ exp_no });
+
+      // Get unique class IDs from the quizzes
+      const quizClassIds = [...new Set(quizzes.map(q => q.classId).filter(id => id))];
+
+      // Find classes where this student is enrolled
+      const classrooms = await Classroom.find({ _id: { $in: quizClassIds }, students: studentId });
+
+      // Extract enrolled class IDs
+      const enrolledClassIds = classrooms.map(c => c._id.toString());
+
+      // Filter quizzes: keep those assigned to "all" or assigned to enrolled classes
+      const filteredQuizzes = quizzes.filter(q =>
+          q.assignedTo === "all" || (q.classId && enrolledClassIds.includes(q.classId.toString()))
+      );
+
+      // Fetch unique experiment numbers again for dropdown
       const expNumbers = await Quiz.distinct('exp_no');
 
-      // Map the numbers to titles using the `titles` object
-      const experiments = expNumbers.map(exp_no => ({
-          exp_no,
-          exp_title: titles[exp_no]
-      }));
+      // Map experiment numbers to titles
+      const experiments = await Quiz.find({ exp_no: { $in: expNumbers } })
+          .select('exp_no exp_title')
+          .then((quizzes) => {
+              return [...new Map(quizzes.map(q => [q.exp_no, q.exp_title])).values()]
+                  .map((exp_title, index) => ({
+                      exp_no: expNumbers[index],
+                      exp_title: exp_title || "Unknown"
+                  }));
+          });
 
-      res.render('stdQuiz', { experiments, quizData, marksObtained: null });
+      res.render('stdQuiz', { experiments, quizData: filteredQuizzes, marksObtained: null });
+
   } catch (err) {
       console.error('Error fetching quiz data:', err);
       res.status(500).send('Error fetching quiz data');
   }
 }
-
 async function handleQuizSubmission(req, res) {
   const { exp_no, answers} = req.body;
   console.log('POST request received at /std/submit-quiz');

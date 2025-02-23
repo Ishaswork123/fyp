@@ -26,7 +26,7 @@ function isAuthenticated(req, res, next) {
 
 router.post('/submit-quiz',isAuthenticated,handleQuizSubmission)
 router.get('/quiz-results', isAuthenticated, quizResult);
-router.get('/get-quiz',getQuiz);
-router.post('/get-quiz',postQuiz);
+router.get('/get-quiz',isAuthenticated,getQuiz);
+router.post('/get-quiz',isAuthenticated,postQuiz);
 // postQuiz
 module.exports=router;

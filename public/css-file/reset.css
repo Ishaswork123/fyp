@@ -1,23 +1,27 @@
 .features {
     font-family: Arial, sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
     height: 100vh;
-    background-color: #f4f4f4;
-}
+    background: linear-gradient(to bottom, #6b6980, #c5c4c7, #1c1c1d);}
 
 .modal {
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 20px; /* Adjust the top position */
-    right: 20px; /* Align to the right */
-    width: 300px; /* Set width to 300px or any value you prefer */
-    height: auto; /* Set height to auto to allow content flexibility */
-    background: rgba(0, 0, 0, 0.5);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the modal */
+    width: 600px; /* Adjust as needed */
+    height: auto; /* Allow content to define height */
+    /* background: rgba(0, 0, 0, 0.5); */
+    padding: 20px;
+    border-radius: 10px;
+    color: rgb(110, 107, 107);
 }
+
 
 .modal-content {
     background: white;
@@ -63,8 +67,22 @@ button:hover {
 /* Media Query for responsiveness */
 @media (max-width: 768px) {
     .modal {
-        width: 90%;
-        top: 10px;
-        right: 10px;
+        width: 90%; /* Make modal take up more width on smaller screens */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Keep it centered */
     }
 }
+
+h1, h2 { 
+    margin: 0; 
+    font-family: 'Leckerli One', cursive;
+    text-shadow: 0 2px rgba(0,0,0,.5);
+  }
+  .header-bar{
+    padding-bottom: 20px;
+  }
+  .form-content{
+    padding-bottom: 20px;
+
+  }

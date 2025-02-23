@@ -3,24 +3,36 @@ const Quiz = require('../Model/quiz');
 const User=require('../Model/std');
  // Import the Quiz model
  const mongoose=require('mongoose');
-
+const Classroom=require('../Model/classroom')
 const ObjectId = mongoose.Types.ObjectId; // Import ObjectId from mongoose
 const QuizResult=require('../Model/QuizResult');
 
 async function handleQuiz(req, res) {
     console.log("Received a request at handleQuiz function.");
-
     // Log the request body for debugging
     if (!req.body || Object.keys(req.body).length === 0) {
         console.error('Request body is empty. Please ensure the form submission is correct.');
         return res.status(400).send('No data submitted');
     }
-
-    console.log('Request Body:', req.body);
-
     // Extract experiment details
     const expNo = req.body.exp_no;
     const expTitle = req.body.exp_title;
+    const assignedTo=req.body.assignedTo;
+    let classId=req.body.classId;
+    console.log('Request Body:', req.body);
+ let className = null; // Default null for "All Students"
+        
+        if (assignedTo === "class" && classId) {
+          // Convert classId to ObjectId
+          classId = new mongoose.Types.ObjectId(classId);
+    
+          // Fetch class details
+          const classroom = await Classroom.findById(classId);
+          if (classroom) {
+            className = classroom.className; // Store className
+          }}
+
+
     const totalQuestions = parseInt(req.body.total_questions);
 
     if (!expNo || !expTitle || isNaN(totalQuestions)) {
@@ -36,6 +48,9 @@ async function handleQuiz(req, res) {
         quizData.push({
             exp_no: expNo,
             exp_title: expTitle,
+            assignedTo, // "all" or "class"
+          classId: assignedTo === "class" ? classId : null, // Store only if assigned to class
+          className, // Store className if class is selected
             question_no: i,
             Question: req.body[`question${i}`],
             option1: req.body[`option1${i}`],

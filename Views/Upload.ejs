@@ -89,10 +89,16 @@
             <!-- Class ID Field (Only Used if 'class' is selected) -->
             <div class="input-group" id="classField" style="display: none;">
                 <label for="classId">Select Class</label>
-                <select name="classId" id="classId">
-                    <% classes.forEach(classroom => { %>
-                        <option value="<%= classroom._id %>"><%= classroom.className %></option>
-                    <% }); %>
+               
+    <% if (classes.length > 0) { %>
+        <select name="classId" id="classId">
+            <% classes.forEach(classroom => { %>
+                <option value="<%= classroom._id %>"><%= classroom.className %></option>
+            <% }); %>
+        </select>
+    <% } else { %>
+        <p>No classes available. Please create a class first.</p>
+    <% } %>
                 </select>
             </div>
 

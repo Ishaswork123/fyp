@@ -10,6 +10,12 @@ const quizSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+    assignedTo: { type: String, enum: ['all', 'class'], required: true },
+    classId: { type: mongoose.Schema.Types.ObjectId, ref: 'Classroom', required: false },
+
+    className: { type: String, default: null }, // Make className optional
+  
   question_no: {
     type: Number,
     required: true,

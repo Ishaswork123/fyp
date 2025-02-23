@@ -111,41 +111,7 @@
 
       <!-- Menu -->
 
-      <div
-        class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400"
-      >
-        <div class="menu_close_container">
-          <div class="menu_close">
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-        <div class="search">
-          <form action="#" class="header_search_form menu_mm">
-            <input
-              type="search"
-              class="search_input menu_mm"
-              placeholder="Search"
-              required="required"
-            />
-            <button
-              class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm"
-            >
-              <i class="fa fa-search menu_mm" aria-hidden="true"></i>
-            </button>
-          </form>
-        </div>
-        <nav class="menu_nav">
-          <ul class="menu_mm">
-            <li class="menu_mm"><a href="index.html">Home</a></li>
-            <li class="menu_mm"><a href="#">About</a></li>
-            <li class="menu_mm"><a href="#">Courses</a></li>
-            <li class="menu_mm"><a href="#">Blog</a></li>
-            <li class="menu_mm"><a href="#">Page</a></li>
-            <li class="menu_mm"><a href="contact.html">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
+   
 
       <!-- Home -->
      
@@ -161,18 +127,25 @@
       <!-- First Modal: Email Input -->
       <div id="emailModal" class="modal">
         <div class="modal-content">
-            <h2>Enter Your Email</h2>
+          <div class="header-bar">
+            <h2>Enter Your Email</h2></div>
+            <div class="form-content">
+
             <form action="/tchr/send-otp" method="POST" onsubmit="showModal('otpModal')">
-                <input type="email" name="email" placeholder="Enter your email" required>
+                <input type="email" name="email" placeholder="Enter your email" required> <br>
                 <button type="submit" >Send OTP</button>
             </form>
-        </div>
+        </div></div>
     </div>
     
     <!-- Second Modal: OTP Input -->
     <div id="otpModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <h2>Enter OTP</h2>
+          <div class="header-bar">
+
+            <h2>Enter OTP</h2></div>
+            <div class="form-content">
+
             <form action="/tchr/verify-otp?email=<%= email %>" method="POST" onsubmit="showModal('passwordModal')">
               <input type="hidden" name="email" value="<%= email %>">
               <div class="otp-inputs">
@@ -185,20 +158,23 @@
               <!-- <input type="email" name="email" placeholder="Enter your email" required> -->
                 <button type="submit" onclick="showPasswordModal(event)">Verify OTP</button>
             </form>
-        </div>
+        </div></div>
     </div>
     
     <!-- Third Modal: Password Reset -->
     <div id="passwordModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <h2>Reset Password</h2>
+          <div class="header-bar">
+
+            <h2>Reset Password</h2></div>
+            <div class="form-content"></div>
             <form action="/tchr/reset-password?email=<%= email %>" method="POST">
               <input type="hidden" name="email" value="<%= email %>">
                 <input type="password" name="newPassword" placeholder="New Password" required>
                 <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
                 <button type="submit" onclick="startNewProject()">Reset Password</button>
             </form>
-        </div>
+        </div></div>
     </div>
 
 		</div>  

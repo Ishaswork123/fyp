@@ -110,6 +110,8 @@ body {
   align-items: center;
   flex-direction: column;
   font-family: Arial, sans-serif;
+  font-size: 1rem;
+  padding: 1rem;
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -137,9 +139,9 @@ body::before {
 /* --- Controls Section --- */
 .controls {
   position: absolute;
-  top: 0.02rem;
+  top: 1rem;
   right: 0rem;
-  width: 16.5%;
+  width: 20%;
   display: flex;
   padding: 1rem;
   box-sizing: border-box;
@@ -147,7 +149,7 @@ body::before {
   flex-direction: column;
   justify-content: flex-start;
   border-radius: 0.5rem;
-  font-size: 1.25rem;
+  font-size: 1rem;
   margin: 0.5rem;
   /* max-width: 28rem; */
 }
@@ -190,13 +192,13 @@ body::before {
 .limits {
   display: flex;
   justify-content: space-between;
-  font-size: 1.2rem;
+  /* font-size: 1rem; */
   color: #666;
 }
 
 .input-value {
   margin-top: 0.3rem;
-  font-size: 1.2rem;
+  /* font-size: 1.2rem; */
   text-align: center;
   color: #333;
 }
@@ -217,11 +219,11 @@ body::before {
 }
 
 .reset-button {
-  color: white;
+  /* color: white; */
   background-color: #730f19;
-  margin-top: 1rem;
+  /* margin-top: 1rem;
   padding: 0.75rem;
-  border-radius: 1rem;
+  border-radius: 1rem; */
 }
 
 .reset-button:hover {
@@ -375,6 +377,7 @@ transition: height 0.3s ease, filter 0.3s ease;
   box-shadow: inset 0.2rem 0.2rem 0.5rem rgba(61, 44, 44, 0.4), inset -0.2rem -0.2rem 0.5rem rgba(255, 163, 163, 0.3);
   box-sizing: border-box;
   overflow-x: auto;
+  font-size: 1rem;
 }
 
 .forks label{
@@ -498,8 +501,8 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: row;
-right: 20%;
-bottom: 58rem;
+right: 25%;
+bottom: 48rem;
 }
 
 .tuning-fork .handle {
@@ -582,12 +585,17 @@ font-size: 1.35rem;
 /* --- Table Section --- */
 #tableContainer{
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
   overflow-x: auto;
   position: absolute;
   bottom: -23rem;
+  padding: 1rem;
+  margin: 1rem;
+  width: 100%;
+  max-width: 100rem;
+  text-align: center;
+  justify-content: center;
 }
+
 table {
 width: 100%;
 border-collapse: collapse;
@@ -627,8 +635,9 @@ margin-left: 45%;
 
 @media (min-width: 1200px) {
   html {
-    font-size: 70%; 
+    font-size: 60%; 
   }
+
 }
 
 
@@ -636,9 +645,12 @@ margin-left: 45%;
   .html{
     font-size: 50%;
   }
+  body{
+    font-size: 0.8rem;
+  };
   .tuning-fork{
     right: 35%;
-    bottom: 63rem;
+    bottom: 43rem;
   }
   
   .forks{
@@ -672,112 +684,175 @@ margin-left: 45%;
   }
 
   table {
-    width: 80%;
-    /* font-size: 1rem; */
-    /* align-items: center; */
-    margin-left: auto;
-    margin-right: auto;
-    /* position: static; */
+    font-size: 0.9rem;
+    align-items: center;
+    margin-left: 1rem;
     overflow: hidden;
   }
 
 }
 
-@media (max-width: 768px) and (min-width: 480px) and (orientation: landscape) {
+@media (max-width: 767px) and (min-width: 200px) {
 
   .html{
-  font-size: 35%;
-  }
-  .tuning-fork{
-    right: 10%;
-    bottom: 43rem;
-  }
-
-  .length-vs-freq-chart{
-  width: 15rem;
-  height: 8rem;
-
-  }
-  .forks{
-    width: 100%;
-    height: 10rem;
-    overflow: scroll;
-  }
-
-  .tuning-fork1, .tuning-fork2, .tuning-fork3, .tuning-fork4 {
-    margin: 0.5rem;
-    min-width: 4.5rem;
-  }
-
-  .exp-tools {
-    width: 25rem;
-    height: 45rem;
-    left: 18%;
-    bottom: 16rem;
-  }
-
-  .controls {
-    width: 18rem;
-    padding: 0.6rem;
+    font-size: 50%;
+    }
   
-  }
+    .tuning-fork{
+      right: 8%;
+      bottom: 40rem;
+    }
+  
+    .forks{
+      width: 95%;
+      height: 8rem;
+      overflow: scroll;
+      top: 0;
+      font-size: 0.5rem;
+    }
+  
+    .tuning-fork1, .tuning-fork2, .tuning-fork3, .tuning-fork4 {
+      margin: 0.35rem;
+    }
+  
+    .exp-tools {
+      width: 30rem;
+      height: 50rem;
+      left: 5%;
+      bottom: 15rem;
+    }
+  
+    .controls {
+      top: 85%;
+      font-size: 0.8rem;
+      width: 100%;
+      padding: 0.6rem;
+      display: flex;
+      flex-direction: row;
+      left: 0;
+      gap: 1rem;
+      overflow:auto;
+      margin-right: 0.5rem;
+    }
+  
+    .controls-button{
+      font-size: 1rem;
+      padding: 0.8rem;
+      margin-right: 0.5rem;
+    }
+    .canvasButton button{
+      font-size: 0.9rem;
+      top: 63%;
+    }
+    .output-container {
+      font-size: 0.97rem;
+      top: 130%;
+      left: 0%;
+      width: 87%;
+      margin-top: 1rem;
+      margin-left: 1rem;
+    }
+  
+    table {
+      font-size: 0.8rem;
+      overflow-x: auto;
+    }
+    #length-vs-freq-chart{
+       width: 90%;
+       top: 100%;
+      margin-left: 1.2rem;
+    }
+    #tableContainer{
+      top: 150%;
+      bottom: -60rem;
+      margin-bottom: 2rem;
+      max-width:38rem;
+      font-size: 0.7rem;
+      /* overflow-x: hidden; */
 
-  .output-container {
-    top: 2rem;
-    left: 0%;
-    width: 15rem;
-  }
+    }
 
-
- 
+    table {
+      overflow-x: hidden;
+      margin: 1rem;
+    }
+    th, td {
+      font-size: 0.6rem;
+      }
+      table input{
+        font-size: 0.6rem;
+        width: 3rem;
+        }
 }
 
-@media (max-width: 480px)and (min-width: 320px) and (orientation: landscape) {
+/* @media (max-width: 480px)and (min-width: 320px)  {
 
   .html{
-  font-size: 20.5%;
+  font-size: 10.5%;
   }
 
   .tuning-fork{
     right: 8%;
-    bottom: 43rem;
+    bottom: 40rem;
   }
 
   .forks{
     width: 95%;
     height: 8rem;
     overflow: scroll;
+    top: 0;
+    font-size: 0.5rem;
   }
 
   .tuning-fork1, .tuning-fork2, .tuning-fork3, .tuning-fork4 {
-    margin: 0.5rem;
+    margin: 0.35rem;
   }
 
   .exp-tools {
     width: 30rem;
     height: 50rem;
     left: 5%;
-    bottom: 16rem;
+    bottom: 15rem;
   }
 
   .controls {
-    font-size: 0.87rem;
-    width: 18rem;
+    top: 85%;
+    font-size: 0.8rem;
+    width: 100%;
     padding: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    left: 0;
+    gap: 1rem;
+    overflow:auto;
+    margin-right: 0.5rem;
+  }
+
+  .controls-button{
+    font-size: 1rem;
+    padding: 0.8rem;
+    margin-right: 0.5rem;
   }
   .canvasButton button{
     font-size: 0.9rem;
-    top: 41%;
+    top: 63%;
   }
   .output-container {
     font-size: 0.97rem;
-    top: 2rem;
+    top: 130%;
     left: 0%;
-    width: 10rem;
+    width: 87%;
+    margin-top: 1rem;
+    margin-left: 1rem;
   }
 
   table {
     font-size: 0.8rem;
     overflow-x: auto;
   }
-}
+  #length-vs-freq-chart{
+     width: 90%;
+     top: 100%;
+    margin-left: 1.2rem;
+  }
+} */

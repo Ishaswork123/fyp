@@ -108,24 +108,26 @@
   
       <!-- Quiz Form -->
       <div class="quizContainer" id="quizContainer">
-          <% if (quizData && quizData.length > 0) { %>
-              <h2>Quiz for Experiment <%= quizData[0].exp_no %></h2>
-              <form id="quizForm" method="POST" action='/std/submit-quiz' class="quizForm">
-                  <% quizData.forEach(function(question, index) { %>
-                      <div>
-                          <p><%= index + 1 %>. <%= question.Question %></p>
-                          <label><input type="checkbox" name="answers[<%= index %>]" value="option1"> <%= question.option1 %></label><br>
-                          <label><input type="checkbox" name="answers[<%= index %>]" value="option2"> <%= question.option2 %></label><br>
-                          <label><input type="checkbox" name="answers[<%= index %>]" value="option3"> <%= question.option3 %></label><br>
-                          <label><input type="checkbox" name="answers[<%= index %>]" value="option4"> <%= question.option4 %></label><br>
-                      </div>
-                  <% }) %>
-                  <input type="hidden" name="exp_no" value="<%= quizData[0].exp_no %>">
-                  <button type="submit">Submit Quiz</button>
-              </form>
-          <% } else { %>
-              <!-- <p>No questions available for this experiment.</p> -->
-          <% } %>
+        <% if (quizData && quizData.length > 0) { %>
+          <h2>Quiz for Experiment <%= quizData[0].exp_no %></h2>
+          <form id="quizForm" method="POST" action='/std/submit-quiz' class="quizForm">
+              <% quizData.forEach(function(question, index) { %>
+                  <div>
+                      <p><%= index + 1 %>. <%= question.Question %></p>
+                      <label><input type="checkbox" name="answers[<%= index %>]" value="option1"> <%= question.option1 %></label><br>
+                      <label><input type="checkbox" name="answers[<%= index %>]" value="option2"> <%= question.option2 %></label><br>
+                      <label><input type="checkbox" name="answers[<%= index %>]" value="option3"> <%= question.option3 %></label><br>
+                      <label><input type="checkbox" name="answers[<%= index %>]" value="option4"> <%= question.option4 %></label><br>
+                  </div>
+              <% }) %>
+              <input type="hidden" name="exp_no" value="<%= quizData[0].exp_no %>">
+              <button type="submit">Submit Quiz</button>
+          </form>
+      <% } else { %>
+          <p style="color: red; font-weight: bold;">No quizzes assigned yet.</p>
+      <% } %>
+                
+            
       </div>
   </div>
   

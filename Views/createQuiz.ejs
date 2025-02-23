@@ -87,6 +87,32 @@
           <input type="number" id="exp_no" name="exp_no" oninput="updateTitle()" required>
           <label for="exp_title">Experiment Title:</label>
           <input type="text" id="exp_title" name="exp_title" readonly>
+            <!-- Access Selection -->
+            <!-- <div class="input-group"> -->
+              <label for="access">Quiz Access</label>
+              <select name="assignedTo" id="access" required>
+                  <option value="all">All Students</option>
+                  <option value="class">Specific Class</option>
+              </select>
+          <!-- </div> -->
+
+          <!-- Class ID Field (Only Used if 'class' is selected) -->
+          <div class="input-group" id="classField" style="display: none;">
+              <label for="classId">Select Class</label>
+             
+  <% if (classes.length > 0) { %>
+      <select name="classId" id="classId">
+          <% classes.forEach(classroom => { %>
+              <option value="<%= classroom._id %>"><%= classroom.className %></option>
+          <% }); %>
+      </select>
+  <% } else { %>
+      <p>No classes available. Please create a class first.</p>
+  <% } %>
+              </select>
+          </div>
+
+         
           <label for="total_questions">Total Questions:</label>
           <input type="number" id="total_questions" name="total_questions" required>
           <button type="button" onclick="startQuizCreation()" >Start</button>
@@ -140,7 +166,12 @@
         </div>
       </footer>
 </div>
-
+<script>
+    document.getElementById("access").addEventListener("change", function() {
+            let classField = document.getElementById("classField");
+            classField.style.display = this.value === "class" ? "block" : "none";
+        });
+</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap JS Bundle -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
