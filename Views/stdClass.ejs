@@ -20,6 +20,57 @@
     <link rel="stylesheet" href="/assets_1/css/templatemo-edu-meeting.css">
     <link rel="stylesheet" href="/assets_1/css/owl.css">
     <link rel="stylesheet" href="/assets_1/css/lightbox.css">
+    <style>
+      .services-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+    
+      .item {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        width: 23%; /* Four items per row on large screens */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+    
+      .item:hover {
+        transform: translateY(-10px);
+      }
+    
+      /* .icon img {
+        width: 80px;
+        height: 80px;
+      } */
+    
+      /* .down-content h4 {
+        margin-top: 15px;
+        font-size: 18px;
+      } */
+    
+      /* .down-content p {
+        font-size: 14px;
+        color: #555;
+      } */
+    
+      /* Responsive Breakpoints */
+      @media (max-width: 1024px) {
+        .item {
+          width: 45%; /* Two items per row on medium screens */
+        }
+      }
+    
+      @media (max-width: 600px) {
+        .item {
+          width: 100%; /* One item per row on small screens */
+        }
+      }
+    
+        </style>
 <!--
 
 TemplateMo 569 Edu Meeting
@@ -114,9 +165,8 @@ https://templatemo.com/tm-569-edu-meeting
 
   <section class="services">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="owl-service-item owl-carousel">
+      <div class="row services-wrapper">
+
           
             <div class="item">
               <div class="icon">

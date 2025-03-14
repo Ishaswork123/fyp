@@ -136,6 +136,8 @@
   </li> -->
 
   <li><a href="/classroom/class">Classroom</a></li>
+  <!-- <li><a href="/tchr/dashboard">Community</a></li> -->
+
 
   <!-- <li class="nav-item dropdown">
 	<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -193,48 +195,46 @@
 							<div class="modal-content">
 							  <div class="content">
 								<button class="close">&times;</button>
-								<form action="/login-com" method="post">
 								  <header>Join Community</header>
 						  
-								  <!-- Username Input -->
-								  <div class="field">
+								  <!-- <div class="field">
 									<span class="fa fa-user"></span>
 									<input type="text" required placeholder="User Name" id="username" name="username">
-								  </div>
+								  </div> -->
 						  
-								  <!-- Select Community Dropdown -->
 								  <div class="field selectCommunity">
 									<label for="room"></label>
 									<select id="room" name="room">
-									  <option id="option" disabled selected>Select a Community</option>
+										<option id="option" disabled selected>Select a Community</option>
+										<% communities.forEach(community => { %>
+											<option value="<%= community._id %>">
+												<%= community.communityName %> - Users: <%= community.totalUsers %>
+											</option>
+										<% }); %>
 									</select>
-								  </div>
+								</div>
+								
 						  
-								  <!-- Create New Community Checkbox -->
 								  <div class="field">
 									<label>
 									  <input type="checkbox" id="createNewCommunityCheckbox" />
 									  Create New Community
 									</label>
 								  </div>
-						  
-								  <!-- Create Community Fields (Initially Hidden) -->
+								  <form action="/tchr/create" method="post">
+
 								  <div id="createCommunityFields" style="display: none;">
 									<div class="field createCommunity">
 									  <span class="fa-solid fa-plus"></span>
-									  <input placeholder="New Community Name" type="text" id="new_room" name="new_room">
+									  <input placeholder="New Community Name" type="text" id="new_room" name="communityName">
 									</div>
 									<div class="field">
 									  <span class="fa fa-info-circle"></span>
-									  <input placeholder="Community Bio" type="text" id="community_bio" name="community_bio">
+									  <input placeholder="Community Bio" type="text" id="community_bio" name="commDescription">
 									</div>
-									<!-- <div class="field">
-									  <span class="fa fa-users"></span>
-									  <input placeholder="Number of Members (Optional)" type="number" id="community_members" name="community_members">
-									</div> -->
+									
 								  </div>
 						  
-								  <!-- Submit Button -->
 								  <button class="submit" type="submit" id="login">Join</button>
 								</form>
 							  </div>
@@ -661,7 +661,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	
 	function closeSideMenu() {
 		document.getElementById("sideMenu").classList.remove("open");
-	}
+	}document.getElementById("room").addEventListener("change", function() {
+        const communityId = this.value;
+        if (communityId) {
+            window.location.href = `/tchr/chat/${communityId}`;
+        }
+    });
 	</script>
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script src="/bootstrap4/popper.js"></script>

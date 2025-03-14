@@ -45,8 +45,8 @@ router.get('/experiments', isAuthenticated, async (req, res) => {
 // Route to submit grade
 router.post('/grade', isAuthenticated, async (req, res) => {
     try {
-        const { studentName, exp_no, exp_title, grade } = req.body;
-
+        const { exp_no, exp_title, grade } = req.body;
+const  studentId=req.user.id;
         // Check if the grade is valid
         if (grade < 0 || grade > 5) {
             return res.status(400).send('Invalid grade. Must be between 0 and 5.');
@@ -60,7 +60,7 @@ router.post('/grade', isAuthenticated, async (req, res) => {
 
         // Create a new result instance with the extracted teacher's data
         const result = new Result({
-            studentName,
+            studentId,
             exp_no,
             exp_title,
             grade,

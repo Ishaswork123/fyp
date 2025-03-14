@@ -5,7 +5,9 @@ const { sendVerificationEmail, sendWelcomeEmail,  sendVerificationEmail_reset,
     sendWelcomeEmail_reset, } =require("../middlewares/Email.js")
 const { generateTokenAndSetCookies } =require( "../middlewares/GenerateToken.js")
 const {generateTeacherToken,getTokenFromCookies,generateEmailToken, getEmailFromToken, }=require('../config/tchr')
-
+// const { getTokenFromCookies } = require('../config/tchr');  
+const Community=require('../Model/community.js');
+const {    addUserToCommunity}=require('../Controller/community');
 async function handleSignup(req,res){
     try {
         const { fname, lname, email, role, pwd, confirm_pwd } = req.body;
@@ -196,7 +198,13 @@ async function handleProfileTchr (req, res, showAllExperiments = false) {
         if (!teacher) {
             return res.status(404).send("User not found");
         }
-
+ const communities = await Community.find();
+        
+        // Call addUserToCommunity function for each community
+        for (const community of communities) {
+            await addUserToCommunity(req, community._id);
+        }
+  
         // Profile picture logic
         const profilePic = teacher.pic
             ? `data:image/jpeg;base64,${teacher.pic}`
@@ -225,7 +233,8 @@ async function handleProfileTchr (req, res, showAllExperiments = false) {
             joinDate: teacher.createdAt,
             profilePic: profilePic,
             experiments: experimentsToShow,
-            allExperiments: showAllExperiments
+            allExperiments: showAllExperiments,
+            user: req.user, communities
         });
     } catch (err) {
         console.error("Error in handleTchrController:", err);

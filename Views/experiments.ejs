@@ -6,173 +6,285 @@
     <title>Experiments</title>
     <style>
         body {
-   font-family: 'lato', sans-serif;
- }
- .container {
-   max-width: 1000px;
-   margin-left: auto;
-   margin-right: auto;
-   padding-left: 10px;
-   padding-right: 10px;
- }
- 
- h2 {
-   font-size: 26px;
-   margin: 20px 0;
-   text-align: center;
-   small {
-     font-size: 0.5em;
-   }
- }
- 
- .responsive-table {
-   li {
-     border-radius: 3px;
-     padding: 25px 30px;
-     display: flex;
-     justify-content: space-between;
-     margin-bottom: 25px;
-   }
-   .table-header {
-     background-color: #95A5A6;
-     font-size: 14px;
-     text-transform: uppercase;
-     letter-spacing: 0.03em;
-   }
-   .table-row {
-     background-color: #ffffff;
-     box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
-   }
-   .col-1 {
-     flex-basis: 15%;
-   }
-   .col-2 {
-     flex-basis: 15%;
-   }
-   .col-3 {
-     flex-basis: 15%;
-   }
-   .col-4 {
-     flex-basis: 15%;
-   }
-   .col-5 {
-     flex-basis: 20%;
-   }
-   .col-6 {
-     flex-basis: 20%;
-   }
-   
-   @media all and (max-width: 767px) {
-     .table-header {
-       display: none;
-     }
-     .table-row{
-       
-     }
-     li {
-       display: block;
-     }
-     .col {
-       
-       flex-basis: 100%;
-       
-     }
-     .col {
-       display: flex;
-       padding: 10px 0;
-       &:before {
-         color: #6C7A89;
-         padding-right: 10px;
-         content: attr(data-label);
-         flex-basis: 50%;
-         text-align: right;
-       }
-     }
-   }
- }
- .header {
-     float: right;
-     text-decoration: none;
-     font-size: 20px;
-     font-weight: bold;
-     color: #333; /* Dark gray text */
-     padding: 10px 15px; /* Adds spacing */
-     background-color: #f8f8f8; /* Light background */
-     border-radius: 5px; /* Rounded corners */
-     transition: all 0.3s ease-in-out;
- }
- 
- .header:hover {
-     color: white;
-     background-color: #007BFF; /* Blue background on hover */
-     text-decoration: none;
- }
-     </style>
+            font-family: 'lato', sans-serif;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 10px;
+        }
+        h2 {
+            font-size: 26px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        input[type="number"] {
+            width: 60px;
+            text-align: center;
+            font-size: 16px;
+            border: 2px solid green;
+            outline: none;
+            transition: 0.3s;
+        }
+        input[type="number"].red {
+            border-color: red;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-
-    <!-- <h1>Experiments</h1> -->
-
-    <h2>Pendulum Experiments</h2>
-    <table border="1">
-        <tr>
-            <th>Student Name</th>
-            <th>Mass</th>
-            <th>Radius</th>
-            <th>Time Period</th>
-            <th>Grade</th>
-        </tr>
-        <% penExperiments.forEach(exp => { %>
+        <h2>Pendulum Experiments</h2>
+        <table>
             <tr>
-                <td><%= exp.studentName %></td>
-                <td><%= exp.mass1 %></td>
-                <td><%= exp.radius1 %></td>
-                <td><%= exp.timePeriod1 %></td>
-                <td>
-                    <form action="/tchr/grade" method="POST">
-                        <input type="hidden" name="studentName" value="<%= exp.studentName %>">
-                        <input type="hidden" name="exp_no" value="1">
-                        <input type="hidden" name="exp_title" value="Pendulum">
-                        <input type="number" name="grade" min="0" max="5" required>
-                        <button type="submit">Submit</button>
-                    </form>
-                </td>
+                <th>Student Name</th>
+                <th>Mass</th>
+                <th>Radius</th>
+                <th>Time Period</th>
+                <th>Grade</th>
             </tr>
-        <% }); %>
-    </table>
+            <% penExperiments.forEach(exp => { %>
+                <tr>
+                    <td><%= exp.studentName %></td>
+                    <td><%= exp.mass1 %></td>
+                    <td><%= exp.radius1 %></td>
+                    <td><%= exp.timePeriod1 %></td>
+                    <td>
+                        <form action="/tchr/grade" method="POST">
+                            <input type="hidden" name="studentName" value="<%= exp.studentName %>">
+                            <input type="hidden" name="exp_no" value="1">
+                            <input type="hidden" name="exp_title" value="Pendulum">
+                            <input type="number" name="grade" class="grade-input" min="0" max="5" value="5" required>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
     </div>
+
     <div class="container">
-
-    <h2>Spring Experiments</h2>
-    <table border="1">
-        <tr>
-            <th>Student Name</th>
-            <th>Mass</th>
-            <th>Initial Length</th>
-            <th>Final Length</th>
-            <th>Time Period</th>
-            <th>Grade</th>
-        </tr>
-        <% springExperiments.forEach(exp => { %>
+        <h2>Spring Experiments</h2>
+        <table>
             <tr>
-                <td><%= exp.studentName %></td>
-                <td><%= exp.mass1 %></td>
-                <td><%= exp.initialLength1 %></td>
-                <td><%= exp.finalLength1 %></td>
-                <td><%= exp.timePeriod1 %></td>
-                <td>
-                    <form action="/tchr/grade" method="POST">
-                        <input type="hidden" name="studentName" value="<%= exp.studentName %>">
-                        <input type="hidden" name="exp_no" value="2">
-                        <input type="hidden" name="exp_title" value="Spring">
-                        <input type="number" name="grade" min="0" max="5" required>
-                        <button type="submit">Submit</button>
-                    </form>
-                </td>
+                <th>Student Name</th>
+                <th>Mass</th>
+                <th>Initial Length</th>
+                <th>Final Length</th>
+                <th>Time Period</th>
+                <th>Grade</th>
             </tr>
-        <% }); %>
-    </table>
+            <% springExperiments.forEach(exp => { %>
+                <tr>
+                    <td><%= exp.studentName %></td>
+                    <td><%= exp.mass1 %></td>
+                    <td><%= exp.initialLength1 %></td>
+                    <td><%= exp.finalLength1 %></td>
+                    <td><%= exp.timePeriod1 %></td>
+                    <td>
+                        <form action="/tchr/grade" method="POST">
+                            <input type="hidden" name="studentName" value="<%= exp.studentName %>">
+                            <input type="hidden" name="exp_no" value="2">
+                            <input type="hidden" name="exp_title" value="Spring">
+                            <input type="number" name="grade" class="grade-input" min="0" max="5" value="5" required>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const gradeInputs = document.querySelectorAll(".grade-input");
+
+            gradeInputs.forEach(input => {
+                input.addEventListener("focus", function() {
+                    this.value = "0";  // Set to 0 when clicked
+                    this.classList.add("red"); // Turn border red
+                });
+
+                input.addEventListener("input", function() {
+                    if (this.value === "5") {
+                        this.classList.remove("red"); // Turn back to green if 5
+                    } else {
+                        this.classList.add("red");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiments</title>
+    <style>
+        body {
+            font-family: 'lato', sans-serif;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 10px;
+        }
+        h2 {
+            font-size: 26px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        input[type="number"] {
+            width: 60px;
+            text-align: center;
+            font-size: 16px;
+            border: 2px solid green;
+            outline: none;
+            transition: 0.3s;
+        }
+        input[type="number"].red {
+            border-color: red;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Pendulum Experiments</h2>
+        <table>
+            <tr>
+                <th>Student Name</th>
+                <th>Mass</th>
+                <th>Radius</th>
+                <th>threadLength</th>
+                <th>PenndulumLength</th>
+                <th>trial1Time</th>
+                <th> trial2Time</th>
+
+                <th>meanTime</th>
+               
+              
+                <th>Time Period</th>
+                <th>Grade</th>
+            </tr>
+            <% penExperiments.forEach(exp => { %>
+                <tr>
+                    <td><%= exp.studentName %></td>
+                    <td><%= exp.mass1 %></td>
+                    <td><%= exp.radius1 %></td>
+                    <td><%= exp.threadLength1 %></td>
+                    <td><%= exp.PenndulumLength1%></td>
+                    <td><%= exp.trial1Time1 %></td>
+                    <td><%= exp.trial2Time1%></td>
+                    <td><%= exp.meanTime1%></td>
+
+                    <td><%= exp.timePeriod1 %></td>
+                    <td>
+                        <form action="/tchr/grade" method="POST">
+                            <input type="hidden" name="studentName" value="<%= exp.studentName %>">
+                            <input type="hidden" name="exp_no" value="1">
+                            <input type="hidden" name="exp_title" value="Pendulum">
+                            <input type="number" name="grade" class="grade-input" min="0" max="5" value="5" required>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
+
+    <div class="container">
+        <h2>Spring Experiments</h2>
+        <table>
+            <tr>
+                <th>Student Name</th>
+                <th>Mass</th>
+                <th>Initial Length</th>
+                <th>Final Length</th>
+                <th>Time Period</th>
+                <th>Grade</th>
+            </tr>
+            <% springExperiments.forEach(exp => { %>
+                <tr>
+                    <td><%= exp.studentName %></td>
+                    <td><%= exp.mass1 %></td>
+                    <td><%= exp.initialLength1 %></td>
+                    <td><%= exp.finalLength1 %></td>
+                    <td><%= exp.timePeriod1 %></td>
+                    <td>
+                        <form action="/tchr/grade" method="POST">
+                            <input type="hidden" name="studentName" value="<%= exp.studentName %>">
+                            <input type="hidden" name="exp_no" value="2">
+                            <input type="hidden" name="exp_title" value="Spring">
+                            <input type="number" name="grade" class="grade-input" min="0" max="5" value="5" required>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const gradeInputs = document.querySelectorAll(".grade-input");
+
+            gradeInputs.forEach(input => {
+                input.addEventListener("focus", function() {
+                    this.value = "0";  // Set to 0 when clicked
+                    this.classList.add("red"); // Turn border red
+                });
+
+                input.addEventListener("input", function() {
+                    if (this.value === "5") {
+                        this.classList.remove("red"); // Turn back to green if 5
+                    } else {
+                        this.classList.add("red");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

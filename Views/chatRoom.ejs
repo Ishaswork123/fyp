@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Chat Room - <%= community.communityName %></title>
+  <link rel="stylesheet" href="/css-file/chat2.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  
+ <body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const socket = io();
+
+      const communityId = '<%= community._id %>';
+      socket.emit('joinCommunity', communityId);
+
+      const form = document.getElementById('chat-form');
+      const messageInput = document.getElementById('message');
+      const messageList = document.getElementById('messages');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const message = messageInput.value;
+        if (message.trim() !== '') {
+          socket.emit('sendMessage', {
+            communityId,
+            message,
+            userId: '<%= user.id %>',
+            role: '<%= user.role %>'
+          });
+          messageInput.value = '';
+        }
+      });
+
+      socket.on('newMessage', (data) => {
+        const msgElement = document.createElement('li');
+        msgElement.textContent = `${data.senderRole} (${data.senderId}): ${data.content}`;
+        messageList.appendChild(msgElement);
+      });
+    });
+    $(function(){
+	$('.chat-area > .chat-list').jScrollPane({
+		mouseWheelSpeed: 30
+	});
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tabs = document.querySelectorAll(".tabs li");
+    const contents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", function () {
+            // Remove 'active' class from all tabs
+            tabs.forEach(t => t.classList.remove("active"));
+            this.classList.add("active");
+
+            // Get the target tab content
+            const tabId = this.getAttribute("data-tab");
+
+            // Hide all content and show only the selected one
+            contents.forEach(content => {
+                content.style.display = "none";
+            });
+            document.getElementById(tabId).style.display = "block";
+        });
+    });
+});
+
+  </script>
+</head>
+<body>
+  <div class="window-wrapper">
+    <div class="window-title">
+        <div class="dots">
+            <i class="fa fa-circle"></i>
+            <i class="fa fa-circle"></i>
+            <i class="fa fa-circle"></i>
+        </div>
+       
+        <div class="expand">
+            <i class="fa fa-expand"></i>
+        </div>
+    </div>
+
+    <div class="window-area">
+        <div class="conversation-list">
+           <ul>
+    <!-- Dashboard Item -->
+    <li class="item" style="background-color: rgb(6, 6, 58);">
+        <a href="/stdConsole">
+            <i class="fa fa-list-alt"></i><span>Dashboard</span>
+        </a>
+    </li>
+
+    <!-- List of Communities -->
+    <% communities.forEach(communitys => { %>
+        <li class="community-item <%= communitys._id.toString() === community._id.toString() ? 'active-community' : '' %>">
+            <a href="/std/chat/<%= communitys._id %>">
+                <i class="fa fa-users"></i>
+                <span><%= communitys.communityName %></span>
+            </a>  
+        </li>
+    <% }); %>
+</ul>
+
+            <div class="my-account">
+                <div class="image">
+                    <img src="/images/profile.jpg">
+                    <i class="fa fa-circle online"></i>
+                </div>
+                <div class="name">
+                    <span><%= community.userType %></span>
+                    <i class="fa fa-angle-down"></i>
+                    <span class="availability">
+                        <%= community.role === 'tchr' ? 'Admin' : 'User/Std' %>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-area">
+            <div class="title" style="background-color: rgb(6, 6, 58); color: beige; text-align: center; font-size: 14px;"><span><%= community.communityName %> Chat Room</span>
+                <i class="fa fa-search"></i></div>
+            <div class="chat-messages">
+                <% messages.forEach(msg => { %>
+                    <% if (msg.isSender) { %>
+                        <div class="message sender">
+                            <p><strong>You:</strong> <%= msg.message %></p>
+                            <small  class="timestamp"><%= new Date(msg.timestamp).toLocaleTimeString() %></small>
+                        </div>
+                    <% } else { %>
+                        <div class="message receiver">
+                            <p><strong><%= msg.userType === 'tchr' ? 'tchr' : 'std' %>:</strong> <%= msg.message %></p>
+                            <small class="timestamp"><%= new Date(msg.timestamp).toLocaleTimeString() %></small>
+                        </div>
+                    <% } %>
+                <% }); %>
+            </div>
+
+         <div class="input-area">
+    <div class="input-wrapper">
+        <form id="messageForm" action="/std/chat/<%= community._id %>/message" method="POST">
+            <!-- <i class="fa fa-pencil-alt"></i>         -->
+
+            <input type="text" name="message" placeholder="Type your message..." required />
+                   </form>
+    </div>
+    <div class="send-button">
+        <button type="submit" form="messageForm" class="send-btn">
+            <img src="/images/send.png" alt="Send" class="send-icon">
+
+            <!-- <i class="fa fa-paper-plane"></i> Send icon -->
+        </button>
+    </div>
+</div>
+
+        </div>
+
+        <div class="right-tabs">
+            <ul class="tabs">
+                <li class="active" data-tab="participants"><a href="#"><i class="fa fa-users"></i></a></li>
+                <li data-tab="creation">
+                    <a href="#"><i class="fa fa-calendar-alt"></i></a> <!-- Calendar icon for creation date -->
+                </li>
+                <li data-tab="info">
+                    <a href="#"><i class="fa fa-info-circle"></i></a> <!-- Info icon for community details -->
+                </li>
+            </ul>
+        
+            <div class="tabs-container">
+                <!-- Participants -->
+                <div class="tab-content active" id="participants">
+                    <ul class="member-list">
+                        <li>
+                            <span class="status"><i class="fa fa-circle-o"></i></span>
+                            <span class="p"> Total Participants: <%= community.totalUsers %></span>
+                        </li>
+                    </ul>
+                </div>
+        
+                <!-- Community Creation Time -->
+                <div class="tab-content" id="creation">
+                    <p class="p">Created on: <%= new Date(community.createdAt).toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    }) %> at <%= new Date(community.createdAt).toLocaleTimeString('en-US', { 
+                        hour: '2-digit', 
+                        minute: '2-digit', 
+                        second: '2-digit', 
+                        hour12: true 
+                    }) %></p>
+                </div>
+                
+        
+                <!-- Community Info -->
+                <div class="tab-content" id="info">
+                    <p class="p"> Community Name: <%= community.communityName %></p>
+                    <p class="p">Description: <%= community.commDescription %></p>
+                </div>
+
+                 <!-- Leave Community Button -->
+                 <div class="leave-section">
+                    <form action="/std/leave" method="POST" onsubmit="return confirm('Are you sure you want to leave this community?');">
+                        <input type="hidden" name="communityId" value="<%= community._id %>">
+                        <button type="submit" class="leave-btn">Leave Community</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const tabs = document.querySelectorAll(".tabs li");
+    const contents = document.querySelectorAll(".tab-content");
+
+    // Ensure only the first content is visible
+    contents.forEach(content => content.style.display = "none");
+    document.querySelector(".tab-content.active").style.display = "block";
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", function (event) {
+            event.preventDefault(); // Stop page jump
+
+            // Remove 'active' class from all tabs
+            tabs.forEach(t => t.classList.remove("active"));
+            this.classList.add("active");
+
+            // Hide all content and show only the selected one
+            contents.forEach(content => content.style.display = "none");
+            const tabId = this.getAttribute("data-tab");
+            document.getElementById(tabId).style.display = "block";
+        });
+    });
+});
+
+</script>
+  </body>
+</html>

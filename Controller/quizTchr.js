@@ -153,16 +153,41 @@ async function handledeleteQuiz(req, res) {
     }
   }
 
-  async function quizResult(req,res){
+  async function quizResult(req, res) {
     try {
-      // Fetch all quiz results from the database
-      const quizResults = await QuizResult.find();
+      const { student_id, exp_no } = req.query;
+  
+      // Building dynamic filter object
+      let filter = {};
+      if (student_id) filter.student_id = student_id;
+      if (exp_no) filter.exp_no = exp_no;
+  
+      // Fetch filtered quiz results from the database
+      const quizResults = await QuizResult.find(filter);
+  
       if (!quizResults || quizResults.length === 0) {
         return res.status(404).send('No quiz results found');
       }
+      const students = await QuizResult.aggregate([
+        {
+          $group: {
+            _id: "$student_id",
+            fname: { $first: "$fname" }
+          }
+        }
+      ]);
   
-      // Render the EJS file and pass the quiz results
-      res.render('tchrQuizResults', { quizResults });
+      // Fetch unique student IDs and experiment numbers for filters
+      // const students = await QuizResult.find().distinct('student_id');
+      const studentDetails = await QuizResult.find({ student_id: { $in: students } }, 'student_id fname');
+      const expNumbers = await QuizResult.find().distinct('exp_no');
+  
+      // Render the EJS file and pass data
+      res.render('quizResults', {
+        quizResults,
+        students: studentDetails,
+        expNumbers
+      });
     } catch (error) {
       console.error(error);
       res.status(500).send('Server error');

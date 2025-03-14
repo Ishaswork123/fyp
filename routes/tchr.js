@@ -1,29 +1,36 @@
 
 const express=require('express');
 const router=express.Router();
-const { handleSignup,handleLogin,handleLogout,handleUpdateAccount,handlegetUpdate,verifyEmail
-    ,sendOTP, verifyOTP, resetPassword
-}= require('../Controller/tchr');
+const { handleSignup,handleLogin,handleLogout,handleUpdateAccount,handlegetUpdate,verifyEmail,sendOTP, verifyOTP, resetPassword}= require('../Controller/tchr');
 const multer = require('multer');
-const { getTokenFromCookies } = require('../config/tchr');  
-
+const Community=require('../Model/community');
+const std = require('../Model/std');
+const tchr = require('../Model/tchr');
 const path = require('path');
 const storage=multer.memoryStorage();
 
+const mongoose =require('mongoose');
+const { getTokenFromCookies } = require('../config/tchr');  
+
+const {    addUserToCommunity
+}=require('../Controller/community');
 
 function isAuthenticated(req, res, next) {
-    const tokenData = getTokenFromCookies(req);  // Extract the token from cookies
+  console.log('Cookies in request:', req.cookies);
 
-    if (!tokenData) {
-        // Token is missing or invalid, redirect to the home page
-        return res.redirect('/');
-    }
+  // Extract student token
+  const Teacher = getTokenFromCookies(req, 'teacher_token');
 
-    // Attach the user ID and email to the request object for further use
-    req.userId = tokenData.id;
-    next();
+  if (Teacher) {
+    console.log('Teacher authenticated:', Teacher);
+    req.user = Teacher; // Attach user info to the request
+    return next(); // Allow access to the intended route
+  } else {
+    console.log('No valid token found. Redirecting to login.');
+    res.clearCookie('teacher_token'); // Clear the student token if invalid
+    return res.redirect('/tchr/login'); // Redirect to the login page
+  }
 }
-  
 
 
 
@@ -102,4 +109,185 @@ router.get("/reset-password", (req, res) => {
 router.post("/verify-otp", verifyOTP);
 router.post("/reset-password", resetPassword);
 
+// Function to add user to the community
+
+
+
+
+// Dashboard Route
+router.get('/dashboard', isAuthenticated, async (req, res) => {
+  try {
+      const communities = await Community.find();
+      
+      // Call addUserToCommunity function for each community
+      for (const community of communities) {
+          await addUserToCommunity(req, community._id);
+      }
+
+      res.render('tchrConsole', { user: req.user, communities });
+  } catch (error) {
+      console.error('Error loading dashboard:', error.message);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
+  // Create Community Route
+  router.post('/create', isAuthenticated, async (req, res) => {
+  
+      try {
+        const { communityName, commDescription } = req.body;
+
+        // Check if a community with the same name already exists
+        const existingCommunity = await Community.findOne({ communityName });
+
+        if (existingCommunity) {
+            return res.status(400).json({ message: "Community name must be unique" });
+        }
+
+        // Extract user details from the JWT token
+        const userToken = getTokenFromCookies(req, 'teacher_token') ;
+
+        if (!userToken) {
+            return res.status(401).json({ message: "Unauthorized: No valid token found" });
+        }
+
+        // Determine role and userType based on the token
+        let role = 'tchr'; // Default role is student
+        let userType = 'tchr';
+
+        // if (userToken.role === 'tchr') {
+        //     role = 'tchr';
+        //     userType = 'tchr';
+        // }
+
+        // Create new community with user details
+        const newCommunity = new Community({
+            communityName,
+            commDescription,  // Add commDescription field
+            role,             // Add role field
+
+            users: [{ userId: userToken.id, role }], // Add user with role
+            totalUsers: 1
+        });
+
+        await newCommunity.save();
+
+        res.render('chatRoom_tchr', { user: req.user, community: newCommunity });
+    } catch (error) {
+        console.error("Error creating community:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+  
+  // Chat Room Route
+ router.get('/chat/:id', isAuthenticated, async (req, res) => {
+     try {
+           const community = await Community.findById(req.params.id)
+               .populate('users.userId')
+               .lean(); // Convert to plain JS object
+   
+           const communities = await Community.find().lean(); // Fetch all communities for sidebar
+   
+           if (!community) {
+               return res.status(404).send('Community not found');
+           }
+   
+           if (!req.user || !req.user.id) {
+               console.error("User authentication error: req.user is missing");
+               return res.redirect('/tchr/login');
+           }
+   
+           const userId = new mongoose.Types.ObjectId(req.user.id);
+           let existingUser = community.users.find(u => u.userId && u.userId.equals(userId));
+   
+           if (!existingUser) {
+               community.users.push({ userId: userId, role: req.user.role || 'tchr' });
+               community.totalUsers += 1;
+               await Community.updateOne({ _id: req.params.id }, { $set: { users: community.users } });
+           }
+   
+           // Get messages from community model
+           const messages = community.messages.map(msg => ({
+               userId: msg.userId,
+               userType: msg.userType,
+               message: msg.message,
+               timestamp: msg.timestamp,
+               isSender: msg.userId.toString() === req.user.id.toString() // Check if the logged-in user is the sender
+           }));
+   
+           res.render('chatRoom_tchr', { 
+               user: req.user, 
+               community,
+               communities, // Pass communities list to the template
+               messages,
+               members: community.users
+           });
+   
+       } catch (error) {
+           console.error("Error in chat route:", error);
+           res.redirect('/tchrConsole');
+       }
+    });
+    router.post('/chat/:id/message', isAuthenticated, async (req, res) => {
+        try {
+                const community = await Community.findById(req.params.id);
+                
+                if (!community) {
+                    console.error("Community not found for ID:", req.params.id);
+                    return res.status(404).send('Community not found'); // Ensure return statement
+                }
+        
+                if (!req.body.message) {
+                    console.error("Message content is missing");
+                    return res.status(400).send("Message cannot be empty"); // Ensure return statement
+                }
+        
+                // Ensure user exists in community
+                const user = community.users.find(u => u?.userId?.equals(req.user.id));
+                if (!user) {
+                    console.error("User not found in community:", req.user.id);
+                    return res.status(400).send('User not found in the community'); // Ensure return statement
+                }
+        
+                // Add message to the community
+                await Community.findByIdAndUpdate(
+                    req.params.id,
+                    {
+                        $push: {
+                            messages: {
+                                userId: req.user.id,
+                                userType: user.role, 
+                                message: req.body.message,
+                            }
+                        }
+                    },
+                    { new: true, runValidators: false } // Prevent full validation
+                );
+        
+                return res.redirect(`/tchr/chat/${req.params.id}`); // Ensure response is only sent once
+        
+            } catch (error) {
+                console.error("Error in posting message:", error);
+        
+                if (!res.headersSent) { 
+                    return res.status(500).send('Failed to save message'); // Send error response only if not already sent
+                }
+            }
+      });
+      
+  router.post('/leave', async (req, res) => {
+      try {
+          const { communityId } = req.body;
+  
+          // Delete the community from the database
+          await Community.findByIdAndDelete(communityId);
+  
+          // Redirect user to console page
+          res.redirect('/tchrConsole');
+      } catch (error) {
+          console.error(error);
+          res.status(500).send('Error leaving the community');
+      }
+  });
   module.exports=router;

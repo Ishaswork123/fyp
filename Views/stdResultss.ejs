@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Student Results</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+   body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f5f5f5;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #333;
+}
+
+section {
+  margin: 30px 0;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Table Styling */
+.table-container {
+  overflow-x: auto; /* Enables horizontal scroll on small screens */
+}
+
+table {
+  width: 100%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  min-width: 600px; /* Prevents table from shrinking too much */
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  body {
+    margin: 10px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  h1, h2 {
+    font-size: 1.5rem;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <h1>Mark Summary</h1>
+
+  <section>
+    <h2>Quiz Results</h2>
+    <% if (quizResults.length > 0) { %>
+      <div class="table-container">
+        <table border="1">
+          <tr>
+            <th>Experiment No</th>
+            <th>Experiment Title</th>
+            <th>Marks Obtained</th>
+            <th>Total Questions</th>
+          </tr>
+          <% quizResults.forEach(result => { %>
+            <tr>
+              <td><%= result.exp_no %></td>
+              <td><%= result.exp_title %></td>
+              <td><%= result.marks_obtained %></td>
+              <td><%= result.total_questions %></td>
+            </tr>
+          <% }) %>
+        </table>
+      </div>
+    <% } else { %>
+      <p style="text-align: center;">No quiz results available.</p>
+    <% } %>
+  </section>
+  
+  <section>
+    <h2>Experiment Results</h2>
+    <% if (expResults.length > 0) { %>
+      <div class="table-container">
+        <table border="1">
+          <tr>
+            <th>Experiment No</th>
+            <th>Experiment Title</th>
+            <th>Grade</th>
+          </tr>
+          <% expResults.forEach(result => { %>
+            <tr>
+              <td><%= result.exp_no %></td>
+              <td><%= result.exp_title %></td>
+              <td><%= result.grade %> / 5</td>
+            </tr>
+          <% }) %>
+        </table>
+      </div>
+    <% } else { %>
+      <p style="text-align: center;">No experiment results available.</p>
+    <% } %>
+  </section>
+  
+</body>
+</html>

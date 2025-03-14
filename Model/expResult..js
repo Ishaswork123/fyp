@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const resultSchema = new mongoose.Schema({
-    studentName: { type: String, required: true },
+    studentId: { type: mongoose.Schema.Types.ObjectId, ref: "std", required: true },
     exp_no: { type: String, required: true },  // Experiment Number
     exp_title: { type: String, required: true },  // Experiment Title
     grade: { type: Number, required: true, min: 0, max: 5 }, // Grade out of 5

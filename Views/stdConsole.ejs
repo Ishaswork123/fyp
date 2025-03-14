@@ -218,6 +218,10 @@ Experiment
 </li> -->
 						  
 <li><a href="/std/class">Classroom</a></li>
+<!-- <li><a href="/std/dashboard">Community</a></li> -->
+<li><a href="/std/results">Result</a></li>
+
+
 
 						  <!-- Modal -->
 						  <!-- <div id="modal" class="modal">
@@ -246,45 +250,77 @@ Experiment
 							  </div>
 							</div>
 						  </div>
-						   -->
-						<!-- Community Dropdown -->
-						<li class="nav-item">
+					
+						 Community Dropdown -->
+						 <li class="nav-item">
 							<a class="nav-link" href="#" id="communityLink">
 							  Community
 							</a>
 						  </li>
-						  
-						  <div id="communityModal" class="modal">
-							<div class="modal-content">
-							  <div class="content">
-								<button class="close">&times;</button>
-								<form action="/login-com" method="post">
-								  <header>Join Community</header>
-						  
-								  <!-- Username Input -->
-								  <div class="field">
-									<span class="fa fa-user"></span>
-									<input type="text" required placeholder="User Name" id="username" name="username">
-								  </div>
-						  
-								  <!-- Select Community Dropdown -->
-								  <div class="field selectCommunity">
-									<label for="room"></label>
-									<select id="room" name="room">
-									  <option id="option" disabled selected>Select a Community</option>
-									</select>
-								  </div>
-						  
-								  <!-- Create New Community Checkbox -->
-								  <div class="field">
+
+													
+			  <div id="communityModal" class="modal">
+				<div class="modal-content">
+				  <div class="content">
+					<button class="close">&times;</button>
+					  <header style=" color: black;">Join Community</header>
+			  
+					  <!-- <div class="field">
+						<span class="fa fa-user"></span>
+						<input type="text" required placeholder="User Name" id="username" name="username">
+					  </div> -->
+			  
+					  <form action="/std/dashboard" method="POST">
+						<div class="field selectCommunity">
+							<label for="room"></label>
+							<select id="room" name="room" required>
+								<option disabled selected>Select a Community</option>
+								<% communities.forEach(community => { %>
+									<option value="<%= community._id %>">
+										<%= community.communityName %> - Users: <%= community.totalUsers %>
+									</option>
+								<% }); %>
+							</select>
+						</div>
+						<button class="submit" type="submit" id="login">Join</button>
+					</form>
+					
+					
+			  
+					  <!-- <div class="field">
+						<label>
+						  <input type="checkbox" id="createNewCommunityCheckbox" />
+						  Create New Community
+						</label>
+					  </div>
+					  <form action="/std/create" method="post">
+
+					  <div id="createCommunityFields" style="display: none;">
+						<div class="field createCommunity">
+						  <span class="fa-solid fa-plus"></span>
+						  <input placeholder="New Community Name" type="text" id="new_room" name="communityName">
+						</div>
+						<div class="field">
+						  <span class="fa fa-info-circle"></span>
+						  <input placeholder="Community Bio" type="text" id="community_bio" name="commDescription">
+						</div>
+						
+					  </div>
+			  
+					  <button class="submit" type="submit" id="login">Join</button>
+					</form> -->
+				  </div>
+				</div>
+			  </div>
+								  <!-- <div class="field">
 									<label>
 									  <input type="checkbox" id="createNewCommunityCheckbox" />
 									  Create New Community
 									</label>
-								  </div>
+								  </div> -->
 						  
 								  <!-- Create Community Fields (Initially Hidden) -->
-								  <div id="createCommunityFields" style="display: none;">
+								  <!-- <div id="createCommunityFields" style="display: none;">
 									<div class="field createCommunity">
 									  <span class="fa-solid fa-plus"></span>
 									  <input placeholder="New Community Name" type="text" id="new_room" name="new_room">
@@ -293,18 +329,13 @@ Experiment
 									  <span class="fa fa-info-circle"></span>
 									  <input placeholder="Community Bio" type="text" id="community_bio" name="community_bio">
 									</div>
-									<!-- <div class="field">
-									  <span class="fa fa-users"></span>
-									  <input placeholder="Number of Members (Optional)" type="number" id="community_members" name="community_members">
-									</div> -->
-								  </div>
+									
+								  </div> -->
 						  
-								  <!-- Submit Button -->
-								  <button class="submit" type="submit" id="login">Join</button>
-								</form>
-							  </div>
+								
+							
 							</div>
-						  </div>
+						  </div> 
 						  
 						  
 						<li>
@@ -778,6 +809,13 @@ function toggleSubmenu(event, id) {
         // Toggle the clicked submenu
         submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
     }
+
+	document.getElementById("room").addEventListener("change", function() {
+        const communityId = this.value;
+        if (communityId) {
+            window.location.href = `/std/chat/${communityId}`;
+        }
+    });
 	</script>
 	
 <script src="/js/jquery-3.2.1.min.js"></script>

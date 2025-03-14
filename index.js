@@ -13,8 +13,7 @@ const bcrypt = require("bcrypt");
 // const bodyParser = require("body-parser");
 const path =require('path');
 
-const http = require('http');
-const socketIo = require('socket.io');
+
 const bodyParser = require('body-parser');
 
 
@@ -34,15 +33,48 @@ const classRoom=require('./routes/classroom')
 const stdClass=require('./routes/classStd');
 const stdRes=require('./routes/learningStd');
 const expRes=require('./routes/expResult');
-
+const stdRes1=require('./routes/stdResult');
 const tchrUpload=require('./routes/learning');
 // Model Imports 
 const {handleProfile}=require('./Controller/std');
 const {handleProfileTchr}=require('./Controller/tchr');
 
 const cookieParser = require('cookie-parser');
-const tchr = require('./Model/tchr');
-const std = require('./Model/std');
+const http = require('http');
+const socketio = require('socket.io');
+const server = http.createServer(app);
+const io = socketio(server);
+const Community = require('./Model/community');
+
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+
+  socket.on('joinCommunity', (communityId) => {
+    socket.join(communityId);
+  });
+
+  socket.on('sendMessage', async ({ communityId, message, userId, role }) => {
+    const newMessage = {
+      senderId: userId,
+      senderRole: role,
+      content: message,
+      timestamp: new Date()
+    };
+
+    await Community.findByIdAndUpdate(communityId, {
+      $push: { messages: newMessage }
+    });
+
+    io.to(communityId).emit('newMessage', newMessage);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
+
+
+
 app.use(cookieParser());
 
 // Use cookie-parser middleware
@@ -156,9 +188,10 @@ app.use('/tchr',tchrUpload);
 app.use('/std',stdClass);
 app.use('/std',stdRes);
 app.use('/tchr',expRes);
+app.use('/std',stdRes1);
 
 
-app.get('/tchr/tchrConsole', isAuthenticated, (req, res) => {
+app.get('/tchr/tchrConsole', isAuthenticated,async (req, res) => {
   handleProfileTchr(req, res, false); // Pass `false` to show only 3 random experiments
 });
 
@@ -178,7 +211,7 @@ app.get('/std/view-all', isAuthenticated, (req, res) => {
 app.use((req, res, next) => {
   res.status(404).render('404', { title: 'Page Not Found', url: req.url });
 });
-const PORT = process.env.PORT || 5014;
+const PORT = process.env.PORT || 5013;
 
 app.listen(PORT, () => {
     console.log(`Server started at port ${PORT}`);

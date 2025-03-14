@@ -6,7 +6,8 @@ const { sendVerificationEmail, sendWelcomeEmail ,  sendVerificationEmail_reset,
     sendWelcomeEmail_reset,} =require("../middlewares/Email.js")
 const { generateTokenAndSetCookies } =require( "../middlewares/GenerateToken.js")
 const {generateToken,getTokenFromCookies,generateStudentToken}=require('../config/tchr')
-
+const Community=require('../Model/community.js');
+const {    addUserToCommunity}=require('../Controller/community');
 async function handleSignup(req,res){
     try {
         const { fname, lname, email, pwd, confirm_pwd } = req.body;
@@ -205,7 +206,11 @@ async function handleProfile(req, res) {
 
         // Fetch two random teachers from the database
         const teachers = await Teacher.aggregate([{ $sample: { size: 2 } }]); // Randomly fetch 2 teachers
-
+    const communities = await Community.find();
+   for (const community of communities) {
+            await addUserToCommunity(req, community._id);
+        }
+  
         // Check if a profile picture exists for the student, or use a default one
         const profilePic = student.pic ? `data:image/jpeg;base64,${student.pic}` : '/images/default-profile-icon.jpg';
 
@@ -215,7 +220,9 @@ async function handleProfile(req, res) {
             email: student.email,
             joinDate: student.createdAt,
             profilePic: profilePic,  // Profile picture path
-            teachers: teachers      // Pass the teachers data to the template
+            teachers: teachers  ,    // Pass the teachers data to the template
+            user: req.user, communities
+
         });
     } catch (err) {
         console.error(err);
