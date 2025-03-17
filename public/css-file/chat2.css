@@ -633,14 +633,21 @@ ul.tabs-container{
 .active-community a {
   color: white !important;
 }
+.delete-form {
+    margin-left: 10px;
+}
 .delete-icon {
     cursor: pointer;
-    color: rgb(11, 20, 68);
-    margin-left: 250px;
-    padding-left: 100px;
+    color: rgb(2, 6, 29);
+    margin-left: 240px;
+    /* padding-left: 100px; */
     padding: 10px;
-    margin-right: 100px;
+    /* margin-right: 400px; */
     font-size: 14px;
+    border: none;
+    background-color: #ffffff;
+    height: 30px;
+    width: 30px;
     cursor: pointer;
     transition: color 0.2s;
 }
@@ -648,3 +655,6 @@ ul.tabs-container{
 .delete-icon:hover {
     color: darkred;
 }
+
+
+

@@ -128,6 +128,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="message sender">
                             <p><strong>You:</strong> <%= msg.message %></p>
                             <small  class="timestamp"><%= new Date(msg.timestamp).toLocaleTimeString() %></small>
+                            <form action="/tchr/chat/<%= community._id %>/delete-message/<%= msg._id %>" method="POST" class="delete-form">
+                                <button type="submit" class="delete-icon">🗑</button>
+                            </form>
                         </div>
                     <% } else { %>
                         <div class="message receiver">

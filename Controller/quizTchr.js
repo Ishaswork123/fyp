@@ -164,7 +164,15 @@ async function handledeleteQuiz(req, res) {
   
       // Fetch filtered quiz results from the database
       const quizResults = await QuizResult.find(filter);
-  
+      const correctAnswers = await Quiz.find({ exp_no }, 'question_no Answer');
+
+      // ✅ Convert correctAnswers into a structured array
+      const formattedCorrectAnswers = correctAnswers.map(q => ({
+        question_no: q.question_no,
+        answer: q.Answer  // Handle possible lowercase
+    }));
+    
+    
       if (!quizResults || quizResults.length === 0) {
         return res.status(404).send('No quiz results found');
       }
@@ -186,7 +194,8 @@ async function handledeleteQuiz(req, res) {
       res.render('quizResults', {
         quizResults,
         students: studentDetails,
-        expNumbers
+        expNumbers, 
+        correctAnswers:formattedCorrectAnswers 
       });
     } catch (error) {
       console.error(error);

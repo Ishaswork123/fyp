@@ -1,393 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Teacher Console</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Unicat project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="/bootstrap4/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" type="text/css" href="/css-file/tchrConsole.css">
-<link rel="stylesheet" type="text/css" href="/css-file/responsive.css">
-<link rel="stylesheet" href="/assets/css/fontawesome.css">
-  <link rel="stylesheet" href="/assets/css/templatemo-seo-dream.css">
-  <link rel="stylesheet" href="/assets/css/animated.css">
-  <link rel="stylesheet" href="/assets/css/owl.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css-file/chat.css">
-<link rel="stylesheet" href="/css-file/tchrConsole.css">
+	<title>Teacher Console</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Unicat project">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/bootstrap4/bootstrap.min.css">
+	<link rel="stylesheet" href="/node_modules/material-icons/iconfont/material-icons.css">
+	<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+	<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+	<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css">
+	<link rel="stylesheet" type="text/css" href="/css-file/tchrConsole.css">
+	<link rel="stylesheet" href="/assets/css/fontawesome.css">
+	<link rel="stylesheet" href="/assets/css/templatemo-seo-dream.css">
+	<link rel="stylesheet" href="/assets/css/animated.css">
+	<link rel="stylesheet" href="/assets/css/owl.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/node_modules/material-icons/iconfont/material-icons.css">
+	<link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+		rel="stylesheet">
+	<!-- <link rel="stylesheet" href="/css-file/expModel.css"> -->
+	<link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+	<link rel="stylesheet" href="/css-file/tchrConsole.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" href="/assets_1/css/templatemo-edu-meeting.css">
+	<style>
+		.submenu {
+			position: absolute;
+			left: 100%;
+			top: 0;
+			/* display: none; */
+		}
 
-<!-- <link rel="stylesheet" href="/css-file/expModel.css"> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>
-	.submenu {
-    position: absolute;
-    left: 100%;
-    top: 0;
-    display: none;
-}
-.dropdown-menu .dropdown-submenu:hover > .submenu {
-    display: block;
-}
-
-</style>
+		.dropdown-menu .dropdown-submenu:hover>.submenu {
+			display: block;
+			position: absolute;
+		}
+	</style>
 </head>
+
 <body>
 
-<div class="super_container">
 
-	<!-- Header -->
 
-	<header class="header">
-			
-		<!-- Top Bar -->
-		<!-- <div class="top_bar">
-			<div class="top_bar_container">
+	<div class="super_container">
+		<!-- Header -->
+		<header class="header">
+			<!-- Header Content -->
+			<div class="header_container">
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
-								<ul class="top_bar_contact_list">
-									<li><div class="question"><img src="/images/R.jpeg" class="rounded  "alt="logo" height="30px" width="30px"></div></li>
-									<li>
-										<i class="fa " aria-hidden="true"></i>
-										<div>Comsats University Islamabad Attock Campus</div>
-									</li>
-									
-								</ul>
-								<div class="top_bar_login ml-auto">
-									<div class="login_button"><a href="/tchr/Profile">Profile</a></div>
+							<div class="header_content d-flex flex-row align-items-center justify-content-start">
+								<img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
+								<div class="logo_container">
+									<a href="#">
+										<div class="logo_text">Physics<span>Verse</span></div>
+									</a>
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>				
-		</div> -->
-
-		<!-- Header Content -->
-		<div class="header_container">
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						<div class="header_content d-flex flex-row align-items-center justify-content-start">
-							<div class="logo_container">
-								<a href="#">
-									<div class="logo_text">Physics<span>Verse</span></div>
-								</a>
-							</div>
-							<nav class="main_nav_contaner ml-auto">
-								<ul class="main_nav mb-0">
-									<li class="active"><a href="/tchr/tchrConsole">Home</a></li>
-									<li><a href="/tchr/quiz">Quizes</a></li>
-									<li class="nav-item dropdown">
-										<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-											Experiment
-										</a>
-										<ul class="dropdown-menu" aria-labelledby="experimentDropdown">
-											<!-- Guided Option -->
-											<li class="dropdown-submenu">
-												<a class="dropdown-item" href="#" onclick="toggleSubmenu(event, 'guidedMenu');">Guided</a>
-												<ul class="submenu dropdown-menu" id="guidedMenu" style="display: none;">
-													<a class="dropdown-item" href="/guided/penExp" >Experiment 1</a>
-													<a class="dropdown-item" href="/guided/massExp" >Experiment 2</a>
-													<a class="dropdown-item" href="/guided/resonance" >Experiment 3</a>
-													<!-- <li><a class="dropdown-item" href="/exp/guided4">Guided 4</a></li>
+								<nav class="main_nav_contaner ml-auto">
+									<ul class="main_nav mb-0">
+										<li class="active"><a href="/tchr/tchrConsole">Home</a></li>
+										<li><a href="/tchr/quiz">Quizes</a></li>
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown"
+												role="button" data-bs-toggle="dropdown" aria-expanded="false">
+												Experiment
+											</a>
+											<ul class="dropdown-menu" aria-labelledby="experimentDropdown">
+												<!-- Guided Option -->
+												<li class="dropdown-submenu">
+													<a class="dropdown-item" href="#"
+														onclick="toggleSubmenu(event, 'guidedMenu');">Guided</a>
+													<ul class="submenu dropdown-menu" id="guidedMenu">
+														<a class="dropdown-item" href="/guided/penExp">Pendulum</a>
+														<a class="dropdown-item" href="/guided/massExp">Mass spring
+															system</a>
+														<a class="dropdown-item" href="/guided/resonance">Resonance</a>
+														<!-- <li><a class="dropdown-item" href="/exp/guided4">Guided 4</a></li>
 													<li><a class="dropdown-item" href="/exp/guided5">Guided 5</a></li> -->
-												</ul>
-											</li>
-											<!-- Experiment Option -->
-											<li class="dropdown-submenu">
-												<a class="dropdown-item" href="#" onclick="toggleSubmenu(event, 'experimentMenu');">Experiment</a>
-												<ul class="submenu dropdown-menu" id="experimentMenu" style="display: none;">
-													<a href="/exp/penExp">Pendulum <i class="uil uil-arrow-right"></i></a>
-													<a href="/exp/massExp">Mass Spring System <i class="uil uil-arrow-right"></i></a>
-													<a href="/exp/resonance">Resonance <i class="uil uil-arrow-right"></i></a>
-													
-												</ul>
-											</li>
-										</ul>
-									</li>
-									
-<!-- 
-									<li class="nav-item dropdown">
-										<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Guided  Experiment
-										</a>
-										<div class="dropdown-menu" aria-labelledby="experimentDropdown">
-										  <a class="dropdown-item" href="/guided/penExp" >Experiment 1</a>
-										  <a class="dropdown-item" href="/guided/massExp" >Experiment 2</a>
-										  <a class="dropdown-item" href="/guided/resonance" >Experiment 3</a>
-									
-										</div>
-									  </li> -->
-									  <!-- Trigger Button
-<li>
-	<a href="#" id="openModalButton"> Experiments</a>
-  </li> -->
+													</ul>
+												</li>
+												<!-- Experiment Option -->
+												<li class="dropdown-submenu">
+													<a class="dropdown-item" href="#"
+														onclick="toggleSubmenu(event, 'experimentMenu');">Experiment</a>
+													<ul class="submenu dropdown-menu" id="experimentMenu">
+														<a href="/exp/penExp">Pendulum <i
+																class="uil uil-arrow-right"></i></a>
+														<a href="/exp/massExp">Mass Spring System <i
+																class="uil uil-arrow-right"></i></a>
+														<a href="/exp/resonance">Resonance <i
+																class="uil uil-arrow-right"></i></a>
 
-  <li><a href="/classroom/class">Classroom</a></li>
-  <!-- <li><a href="/tchr/dashboard">Community</a></li> -->
+													</ul>
+												</li>
+											</ul>
+										</li>
 
 
-  <!-- <li class="nav-item dropdown">
-	<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	  Experiment
-	</a>
-	<div class="dropdown-menu" aria-labelledby="experimentDropdown">
-	  <a class="dropdown-item" href="/exp/penExp" >Experiment 1</a>
-	  <a class="dropdown-item" href="/exp/massExp" >Experiment 2</a>
-	  <a class="dropdown-item" href="/exp/resonance" >Experiment 3</a>
+										<li><a href="/classroom/class">Classroom</a></li>
 
-	</div>
-  </li> -->
 
-  
 
-  <!-- Modal -->
-  <!-- <div id="modal" class="modal">
-	<div class="modal-content">
-	  <button class="close">&times;</button>
-	  <div class="content">
-		<header>Select an Option</header>
-		<div class="options">
-		  <div class="option">
-			<img src="images/customized-experiment.jpg" alt="Customized Experiment">
-			<button class="option-button">Customized Experiment</button>
-		  </div>
-		  <div class="option">
-			<img src="images/guided-experiment.jpg" alt="Guided Experiment">
-			<button class="option-button">Guided Experiment</button>
-		  </div>
-		  <div class="option">
-			<img src="images/quiz.jpg" alt="Quiz">
-			<button class="option-button">Quiz</button>
-		  </div>
-		  <div class="option">
-			<img src="images/details.jpg" alt="Details">
-			<button class="option-button">Details</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-  </div>
-   -->
+										<!-- Community Dropdown --> 
+										<li class="nav-item">
+										   <a class="nav-link" href="#" id="communityLink">
+											 Community
+										   </a>
+										 </li>
+			   
+																   
+							 <div id="communityModal" class="modal">
+							   <div class="modal-content">
+								 <div class="content">
+								   <button class="close">&times;</button>
+									 <header style=" color: black;">Join Community</header>
+							 
+									 <!-- <div class="field">
+									   <span class="fa fa-user"></span>
+									   <input type="text" required placeholder="User Name" id="username" name="username">
+									 </div> -->
+							 
+									 <form action="/tchr/dashboard" method="POST">
+									   <div class="field selectCommunity">
+										   <label for="room"></label>
+										   <select id="room" name="room" required>
+											   <option disabled selected>Select a Community</option>
+											   <% communities.forEach(community => { %>
+												   <option value="<%= community._id %>">
+													   <%= community.communityName %> - Users: <%= community.totalUsers %>
+												   </option>
+											   <% }); %>
+										   </select>
+									   </div>
+									   <button class="submit" type="submit" id="login">Join</button>
+								   </form>
+								   
+								   
+							 
+									 <div class="field">
+									   <label>
+										 <input type="checkbox" id="createNewCommunityCheckbox" />
+										 Create New Community
+									   </label>
+									 </div>
+									 <form action="/tchr/create" method="post">
+			   
+									 <div id="createCommunityFields" style="display: none;">
+									   <div class="field createCommunity">
+										 <span class="fa-solid fa-plus"></span>
+										 <input placeholder="New Community Name" type="text" id="new_room" name="communityName">
+									   </div>
+									   <div class="field">
+										 <span class="fa fa-info-circle"></span>
+										 <input placeholder="Community Bio" type="text" id="community_bio" name="commDescription">
+									   </div>
+									   
+									 </div>
+							 
+									 <button class="submit" type="submit" id="login">Join</button>
+								   </form>
+								 </div>
+							   </div>
+							 </div>
+												 <!-- <div class="field">
+												   <label>
+													 <input type="checkbox" id="createNewCommunityCheckbox" />
+													 Create New Community
+												   </label>
+												 </div> -->
+										 
+												 <!-- Create Community Fields (Initially Hidden) -->
+												 <!-- <div id="createCommunityFields" style="display: none;">
+												   <div class="field createCommunity">
+													 <span class="fa-solid fa-plus"></span>
+													 <input placeholder="New Community Name" type="text" id="new_room" name="new_room">
+												   </div>
+												   <div class="field">
+													 <span class="fa fa-info-circle"></span>
+													 <input placeholder="Community Bio" type="text" id="community_bio" name="community_bio">
+												   </div>
+												   
+												 </div> -->
+										 
+											   
+										   
+										   </div>
+										 </div> 
 
-									<!-- <li><a href="/tchr/managestudent">Exp Results</a></li> -->
 
-									<li class="nav-item">
-										<a class="nav-link" href="#" id="communityLink">
-										  Community
-										</a>
-									  </li>
-
-									  						  
-						  <div id="communityModal" class="modal">
-							<div class="modal-content">
-							  <div class="content">
-								<button class="close">&times;</button>
-								  <header>Join Community</header>
-						  
-								  <!-- <div class="field">
-									<span class="fa fa-user"></span>
-									<input type="text" required placeholder="User Name" id="username" name="username">
-								  </div> -->
-						  
-								  <div class="field selectCommunity">
-									<label for="room"></label>
-									<select id="room" name="room">
-										<option id="option" disabled selected>Select a Community</option>
-										<% communities.forEach(community => { %>
-											<option value="<%= community._id %>">
-												<%= community.communityName %> - Users: <%= community.totalUsers %>
-											</option>
-										<% }); %>
-									</select>
-								</div>
-								
-						  
-								  <div class="field">
-									<label>
-									  <input type="checkbox" id="createNewCommunityCheckbox" />
-									  Create New Community
-									</label>
-								  </div>
-								  <form action="/tchr/create" method="post">
-
-								  <div id="createCommunityFields" style="display: none;">
-									<div class="field createCommunity">
-									  <span class="fa-solid fa-plus"></span>
-									  <input placeholder="New Community Name" type="text" id="new_room" name="communityName">
+										<li>
+											<div class="profile-icon" onclick="openSideMenu()">
+												<i class="fa fa-user"></i>
+											</div>
+										</li>
+									</ul>
+									<div class="hamburger menu_mm">
+										<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
 									</div>
-									<div class="field">
-									  <span class="fa fa-info-circle"></span>
-									  <input placeholder="Community Bio" type="text" id="community_bio" name="commDescription">
-									</div>
-									
-								  </div>
-						  
-								  <button class="submit" type="submit" id="login">Join</button>
-								</form>
-							  </div>
+								</nav>
 							</div>
-						  </div>
-						  <li>
-							<div class="profile-icon" onclick="openSideMenu()">
-							  <i class="fa fa-user"></i>
-						  </div>		
-							  </li>
-									<!-- <li><a href="/community">Community</a></li>
-
-									<li><a href="/logout">Logout</a></li> -->
-
-								</ul>
-								<!-- <div class="search_button"><i class="fa fa-search" aria-hidden="true"></i></div> -->
-
-								<!-- Hamburger -->
-
-								<div class="hamburger menu_mm">
-									<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
-								</div>
-							</nav>
-
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-<!-- Sidebar Menu -->
-<div id="sideMenu" class="side-menu">
-    <!-- Close Button -->
-    <button class="close-btn"  onclick="closeSideMenu()">x</button>
+			<!-- Sidebar Menu -->
+			<div id="sideMenu" class="side-menu">
+				<!-- Close Button -->
+				<button class="close-btn" onclick="closeSideMenu()">x</button>
 
-    <div class="side-menu-header">
-		<div class="profile-image-container_mm">
-			<a href="/tchr/setting">
-				<img src="<%= profilePic %>" alt="Profile Picture" class="profile-image_mm" />
-				<i class="fas fa-edit editIconImage_mm" title="Edit Profile"></i>
-			</a>
-		</div>
-        <h3><%= name %></h3>
-        <span>Online</span>
-    </div>
-
-    <div class="side-menu-content">
-        <ul class="profile-details">
-            <li class="profile-detail">
-                <i class="fa-solid fa-envelope"></i>
-                <span><%= email %></span>
-            </li>
-            <li class="profile-detail">
-                <i class="fas fa-id-card"></i>
-                <span><%= role %></span> <!-- Since role is static for now -->
-            </li>
-            <li class="profile-detail">
-                <i class="fa-solid fa-calendar-days"></i>
-                <span>Joined <%= joinDate.toDateString() %></span>
-            </li>
-
-            <li class="profile-detail">
-                <a href="/tchr/logout">
-                    <i class="fa-solid fa-power-off logOut"></i>
-                    <span>Logout</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-  </div>
-		  
-
-
-		<!-- Header Search Panel
-		<div class="header_search_container">
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						<div class="header_search_content d-flex flex-row align-items-center justify-content-end">
-							<form action="#" class="header_search_form">
-								<input type="search" class="search_input" placeholder="Search" required="required">
-								<button class="header_search_button d-flex flex-column align-items-center justify-content-center">
-									<i class="fa fa-search" aria-hidden="true"></i>
-								</button>
-							</form>
-						</div>
+				<div class="side-menu-header">
+					<div class="profile-image-container_mm">
+						<a href="/tchr/setting">
+							<img src="<%= profilePic %>" alt="Profile Picture" class="profile-image_mm" />
+							<i class="fa fa-edit editIconImage_mm" title="Edit Profile"></i>
+						</a>
 					</div>
+					<h3>
+						<%= name %>
+					</h3>
+					<span>Online</span>
 				</div>
-			</div>			
-		</div>			 -->
-	</header>
 
-	<!-- Menu -->
+				<div class="side-menu-content">
+					<ul class="profile-details">
+						<li class="profile-detail">
+							<i class="fa-solid fa-envelope"></i>
+							<span>
+								<%= email %>
+							</span>
+						</li>
+						<li class="profile-detail">
+							<i class="fas fa-id-card"></i>
+							<span>
+								<%= role %>
+							</span> <!-- Since role is static for now -->
+						</li>
+						<li class="profile-detail">
+							<i class="fa-solid fa-calendar-days"></i>
+							<span>Joined <%= joinDate.toDateString() %></span>
+						</li>
 
-	<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
-		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
-		<div class="search">
-			<form action="#" class="header_search_form menu_mm">
-				<input type="search" class="search_input menu_mm" placeholder="Search" required="required">
-				<button class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm">
-					<i class="fa fa-search menu_mm" aria-hidden="true"></i>
-				</button>
-			</form>
-		</div>
-		<nav class="menu_nav">
-			<ul class="menu_mm">
-				<li class="menu_mm"><a href="/">Home</a></li>
-				<li class="menu_mm"><a href="/tchr/quiz">Quizes</a></li>
-				<li class="menu_mm"><a href="#">Guided Experiments</a></li>
-				<li><a href="/tchr/managestudent">Experiment Result</a></li>
-				<li class="menu_mm">
-					<a id="myBtn" href="/community">Community</a>
-					
+						<li class="profile-detail">
+							<a href="/tchr/logout">
+								<i class="fa-solid fa-power-off logOut"></i>
+								<span>Logout</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+
+		<!-- Menu -->
+
+		<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+			<div class="menu_close_container">
+				<div class="menu_close">
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+
+			<nav class="menu_nav">
+				<ul class="menu_mm">
+					<li class="menu_mm"><a href="/">Home</a></li>
+					<li class="menu_mm"><a href="/tchr/quiz">Quizes</a></li>
+					<li class="menu_mm"><a href="#">Guided Experiments</a></li>
+					<li><a href="/tchr/managestudent">Experiment Result</a></li>
+					<!-- <li class="menu_mm">
+						<a id="myBtn" href="/community">Community</a> -->
+
 					<li class="menu_mm">
 						<a class="nav-link" href="#" id="communityLink">
 							Community
-						  </a>
+						</a>
 					</li>
 					<li class="menu_mm">
-						<a class="nav-link dropdown-toggle" href="#" id="profileDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a class="nav-link dropdown-toggle" href="#" id="profileDropDown" role="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<i class="fa fa-user"></i>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="profileDropDown">
 							<div class="profile-dropdown-content">
-								<!-- Profile Content inside Dropdown -->
 								<div class="profile-image-container_mm">
 									<a href="/tchr/setting">
 										<img src="<%= profilePic %>" alt="Profile Picture" class="profile-image_mm" />
 										<i class="fas fa-edit editIconImage_mm" title="Edit Profile"></i>
 									</a>
 								</div>
-								
-								
+
+
 								<div class="profile-details_mm">
 									<div class="profile-detail_mm">
-										<span><%= name %></span>
+										<span>
+											<%= name %>
+										</span>
 										<span>Online</span>
 										<i class="fas fa-edit editIcon_mm"></i>
 									</div>
 									<div class="profile-detail_mm">
 										<label>Email:</label>
-										<span><%= email %></span>
+										<span>
+											<%= email %>
+										</span>
 										<i class="fas fa-edit editIcon_mm"></i>
 									</div>
 									<div class="profile-detail_mm">
 										<label>Role:</label>
-										<span><%= role %></span>
+										<span>
+											<%= role %>
+										</span>
 										<i class="fas fa-edit editIcon_mm"></i>
 									</div>
-								
+
 									<div class="profile-detail_mm">
 										<label>Joined:</label>
-										<span><%= joinDate.toDateString() %></span>
+										<span>
+											<%= joinDate.toDateString() %>
+										</span>
 									</div>
 									<div class="profile-detail_mm">
 										<a href="/std/logout">
@@ -398,331 +338,231 @@
 								</div>
 							</div>
 						</div>
-					</li>
-				
-				<!-- <li class="menu_mm"><a href="/logout">Logout</a></li> -->
 
-			</ul>
-		</nav>
+					</li>
+				</ul>
+			</nav>
+		</div>
 	</div>
-	
+
 	<!-- Home -->
 
-  <div class="Home">
-    <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="row">
-              <div class="col-lg-6 align-self-center">
-                <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
-                  <div class="row">
-                    <!-- <div class="col-lg-4 col-sm-4">
-                     
-                    </div>
-                    <div class="col-lg-4 col-sm-4">
-                      
-                    </div>
-                    <div class="col-lg-4 col-sm-4">
-                      
-                    </div> -->
-                    <div class="col-lg-12">
-                      <h2 class="head">Welcome to Physics Verse</h2>
-                    </div>
-                    <div class="col-lg-12">
-						<!-- <div class="main-green-button scroll-to-section">
-							<a href="#contact" id="openModal">Physics Virtual Lab</a>
-						  </div> -->
-						  
-						  <!-- <div class="modal" id="labModal">
-							<div class="modal-content">
-							  <h4>Choose Experiment Mode</h4>
-							  <div class="team team-quiz">
-								<div class="container">
-									<div class="row team_row d-flex justify-content-center align-items-center">
-									
-									  <div class="col-lg-3 col-md-6 team_col">
-										<div class="dropdown">
-										  <button class="btn btn-primary dropdown-toggle" type="button" id="guidedDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-											Guided Experiment
-										  </button>
-										  <ul class="dropdown-menu" aria-labelledby="guidedDropdown">
-											<li><a class="dropdown-item" href="/guided-experiment/option1">Option 1</a></li>
-											<li><a class="dropdown-item" href="/guided-experiment/option2">Option 2</a></li>
-											<li><a class="dropdown-item" href="/guided-experiment/option3">Option 3</a></li>
-										  </ul>
-										</div>
-									  </div>
-									  
-									
-									  <div class="col-lg-3 col-md-6 team_col">
-										<div class="dropdown">
-										  <button class="btn btn-secondary dropdown-toggle" type="button" id="unguidedDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-											Unguided Experiment
-										  </button>
-										  <ul class="dropdown-menu" aria-labelledby="unguidedDropdown">
-											<li><a class="dropdown-item" href="/unguided-experiment/option1">Option 1</a></li>
-											<li><a class="dropdown-item" href="/unguided-experiment/option2">Option 2</a></li>
-											<li><a class="dropdown-item" href="/unguided-experiment/option3">Option 3</a></li>
-										  </ul>
-										</div>
-									  </div>
-									</div>
-								  </div>
-							  </div>
-							  <button id="closeModal">Close</button>
-							</div>
-						  </div> -->
-						  
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                  <img src="/assets/images/banner-right-image.png" alt="">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-   
-  </div>
-  
-
-	<!-- Features -->
-
-	<div class="features">
-		
-	<!-- Popular Courses -->
-
-	<div class="courses">
-        <h2>Experiments</h2>
-        <div class="row courses_row">
-            <% experiments.forEach(function(exp) { %>
-                <div class="col-lg-4 course_col">
-                    <div class="course">
-                        <div class="course_image">
-                            <img src="<%= exp.image %>" alt="<%= exp.title %>" />
-                        </div>
-                        <div class="course_body">
-                            <h3 class="course_title">
-                                <a href="/exp/<%= exp.id %>"><%= exp.title %></a>
-                            </h3>
-                            <p><%= exp.description %></p>
-                        </div>
-                    </div>
-                </div>
-            <% }) %>
-        </div>
-        <!-- View All Experiments Button -->
-		<div class="text-center">
-			<% if (allExperiments) { %>
-				<!-- Show Less Button -->
-				<a href="/tchr/tchrConsole" class="btn btn-secondary">Show Less</a>
-			<% } else { %>
-				<!-- View All Experiments Button -->
-				<a href="/view-all" class="btn btn-primary">View All Experiments</a>
-			<% } %>
-		</div>
-    </div>
-	<!-- Counter -->
-
-
-
-	<!-- Events -->
-
-	
-
-	<!-- Team -->
-
-	
-				<!-- Team Item -->
-				
-       
-	<!-- Newsletter -->
-
-	
-
-	<!-- Footer -->
-
-	<footer class="footer">
-		<div class="footer_background" style="background-image:url(/images/footer_background.png)"></div>
-		<div class="container">
-			<div class="row footer_row">
-				<div class="col">
-					<div class="footer_content">
-						<div class="row">
-
-							<div class="col-lg-3 footer_col">
-					
-								<!-- Footer About -->
-								<div class="footer_section footer_about">
-									<div class="footer_logo_container">
-										<a href="#">
-											<div class="footer_logo_text">Physics<span>Verse</span></div>
-										</a>
-									</div>
-									<div class="footer_about_text">
-										<p class="text-start">An interactive physics virtual lab .</p>
-									</div>
-									<div class="footer_social">
-										<ul class="p-0">
-											<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								
-							</div>
-
-							<div class="col-lg-3 footer_col">
-					
-								<!-- Footer Contact -->
-								<div class="footer_section footer_contact">
-									<div class="footer_title">Contact Us</div>
-									<div class="footer_contact_info">
-										<ul class="p-0">
-											<li>Email: Info.deercreative@gmail.com</li>
-											<li>Phone:  +(88) 111 555 666</li>
-											<li>40 Baria Sreet 133/2 New York City, United States</li>
-										</ul>
-									</div>
-								</div>
-								
-							</div>
-
-							<div class="col-lg-3 footer_col">
-					
-								<!-- Footer links -->
-								<div class="footer_section footer_links">
-									<div class="footer_title">Contact Us</div>
-									<div class="footer_links_container">
-										<ul class="p-0">
-											<li><a href="index.html">Home</a></li>
-											<li><a href="about.html">About</a></li>
-											<li><a href="contact.html">Contact</a></li>
-											<li><a href="#">Features</a></li>
-											<li><a href="courses.html">Courses</a></li>
-											<li><a href="#">Events</a></li>
-											<li><a href="#">Gallery</a></li>
-											<li><a href="#">FAQs</a></li>
-										</ul>
-									</div>
-								</div>
-								
-							</div>
-
-							<div class="col-lg-3 footer_col clearfix">
-					
-								<!-- Footer links -->
-								<div class="footer_section footer_mobile">
-									<div class="footer_title">Mobile</div>
-									<div class="footer_mobile_content">
-										<div class="footer_image"><a href="#"><img src="images/mobile_1.png" alt=""></a></div>
-										<div class="footer_image"><a href="#"><img src="images/mobile_2.png" alt=""></a></div>
-									</div>
-								</div>
-								
+	<section class="section main-banner" id="top" data-section="section1">
+		<video autoplay muted loop id="bg-video">
+			<source src="/assets_1/images/course-video.mp4" type="video/mp4" />
+		</video>
+		<div class="video-overlay header-text">
+			<div class="Home">
+				<div class="row">
+					<!-- <div class="col-lg-3"></div> -->
+					<div class="col-lg-12">
+						<h2 class="head">Welcome to<br> PhysicsVerse</h2>
+						<div class="col-lg-12">
+							<div class="tagLine main-blue-button scroll-to-section">
+								<a href="#contact">Physics Virtual Lab</a>
 							</div>
 
 						</div>
 					</div>
+					<!-- <div class="col-lg-3"></div> -->
+		
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- <div class="Home">
+		<div class="row">
+			<div class="col-lg-6">
+				<h2 class="head">Welcome to PhysicsVerse</h2>
+				<div class="col-lg-12">
+					<div class="main-green-button scroll-to-section">
+						<a href="#contact">Physics Virtual Lab</a>
+					</div>
+
 				</div>
 			</div>
 
-			<div class="row copyright_row">
-				<div class="col">
-					<div class="copyright d-flex flex-lg-row flex-column align-items-center justify-content-start">
-						<div class="cr_text"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-						<div class="ml-lg-auto cr_links">
-							<ul class="cr_list p-0">
-								<li><a href="#">Copyright notification</a></li>
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Privacy Policy</a></li>
+			<div class="col-lg-6">
+				<div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+					<img src="/images/cccc.jpg" alt="">
+				</div>
+			</div>
+
+		</div>
+	</div> -->
+
+
+	<!-- Popular Courses -->
+
+	<div class="courses">
+		<h2>Experiments</h2>
+		<div class="row courses_row">
+			<% experiments.forEach(function(exp) { %>
+				<div class="col-lg-4 course_col">
+					<div class="course">
+						<div class="course_image">
+							<img src="<%= exp.image %>" alt="<%= exp.title %>" />
+						</div>
+						<div class="course_body">
+							<h3 class="course_title">
+								<a href="/exp/<%= exp.id %>">
+									<%= exp.title %>
+								</a>
+							</h3>
+							<p>
+								<%= exp.description %>
+							</p>
+						</div>
+					</div>
+				</div>
+				<% }) %>
+		</div>
+		<!-- View All Experiments Button -->
+		<div class="text-center">
+			<% if (allExperiments) { %>
+				<!-- Show Less Button -->
+				<a href="/tchr/tchrConsole" class="btn btn-secondary">Show Less</a>
+				<% } else { %>
+					<!-- View All Experiments Button -->
+					<a href="/view-all" class="btn btn-primary">View All Experiments</a>
+					<% } %>
+		</div>
+	</div>
+
+	<!-- Footer -->
+
+	<footer class="footer">
+		<div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+		<div class="container">
+			<div class="row footer_row">
+				<!-- About Section -->
+				<div class="col-lg-4 col-md-6 footer_col">
+					<div class="footer_section footer_about">
+						<div class="footer_logo_container">
+							<a href="#">
+								<div class="footer_logo_text">Physics<span>Verse</span></div>
+							</a>
+						</div>
+						<div class="footer_about_text">
+							<p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+						</div>
+						<div class="footer_social">
+							<ul>
+								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
+					</div>
+				</div>
+
+				<!-- Useful Links Section -->
+				<div class="col-lg-3 col-md-6 footer_col">
+					<div class="footer_section footer_links">
+						<div class="footer_title">Useful Links</div>
+						<div class="footer_links_container">
+							<ul>
+								<li><a href="#" id="footer_home">Home</a></li>
+								<li><a href="#" id="footer_about">About Us</a></li>
+								<!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+								<li><a href="#" id="footer_contact">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- Contact Section -->
+				<div class="col-lg-5 col-md-12 footer_col">
+					<div class="footer_section footer_contact">
+						<div class="footer_title">Contact Us</div>
+						<div class="footer_contact_info">
+							<ul>
+								<li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+								<li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+									fa21-bcs-046@cuiatk.edu.pk</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div> <!-- Close footer_row -->
+
+			<!-- Copyright Section -->
+			<div class="row">
+				<div class="col">
+					<div class="footer_copyright">
+						<p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</footer>
-</div>
-<script>
-	function openSideMenu() {
-		document.getElementById("sideMenu").classList.add("open");
-	}
-	
-	function closeSideMenu() {
-		document.getElementById("sideMenu").classList.remove("open");
-	}document.getElementById("room").addEventListener("change", function() {
-        const communityId = this.value;
-        if (communityId) {
-            window.location.href = `/tchr/chat/${communityId}`;
-        }
-    });
+
+	<script>
+		function openSideMenu() {
+			document.getElementById("sideMenu").classList.add("open");
+		}
+
+		function closeSideMenu() {
+			document.getElementById("sideMenu").classList.remove("open");
+		}
+		document.getElementById("openModal").addEventListener("click", function (event) {
+			event.preventDefault();
+			document.getElementById("labModal").style.display = "block";
+		});
+
+		document.getElementById("closeModal").addEventListener("click", function () {
+			document.getElementById("labModal").style.display = "none";
+		});
+
+		// Optional: Close modal when clicking outside of it
+		window.addEventListener("click", function (event) {
+			const modal = document.getElementById("labModal");
+			if (event.target === modal) {
+				modal.style.display = "none";
+			}
+		});
+
+		function toggleSubmenu(event, id) {
+			event.preventDefault(); // Prevent the default link action
+
+			let submenu = document.getElementById(id);
+
+			// Close other submenus when opening a new one
+			document.querySelectorAll('.submenu').forEach(menu => {
+				if (menu.id !== id) {
+					menu.style.display = 'none';
+				}
+			});
+
+			// Toggle the clicked submenu
+			submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+		}
 	</script>
-<script src="/js/jquery-3.2.1.min.js"></script>
-<script src="/bootstrap4/popper.js"></script>
-<script src="/bootstrap4/bootstrap.min.js"></script>
-<script src="/plugins/greensock/TweenMax.min.js"></script>
-<script src="/plugins/greensock/TimelineMax.min.js"></script>
-<script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
-<script src="/plugins/greensock/animation.gsap.min.js"></script>
-<script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
-<script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="/plugins/easing/easing.js"></script>
-<script src="/plugins/parallax-js-master/parallax.min.js"></script>
-<script src="/js/custom.js"></script>
-<script src="/vendor/jquery/jquery.min.js"></script>
-<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Animation -->
-<script src="/assets/js/animation.js"></script>
+	<script src="/js/jquery-3.2.1.min.js"></script>
+	<script src="/bootstrap4/popper.js"></script>
+	<script src="/bootstrap4/bootstrap.min.js"></script>
+	<script src="/plugins/greensock/TweenMax.min.js"></script>
+	<script src="/plugins/greensock/TimelineMax.min.js"></script>
+	<script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+	<script src="/plugins/greensock/animation.gsap.min.js"></script>
+	<script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+	<script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+	<script src="/plugins/easing/easing.js"></script>
+	<script src="/plugins/parallax-js-master/parallax.min.js"></script>
+	<script src="/js/custom.js"></script>
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Animation -->
+	<script src="/assets/js/animation.js"></script>
 
-<!-- Custom JS -->
-<script src="/assets/js/custom.js"></script>
-<script src="/js/chat.js"></script>
-<script>
-	 function toggleSubmenu(event, id) {
-        event.preventDefault(); // Prevent the default link action
-
-        let submenu = document.getElementById(id);
-        
-        // Close other submenus when opening a new one
-        document.querySelectorAll('.submenu').forEach(menu => {
-            if (menu.id !== id) {
-                menu.style.display = 'none';
-            }
-        });
-
-        // Toggle the clicked submenu
-        submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
-    }
-// 	document.getElementById("openModal").addEventListener("click", function (event) {
-//   event.preventDefault();
-//   document.getElementById("labModal").style.display = "block";
-// });
-
-// document.getElementById("closeModal").addEventListener("click", function () {
-//   document.getElementById("labModal").style.display = "none";
-// });
-
-// // Optional: Close modal when clicking outside of it
-// window.addEventListener("click", function (event) {
-//   const modal = document.getElementById("labModal");
-//   if (event.target === modal) {
-//     modal.style.display = "none";
-//   }
-// });
-
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Custom JS -->
+	<script src="/assets/js/custom.js"></script>
+	<script src="/js/chat.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

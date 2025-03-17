@@ -2,39 +2,51 @@ body {
     margin: 0;
     color: #000;
     background: #f0f0f0;
-    font: 600 16px/18px 'Open Sans', sans-serif;
+    font: 600 12px/15px 'Open Sans', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    height: 100%;
+
 }
 
-.features{
-    margin-top: 80px;
-    /* padding-left: 25%; */
+/* .features{
     padding-right: auto;
     align-items: center;
-    margin-top: 80px ;
+    margin-top: 10px ;
+    margin-bottom: 10px;
     width: 100%;
-    background: url(https://media.istockphoto.com/id/1204743637/photo/science-technology-concept-abstract-background.jpg?s=1024x1024&w=is&k=20&c=JfgwvkCYBLk_Ja2Gj2IcuxYAQW-saVw91fYHd_8iWpc=) no-repeat center;
-    background-size: cover;
+    background: url(/images/image2.png) no-repeat center;
+    background-size:cover;
+} */
+.features {
+    margin-top: 20px;
+    margin-bottom: -50px;
+    padding-right: auto;
+    align-items: center;
+    width: 100%;
+    height:auto; /* Set a fixed height or use min-height */
+    background: #e7f6fc url(/images/image.png) repeat ; /* Fallback color */
+    background-size: auto;
+    background-position: center;
 }
 
 .login-box {
     position: relative;
     /* box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); */
-    border-radius: 20px;
-    max-width: 900px;
+    /* border-radius: 20px; */
+    max-width: 500px;
     width: 100%;
-    padding: 40px;
+    padding: 10px;
     margin: auto;
-    height: 1000px;
+    /* height: auto; */
 }
 
 
 .login-snip {
     position: relative;
-    background: rgba(31, 81, 94, 0.9);
+    background: rgba(31, 73, 94, 0.8);
     padding: 30px 20px;
     border-radius: 15px;
     color: #fff;
@@ -74,7 +86,7 @@ body {
 .login-snip .tab{
     font-size: 18px;
     margin-bottom: 10px;
-    padding: 10px;
+    /* padding: 10px; */
     display: inline-block;
     border-bottom: 2px solid transparent;
     cursor: pointer;
@@ -103,11 +115,13 @@ body {
 .login-space .group .input,
 .login-space .group .button{
     border:none;
-    padding:15px 20px;
+    padding:10px 10px;
     border-radius:25px;
     background:rgba(235, 228, 228, 0.1);
     color: #fff;
+    
 }
+
 .login-space .group input[data-type="password"]{
     -webkit-text-security:circle;
 }
@@ -115,10 +129,12 @@ body {
     color:#fff;;
     font-size:12px;
 }
+
 .login-space .group .button{
-    background:#1161ee;
+    background:#0543ad;
     cursor: pointer;
     transition: background 0.3s ease;
+    /* font-size: 15px; */
 }
 .login-space .group label .icon{
     width:15px;
@@ -205,6 +221,7 @@ color: #ada9a9;
     position: absolute;
     display: flex;
     align-items: center;
+    
   }
 .toggle-password {
     position: absolute;
@@ -232,16 +249,7 @@ color: #ada9a9;
     font-size: 12px;
 }
 
-  
-  /* .toggle-password {
-    background: none;
-    border: none;
-    cursor: pointer;
-  } */
-  
-  /* .toggle-password i {
-   
-  } */
+
   
   @media (max-width: 768px) {
     .login-box {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Home </title>
+  <title>Home</title>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Unicat project" />
@@ -16,54 +16,12 @@
   <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
   <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
 
-  <!-- External resources -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
-
-<style>
-  .home_slider_container {
-    width: 100%; /* Full width */
-    /* transition: width 0.5s ease; Smooth transition */
-}
-
-.home_slider_minimized {
-    height: 70%; /* Smaller width when minimized */
-}
-
-</style>
-
 </head>
 
 <body>
   <div class="super_container">
     <!-- Header Section -->
     <header class="header">
-      <!-- Top Bar -->
-      <!-- <div class="top_bar">
-        <div class="top_bar_container">
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
-                  <ul class="top_bar_contact_list">
-                    <li>
-                      <div class="question">
-                        <img src="/images/R.jpeg" class="rounded" alt="logo" height="30px" width="30px">
-                      </div>
-                    </li>
-                    <li>
-                      <i class="fa" aria-hidden="true"></i>
-                      <div>Comsats University Islamabad Attock Campus</div>
-                    </li>
-                  </ul>
-                 
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
       <!-- Header Content -->
       <div class="header_container">
         <div class="container">
@@ -71,11 +29,11 @@
             <div class="col">
               <div class="header_content d-flex flex-row align-items-center justify-content-start">
                 <div class="question">
-                  <img src="/images/R.jpeg" class="rounded" alt="logo" height="50px" width="50px" style="margin-left: 0px; border-radius: 50px;">
+                  <img src="/images/R.jpeg" class="rounded" alt="logo" height="50px" width="50px">
                 </div>
                 <div class="logo_container">
                   <a href="#">
-                    <div class="logo_text">Physics<span>Verse</span></div>
+                    <div class="logo_text">Physics<span>Verse</span><p>A virtual physics Lab</p></div>
                   </a>
                 </div>
               </div>
@@ -85,39 +43,30 @@
       </div>
     </header>
 
-    <!-- Home Section -->
+    <!-- Home Section with Carousel -->
     <div class="home">
-		<div class="home_slider_container">
-			
-			<!-- Home Slider -->
-			<div class="owl-carousel owl-theme home_slider">
-				
-				<!-- Home Slider Item -->
-				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(images/home_slider_1.jpg)"></div>
-					
-				</div>
+      <div class="home_slider_container">
+        <!-- Home Slider -->
+        <div class="owl-carousel owl-theme home_slider">
+          <!-- Home Slider Item 1 -->
+          <div class="owl-item">
+            <div class="home_slider_background" style="background-image:url(images/aaa.jpg)"></div>
+          </div>
+          <!-- Home Slider Item 2 -->
+          <div class="owl-item">
+            <div class="home_slider_background" style="background-image:url(images/cccc.jpg)"></div>
+          </div>
+          <!-- Home Slider Item 3 -->
+          <div class="owl-item">
+            <div class="home_slider_background" style="background-image:url(images/bbb.jpg)"></div>
+          </div>
+        </div>
+        <!-- Home Slider Navigation -->
+        <div class="home_slider_nav home_slider_prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+        <div class="home_slider_nav home_slider_next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+      </div>
+    </div>
 
-				<!-- Home Slider Item -->
-				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(images/home_slider_1.jpg)"></div>
-				
-					</div>
-				</div>
-
-				<!-- Home Slider Item -->
-				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(images/home_slider_1.jpg)"></div>
-					
-
-			</div> 
-		</div>
-
-		<!-- Home Slider Nav -->
-
-		<div class="home_slider_nav home_slider_prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
-		<div class="home_slider_nav home_slider_next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
-	</div>
     <!-- Team Section -->
     <div class="team">
       <div class="container">
@@ -153,43 +102,73 @@
       </div>
     </div>
 
-    <!-- Footer Section -->
-    <footer class="footer">
-      <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
-      <div class="container">
-        <div class="row footer_row">
-          <div class="col">
-            <div class="footer_content">
-              <div class="row">
-                <div class="col-lg-3 footer_col">
-                  <div class="footer_section footer_about">
-                    <div class="footer_logo_container">
-                      <a href="#">
-                        <div class="footer_logo_text">Physics<span>Verse</span></div>
-                      </a>
-                    </div>
-                    <div class="footer_about_text">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                    <div class="footer_social">
-                      <ul>
-                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <!-- Additional footer content here -->
-              </div>
-            </div>
+<!-- Footer Section -->
+<footer class="footer">
+  <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+  <div class="container">
+    <div class="row footer_row">
+      <!-- About Section -->
+      <div class="col-lg-4 col-md-6 footer_col">
+        <div class="footer_section footer_about">
+          <div class="footer_logo_container">
+            <a href="#">
+              <div class="footer_logo_text">Physics<span>Verse</span></div>
+            </a>
+          </div>
+          <div class="footer_about_text">
+            <p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+          </div>
+          <div class="footer_social">
+            <ul>
+              <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            </ul>
           </div>
         </div>
       </div>
-    </footer>
-  </div>
 
+      <!-- Useful Links Section -->
+      <div class="col-lg-3 col-md-6 footer_col">
+        <div class="footer_section footer_links">
+          <div class="footer_title">Useful Links</div>
+          <div class="footer_links_container">
+            <ul>
+              <li><a href="#" id="footer_home">Home</a></li>
+              <li><a href="#" id="footer_about">About Us</a></li>
+              <!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+              <li><a href="#" id="footer_contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="col-lg-5 col-md-12 footer_col">
+        <div class="footer_section footer_contact">
+          <div class="footer_title">Contact Us</div>
+          <div class="footer_contact_info">
+            <ul>
+              <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+              <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+              <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk | fa21-bcs-046@cuiatk.edu.pk</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- Close footer_row -->
+
+    <!-- Copyright Section -->
+    <div class="row">
+      <div class="col">
+        <div class="footer_copyright">
+          <p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
   <!-- jQuery (make sure this is above Bootstrap JS) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Bootstrap JS Bundle -->
@@ -210,18 +189,25 @@
   
   <!-- Custom JavaScript -->
   <script src="/js/custom.js"></script>
-  <!-- Local JavaScript files -->
-<script>
-  window.addEventListener("scroll", function() {
-    var sliderContainer = document.querySelector(".home_slider_container");
-    
-    if (window.scrollY > 50) { // Adjust the value (50) based on the amount of scroll you want
-        sliderContainer.classList.add("home_slider_minimized");
-    } else {
-        sliderContainer.classList.remove("home_slider_minimized");
-    }
-});
+  <script>
+    // Initialize Owl Carousel
+    $(document).ready(function(){
+      $(".home_slider").owlCarousel({
+        items: 1,
+        loop: true,
+        autoplay: true,
+        autoplayTimeout: 1000,
+        nav: true,
+        navText: [
+          '<div class="home_slider_nav home_slider_prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>',
+          '<div class="home_slider_nav home_slider_next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>'
+        ],
+        dots: false
+      });
+    });
 
-</script>
+    // Scroll event for minimizing slider
+   
+  </script>
 </body>
 </html>

@@ -206,6 +206,8 @@ router.get('/chat/:id', isAuthenticated, async (req, res) => {
 
         // Get messages from community model
         const messages = community.messages.map(msg => ({
+            _id: msg._id,  // Ensure _id is included
+
             userId: msg.userId,
             userType: msg.userType,
             message: msg.message,
@@ -289,25 +291,20 @@ router.post('/leave', async (req, res) => {
     }
 });
 
-router.post('/delete-message/:communityId/:messageId', async (req, res) => {
-   
-        try {
-            const { communityId, messageId } = req.params;
-    
-            // Find the community and remove the message with given ID from messages array
-            const updatedCommunity = await Community.findByIdAndUpdate(
-                communityId,
-                { $pull: { messages: { _id: messageId } } }, // Remove message by _id
-                { new: true }
-            );
-        // Save the updated community document
-        await updatedCommunity.save();
+router.post('/chat/:communityId/delete-message/:messageId', isAuthenticated, async (req, res) => {
+    try {
+        const { communityId, messageId } = req.params;
 
-        // Redirect back to the same page after deletion
-        return res.redirect(`/std/chat/${req.params.id}`); // Ensure response is only sent once
+        // Find the community and remove the message
+        await Community.updateOne(
+            { _id: communityId },
+            { $pull: { messages: { _id: messageId } } } // Remove specific message
+        );
+
+        res.redirect(`/std/chat/${communityId}`);
     } catch (error) {
-        console.error('Error deleting message:', error);
-        res.status(500).send('Internal Server Error');
+        console.error("Error deleting message:", error);
+        res.redirect(`/std/chat/${req.params.communityId}`);
     }
 });
     

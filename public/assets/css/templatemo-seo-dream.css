@@ -375,6 +375,7 @@ header
 }
 
 .header-area .main-nav .logo {
+  
   float: left;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
@@ -911,6 +912,8 @@ Banner Style
 --------------------------------------------- 
 */
 
+
+/* 
 .main-banner {
   background-repeat: no-repeat;
   background-position: center center;
@@ -926,11 +929,12 @@ Banner Style
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
-  top: 100px;
+  top: 30px;
   width: 212px;
   height: 653px;
   z-index: -1;
 }
+
 
 .main-banner:before {
   content: "";
@@ -938,7 +942,7 @@ Banner Style
   background-repeat: no-repeat;
   position: absolute;
   right: 0;
-  top: 100px;
+  top: 30px;
   width: 1159px;
   height: 797px;
   z-index: -1;
@@ -989,7 +993,7 @@ Banner Style
 
 .main-banner .right-image img {
   max-width: 593px;
-}
+} */
 
 /* 
 ---------------------------------------------
@@ -1178,7 +1182,7 @@ Features Style
   border-style: solid;
   position: absolute;
   top: 0;
-  border-color: #fd6a54;
+  border-color: #221d1c;
 }
 .progress .progress-left .progress-bar {
   left: 100%;

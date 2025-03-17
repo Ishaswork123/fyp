@@ -29,6 +29,26 @@
  }
 
 </style> -->
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+  .modal-active {
+    display: block;
+  }
+  /* .blur-background {
+    filter: blur(5px);
+    pointer-events: none;
+  } */
+</style>
 
 </head>
 
@@ -95,15 +115,7 @@
       <!-- Filter Section -->
       <div class="filter-container">
         <form method="GET" action="/tchr/quiz-results" style="display: flex; flex-direction: column; gap: 20px;">
-          <label for="student_id">
-            Filter by Student ID:
-            <select name="student_id" onchange="this.form.submit()">
-              <option value="">All Students</option>
-              <% students.forEach(student => { %>
-                <option value="<%= student._id %>"><%= student.fname %></option>
-              <% }) %>
-            </select>
-          </label>
+         
     
           <label for="exp_no">
             Filter by Experiment No:
@@ -121,37 +133,155 @@
       <div class="results-container">
         <% if (quizResults && quizResults.length > 0) { %>
           <!-- <h2>Quiz Results</h2> -->
-          <table>
+          <table id="quizTable">
             <thead>
               <tr>
                 <th>Student Name</th>
                 <th>Experiment No</th>
                 <th>Marks Obtained</th>
-                <th>Correct Answers</th>
+                <th>Total Marks</th>  <!-- Added a header for clarity -->
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <% quizResults.forEach(function(result) { %>
-                <tr>
+              <% quizResults.forEach((result, i) => { %>
+                <tr data-exp="<%= result.exp_no %>">
                   <td><%= result.fname %></td>
                   <td><%= result.exp_no %></td>
+                  <td class="marks"><%= result.marks_obtained %></td>
                   <td><%= result.marks_obtained %> / <%= result.total_questions * 5 %></td>
                   <td>
-                    <ul>
-                      <% result.answers_submitted.forEach(function(answer, index) { %>
-                        <li>Q<%= index + 1 %>: <%= answer %></li>
-                      <% }) %>
-                    </ul>
+                    <!-- Hidden fields -->
+                    <% correctAnswers.forEach((q, index) => { %>
+                      <input type="hidden" id="correctAnswers-<%= index %>" value="<%= q.answer %>">
+                    <% }); %>
+                    <input type="hidden" id="userAnswers-<%= i %>" value="<%= result.answers_submitted.join(', ') %>">
+          
+                    <!-- View Button -->
+                    <button onclick="openModal('<%= i %>')">View</button>  <!-- Wrapped i in quotes -->
                   </td>
                 </tr>
               <% }) %>
             </tbody>
           </table>
+          
+          <!-- Modal Structure -->
+          <div id="modal" class="modal">
+            <div class="modal-content">
+              <h2>Quiz Details</h2>
+              <p><strong>Correct Answers:</strong></p>
+              <ul id="correctAnswersList"></ul>
+              <p><strong>User Submitted Answers:</strong></p>
+              <ul id="userAnswersList"></ul>
+              <button onclick="closeModal()">Close</button>
+            </div>
+          </div>
+          
+          
         <% } else { %>
           <p>No quiz data available to display correct answers.</p>
         <% } %>
       </div>
     </div>
+
+    <!-- Pie Chart Container -->
+<canvas id="pie-chart" width="400" height="400"></canvas>
+    <script>
+      
+      function openModal(index) {
+        const correctAnswers = document.getElementById(`correctAnswers-${index}`).value.split(', ');
+        const userAnswers = document.getElementById(`userAnswers-${index}`).value.split(', ');
+    
+        document.getElementById('correctAnswersList').innerHTML = correctAnswers.map((ans, i) => `<li>Q${i + 1}: ${ans}</li>`).join('');
+        document.getElementById('userAnswersList').innerHTML = userAnswers.map((ans, i) => `<li>Q${i + 1}: ${ans}</li>`).join('');
+    
+        document.getElementById('modal').classList.add('modal-active');
+        document.body.classList.add('blur-background');
+      }
+    
+      function closeModal() {
+        document.getElementById('modal').classList.remove('modal-active');
+        document.body.classList.remove('blur-background');
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        applyFilter();
+    });
+    let chartInstance = null; // Global chart instance
+
+function applyFilter() {
+    const selectedExp = document.querySelector("select[name='exp_no']").value;
+    const rows = document.querySelectorAll("#quizTable tbody tr");
+
+    let failCount = 0, passCount = 0, excellentCount = 0;
+
+    rows.forEach(row => {
+        const expNo = row.getAttribute("data-exp");
+        const marksText = row.querySelector(".marks").innerText;
+        const marks = parseInt(marksText.split("/")[0].trim()); // Extract marks before '/'
+
+        // Filter table rows
+        if (selectedExp && expNo !== selectedExp) {
+            row.style.display = "none";
+        } else {
+            row.style.display = "";
+            // Categorize marks
+            if (marks < 5) failCount++;
+            else if (marks >= 5 && marks <= 10) passCount++;
+            else excellentCount++;
+        }
+    });
+
+    // Delay chart update to ensure smooth transition
+    setTimeout(() => updateChart(failCount, passCount, excellentCount), 100);
+}
+
+function updateChart(fail, pass, excellent) {
+    // Remove previous canvas & create a new one to prevent resizing issues
+    const oldCanvas = document.getElementById("pie-chart");
+    oldCanvas.remove(); // Remove the previous canvas
+
+    const newCanvas = document.createElement("canvas");
+    newCanvas.id = "pie-chart";
+    newCanvas.width = 300; // Adjust size
+    newCanvas.height = 300; // Adjust size
+    document.querySelector(".results-container").appendChild(newCanvas); // Append new canvas
+
+    const ctx = newCanvas.getContext("2d");
+
+    if (chartInstance) {
+        chartInstance.destroy(); // Destroy old chart if exists
+    }
+
+    // Create new pie chart
+    chartInstance = new Chart(ctx, {
+        type: "pie",
+        data: {
+            labels: ["Fail (<5)", "Pass (5-10)", "Excellent (>10)"],
+            datasets: [{
+                backgroundColor: ["#FF6384", "#36A2EB", "#4CAF50"],
+                data: [fail, pass, excellent]
+            }]
+        },
+        options: {
+            responsive: false, // Ensure fixed size
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: "top"
+                }
+            }
+        }
+    });
+}
+
+// Attach event listener to filter dropdown
+document.querySelector("select[name='exp_no']").addEventListener("change", applyFilter);
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     
     <!-- Footer Section -->
     <footer class="footer">
@@ -211,6 +341,7 @@
   <!-- Custom JavaScript -->
   <script src="/js/custom.js"></script>
   <!-- Local JavaScript files -->
-
+ 
+  
 </body>
 </html>

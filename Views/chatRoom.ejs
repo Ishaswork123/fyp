@@ -127,11 +127,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     <% if (msg.isSender) { %>
                         <div class="message sender">
                             <p><strong>You:</strong> <%= msg.message %></p>
-                            <small  class="timestamp"><%= new Date(msg.timestamp).toLocaleTimeString() %></small>
+                            <small class="timestamp"><%= new Date(msg.timestamp).toLocaleTimeString() %></small>
+                            <form action="/std/chat/<%= community._id %>/delete-message/<%= msg._id %>" method="POST" class="delete-form">
+                                <button type="submit" class="delete-icon">🗑</button>
+                            </form>
+                        
+                            <!-- Delete button for the sender's messages -->
                         </div>
+                       
                     <% } else { %>
                         <div class="message receiver">
-                            <p><strong><%= msg.userType === 'tchr' ? 'tchr' : 'std' %>:</strong> <%= msg.message %></p>
+                            <p><strong><%= msg.userType === 'tchr' ? 'Teacher' : 'Student' %>:</strong> <%= msg.message %></p>
                             <small class="timestamp"><%= new Date(msg.timestamp).toLocaleTimeString() %></small>
                         </div>
                     <% } %>

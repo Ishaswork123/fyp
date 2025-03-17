@@ -130,7 +130,22 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
       res.status(500).send('Internal Server Error');
   }
 });
-
+router.post('/dashboard', isAuthenticated, async (req, res) => {
+    try {
+        const { room } = req.body; // Extract community ID from the form
+  
+        if (!room) {
+            return res.status(400).send('Community ID is required');
+        }
+  
+        // Redirect to the chat route of the selected community
+        res.redirect(`/tchr/chat/${room}`);
+    } catch (error) {
+        console.error('Error processing dashboard selection:', error.message);
+        res.status(500).send('Internal Server Error');
+    }
+  });
+  
   // Create Community Route
   router.post('/create', isAuthenticated, async (req, res) => {
   
@@ -159,6 +174,8 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
         //     role = 'tchr';
         //     userType = 'tchr';
         // }
+        const communities = await Community.find();
+        const messages = Community.messages || []; // Ensure it's an array
 
         // Create new community with user details
         const newCommunity = new Community({
@@ -172,7 +189,8 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
 
         await newCommunity.save();
 
-        res.render('chatRoom_tchr', { user: req.user, community: newCommunity });
+        res.render('chatRoom_tchr', { user: req.user, community: newCommunity,         communities ,messages// ✅ Pass all communities here
+        });
     } catch (error) {
         console.error("Error creating community:", error);
         res.status(500).json({ message: "Internal Server Error" });
@@ -209,6 +227,8 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
    
            // Get messages from community model
            const messages = community.messages.map(msg => ({
+            _id: msg._id,  // Ensure _id is included
+
                userId: msg.userId,
                userType: msg.userType,
                message: msg.message,
@@ -284,10 +304,27 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
           await Community.findByIdAndDelete(communityId);
   
           // Redirect user to console page
-          res.redirect('/tchrConsole');
+          res.redirect('/tchr/tchrConsole');
       } catch (error) {
           console.error(error);
           res.status(500).send('Error leaving the community');
+      }
+  });
+
+  router.post('/chat/:communityId/delete-message/:messageId', isAuthenticated, async (req, res) => {
+      try {
+          const { communityId, messageId } = req.params;
+  
+          // Find the community and remove the message
+          await Community.updateOne(
+              { _id: communityId },
+              { $pull: { messages: { _id: messageId } } } // Remove specific message
+          );
+  
+          res.redirect(`/tchr/chat/${communityId}`);
+      } catch (error) {
+          console.error("Error deleting message:", error);
+          res.redirect(`/tchr/chat/${req.params.communityId}`);
       }
   });
   module.exports=router;

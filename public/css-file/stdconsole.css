@@ -1,75 +1,75 @@
 /* styling of header*/
 .navbar {
-    background: radial-gradient(farthest-side, rgba(137, 158, 216, 0.788) 2%, rgba(9, 2, 48,0.888) 98%);
-   /* padding: 10px; */
-   text-align: center;
-   margin-bottom: 0; /* Remove any bottom margin */
-   padding-bottom: 0;
+   background: radial-gradient(farthest-side, rgba(137, 158, 216, 0.788) 2%, rgba(9, 2, 48,0.88) 98%);
+  /* padding: 10px; */
+  text-align: center;
+  margin-bottom: 0; /* Remove any bottom margin */
+  padding-bottom: 0;
 }
 .navbar h3 {
-   font-family: 'Times New Roman', serif;
-  
-   color: white;
+  font-family: 'Times New Roman', serif;
+ 
+  color: white;
 }
 
 .col-2{
-   background-color: rgb(130, 150, 228);
-   /* background: radial-gradient(farthest-side, rgba(238, 238, 243, 0.911) 0%, rgb(130, 150, 228) 100%); */
+  background-color: rgb(130, 150, 228);
+  /* background: radial-gradient(farthest-side, rgba(238, 238, 243, 0.911) 0%, rgb(130, 150, 228) 100%); */
 }
 .row {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+   margin: 0;
+   padding: 0;
+   width: 100%;
 }
 
 .col {
-    padding: 0;
-    width: 100%;
+   padding: 0;
+   width: 100%;
 }
 
- 
+
 .container-fluid {
-   padding-right: 0;
-   padding-left: 0;
+  padding-right: 0;
+  padding-left: 0;
 }
 .col-2, .col-10 {
-   padding-right: 0;
-   padding-left: 0;
-   padding-top: 0;
+  padding-right: 0;
+  padding-left: 0;
+  padding-top: 0;
 
 }
 .nav-item{
-   margin: 5px;
-   padding: 5px; /*this is for profile */
+  margin: 5px;
+  padding: 5px; /*this is for profile */
 }
 .nav-item img{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+ display: block;
+ margin-left: auto;
+ margin-right: auto;
 }
 .nav-item a{
-   color: black;
-   text-align: center;
-   font-family: Arial;
-   font-size: 25px;
+  color: black;
+  text-align: center;
+  font-family: Arial;
+  font-size: 25px;
 }
 .row-Footer{
-   background: radial-gradient(farthest-side, rgba(122, 163, 240, 0.932) 0%, rgba(11, 2, 69,0.895)100%);}
+  background: radial-gradient(farthest-side, rgba(122, 163, 240, 0.932) 0%, rgba(11, 2, 69,0.895)100%);}
 .row-Footer h4{
-   color: white;
-   text-align: center;
-   font-family: sans-serif;
-   padding: 5px;
-   font-size: 20px;
+  color: white;
+  text-align: center;
+  font-family: sans-serif;
+  padding: 5px;
+  font-size: 20px;
 }
 .row-Carousel{
-   height: 800px;
-   width: 900px;
-   text-align: center;
+  height: 800px;
+  width: 900px;
+  text-align: center;
 }
 .row-navbar{
 
-   background-color: rgb(130, 150, 228);
-   /* background: radial-gradient(closest-side, rgba(238, 238, 243, 0.911) 0%, rgb(130, 150, 228) 100%); */
+  background-color: rgb(130, 150, 228);
+  /* background: radial-gradient(closest-side, rgba(238, 238, 243, 0.911) 0%, rgb(130, 150, 228) 100%); */
 
 }
