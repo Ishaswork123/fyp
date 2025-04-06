@@ -1,0 +1,244 @@
+.back-icon {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px 12px;
+    display: inline-block;
+    color: #333;
+}
+
+.back-icon:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+      body {
+    font-family: 'Lato', sans-serif;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h2 {
+    font-size: 28px;
+    margin: 20px 0;
+    text-align: center;
+    /* color: #245026; */
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 3px solid #090341;;
+    padding-bottom: 10px;
+    display: inline-block;  font-size: 28px;
+    margin: 20px 20px;
+    text-align: center;
+    color: #090341;;
+    font-weight: bold;
+    text-transform: uppercase;
+    /* border-bottom: 3px solid #245026; */
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Table Styling */
+#springTable, table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#springTable th, #springTable td, th, td {
+    padding: 20px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+#springTable th, th {
+    background-color: #090341;
+    color: white;
+}
+
+/* Row Colors */
+.green-row, .row-green {
+    background-color: #d4edda; /* Light green */
+}
+
+.red-row, .row-red {
+    background-color: #f8d7da !important; /* Light red */
+}
+
+/* Editable Cells */
+.editable {
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Grade Container */
+.grade-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Input Fields */
+input[type="number"], .grade-input {
+    width: 60px;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid green;
+    border-radius: 4px;
+    padding: 5px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input[type="number"].red, .grade-input.red {
+    border-color: red;
+}
+
+/* Edit Icon */
+.edit-icon {
+    cursor: pointer;
+    color: #007bff;
+    font-size: 18px;
+    margin-left: 8px;
+    transition: color 0.3s;
+}
+
+.edit-icon:hover {
+    color: #0056b3;
+}
+
+/* Submit Button */
+.submit-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1.2em;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background: darkgreen;
+}
+
+.submit-btn i {
+    font-size: 16px;
+}
+
+.hidden {
+  display: none;
+}
+.container {
+  margin: 180px;
+  padding: 80px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.continue-btn, .view-btn {
+    background-color: #090341; /* green */
+    color: white;
+    padding: 10px 20px;
+    margin-left: 75px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .continue-btn  i , .view-btn i {
+    margin-left: 8px;
+  }
+
+  .continue-btn:hover {
+    background-color: #45a049;
+  }
+  select[name="exp_no"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 12px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  select[name="exp_no"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
+    background-color: #fff;
+  }
+
+  select[name="exp_no"] option {
+    padding: 10px;
+    font-size: 15px;
+  }
+  .student-select {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 14px;
+    font-size: 16px;
+    margin: 20px;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    transition: 0.3s ease all;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .student-select:focus {
+    border-color: #4CAF50;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  }
+
+  .student-select option {
+    padding: 10px;
+    font-size: 15px;
+  }
+  .submit-grade-btn {
+    background-color: #090341; /* green */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .submit-grade-btn:hover {
+    background-color: #033618;
+    transform: scale(1.03);
+  }
+
+  .submit-grade-btn i {
+    font-size: 18px;
+  }

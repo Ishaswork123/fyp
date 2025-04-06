@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const learningMaterialSchema = new mongoose.Schema({
   title: String,
+  exp_no:{
+    type: String,
+    required: true,
+  },
   file: { type: Buffer, required: true }, // Stores the file as binary data
 fileSize:{type:String,required:true},
   fileId: { type: mongoose.Schema.Types.ObjectId, required: false }, // Stores GridFS file ID

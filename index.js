@@ -136,7 +136,6 @@ const experiments = [
   { id: "inclineExp", title: "Resonance Exp", description: " Determine the velocity of sound at 0 degree C by resonance Tube  apparatus using first resonance position and applying end correction: "
       , image: "/images/course_5.jpg" }
 ];
-
 function isAuthenticated(req, res, next) {
   console.log('Cookies in request:', req.cookies);
 
@@ -146,17 +145,11 @@ function isAuthenticated(req, res, next) {
   if (teacher) {
     console.log('Teacher authenticated:', teacher);
     req.user = teacher;
-    if (req.path !== '/tchr/tchrConsole') {
-      return res.redirect('/tchr/tchrConsole');
-    }
-    return next();
+    return next(); // Allow access to any route
   } else if (student) {
     console.log('Student authenticated:', student);
     req.user = student;
-    if (req.path !== '/stdConsole') {
-      return res.redirect('/stdConsole');
-    }
-    return next();
+    return next(); // Allow access to any route
   } else {
     console.log('No valid token found. Redirecting to login.');
     res.clearCookie('teacher_token');
@@ -183,7 +176,7 @@ app.use('/tchr',tchrQUiz);
 app.use('/std',stdQuiz);
 app.use('/guided',guidedRoute);
 app.use('/classroom',classRoom);
-app.get('/stdConsole',isAuthenticated,handleProfile);
+// app.get('/stdConsole',isAuthenticated,handleProfile);
 app.use('/tchr',tchrUpload);
 app.use('/std',stdClass);
 app.use('/std',stdRes);
@@ -196,12 +189,20 @@ app.get('/tchr/tchrConsole', isAuthenticated,async (req, res) => {
 });
 
 // Route to display all experiments
-app.get('/view-all', isAuthenticated, (req, res) => {
+app.get('/view-all', isAuthenticated, async(req, res) => {
   handleProfileTchr(req, res, true); // Pass `true` to show all experiments
 });
-app.get('/std/view-all', isAuthenticated, (req, res) => {
-  handleProfile(req, res, true); // Pass `true` to show all experiments
-});
+
+// app.get('/view-all-test', isAuthenticated, (req, res) => {
+//   res.send('Route works!');
+// });
+
+// Route for showing only a few experiments
+app.get('/stdConsole', isAuthenticated, (req, res) => handleProfile(req, res, false));
+
+// Route for showing all experiments
+app.get('/std/view-all', isAuthenticated, (req, res) => handleProfile(req, res, true));
+
 // app.use((req, res, next) => {
 //   console.log(`Request received: ${req.method} ${req.url}`);
 //   next();
@@ -211,7 +212,7 @@ app.get('/std/view-all', isAuthenticated, (req, res) => {
 app.use((req, res, next) => {
   res.status(404).render('404', { title: 'Page Not Found', url: req.url });
 });
-const PORT = process.env.PORT || 5013;
+const PORT = process.env.PORT || 5012;
 
 app.listen(PORT, () => {
     console.log(`Server started at port ${PORT}`);

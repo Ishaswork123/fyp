@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Home </title>
+  <title>Std Quiz </title>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Unicat project" />
@@ -17,9 +17,12 @@
   <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
 
   <!-- External resources -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+   <!-- main css file -->
 <link rel="stylesheet" href="/css-file/QuizStyle.css">
+<link rel="stylesheet" href="/css-file/tchrConsole.css">
+<!-- External resources -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
  .home{
   padding-top: 50px;
@@ -27,6 +30,59 @@
   margin-top: 80px;
   margin-bottom: 40;
  }
+ .footer_links_container li{ 
+    background-color: #232835;
+  }
+  .footer_social li{
+    background-color: #1e2434;
+  }
+  .footer_contact_info li{
+    background-color: #1e2434;
+
+  }
+  /* Initially show the modal */
+.modal {
+    display: block; /* Show modal first */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Close button */
+.close {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* Initially hide quiz form */
+.quizContainer {
+    display: none;
+}
+
+/* Hide modal after form submission */
+.modal.hidden {
+    display: none;
+}
+
+/* Show quiz form when data is available */
+.quizContainer.visible {
+    display: block;
+}
+
 </style>
 
 </head>
@@ -36,45 +92,22 @@
     <!-- Header Section -->
     <header class="header">
       <!-- Top Bar -->
-      <div class="top_bar">
-        <div class="top_bar_container">
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
-                  <ul class="top_bar_contact_list">
-                    <li>
-                      <div class="question">
-                        <img src="/images/R.jpeg" class="rounded" alt="logo" height="30px" width="30px">
-                      </div>
-                    </li>
-                    <li>
-                      <i class="fa" aria-hidden="true"></i>
-                      <div>Comsats University Islamabad Attock Campus</div>
-                    </li>
-                    
-                  </ul>
-                  <div class="top_bar_login ml-auto">
-                    <div class="login_button"><a href="/signups">Profile</a></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      
       <!-- Header Content -->
       <div class="header_container">
         <div class="container">
           <div class="row">
             <div class="col">
               <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                  <a href="javascript:history.back()"  style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+                    <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i> 
+                  <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
                 <div class="logo_container">
                   <a href="#">
                     <div class="logo_text">Physics<span>Verse</span></div>
                   </a>
-                </div>
+                </div></div>
               </div>
             </div>
           </div>
@@ -99,8 +132,9 @@
                   <% experiments.forEach(function(experiment) { %>
                     <option value="<%= experiment.exp_no %>"><%= experiment.exp_title %></option>
                   <% }) %>
-                </select>
-                <button type="submit">Load Quiz</button>
+                </select><br>
+                <button type="submit"><i class="fas fa-paper-plane"></i>
+                  Load Quiz</button>
               </form>
               
           </div>
@@ -118,10 +152,13 @@
                       <label><input type="checkbox" name="answers[<%= index %>]" value="option2"> <%= question.option2 %></label><br>
                       <label><input type="checkbox" name="answers[<%= index %>]" value="option3"> <%= question.option3 %></label><br>
                       <label><input type="checkbox" name="answers[<%= index %>]" value="option4"> <%= question.option4 %></label><br>
+                      <input type="hidden" name="correctAnswers[<%= index %>]" value="<%= question.Answer %>">
+
                   </div>
               <% }) %>
-              <input type="hidden" name="exp_no" value="<%= quizData[0].exp_no %>">
-              <button type="submit">Submit Quiz</button>
+              <input type="hidden" name="exp_no" value="<%= quizData[0].exp_no %>"> <br>
+              <button type="submit"><i class="fas fa-arrow-circle-up"></i>
+                Submit Quiz</button>
           </form>
       <% } else { %>
           <p style="color: red; font-weight: bold;">No quizzes assigned yet.</p>
@@ -131,44 +168,76 @@
       </div>
   </div>
   
-  
     <!-- Footer Section -->
     <footer class="footer">
       <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
       <div class="container">
         <div class="row footer_row">
-          <div class="col">
-            <div class="footer_content">
-              <div class="row">
-                <div class="col-lg-3 footer_col">
-                  <div class="footer_section footer_about">
-                    <div class="footer_logo_container">
-                      <a href="#">
-                        <div class="footer_logo_text">Physics<span>Verse</span></div>
-                      </a>
-                    </div>
-                    <div class="footer_about_text">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                    <div class="footer_social">
-                      <ul>
-                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <!-- Additional footer content here -->
+          <!-- About Section -->
+          <div class="col-lg-4 col-md-6 footer_col">
+            <div class="footer_section footer_about">
+              <div class="footer_logo_container">
+                <a href="#">
+                  <div class="footer_logo_text">Physics<span>Verse</span></div>
+                </a>
               </div>
+              <div class="footer_about_text">
+                <p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+              </div>
+              <div class="footer_social">
+                <ul>
+                  <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Useful Links Section -->
+          <div class="col-lg-3 col-md-6 footer_col">
+            <div class="footer_section footer_links">
+              <div class="footer_title">Useful Links</div>
+              <div class="footer_links_container">
+                <ul>
+                  <li><a href="#" id="footer_home">Home</a></li>
+                  <li><a href="#" id="footer_about">About Us</a></li>
+                  <!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+                  <li><a href="#" id="footer_contact">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Contact Section -->
+          <div class="col-lg-5 col-md-12 footer_col">
+            <div class="footer_section footer_contact">
+              <div class="footer_title">Contact Us</div>
+              <div class="footer_contact_info">
+                <ul>
+                  <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+                  <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                  <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+                    fa21-bcs-046@cuiatk.edu.pk</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Close footer_row -->
+  
+        <!-- Copyright Section -->
+        <div class="row">
+          <div class="col">
+            <div class="footer_copyright">
+              <p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
             </div>
           </div>
         </div>
       </div>
     </footer>
-  </div>
-
+  
+      </div>
   <!-- jQuery (make sure this is above Bootstrap JS) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Bootstrap JS Bundle -->
@@ -191,44 +260,34 @@
   <script src="/js/custom.js"></script>
   <!-- Local JavaScript files -->
 <script>
-  // Get modal elements
-var modal = document.getElementById("experimentModal");
-var openModalBtn = document.getElementById("openModalBtn");
-var closeModalBtn = document.getElementById("closeModalBtn");
+ document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("experimentModal");
+    const quizContainer = document.getElementById("quizContainer");
+    const closeModalBtn = document.getElementById("closeModalBtn");
 
-// Open the modal when the button is clicked
-openModalBtn.onclick = function() {
-    modal.style.display = "block";
+    // If quizData exists (backend response), show quiz and hide modal
+    const quizDataLength = '<%= quizData && quizData.length > 0 ? quizData.length : 0 %>';
+
+if (quizDataLength > 0) {
+    const modal = document.getElementById('modal');
+    const quizContainer = document.getElementById('quizContainer');
+    const openModalBtn = document.getElementById('openModalBtn');
+
+    modal.classList.add("hidden");  // Hide modal
+    modal.style.display = "none";   // Hide modal
+    quizContainer.style.display = "block";  // Show quiz
+    openModalBtn.style.display = "none";  // Hide the 'Select Experiment' button
+    quizContainer.classList.add("visible"); // Show quiz
 }
 
-// Close the modal when the 'X' is clicked
-closeModalBtn.onclick = function() {
-    modal.style.display = "none";
-}
-
-// Close the modal when clicking outside the modal content
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
-// Automatically close the modal when the form is submitted
-document.getElementById("expForm").onsubmit = function(event) {
-    event.preventDefault(); // Prevent form from submitting immediately
-
-    // Add logic to submit the form via AJAX (optional) or use a regular form submission
-    var exp_no = document.getElementById('exp_no').value;
-    if (exp_no) {
-        modal.style.display = "none"; // Close the modal
-
-      
-        this.submit(); // Proceed with regular form submission
-    } else {
-        alert("Please select an experiment.");
-    }
-}
+    // Close modal manually
+    closeModalBtn.addEventListener("click", function () {
+        modal.classList.add("hidden");
+    });
+});
 
 </script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 </body>
 </html>

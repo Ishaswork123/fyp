@@ -3,22 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Update Class</title>
     <link rel="stylesheet" href="/css-file/updateClass.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" /> -->
+    <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+    <link rel="stylesheet" href="/css-file/tchrConsole.css">
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .header-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  .footer_row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer_col {
+    margin-bottom: 30px;
+    width: 100%; /* Ensure each column takes full width on smaller screens */
+}
+
+@media screen and (min-width: 768px) {
+    .footer_col {
+        width: auto; /* Allow columns to take their natural width on larger screens */
+    }
+}
+
+    </style>
 </head>
 <body>
+    <div class="super_container">
+        <!-- Header Section -->
+        <header class="header">
+          <!-- Top Bar -->
+         
+                      <div class="top_bar_login ml-auto">
+                        <div class="login_button">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Header Content -->
+          <div class="header_container">
+            <div class="container">
+              <div class="row" style="padding-left: 40px;">
+                <div class="col">
+                  <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                    <div class="header-bar">
+                      <a href="/classroom/list"><i class="fa fa-arrow-left fa-2x back-icon" style="color: rgb(255, 255, 255);"></i></a>
+                    
+                      <div class="logo"  style="margin-left: 20px;">
+                        <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo" />
+                        <div class="logo_text">Physics<span>Verse</span></div>
+                      </div>
+                    </div>
+    
+                  <nav class="main_nav_contaner ml-auto">
+                    <ul class="main_nav">
+                    
+                     
+                    </ul>
+    
+                   
+                  </nav></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+    
     <div class="wrapper bg-white">
         <div class="h2 text-center">Update Class Details</div>
 
         <div class="classroom-item">
+            <div class="details" style="font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif; margin: 10px; color: rgb(4, 4, 63);">
             <h3><%= classroom.className %></h3>
             <p><%= classroom.classDescription %></p>
             <p>Class Code: <%= classroom.classCode %></p>
-        
+        </div>
             <!-- Update Classroom Form -->
             <form class="pt-3" action="/classroom/update-classroom/<%= classroom._id %>" method="POST">
                 
@@ -28,6 +108,7 @@
                         <input type="text" name="className" value="<%= classroom.className %>" required>
                     </div>
                 </div>
+                <br>
         
                 <div class="form-group py-2">
                     <div class="input-field">
@@ -36,85 +117,145 @@
                     </div>
                 </div>  
         
-                <div class="form-group py-2">
+                <!-- <div class="form-group py-2">
                     <div class="input-field">
                         <span class="far fa-user p-2"></span>
-                    </div>
+                    </div> -->
                 </div>
+                <br>
         
                 <!-- Already Enrolled Students -->
-                <div class="form-group py-2">
-                    <label for="enrolled-select">Already Enrolled</label>
-                    <div class="select">
-                        <select id="enrolled-select" name="students" multiple>
-                            <% if (classroom.students && classroom.students.length > 0) { %>
-                                <% classroom.students.forEach(studentId => { %>
-                                    <% let student = students.find(s => s._id.toString() === studentId.toString()); %>
-                                    <% if (student) { %>
-                                        <option value="<%= student._id %>" selected><%= student.email %></option>
-                                    <% } %>
-                                <% }); %>
-                            <% } else { %>
-                                <option value="">No students enrolled</option>
-                            <% } %>
-                        </select>
-                        <span class="focus"></span>
-                    </div>
-                </div>
-        
-                <!-- Select a New Student to Enroll -->
-                <div class="form-group py-2">
-                    <label for="standard-select">Enroll New Student</label>
-                    <div class="select">
-                        <select name="newStudent">
-                            <option value="">Select a student</option>
-                            <% students.forEach(student => { %>
-                                <option value="<%= student._id %>"><%= student.fname %> - <%= student.email %></option>
-                            <% }) %>
-                        </select>
-                        <span class="focus"></span>
-                    </div>
-                </div>
-            </div>
-                <button class="btn btn-block text-center my-3" type="submit">Update</button>
-              
+               <!-- Already Enrolled Students -->
+<div class="form-group py-2" style="margin-bottom: 1.5rem;">
+    <label for="enrolled-select" style="display: block; font-weight: bold; color: #333; margin-bottom: 0.5rem;">
+        Already Enrolled
+    </label>
+    <div class="select" style="border: 1px solid #ffffff; border-radius: 6px; background-color: #f7fbff; padding: 0.5rem;">
+        <select id="enrolled-select" name="students" multiple style="width: 100%; padding: 0.5rem; border: none; ">
+            <% if (classroom.students && classroom.students.length > 0) { %>
+                <% classroom.students.forEach(studentId => { %>
+                    <% let student = students.find(s => s._id.toString() === studentId.toString()); %>
+                    <% if (student) { %>
+                        <option value="<%= student._id %>" selected><%= student.email %></option>
+                    <% } %>
+                <% }); %>
+            <% } else { %>
+                <option value="">No students enrolled</option>
+            <% } %>
+        </select>
+        <span class="focus"></span>
+    </div>
+</div>
+
+<!-- Enroll New Student -->
+<div class="form-group py-2">
+    <label for="standard-select" style="display: block; font-weight: bold; color: #333; margin-bottom: 0.5rem;">
+        Enroll New Student
+    </label>
+    <div class="select" style="border: 1px solid #ccc; border-radius: 6px; background-color: #e6ffe6; padding: 0.5rem;">
+        <select name="newStudent" style="width: 100%; padding: 0.5rem; border: none; background: transparent;">
+            <option value="">Select a student</option>
+            <% students.forEach(student => { %>
+                <option value="<%= student._id %>"><%= student.fname %> - <%= student.email %></option>
+            <% }) %>
+        </select>
+        <span class="focus"></span>
+    </div>
+</div>
+<br>
+<div class="btn" style="margin-left: 150px;">
+<button 
+    class="btn btn-block text-center my-3" 
+    type="submit"
+    style="
+        background-color: #090341;; 
+        color: white; 
+        padding: 0.6rem 1.2rem; 
+        font-size: 1rem; 
+        border: none; 
+       
+        border-radius: 8px; 
+        cursor: pointer; 
+        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;"
+>
+    Update     <i class="fas fa-sync-alt"></i>
+
+</button>              </div>
 
             </form>
         </div> <!-- Closing the loop properly -->
-        
-    <!-- <div class="wrapper bg-white">
-        <div class="h2 text-center">Creativity</div>
-        <div class="h4 text-muted text-center pt-2">Enter your login details</div>
-        <form class="pt-3">
-            <div class="form-group py-2">
-                <div class="input-field">
-                    <span class="far fa-user p-2"></span>
-                    <input type="text" placeholder="Username or Email Address" required class="">
-                </div>
-            </div>
-            <div class="form-group py-1 pb-2">
-                <div class="input-field">
-                    <span class="fas fa-lock p-2"></span>
-                    <input type="text" placeholder="Enter your Password" required class="">
-                    <button class="btn bg-white text-muted">
-                        <span class="far fa-eye-slash"></span>
-                    </button>
-                </div>
-            </div>
-            <div class="d-flex align-items-start">
-                <div class="remember">
-                    <label class="option text-muted"> Remember me
-                        <input type="radio" name="radio">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="ml-auto">
-                    <a href="#" id="forgot">Forgot Password?</a>
-                </div>
-            </div>
-            <button class="btn btn-block text-center my-3">Log in</button>
-            <div class="text-center pt-3 text-muted">Not a member? <a href="#">Sign up</a></div>
-        </form>
-    </div> -->
+      
+	<footer class="footer">
+		<div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+		<div class="container">
+			<div class="row footer_row" ">
+				<!-- About Section -->
+				<div class="col-lg-4 col-md-6 footer_col">
+					<div class="footer_section footer_about">
+						<div class="footer_logo_container">
+							<a href="#">
+								<div class="footer_logo_text">Physics<span>Verse</span></div>
+							</a>
+						</div>
+						<div class="footer_about_text">
+							<p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+						</div>
+						<div class="footer_social">
+							<ul>
+								<li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- Useful Links Section -->
+				<div class="col-lg-3 col-md-6 footer_col">
+					<div class="footer_section footer_links">
+						<div class="footer_title">Useful Links</div>
+						<div class="footer_links_container">
+							<ul>
+								<li><a href="#" id="footer_home">Home</a></li>
+								<li><a href="#" id="footer_about">About Us</a></li>
+								<!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+								<li><a href="#" id="footer_contact">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- Contact Section -->
+				<div class="col-lg-5 col-md-12 footer_col">
+					<div class="footer_section footer_contact">
+						<div class="footer_title">Contact Us</div>
+						<div class="footer_contact_info">
+							<ul>
+								<li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+								<li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+									fa21-bcs-046@cuiatk.edu.pk</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div> <!-- Close footer_row -->
+
+			<!-- Copyright Section -->
+			<div class="row">
+				<div class="col">
+					<div class="footer_copyright">
+						<p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
 </body>
 </html>

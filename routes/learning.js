@@ -50,7 +50,7 @@ router.post('/delete-classroom/:id', async (req, res) => {
       res.status(500).json({ message: 'Error deleting classroom', error: error.message });
   }
 });
-router.get("/resources", isAuthenticated,getResource);
+router.get("/resource", isAuthenticated, getResource);
 
 // Route to download file
 router.get("/download/:id", isAuthenticated, DownloadRes);

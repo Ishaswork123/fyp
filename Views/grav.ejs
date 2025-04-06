@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gravesand's Apparatus Simulation</title>
+  <link rel="stylesheet" href="../public/css-file/grav.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div id="exp-container" class="exp-container">
+      <canvas id="expCanvas" width="600" height="300"></canvas>
+    </div>
+    
+
+    <div class="controls">
+      <div class="input-group">
+        <label for="weightP">Weight P (g): </label>
+        <div class="limits">
+          <span>1</span>
+          <span>500</span>
+        </div>
+        <div class="arrow-buttons">
+          <button id="weightP-decrease">◄</button>
+          <input type="range" id="weightP" min="0" max="500" step="1" value="50" />
+          <button id="weightP-increase">►</button>
+        </div>
+        <div class="input-value" id="weightP-value">50 g</div>
+      </div>
+
+      <div class="input-group">
+        <label for="weightQ">Weight Q (g): </label>
+        <div class="limits">
+          <span>1</span>
+          <span>500</span>
+        </div>
+        <div class="arrow-buttons">
+          <button id="weightQ-decrease">◄</button>
+          <input type="range" id="weightQ" min="0" max="500" step="5" value="30" />
+          <button id="weightQ-increase">►</button>
+        </div>
+        <div class="input-value" id="weightQ-value">30 g</div>
+        </div>
+
+        <div class="input-group">
+        <label for="verticalLength">Vertical String Length:</label>
+          <div class="limits">
+            <span>30</span>
+            <span>150</span>
+          </div>
+          <div class="arrow-buttons">
+            <button id="VL-decrease">◄</button>
+            <input type="range" id="verticalLength" min="30" max="150" step="1" value="60" />
+            <button id="VL-increase">►</button>
+          </div>
+          <div class="input-value" id="VL-value">30</div>
+          </div>
+        
+          <div class="input-group">
+            <label for="unknownWeight">Unknown Weight (g): </label>
+            <div class="limits">
+              <span>1</span>
+              <span>500</span>
+            </div>
+            <div class="arrow-buttons">
+              <button id="unknownWeight-decrease">◄</button>
+              <input type="range" id="unknownWeight" min="1" max="500" step="1" value="100" />
+              <button id="unknownWeight-increase">►</button>
+            </div>
+            <div class="input-value" id="unknownWeight-value">100 g</div>
+          </div>
+
+        <div class="output-container">
+          Output:
+          <div class="weight-display">
+            Weight W: <span id="weightW">0.000 g</span>
+          </div>
+          <!-- <div class="weight-display" id="tensionDisplay">
+            T1: 0.00 g<br>
+            T2: 0.00 g
+          </div> -->
+          <div class="weight-display">
+            Error: <span id="weightError">0.000 g</span>
+          </div>
+        </div>
+        <div class="canvasButton">
+          <button id="showValuesBtn">Show Values</button>
+        </div>
+        
+      </div>
+
+    <div class="weights" id="draggable-weights">
+      <div class="weight draggable" id="weight1" data-weight="50" draggable="true" style="background-color: orange">50 g</div>
+      <div class="weight draggable" id="weight2" data-weight="150" draggable="true" style="background-color: blue">150 g</div>
+      <div class="weight draggable" id="weight3" data-weight="100" draggable="true" style="background-color: green">100 g</div>
+      <div class="weight draggable" id="weight4" data-weight="200" draggable="true" style="background-color: red">200 g</div>
+    </div>
+
+      </div>
+    
+ 
+      <div id="graphContainer">
+        <canvas id="realTimeGraph" width="600" height="300"></canvas>
+    </div>
+
+
+  
+
+
+<div id="tableContainer" style="display: none;">
+    <h3>Result Table</h3>
+    <div class="table-controls">
+        <label>
+            Add Data:
+            <select id="addDataMethod">
+                <option value="manual">Manually</option>
+                <option value="automatic">Automatically</option>
+            </select>
+        </label>
+        <button id="addTrial">Add Trial</button>
+    </div>
+    <form action="/exp/forceExp" method="post"></form>
+    <table>
+        <thead>
+            <tr>
+                <th>Trial</th>
+                <th>Force P (N)</th>
+                <th>Force Q (N)</th>
+                <th>θ1 (angle with P's string)</th>
+                <th>θ2 (angle with Q's string)</th>
+                <th>P sin θ1</th>
+                <th>Q sin θ2</th>
+                <th>Weight of unknown mass (W)</th>
+                <th>Error (N)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="trial1">
+                <td>1</td>
+                <td><input type="text" id="table-weightP-1" value="" /></td>
+                <td><input type="text" id="table-weightQ-1" value="" /></td>
+                <td><input type="text" id="table-angleP-1" value="" /></td>
+                <td><input type="text" id="table-angleQ-1" value="" /></td>
+                <td><input type="text" id="table-PsinAngleP-1" value="" /></td>
+                <td><input type="text" id="table-QsinAngleQ-1" value="" /></td>
+                <td><input type="text" id="table-weightW-1" value="" /></td>
+                <td><input type="text" id="table-weightError-1" value="" /></td>
+            </tr>
+            <tr id="trial2" style="display: none;">
+                <td>2</td>
+                <td><input type="text" id="table-weightP-2" value="" /></td>
+                <td><input type="text" id="table-weightQ-2" value="" /></td>
+                <td><input type="text" id="table-angleP-2" value="" /></td>
+                <td><input type="text" id="table-angleQ-2" value="" /></td>
+                <td><input type="text" id="table-PsinAngleP-2" value="" /></td>
+                <td><input type="text" id="table-QsinAngleQ-2" value="" /></td>
+                <td><input type="text" id="table-weightW-2" value="" /></td>
+                <td><input type="text" id="table-weightError-2" value="" /></td>
+            </tr>
+            <tr id="trial3" style="display: none;">
+                <td>3</td>
+                <td><input type="text" id="table-weightP-3" value="" /></td>
+                <td><input type="text" id="table-weightQ-3" value="" /></td>
+                <td><input type="text" id="table-angleP-3" value="" /></td>
+                <td><input type="text" id="table-angleQ-3" value="" /></td>
+                <td><input type="text" id="table-PsinAngleP-3" value="" /></td>
+                <td><input type="text" id="table-QsinAngleQ-3" value="" /></td>
+                <td><input type="text" id="table-weightW-3" value="" /></td>
+                <td><input type="text" id="table-weightError-3" value="" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit" id="saveInDB">Save Data</button>
+
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/js/grav.js"></script>
+</body>
+
+</html>

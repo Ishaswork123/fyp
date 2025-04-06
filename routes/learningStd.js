@@ -25,7 +25,7 @@ function isAuthenticated(req, res, next) {
   const router = express.Router();
 
 // Route to fetch resources for a student
-router.get("/resources", isAuthenticated, getResource);
+router.get("/resource/:exp_no", isAuthenticated, getResource);
 
 // Route to download file
 router.get("/download/:id", DownloadRes);

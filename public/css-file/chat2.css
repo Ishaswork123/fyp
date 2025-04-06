@@ -45,7 +45,7 @@ table {
 }
 
 body{
-	background: #a9b89e;
+	background: #ffffff;
 	font-family: 'Open Sans', Arial, sans-serif;
 	font-size: 12px;
 	color: #333f4d;
@@ -56,7 +56,8 @@ b{
 .window-wrapper{
 	background: #fff;
 	width: 780px;
-	margin: 30px auto;
+	margin: 70px auto;
+    /* padding-bottom: 50px; */
 	border-radius: 6px;
 	box-shadow: 0 0 6px rgba(9, 9, 54, 0.3);
 	overflow: hidden;
@@ -497,6 +498,9 @@ ul.tabs-container{
         /* width: auto; */
         /* padding-left: 40px; */
 
+    }
+    .my-account{
+        padding-bottom: 60px;
     }
     .timestamp {
     display: block;

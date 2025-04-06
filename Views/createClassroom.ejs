@@ -2,31 +2,102 @@
 <html lang="en">
 <head>
     <title>Create Classroom</title>
+    
  <link rel="stylesheet" href="/css-file/createroom.css">
  <link rel="stylesheet" href="/css-file/class.scss">
+ <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+ <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+ <link rel="stylesheet" href="/css-file/tchrConsole.css">
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+ <style>
+ .input-error {
+    border: 2px solid red;
+    background-color: #ffffff;
+}
+/* .body{
+    background: linear-gradient(to right, #051a41, #d0cfda); /* Gradient effect */
+
+ */
+</style>
+
 </head>
 <body>
   
-
+    <div class="super_container">
+        <!-- Header Section -->
+        <header class="header">
+          <!-- Top Bar -->
+         
     
-    <div class="container">
+          <!-- Header Content -->
+          <div class="header_container">
+            <!-- <div class="container"> -->
+              <div class="row">
+                <div class="col">
+                  <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                    <div
+                    class="header_content d-flex flex-row align-items-center justify-content-start">
+                   
+                      <a href="javascript:history.back()"  style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+                        <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i> 
+                    
+                      <!-- <i class="fas fa-arrow-left"></i>  -->
+                    </a>
+                      <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
+                    <div class="logo_container">
+                      <a href="#">
+                        <div class="logo_text">Physics<span>Verse</span></div>
+                      </a>
+                    </div>
+        <!-- HTML !-->
+    
+        
+      
+    
+         
+                </div>
+                <nav class="main_nav_contaner ml-auto">
+                  <ul class="main_nav" ">
+                  
+                    <li>
+                      <a href="/tchr/tchrConsole" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px; ">
+                        <i class="fa fa-home" style="margin-right: 30px; "></i>
+                      </a>
+                    </li>
+                  </ul>>
+                 
+                </nav>
+              </div>
+               <!-- Filter Form -->
+       
+            </div>
+          </div>
+        </header>
+  
+    <div class="superContainer_1 " style="align-items: center; margin-top: 280px; padding: 40px;">
+
+    <div class="container" ">
         <!-- Title section -->
-        <div class="title">Create Classroom</div>
+        <div class="title" style="text-align: center; text-decoration: none;">Create Classroom</div>
         <div class="content">
             <form action="/classroom/create" method="POST">
                 <div class="user-details">
                     <!-- Left Column: Class Name -->
                     <div class="input-box">
                         <span class="details">Class Name</span>
-                        <input type="text" id="className" name="className" placeholder="Enter class name" required>
-                      <br><br>  <% if (error) { %>
-                            <div style="color: red; font-weight: bold; padding: 10px; background: #ffebee; border: 1px solid red; margin-bottom: 10px;">
-                                <%= error %>
-                            </div>
-                        <% } %>
-                        <br><br>
+                        <input type="text" id="className" name="className" placeholder="Enter class name" 
+                               required title="<%= error ? error : '' %>"
+                               class="<%= error ? 'input-error' : '' %>">
+                               <br><br>
+                        
                         <div class="form__group field">
-                            <input type="input" class="form__field" placeholder="Class Details" name="About" id='name' required />
+                            <span class="details" style="font-size: 18px; color: black; margin-right: 30px;">Class Details </span>
+                            <br> <br>
+                      
+
+
+                            <input type="input" class="form__field" placeholder="Write class description here " name="About" id='name' style="padding: 50px;" required  />
                             <!-- <label for="name" class="form__label">About</label> -->
                           </div>
                          </div>
@@ -50,12 +121,80 @@
     
                 <!-- Submit button -->
                 <div class="button">
-                    <input type="submit" value="Create Classroom">
+                    <input type="submit" value="Create Classroom" style="background-color: #051a41; color: #ffffff; ">
                 </div>
             </form>
         </div>
     </div>
-    
-    
+    </div>
+    <br>
+    <footer class="footer">
+      <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+      <!-- <div class="container"> -->
+        <div class="row footer_row" style="padding: 40px;">
+          <!-- About Section -->
+          <div class="col-lg-4 col-md-6 footer_col">
+            <div class="footer_section footer_about">
+              <div class="footer_logo_container">
+                <a href="#">
+                  <div class="footer_logo_text">Physics<span>Verse</span></div>
+                </a>
+              </div>
+              <div class="footer_about_text">
+                <p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+              </div>
+              <div class="footer_social">
+                <ul>
+                  <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Useful Links Section -->
+          <div class="col-lg-3 col-md-6 footer_col">
+            <div class="footer_section footer_links">
+              <div class="footer_title">Useful Links</div>
+              <div class="footer_links_container">
+                <ul>
+                  <li><a href="#" id="footer_home">Home</a></li>
+                  <li><a href="#" id="footer_about">About Us</a></li>
+                  <!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+                  <li><a href="#" id="footer_contact">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Contact Section -->
+          <div class="col-lg-5 col-md-12 footer_col">
+            <div class="footer_section footer_contact">
+              <div class="footer_title">Contact Us</div>
+              <div class="footer_contact_info">
+                <ul>
+                  <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+                  <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                  <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+                    fa21-bcs-046@cuiatk.edu.pk</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Close footer_row -->
+  
+        <!-- Copyright Section -->
+        <div class="row">
+          <div class="col">
+            <div class="footer_copyright">
+              <p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>

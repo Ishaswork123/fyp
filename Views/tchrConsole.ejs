@@ -43,6 +43,68 @@
 			display: block;
 			position: absolute;
 		}
+		.main_nav {
+    display: flex;
+    gap: 5px; /* Adjust spacing between items */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.main_nav li {
+    padding: 0 2px; /* Reduce padding between items */
+    margin: 0;
+}
+
+.main_nav a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 2px 2px; /* Adjust link padding */
+}
+/* Modal Styling */
+.modal {
+    display: none; /* Initially hidden */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Close Button */
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Modal Links */
+.modal-links {
+    margin-top: 15px;
+}
+
+.modal-links a {
+    display: block;
+    margin: 5px 0;
+}
+
 	</style>
 </head>
 
@@ -58,12 +120,20 @@
 				<div class="container">
 					<div class="row">
 						<div class="col">
+							
 							<div class="header_content d-flex flex-row align-items-center justify-content-start">
+								<a href="javascript:history.back()">
+									<i class="fas fa-arrow-left" style="padding-right: 40px; margin: 5px;"></i> 
+								  </a>
+							
 								<img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
 								<div class="logo_container">
+								
 									<a href="#">
 										<div class="logo_text">Physics<span>Verse</span></div>
 									</a>
+									
+									  
 								</div>
 								<nav class="main_nav_contaner ml-auto">
 									<ul class="main_nav mb-0">
@@ -169,8 +239,8 @@
 									 <button class="submit" type="submit" id="login">Join</button>
 								   </form>
 								 </div>
-							   </div>
-							 </div>
+							   <!-- </div>
+							 </div> -->
 												 <!-- <div class="field">
 												   <label>
 													 <input type="checkbox" id="createNewCommunityCheckbox" />
@@ -222,7 +292,7 @@
 					<div class="profile-image-container_mm">
 						<a href="/tchr/setting">
 							<img src="<%= profilePic %>" alt="Profile Picture" class="profile-image_mm" />
-							<i class="fa fa-edit editIconImage_mm" title="Edit Profile"></i>
+							<!-- <i class="fa fa-edit editIconImage_mm" title="Edit Profile"></i> -->
 						</a>
 					</div>
 					<h3>
@@ -398,25 +468,36 @@
 	<div class="courses">
 		<h2>Experiments</h2>
 		<div class="row courses_row">
-			<% experiments.forEach(function(exp) { %>
+			<% experiments.forEach(function(exp, index) { %>
 				<div class="col-lg-4 course_col">
-					<div class="course">
+					<div class="course" onclick="openModal('<%= index %>')">
 						<div class="course_image">
 							<img src="<%= exp.image %>" alt="<%= exp.title %>" />
 						</div>
 						<div class="course_body">
-							<h3 class="course_title">
-								<a href="/exp/<%= exp.id %>">
-									<%= exp.title %>
-								</a>
+							<h3 class="course_title"> <%= exp.title %>
 							</h3>
-							<p>
-								<%= exp.description %>
-							</p>
+							
+							<p><%= exp.description %></p>
 						</div>
 					</div>
 				</div>
-				<% }) %>
+			
+				<!-- Modal for Each Experiment -->
+				<div id="expModal<%= index %>" class="modal">
+					<div class="modal-content">
+						<span class="close" onclick="closeModal('<%= index %>')">&times;</span>
+						<h3><%= exp.title %></h3>
+						<div class="modal-links">
+							<a href="/guided/<%= exp.id %>" class="btn btn-primary">Guided Experiment</a>
+							<a href="/exp/<%= exp.id %>" class="btn btn-secondary">Custom Experiment</a>
+							<a href="/std/resource/<%= exp.exp_no%>" class="btn btn-info">Learning Material</a>
+						</div>
+					</div>
+				</div>
+			<% }) %>
+			
+			
 		</div>
 		<!-- View All Experiments Button -->
 		<div class="text-center">
@@ -425,9 +506,10 @@
 				<a href="/tchr/tchrConsole" class="btn btn-secondary">Show Less</a>
 				<% } else { %>
 					<!-- View All Experiments Button -->
-					<a href="/view-all" class="btn btn-primary">View All Experiments</a>
+					<button class="btn btn-primary" onclick="window.location.href='/view-all'">View All Experiments</button>
 					<% } %>
 		</div>
+		
 	</div>
 
 	<!-- Footer -->
@@ -449,10 +531,10 @@
 						</div>
 						<div class="footer_social">
 							<ul>
-								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -508,22 +590,65 @@
 		function closeSideMenu() {
 			document.getElementById("sideMenu").classList.remove("open");
 		}
-		document.getElementById("openModal").addEventListener("click", function (event) {
-			event.preventDefault();
-			document.getElementById("labModal").style.display = "block";
-		});
+		const openLabModalBtn = document.getElementById("openModal");
+  const closeLabModalBtn = document.getElementById("closeModal");
+  const labModal = document.getElementById("labModal");
 
-		document.getElementById("closeModal").addEventListener("click", function () {
-			document.getElementById("labModal").style.display = "none";
-		});
+  if (openLabModalBtn && labModal) {
+    openLabModalBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      labModal.style.display = "flex"; // or "block" if not using flex
+    });
+  }
 
+  if (closeLabModalBtn && labModal) {
+    closeLabModalBtn.addEventListener("click", function () {
+      labModal.style.display = "none";
+    });
+  }
+
+  // ==== Handle Experiment Modals (Multiple) ====
+  function openModal(index) {
+    const modal = document.getElementById("expModal" + index);
+    if (modal) {
+      modal.style.display = "flex"; // your CSS uses flex
+    }
+  }
+
+  function closeModal(index) {
+    const modal = document.getElementById("expModal" + index); // ✅ Corrected this line
+    if (modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // Optional: Close modal when clicking outside of it
+  window.onclick = function (event) {
+    const modals = document.querySelectorAll(".modal");
+    modals.forEach((modal) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  };
+
+ // Close all modals on any key press
+document.addEventListener("keydown", function () {
+  const modals = document.querySelectorAll(".modal");
+  modals.forEach((modal) => (modal.style.display = "none"));
+});
+
+
+  // Make openModal and closeModal globally available (optional)
+  window.openModal = openModal;
+  window.closeModal = closeModal;
 		// Optional: Close modal when clicking outside of it
-		window.addEventListener("click", function (event) {
-			const modal = document.getElementById("labModal");
-			if (event.target === modal) {
-				modal.style.display = "none";
-			}
-		});
+		// window.addEventListener("click", function (event) {
+		// 	const modal = document.getElementById("labModal");
+		// 	if (event.target === modal) {
+		// 		modal.style.display = "none";
+		// 	}
+		// });
 
 		function toggleSubmenu(event, id) {
 			event.preventDefault(); // Prevent the default link action
@@ -540,6 +665,9 @@
 			// Toggle the clicked submenu
 			submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
 		}
+
+
+
 	</script>
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/bootstrap4/popper.js"></script>
@@ -562,6 +690,8 @@
 	<script src="/assets/js/custom.js"></script>
 	<script src="/js/chat.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 
 </body>
 

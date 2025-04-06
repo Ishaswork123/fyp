@@ -15,6 +15,7 @@
   <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css" />
   <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
   <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+  <link rel="stylesheet" href="/css-file/tchrConsole.css">
 
   <!-- External resources -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -48,6 +49,19 @@
     filter: blur(5px);
     pointer-events: none;
   } */
+  /* .footer{
+    background-color: black;
+  } */
+  .footer_links_container li{ 
+    background-color: #232835;
+  }
+  .footer_social li{
+    background-color: #1e2434;
+  }
+  .footer_contact_info li{
+    background-color: #1e2434;
+
+  }
 </style>
 
 </head>
@@ -57,32 +71,7 @@
     <!-- Header Section -->
     <header class="header">
       <!-- Top Bar -->
-      <div class="top_bar">
-        <div class="top_bar_container">
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
-                  <ul class="top_bar_contact_list">
-                    <li>
-                      <div class="question">
-                        <img src="/images/R.jpeg" class="rounded" alt="logo" height="30px" width="30px">
-                      </div>
-                    </li>
-                    <li>
-                      <i class="fa" aria-hidden="true"></i>
-                      <div>Comsats University Islamabad Attock Campus</div>
-                    </li>
-                  </ul>
-                  <!-- <div class="top_bar_login ml-auto">
-                    <div class="login_button"><a href="/Profile">Profile</a></div>
-                  </div> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+     
 
       <!-- Header Content -->
       <div class="header_container">
@@ -90,6 +79,13 @@
           <div class="row">
             <div class="col">
               <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                <div
+                class="header_content d-flex flex-row align-items-center justify-content-start">
+                <a href="/tchr/quiz" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+                  <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i>
+                  <!-- <i class="fas fa-arrow-left"></i>  -->
+                </a>
+                  <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
                 <div class="logo_container">
                   <a href="#">
                     <div class="logo_text">Physics<span>Verse</span></div>
@@ -100,9 +96,19 @@
     
   
 
-      <button class="button-86" role="button">Show Graph</button>
      
             </div>
+            <nav class="main_nav_contaner ml-auto">
+              <ul class="main_nav" ">
+              
+                <li>
+                  <a href="/tchr/tchrConsole" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px; ">
+                    <i class="fa fa-home" style="margin-right: 2px; "></i>
+                  </a>
+                </li>
+              </ul>>
+             
+            </nav>
           </div>
            <!-- Filter Form -->
    
@@ -171,7 +177,7 @@
               <h2>Quiz Details</h2>
               <p><strong>Correct Answers:</strong></p>
               <ul id="correctAnswersList"></ul>
-              <p><strong>User Submitted Answers:</strong></p>
+               <p><strong>User Submitted Answers:</strong></p> 
               <ul id="userAnswersList"></ul>
               <button onclick="closeModal()">Close</button>
             </div>
@@ -187,17 +193,35 @@
     <!-- Pie Chart Container -->
 <canvas id="pie-chart" width="400" height="400"></canvas>
     <script>
-      
-      function openModal(index) {
-        const correctAnswers = document.getElementById(`correctAnswers-${index}`).value.split(', ');
-        const userAnswers = document.getElementById(`userAnswers-${index}`).value.split(', ');
-    
-        document.getElementById('correctAnswersList').innerHTML = correctAnswers.map((ans, i) => `<li>Q${i + 1}: ${ans}</li>`).join('');
-        document.getElementById('userAnswersList').innerHTML = userAnswers.map((ans, i) => `<li>Q${i + 1}: ${ans}</li>`).join('');
-    
-        document.getElementById('modal').classList.add('modal-active');
-        document.body.classList.add('blur-background');
-      }
+  const quizData = JSON.parse('<%- JSON.stringify(quizResults) %>');
+  function openModal(index) {
+  const result = quizData[index];
+
+  // Fetching the correct and user-submitted answers
+  const correctAnswers = result.correctAnswers || [];
+  const userAnswers = result.answers_submitted || [];
+
+  // Creating the list for correct answers
+  const correctList = correctAnswers.map((ans, i) => {
+    return `<li>Q${i + 1}: <span style="color: green;">${ans}</span></li>`; // Correct answers in green
+  }).join('');
+
+  // Creating the list for user answers
+  const userList = userAnswers.map((ans, i) => {
+    const isCorrect = ans === correctAnswers[i];  // Check if user answer is correct
+    return `<li>Q${i + 1}: <span style="color: ${isCorrect ? 'green' : 'red'};">${ans}</span></li>`; // Color user answers accordingly
+  }).join('');
+
+  // Update the modal lists with correct and user answers
+  document.getElementById('correctAnswersList').innerHTML = correctList;
+  document.getElementById('userAnswersList').innerHTML = userList;
+
+  // Display the modal and apply blur to background
+  document.getElementById('modal').classList.add('modal-active');
+  document.body.classList.add('blur-background');
+}
+
+
     
       function closeModal() {
         document.getElementById('modal').classList.remove('modal-active');
@@ -206,7 +230,8 @@
       document.addEventListener("DOMContentLoaded", function () {
         applyFilter();
     });
-    let chartInstance = null; // Global chart instance
+    // Global chart instance
+    let chartInstance=null;
 
 function applyFilter() {
     const selectedExp = document.querySelector("select[name='exp_no']").value;
@@ -277,42 +302,70 @@ function updateChart(fail, pass, excellent) {
 
 // Attach event listener to filter dropdown
 document.querySelector("select[name='exp_no']").addEventListener("change", applyFilter);
-
-
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+</script>
     
-    <!-- Footer Section -->
     <footer class="footer">
       <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
       <div class="container">
         <div class="row footer_row">
-          <div class="col">
-            <div class="footer_content">
-              <div class="row">
-                <div class="col-lg-3 footer_col">
-                  <div class="footer_section footer_about">
-                    <div class="footer_logo_container">
-                      <a href="#">
-                        <div class="footer_logo_text">Physics<span>Verse</span></div>
-                      </a>
-                    </div>
-                    <div class="footer_about_text">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                    <div class="footer_social">
-                      <ul>
-                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <!-- Additional footer content here -->
+          <!-- About Section -->
+          <div class="col-lg-4 col-md-6 footer_col">
+            <div class="footer_section footer_about">
+              <div class="footer_logo_container">
+                <a href="#">
+                  <div class="footer_logo_text">Physics<span>Verse</span></div>
+                </a>
               </div>
+              <div class="footer_about_text">
+                <p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+              </div>
+              <div class="footer_social">
+                <ul>
+                  <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Useful Links Section -->
+          <div class="col-lg-3 col-md-6 footer_col">
+            <div class="footer_section footer_links">
+              <div class="footer_title">Useful Links</div>
+              <div class="footer_links_container">
+                <ul>
+                  <li><a href="#" id="footer_home">Home</a></li>
+                  <li><a href="#" id="footer_about">About Us</a></li>
+                  <!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+                  <li><a href="#" id="footer_contact">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Contact Section -->
+          <div class="col-lg-5 col-md-12 footer_col">
+            <div class="footer_section footer_contact">
+              <div class="footer_title">Contact Us</div>
+              <div class="footer_contact_info">
+                <ul>
+                  <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+                  <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                  <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+                    fa21-bcs-046@cuiatk.edu.pk</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Close footer_row -->
+  
+        <!-- Copyright Section -->
+        <div class="row">
+          <div class="col">
+            <div class="footer_copyright">
+              <p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
             </div>
           </div>
         </div>
@@ -340,8 +393,103 @@ document.querySelector("select[name='exp_no']").addEventListener("change", apply
   
   <!-- Custom JavaScript -->
   <script src="/js/custom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <!-- Local JavaScript files -->
- 
+  <script>
+      
+//     function openModal(index) {
+//       const correctAnswers = document.getElementById(`correctAnswers-${index}`).value.split(', ');
+//       const userAnswers = document.getElementById(`userAnswers-${index}`).value.split(', ');
+  
+//       document.getElementById('correctAnswersList').innerHTML = correctAnswers.map((ans, i) => `<li>Q${i + 1}: ${ans}</li>`).join('');
+//       document.getElementById('userAnswersList').innerHTML = userAnswers.map((ans, i) => `<li>Q${i + 1}: ${ans}</li>`).join('');
+  
+//       document.getElementById('modal').classList.add('modal-active');
+//       document.body.classList.add('blur-background');
+//     }
+  
+//     function closeModal() {
+//       document.getElementById('modal').classList.remove('modal-active');
+//       document.body.classList.remove('blur-background');
+//     }
+//     document.addEventListener("DOMContentLoaded", function () {
+//       applyFilter();
+//   });
+//   let chartInstance = null; // Global chart instance
+
+// function applyFilter() {
+//   const selectedExp = document.querySelector("select[name='exp_no']").value;
+//   const rows = document.querySelectorAll("#quizTable tbody tr");
+
+//   let failCount = 0, passCount = 0, excellentCount = 0;
+
+//   rows.forEach(row => {
+//       const expNo = row.getAttribute("data-exp");
+//       const marksText = row.querySelector(".marks").innerText;
+//       const marks = parseInt(marksText.split("/")[0].trim()); // Extract marks before '/'
+
+//       // Filter table rows
+//       if (selectedExp && expNo !== selectedExp) {
+//           row.style.display = "none";
+//       } else {
+//           row.style.display = "";
+//           // Categorize marks
+//           if (marks < 5) failCount++;
+//           else if (marks >= 5 && marks <= 10) passCount++;
+//           else excellentCount++;
+//       }
+//   });
+
+//   // Delay chart update to ensure smooth transition
+//   setTimeout(() => updateChart(failCount, passCount, excellentCount), 100);
+// }
+
+// function updateChart(fail, pass, excellent) {
+//   // Remove previous canvas & create a new one to prevent resizing issues
+//   const oldCanvas = document.getElementById("pie-chart");
+//   oldCanvas.remove(); // Remove the previous canvas
+
+//   const newCanvas = document.createElement("canvas");
+//   newCanvas.id = "pie-chart";
+//   newCanvas.width = 300; // Adjust size
+//   newCanvas.height = 300; // Adjust size
+//   document.querySelector(".results-container").appendChild(newCanvas); // Append new canvas
+
+//   const ctx = newCanvas.getContext("2d");
+
+//   if (chartInstance) {
+//       chartInstance.destroy(); // Destroy old chart if exists
+//   }
+
+//   // Create new pie chart
+//   chartInstance = new Chart(ctx, {
+//       type: "pie",
+//       data: {
+//           labels: ["Fail (<5)", "Pass (5-10)", "Excellent (>10)"],
+//           datasets: [{
+//               backgroundColor: ["#FF6384", "#36A2EB", "#4CAF50"],
+//               data: [fail, pass, excellent]
+//           }]
+//       },
+//       options: {
+//           responsive: false, // Ensure fixed size
+//           maintainAspectRatio: false,
+//           plugins: {
+//               legend: {
+//                   display: true,
+//                   position: "top"
+//               }
+//           }
+//       }
+//   });
+// }
+
+// // Attach event listener to filter dropdown
+// document.querySelector("select[name='exp_no']").addEventListener("change", applyFilter);
+
+
+  </script>
   
 </body>
 </html>

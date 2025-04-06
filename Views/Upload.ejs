@@ -4,21 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="/assets_1/css/fontawesome.css">
+    <link rel="stylesheet" href="/assets_1/css/templatemo-edu-meeting.css">
+    <link rel="stylesheet" href="/assets_1/css/owl.css">
+    <link rel="stylesheet" href="/assets_1/css/lightbox.css">
+    <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+    <link rel="stylesheet" href="/css-file/tchrConsole.css">
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>File Upload</title>
     <style>
-        body {
-            background-color: rgb(6, 26, 27);
-        }
-        * {
+       .header-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+        /* * {
             box-sizing: border-box;
-        }
-        .container {
+        } */
+        .container_1 {
             max-width: 500px;
-            margin: 60px auto;
+            margin: 100px auto;
+            /* border: 2px dotted  #090341;; */
         }
-        .container h1 {
+        .container_1 h1 {
             text-align: center;
-            color: white;
+            color:  #090341;
         }
         form {
             background-color: white;
@@ -41,7 +58,7 @@
         .submit-btn {
             width: 100%;
             border: none;
-            background: rgb(37, 83, 3);
+            background:#051a41;
             font-size: 18px;
             color: white;
             border-radius: 3px;
@@ -49,13 +66,77 @@
             text-align: center;
             cursor: pointer;
         }
+        .footer_row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer_col {
+    margin-bottom: 30px;
+    width: 100%; /* Ensure each column takes full width on smaller screens */
+}
+
+@media screen and (min-width: 768px) {
+    .footer_col {
+        width: auto; /* Allow columns to take their natural width on larger screens */
+    }
+}
+
     </style>
 </head>
 <body>
+    <!-- ***** Header Area Start ***** -->
+    <div class="super_container">
+
+  <header class="header-area header-sticky">
     <div class="container">
+        <div class="row" style="padding-left: 20px;">
+            <div class="col-12">
+                <nav class="main-nav">
+            
+                  <!-- ***** Logo Start ***** -->
+                      <div class="header-bar">
+                        <a href="/tchr/tchrConsole"><i class="fa fa-arrow-left fa-2x back-icon"></i></a>
+                      
+                        <div class="logo">
+                          <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo" />
+                          <div class="logo_text">Physics<span>Verse</span></div>
+                        </div>
+                      </div>
+                      
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                  
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    
+    <div class="container_1">
         <h1>File Upload</h1>
         <form id="form" action="/tchr/upload" method="post" enctype="multipart/form-data">
             <!-- Document Title -->
+            <div class="input-group">
+                <label for="title">Exp_No</label>
+                <select name="exp_no" id="exp_no" required>
+                    <option value="" disabled selected>Select an experiment</option>
+                    <% const experiments = [
+                        { exp_no: 1, title: "penExp" },
+                        { exp_no: 2, title: "massExp" },
+                        { exp_no: 3, title: "MeterRod" },
+                        { exp_no: 4, title: "inclineExp" },
+                        { exp_no: 5, title: "resonance" }
+                    ]; %>
+                    
+                    <% experiments.forEach(exp => { %>
+                        <option value="<%= exp.exp_no %>"><%= exp.title %></option>
+                    <% }) %>
+                </select>
+                            </div>
+
             <div class="input-group">
                 <label for="title">Document Name</label>
                 <input type="text" name="title" id="title" placeholder="Enter document name" required />
@@ -106,9 +187,82 @@
          
             <input type="hidden" name="fileSize" id="fileSize" />
 
-            <button class="submit-btn" type="submit">Upload</button>
-        </form>
+            <button class="submit-btn" type="submit">
+                <i class="fas fa-upload"></i> Upload
+            </button>
+            
+                    </form>
     </div>
+</div>
+
+	<footer class="footer">
+		<div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+		<div class="container">
+			<div class="row footer_row" style="padding: 40px;">
+				<!-- About Section -->
+				<div class="col-lg-4 col-md-6 footer_col">
+					<div class="footer_section footer_about">
+						<div class="footer_logo_container">
+							<a href="#">
+								<div class="footer_logo_text">Physics<span>Verse</span></div>
+							</a>
+						</div>
+						<div class="footer_about_text">
+							<p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+						</div>
+						<div class="footer_social">
+							<ul>
+								<li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- Useful Links Section -->
+				<div class="col-lg-3 col-md-6 footer_col">
+					<div class="footer_section footer_links">
+						<div class="footer_title">Useful Links</div>
+						<div class="footer_links_container">
+							<ul>
+								<li><a href="#" id="footer_home">Home</a></li>
+								<li><a href="#" id="footer_about">About Us</a></li>
+								<!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+								<li><a href="#" id="footer_contact">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- Contact Section -->
+				<div class="col-lg-5 col-md-12 footer_col">
+					<div class="footer_section footer_contact">
+						<div class="footer_title">Contact Us</div>
+						<div class="footer_contact_info">
+							<ul>
+								<li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+								<li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+									fa21-bcs-046@cuiatk.edu.pk</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div> <!-- Close footer_row -->
+
+			<!-- Copyright Section -->
+			<div class="row">
+				<div class="col">
+					<div class="footer_copyright">
+						<p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
 
     <script>
         // Show class selection only when "Specific Class" is chosen

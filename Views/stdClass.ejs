@@ -20,6 +20,17 @@
     <link rel="stylesheet" href="/assets_1/css/templatemo-edu-meeting.css">
     <link rel="stylesheet" href="/assets_1/css/owl.css">
     <link rel="stylesheet" href="/assets_1/css/lightbox.css">
+    <style>
+      .header-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  } 
+    </style>
 <!--
 
 TemplateMo 569 Edu Meeting
@@ -41,26 +52,18 @@ https://templatemo.com/tm-569-edu-meeting
               <div class="col-12">
                   <nav class="main-nav">
                       <!-- ***** Logo Start ***** -->
-                      <a href="#" >
-                        <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
-                         <div class="logo_text">Physics<span>Verse</span></div>
-                       </a>     
+                      <div class="header-bar">
+                        <a href="javascript:history.back()"  style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+                          <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i>                 
+                        <div class="logo"  style="margin-left: 10px;">
+                          <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo" />
+                          <div class="logo_text">Physics<span>Verse</span></div>
+                        </div>
+                      </div>
                       <!-- ***** Logo End ***** -->
                       <!-- ***** Menu Start ***** -->
                       <ul class="nav">
-                          <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                           <!-- <li><a href="meetings.html">Meetings</a></li> -->
-                          <li class="scroll-to-section"><a href="/classroom/create">My classes</a></li>
-                          <li class="has-sub">
-                              <a href="javascript:void(0)">Pages</a>
-                              <ul class="sub-menu">
-                                <!-- <li><a href="/classroom/list">Room list</a></li> -->
-                                <!-- <li><a href="meeting-details.html">Room  Details</a></li> -->
-                              </ul>
-                          </li>
-                          <li class="scroll-to-section"><a href="/tchr/Upload">Quizes</a></li> 
-
-                          <li class="scroll-to-section"><a href="/std/resources">Learning Resources</a></li> 
                           
                           <!-- <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>  -->
                       </ul>        
@@ -93,17 +96,18 @@ https://templatemo.com/tm-569-edu-meeting
           
             <div class="item">
               <div class="icon">
+                <a href="/std/my-classes">
+
                 <img src="/assets_1/images/service-icon-01.png" alt="">
               </div>
               <div class="down-content">
                 <h4>Enroll  Room</h4>
-                <a href="/std/my-classes">
         
                 <p>Teacher can create class in which he/she can sent resources.</p></a>
               </div>
             </div>
             
-            <div class="item">
+            <!-- <div class="item">
               <div class="icon">
                 <img src="/assets_1/images/service-icon-02.png" alt="">
               </div>
@@ -112,29 +116,21 @@ https://templatemo.com/tm-569-edu-meeting
                 <a href="/std/resources">
                   <p>List of all the rooms each teacher can create. </p></a>
                 </div>
-            </div>
+            </div> -->
             
             <div class="item">
               <div class="icon">
+                <a href="/std/get-quiz">
+
                 <img src="/assets_1/images/service-icon-03.png" alt="">
               </div>
               <div class="down-content">
                 <h4>Quizes</h4>
-                <a href="/tchr/upload">
-                <p>Teacher can upload material like pdf , video for students to help in studies.</p>
+                <p>Assessment based on experiment .</p>
               </a> </div>
             </div>
             
-            <div class="item">
-              <div class="icon">
-                <img src="/assets_1/images/service-icon-02.png" alt="">
-              </div>
-              <div class="down-content">
-                <h4>Room Details</h4>
-                <a href="">
-                <p>Details of all the students in which enrolled in class . </p></a>
-              </div>
-            </div>
+          
 
             
           </div>
@@ -216,6 +212,7 @@ https://templatemo.com/tm-569-edu-meeting
   <!-- Bootstrap core JavaScript -->
     <script src="/vendor_1/jquery/jquery.min.js"></script>
     <script src="/vendor_1/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
     <script src="/assets_1/js/isotope.min.js"></script>
     <script src="/assets_1/js/owl-carousel.js"></script>

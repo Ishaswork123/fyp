@@ -1,290 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Experiments</title>
-    <style>
-        body {
-            font-family: 'lato', sans-serif;
-        }
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            padding: 10px;
-        }
-        h2 {
-            font-size: 26px;
-            margin: 20px 0;
-            text-align: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-        input[type="number"] {
-            width: 60px;
-            text-align: center;
-            font-size: 16px;
-            border: 2px solid green;
-            outline: none;
-            transition: 0.3s;
-        }
-        input[type="number"].red {
-            border-color: red;
-        }
-        button {
-            padding: 5px 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/bootstrap4/bootstrap.min.css" />
+    <link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css" />
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css" />
+    <link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+    <link rel="stylesheet" href="/css-file/tchrConsole.css">
+    <!-- <link rel="stylesheet" href="../public/css-file/table.scss"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+ <link rel="stylesheet" href="/css-file/exxpresult.css">
 </head>
+
 <body>
-    <div class="container">
-        <h2>Pendulum Experiments</h2>
-        <table>
-            <tr>
-                <th>Student Name</th>
-                <th>Mass</th>
-                <th>Radius</th>
-                <th>Time Period</th>
-                <th>Grade</th>
-            </tr>
-            <% penExperiments.forEach(exp => { %>
-                <tr>
-                    <td><%= exp.studentName %></td>
-                    <td><%= exp.mass1 %></td>
-                    <td><%= exp.radius1 %></td>
-                    <td><%= exp.timePeriod1 %></td>
-                    <td>
-                        <form action="/tchr/grade" method="POST">
-                            <input type="hidden" name="studentName" value="<%= exp.studentName %>">
-                            <input type="hidden" name="exp_no" value="1">
-                            <input type="hidden" name="exp_title" value="Pendulum">
-                            <input type="number" name="grade" class="grade-input" min="0" max="5" value="5" required>
-                            <button type="submit">Submit</button>
-                        </form>
-                    </td>
-                </tr>
-            <% }); %>
-        </table>
-    </div>
+  <div class="super_container">
+    <!-- Header Section -->
+    <header class="header">
+      <!-- Top Bar -->
+     
 
-    <div class="container">
-        <h2>Spring Experiments</h2>
-        <table>
-            <tr>
-                <th>Student Name</th>
-                <th>Mass</th>
-                <th>Initial Length</th>
-                <th>Final Length</th>
-                <th>Time Period</th>
-                <th>Grade</th>
-            </tr>
-            <% springExperiments.forEach(exp => { %>
-                <tr>
-                    <td><%= exp.studentName %></td>
-                    <td><%= exp.mass1 %></td>
-                    <td><%= exp.initialLength1 %></td>
-                    <td><%= exp.finalLength1 %></td>
-                    <td><%= exp.timePeriod1 %></td>
-                    <td>
-                        <form action="/tchr/grade" method="POST">
-                            <input type="hidden" name="studentName" value="<%= exp.studentName %>">
-                            <input type="hidden" name="exp_no" value="2">
-                            <input type="hidden" name="exp_title" value="Spring">
-                            <input type="number" name="grade" class="grade-input" min="0" max="5" value="5" required>
-                            <button type="submit">Submit</button>
-                        </form>
-                    </td>
-                </tr>
-            <% }); %>
-        </table>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const gradeInputs = document.querySelectorAll(".grade-input");
-
-            gradeInputs.forEach(input => {
-                input.addEventListener("focus", function() {
-                    this.value = "0";  // Set to 0 when clicked
-                    this.classList.add("red"); // Turn border red
-                });
-
-                input.addEventListener("input", function() {
-                    if (this.value === "5") {
-                        this.classList.remove("red"); // Turn back to green if 5
-                    } else {
-                        this.classList.add("red");
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experiments</title>
-    <style>
-        body {
-            font-family: 'lato', sans-serif;
-        }
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            padding: 10px;
-        }
-        h2 {
-            font-size: 26px;
-            margin: 20px 0;
-            text-align: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-        input[type="number"] {
-            width: 60px;
-            text-align: center;
-            font-size: 16px;
-            border: 2px solid green;
-            outline: none;
-            transition: 0.3s;
-        }
-        input[type="number"].red {
-            border-color: red;
-        }
-        button {
-            padding: 5px 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Pendulum Experiments</h2>
-        <table>
-            <tr>
-                <th>Student Name</th>
-                <th>Mass</th>
-                <th>Radius</th>
-                <th>threadLength</th>
-                <th>PenndulumLength</th>
-                <th>trial1Time</th>
-                <th> trial2Time</th>
-
-                <th>meanTime</th>
+      <!-- Header Content -->
+      <div class="header_container">
+        <!-- <div class="container"> -->
+          <div class="row">
+            <div class="col">
+              <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                <div
+                class="header_content d-flex flex-row align-items-center justify-content-start">
                
+                  <a href="javascript:history.back()"  style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+                    <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i> 
+                
+                  <!-- <i class="fas fa-arrow-left"></i>  -->
+                </a>
+                  <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
+                <div class="logo_container">
+                  <a href="#">
+                    <div class="logo_text">Physics<span>Verse</span></div>
+                  </a>
+                </div>
+    <!-- HTML !-->
+
+    
+  
+
+     
+            </div>
+            <nav class="main_nav_contaner ml-auto">
+              <ul class="main_nav" ">
               
-                <th>Time Period</th>
-                <th>Grade</th>
-            </tr>
-            <% penExperiments.forEach(exp => { %>
-                <tr>
-                    <td><%= exp.studentName %></td>
-                    <td><%= exp.mass1 %></td>
-                    <td><%= exp.radius1 %></td>
-                    <td><%= exp.threadLength1 %></td>
-                    <td><%= exp.PenndulumLength1%></td>
-                    <td><%= exp.trial1Time1 %></td>
-                    <td><%= exp.trial2Time1%></td>
-                    <td><%= exp.meanTime1%></td>
+                <li>
+                  <a href="/tchr/tchrConsole" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px; ">
+                    <i class="fa fa-home" style="margin-right: 30px; "></i>
+                  </a>
+                </li>
+              </ul>>
+             
+            </nav>
+          </div>
+           <!-- Filter Form -->
+   
+        </div>
+      </div>
+    </header>
 
-                    <td><%= exp.timePeriod1 %></td>
-                    <td>
-                        <form action="/tchr/grade" method="POST">
-                            <input type="hidden" name="studentName" value="<%= exp.studentName %>">
-                            <input type="hidden" name="exp_no" value="1">
-                            <input type="hidden" name="exp_title" value="Pendulum">
-                            <input type="number" name="grade" class="grade-input" min="0" max="5" value="5" required>
-                            <button type="submit">Submit</button>
-                        </form>
-                    </td>
-                </tr>
-            <% }); %>
-        </table>
-    </div>
+  <div class="container exp-form <%= showStudentModal || showGradeSection ? 'hidden' : '' %>">
 
-    <div class="container">
-        <h2>Spring Experiments</h2>
-        <table>
+    <h2>Select Experiment</h2>
+    <form action="/tchr/select-exp" method="POST">
+      <select name="exp_no" required>
+        <option value="">-- Select Experiment --</option>
+        <option value="1" <%= exp_no === '1' ? 'selected' : '' %>>Pendulum</option>
+        <option value="2" <%= exp_no === '2' ? 'selected' : '' %>>Spring</option>
+        <option value="3" <%= exp_no === '3' ? 'selected' : '' %>>Meter Rod</option>
+        <option value="4" <%= exp_no === '4' ? 'selected' : '' %>>Force Table</option>
+        <option value="5" <%= exp_no === '5' ? 'selected' : '' %>>Resonance Column</option>
+      </select>
+      <button type="submit" class="continue-btn">
+        Continue <i class="fas fa-arrow-right"></i>
+      </button>    </form>
+  </div>
+  
+  <% if (showStudentModal) { %>
+  <div class="container student-form">>
+    <h2>Select Student</h2>
+    <form action="/tchr/select-student" method="POST">
+      <input type="hidden" name="exp_no" value="<%= exp_no %>">
+      <select name="studentName" required class="student-select">
+        <option value="">-- Select Student --</option>
+        <% students.forEach(name => { %>
+          <option value="<%= name %>"><%= name %></option>
+        <% }) %>
+      </select>
+      
+      <button type="submit" class="view-btn">
+        <i class="fas fa-eye"></i> View
+      </button>    </form>
+  </div>
+  <% } %>
+  
+      
+    <% if (showGradeSection && studentData.length > 0) { %>
+  <% 
+    const experiments = {
+      '1': {
+        title: 'Pendulum',
+        headers: ['Mass', 'Radius', 'Thread Length', 'Pendulum Length', 'Trial 1 Time', 'Trial 2 Time', 'Mean Time', 'Time Period'],
+        keys: ['mass', 'radius', 'threadLength', 'PenndulumLength', 'trial1Time', 'trial2Time', 'meanTime', 'timePeriod']
+      },
+      '2': {
+        title: 'Spring',
+        headers: ['Mass', 'Initial Length', 'Final Length', 'Extension', 'Trial 1 Time', 'Trial 2 Time', 'Mean Time', 'Time Period', 'Gravity'],
+        keys: ['mass', 'initialLength', 'finalLength', 'extension', 'trial1Time', 'trial2Time', 'meanTime', 'timePeriod', 'gravity']
+      },
+      '3': {
+        title: 'Meter Rod',
+        headers: ['Weight', '1/R', 'Observed Reading', 'Corrected Reading', '1/q × 1/R', 'F1', 'Loop Position', 'Distance', 'τ'],
+        keys: ['weightSuspended', 'rInverse', 'observedReading', 'correctedReading', 'qInverseRInverse', 'condition1F1_', 'loopPosition', 'distance', 'condition2Tau']
+      },
+      '4': {
+        title: 'Force Table',
+        headers: ['Force P', 'Force Q', 'Angle P', 'Angle Q', 'Psin(θP)', 'Qsin(θQ)', 'Weight', 'Error'],
+        keys: ['forceP', 'forceQ', 'angleP', 'angleQ', 'PsinAngleP', 'QsinAngleQ', 'weightW', 'weightError']
+      },
+      '5': {
+        title: 'Resonance Column',
+        headers: ['Frequency', 'Water Level', 'Diameter', 'Air Column', 'Correct Length', 'Wavelength', 'Temp', 'Velocity'],
+        keys: ['freq', 'waterLevel', 'diameter', 'airColumn', 'correctLength', 'waveLength', 'temp', 'velocity']
+      }
+    };
+
+    const currentExp = experiments[exp_no];
+  %>
+
+  <% if (currentExp) { %>
+    <div class="container grade-section">
+      <h2><%= currentExp.title %> Experiment - <%= selectedStudent %></h2>
+      <table>
+        <tr>
+          <% currentExp.headers.forEach(header => { %>
+            <th><%= header %></th>
+          <% }) %>
+        </tr>
+
+        <% studentData.forEach(exp => { %>
+          <% for (let i = 1; i <= 3; i++) { %>
             <tr>
-                <th>Student Name</th>
-                <th>Mass</th>
-                <th>Initial Length</th>
-                <th>Final Length</th>
-                <th>Time Period</th>
-                <th>Grade</th>
+              <% currentExp.keys.forEach(key => { %>
+                <td><%= exp[key + i] %></td>
+              <% }) %>
             </tr>
-            <% springExperiments.forEach(exp => { %>
-                <tr>
-                    <td><%= exp.studentName %></td>
-                    <td><%= exp.mass1 %></td>
-                    <td><%= exp.initialLength1 %></td>
-                    <td><%= exp.finalLength1 %></td>
-                    <td><%= exp.timePeriod1 %></td>
-                    <td>
-                        <form action="/tchr/grade" method="POST">
-                            <input type="hidden" name="studentName" value="<%= exp.studentName %>">
-                            <input type="hidden" name="exp_no" value="2">
-                            <input type="hidden" name="exp_title" value="Spring">
-                            <input type="number" name="grade" class="grade-input" min="0" max="5" value="5" required>
-                            <button type="submit">Submit</button>
-                        </form>
-                    </td>
-                </tr>
-            <% }); %>
-        </table>
+          <% } %>
+          <tr>
+            <td colspan="<%= currentExp.headers.length %>">
+              <form action="/tchr/grade" method="POST">
+                <input type="hidden" name="exp_no" value="<%= exp_no %>">
+                <input type="hidden" name="exp_title" value="<%= currentExp.title %>">
+                <input type="hidden" name="studentId" value="<%= exp.studentId || exp._id %>">
+                Grade:
+                <input type="number" name="grade" min="0" max="15" value="15" required>
+                <button type="submit" class="submit-grade-btn">
+                  <i class="fas fa-check-circle"></i> 
+                </button>              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
     </div>
+  <% } %>
+<% } else if (!showStudentModal && !showGradeSection) { %>
+  <div class="container grade-section">
+    <p>Please select an experiment to begin grading.</p>
+  </div>
+<% } %>
 
+<footer class="footer">
+  <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+  <!-- <div class="container"> -->
+    <div class="row footer_row" style="padding: 30px;">
+      <!-- About Section -->
+      <div class="col-lg-4 col-md-6 footer_col">
+        <div class="footer_section footer_about">
+          <div class="footer_logo_container">
+            <a href="#">
+              <div class="footer_logo_text">Physics<span>Verse</span></div>
+            </a>
+          </div>
+          <div class="footer_about_text">
+            <p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+          </div>
+          <div class="footer_social">
+            <ul>
+              <ul>
+                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+              </ul>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Useful Links Section -->
+      <div class="col-lg-3 col-md-6 footer_col">
+        <div class="footer_section footer_links">
+          <div class="footer_title">Useful Links</div>
+          <div class="footer_links_container">
+            <ul>
+              <li><a href="#" id="footer_home">Home</a></li>
+              <li><a href="#" id="footer_about">About Us</a></li>
+              <!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+              <li><a href="#" id="footer_contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="col-lg-5 col-md-12 footer_col">
+        <div class="footer_section footer_contact">
+          <div class="footer_title">Contact Us</div>
+          <div class="footer_contact_info">
+            <ul>
+              <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+              <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+              <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+                fa21-bcs-046@cuiatk.edu.pk</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> <!-- Close footer_row -->
+
+    <!-- Copyright Section -->
+    <div class="row">
+      <div class="col">
+        <div class="footer_copyright">
+          <p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const gradeInputs = document.querySelectorAll(".grade-input");
+       
 
-            gradeInputs.forEach(input => {
-                input.addEventListener("focus", function() {
-                    this.value = "0";  // Set to 0 when clicked
-                    this.classList.add("red"); // Turn border red
-                });
+        document.addEventListener('DOMContentLoaded', function () {
+        const backBtn = document.querySelector('.back-icon');
 
-                input.addEventListener("input", function() {
-                    if (this.value === "5") {
-                        this.classList.remove("red"); // Turn back to green if 5
-                    } else {
-                        this.classList.add("red");
-                    }
-                });
+        if (backBtn) {
+            backBtn.addEventListener('click', function () {
+                window.history.back(); // Go to previous page
             });
-        });
+        }
+    });
+        document.addEventListener('DOMContentLoaded', () => {
+    const expForm = document.querySelector('.exp-form');
+    const studentForm = document.querySelector('.student-form');
+    const gradeSection = document.querySelector('.grade-section');
+    if (expForm && '<%= showStudentModal %>' !== 'true' && '<%= showGradeSection %>' !== 'true') {
+  expForm.classList.remove('hidden');
+  studentForm?.classList.add('hidden');
+  gradeSection?.classList.add('hidden');
+}
+        
+if ('<%= showStudentModal %>' === 'true') {
+  expForm?.classList.add('hidden');
+  studentForm?.classList.remove('hidden');
+  gradeSection?.classList.add('hidden');
+}
+
+if ('<%= showGradeSection %>' === 'true') {
+  expForm?.classList.add('hidden');
+  studentForm?.classList.add('hidden');
+  gradeSection?.classList.remove('hidden');
+}
+
+        function toggleRow(rowId) {
+    const row = document.getElementById(`row-${rowId}`);
+    const gradeInput = document.getElementById(`grade-${rowId.split('-')[0]}`);
+
+    if (row.classList.contains("green-row")) {
+        row.classList.remove("green-row");
+        row.classList.add("red-row");
+
+        // Subtract 5 from the grade
+        let currentGrade = parseInt(gradeInput.value, 10);
+        if (currentGrade > 0) {
+            gradeInput.value = Math.max(0, currentGrade - 5);
+        }
+    }
+}
+
+// function enableEdit(expId) {
+//     const gradeInput = document.getElementById(`grade-${expId}`);
+//     gradeInput.removeAttribute("readonly");
+//     gradeInput.focus();
+// }
+
+
+        function markError(rowId) {
+        let row = document.getElementById(`row-${rowId}`);
+        if (!row.classList.contains('row-red')) {
+            row.classList.add('row-red');
+            row.classList.remove('row-green');
+            let gradeInput = row.closest('table').querySelector(`#grade-${rowId.split('-')[0]}`);
+            if (gradeInput) {
+                let currentGrade = parseInt(gradeInput.value);
+                gradeInput.value = Math.max(0, currentGrade - 5);
+            }
+        }
+    }
+//     let submitBtn = document.getElementById(`submit-btn-${expId}`);
+// if (submitBtn) {
+//     submitBtn.disabled = false;
+// } else {
+//     console.log(`Submit button with ID submit-btn-${expId} not found`);
+// }
+
+const submittedExperiments = new Set();
+
+    function enableEdit(expId) {
+        const input = document.getElementById(`grade-${expId}`);
+        if (input) {
+            input.removeAttribute('readonly');
+            input.focus();
+        }
+
+        const submitBtn = document.getElementById(`submit-btn-${expId}`);
+        if (submitBtn) {
+            submitBtn.disabled = false;
+        }
+    }
+
+    function disableEdit(expId) {
+        if (submittedExperiments.has(expId)) {
+            alert("Grade already submitted for this experiment.");
+            return false; // Prevent duplicate submission
+        }
+
+        const input = document.getElementById(`grade-${expId}`);
+        const submitBtn = document.getElementById(`submit-btn-${expId}`);
+
+        if (input) input.setAttribute('readonly', true);
+        if (submitBtn) submitBtn.disabled = true;
+
+        // Mark this exp as submitted
+        submittedExperiments.add(expId);
+
+        return true; // Allow form submission
+    }});
     </script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 </body>
 </html>

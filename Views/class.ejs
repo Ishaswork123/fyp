@@ -20,6 +20,30 @@
     <link rel="stylesheet" href="/assets_1/css/templatemo-edu-meeting.css">
     <link rel="stylesheet" href="/assets_1/css/owl.css">
     <link rel="stylesheet" href="/assets_1/css/lightbox.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+  <style>
+    .back-icon {
+      padding: 20px;
+      margin-top: 25px; /* Moves the icon down */
+      /* display: inline-block; */
+      color: #e9e9e9; /* Optional: icon color */
+      cursor: pointer;
+    }
+  
+    .back-icon:hover {
+      color: #4CAF50; /* Optional: hover color */
+    }
+    
+  .header-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+</style>
 	<!-- <link rel="stylesheet" type="text/css" href="/css-file/tchrConsole.css"> -->
 
     <!-- <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css"> -->
@@ -42,33 +66,20 @@ https://templatemo.com/tm-569-edu-meeting
           <div class="row">
               <div class="col-12">
                   <nav class="main-nav">
-                      
+              
                     <!-- ***** Logo Start ***** -->
-                    <a href="#" >
-                      <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
-                       <div class="logo_text">Physics<span>Verse</span></div>
-                     </a>             
-
+                        <div class="header-bar">
+                          <a href="/tchr/tchrConsole"><i class="fa fa-arrow-left fa-2x back-icon"></i></a>
+                        
+                          <div class="logo">
+                            <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo" />
+                            <div class="logo_text">Physics<span>Verse</span></div>
+                          </div>
+                        </div>
+                        
                       <!-- ***** Logo End ***** -->
                       <!-- ***** Menu Start ***** -->
-                      <ul class="nav">
-
-                          <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                          <!-- <li><a href="meetings.html">Meetings</a></li> -->
-                          <li class="scroll-to-section"><a href="/classroom/create">Create Room</a></li>
-                          <li class="has-sub">
-                              <a href="javascript:void(0)">Pages</a>
-                              <ul class="sub-menu">
-                                <li><a href="/classroom/list">Room list</a></li>
-                                <li><a href="meeting-details.html">Room  Details</a></li>
-                              </ul>
-                          </li>
-                          <li class="scroll-to-section"><a href="/tchr/Upload">Upload Resource</a></li> 
-                          <!-- <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>  -->
-                      </ul>        
-                      <a class='menu-trigger'>
-                          <span>Menu</span>
-                      </a>
+                    
                       <!-- ***** Menu End ***** -->
                   </nav>
               </div>
@@ -96,11 +107,12 @@ https://templatemo.com/tm-569-edu-meeting
           
             <div class="item">
               <div class="icon">
+                <a href="/classroom/create">
                 <img src="/assets_1/images/service-icon-01.png" alt="">
               </div>
               <div class="down-content">
                 <h4>Create Room</h4>
-                <a href="/classroom/create">
+             
         
                 <p>Teacher can create class in which he/she can sent resources.</p></a>
               </div>
@@ -108,33 +120,37 @@ https://templatemo.com/tm-569-edu-meeting
             
             <div class="item">
               <div class="icon">
+                <a href="/classroom/list">
                 <img src="/assets_1/images/service-icon-02.png" alt="">
               </div>
               <div class="down-content">
                 <h4>List of classes</h4>
-                <a href="/classroom/list">
+                
                   <p>List of all the rooms each teacher can create. </p></a>
                 </div>
             </div>
             
             <div class="item">
               <div class="icon">
+                <a href="/tchr/upload">
                 <img src="/assets_1/images/service-icon-03.png" alt="">
               </div>
               <div class="down-content">
                 <h4>Upload resources</h4>
-                <a href="/tchr/upload">
+               
                 <p>Teacher can upload material like pdf , video for students to help in studies.</p>
               </a> </div>
             </div>
             
             <div class="item">
               <div class="icon">
+                
+                <a href="/tchr/resource">
                 <img src="/assets_1/images/service-icon-02.png" alt="">
               </div>
               <div class="down-content">
-                <h4>Show Resources</h4>
-                <a href="/tchr/resources">
+                <h4>View Resources</h4>
+
                 <p>View all the learning Materiall which uploaded yet . </p></a>
               </div>
             </div>

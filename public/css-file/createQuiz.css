@@ -11,43 +11,47 @@
 
 
 
-
-
-
-
 /* General Modal Styling */
 .modal {
-    display: none;
+    display: none; /* Initially hidden */
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-    backdrop-filter: blur(10px); /* Blur effect */
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    background: rgba(82, 79, 79, 0.4); /* Semi-transparent dark overlay */
+    backdrop-filter: blur(10px); /* Strong blur effect */
     -webkit-backdrop-filter: blur(10px); /* Safari support */
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center modal in the viewport */
 }
 
-/* Modal Content Styling */
+/* Centered Modal Content */
 .modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background-color: #fff;
-    padding: 15px;
+    padding: 20px;
     border-radius: 10px;
-    width: 300px;
-    height: auto; /* Adjust height dynamically based on content */
-    max-height: 80%; /* Prevents the modal from exceeding screen height */
-    overflow-y: auto; /* Adds scrolling if content overflows */
+    width: 35%; /* Moderate width */
+    min-width: 280px; /* Prevents shrinking too much */
+    max-width: 400px; /* Limits width */
+    height: auto; /* Dynamic height */
+    max-height: 80vh; /* Prevents overflowing */
+    overflow-y: auto; /* Enables scrolling */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     animation: fadeIn 0.3s ease-in-out;
 }
 
 /* Form Elements Styling */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Ensures form elements are centered */
+    width: 100%;
+}
+
 .modal-content form label,
 .modal-content form input {
     display: block;
@@ -58,75 +62,144 @@
 
 .modal-content form input,
 .modal-content form button {
-    padding: 8px; /* Slightly reduced padding */
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    width: 90%;
 }
 
 .modal-content form button {
     margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #0a0647;
     color: white;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
 
 .modal-content form button:hover {
-    background-color: #45a049;
+    background-color: #777fc0;
 }
 
-/* Fade-In Animation */
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%; /* Take more space on smaller screens */
+        max-width: 90%;
+    }
+}
+
+/* Fade-in animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
+        transform: scale(0.9);
     }
     to {
         opacity: 1;
+        transform: scale(1);
     }
 }
+
 
 /* Quiz Form Styling */
 #quizForm {
     display: none;
     padding: 40px;
-    background-color: #f9f9f9;
+    background: linear-gradient(to right, #051a41, #d0cfda); /* Gradient effect */
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
-    width: 90%;
+    max-width: 800px;
+    width: 100%;
     margin: 40px auto;
+    padding: 100px;
+    margin-top: 100px;
     text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+#quizQuestionForm h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #0a0647;
+    font-weight: bold;
+    background-color: gr;
+}
+
+#quizQuestionForm label {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    display: block;
+}
 /* Input Fields and Buttons */
-#quizQuestionForm input,
-#quizQuestionForm button {
+#quizQuestionForm input {
+    width: 100%; /* Make inputs full width */
+    max-width: 800px; /* Limit max width for better readability */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    color: black;
+    font-size: 16px;
+    margin: 10px 0;
+    display: block; /* Ensure inputs stack properly */
+}
+#quizQuestionForm button{
+    width: 100%; /* Make inputs full width */
+    max-width: 800px; /* Limit max width for better readability */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    color: rgb(255, 252, 252);
+    font-size: 16px;
+    margin: 10px 0;
+    display: block; /* Ensure inputs stack properly */
+}
+/* General Button Styling */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0a0647;;
+    /* color: black; */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.horizontal-button {
+
+    color: white;
+}
+/* #access{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     color: black;
     font-size: 16px;
     margin: 10px 0;
+    width: 50px;
+} */
+/* button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
 }
 
-/* General Button Styling */
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
+.horizontal-button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s;
 }
 
-button:hover {
+.horizontal-button:hover {
     background-color: #0056b3;
-}
+} */

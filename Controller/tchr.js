@@ -210,16 +210,14 @@ async function handleProfileTchr (req, res, showAllExperiments = false) {
             ? `data:image/jpeg;base64,${teacher.pic}`
             : '/images/default-profile-icon.jpg';
 
-        // All experiments
-        const experiments = [
-            { id: "penExp", title: "Pendulum", description: "Verification of the laws of simple pendulum", image: "/images/course_1.jpg" },
-            { id: "massExp", title: "Mass Spring System", description: "To determine the acceleration due to the gravity by oscillating mass spring system: ", image: "/images/course_2.jpg" },
-            { id: "meterExp", title: "Meter Rod Method", description: " Verify the conditions of equilibrium by suspended meter rod method: ", image: "/images/course_3.jpg" },
-            { id: "forceExp", title: "Force Table", description: "To find the unknown weight of a body by the method of rectangular component of forces: ", image: "/images/course_4.jpg" },
-            { id: "inclineExp", title: "Resonance Exp", description: " Determine the velocity of sound at 0 degree C by resonance Tube  apparatus using first resonance position and applying end correction: "
-                , image: "/images/course_5.jpg" }
-        ];
-
+            const experiments = [
+                { id: "penExp", exp_no: "1", title: "Pendulum", description: "Verification of the laws of simple pendulum", image: "/images/pendulum.jpg" },
+                { id: "massExp", exp_no: "2", title: "Mass Spring System", description: "To determine the acceleration due to gravity by oscillating mass spring system", image: "/images/mass-spring.jpg" },
+                { id: "meterExp", exp_no: "3", title: "Meter Rod Method", description: "Verify the conditions of equilibrium by suspended meter rod method", image: "/images/meter-rod.jpg" },
+                { id: "forceExp", exp_no: "4", title: "Force Table", description: "To find the unknown weight of a body by the method of rectangular component of forces", image: "/images/incline-plane.jpg" },
+                { id: "inclineExp", exp_no: "5", title: "Resonance Exp", description: "Determine the velocity of sound at 0 degree C by resonance tube apparatus", image: "/images/resonance.jpg" }
+              ];
+              
         // Random experiments logic
         const experimentsToShow = showAllExperiments
             ? experiments
@@ -245,9 +243,10 @@ async function handleProfileTchr (req, res, showAllExperiments = false) {
 
 async function handlegetUpdate(req, res) {
    try{ 
-    const userId = getTokenFromCookies(req);
+    const userid=req.user.id;
+    // const userId = getTokenFromCookies(req);
 
-    const user = await User_Tchr.findById(userId);
+    const user = await User_Tchr.findById(userid);
     if (!user) {
         return res.status(404).send('User not found.');
     }
@@ -272,7 +271,7 @@ async function handleUpdateAccount(req, res) {
         console.log('Starting account update process...');
         
         // Extract user ID from the token
-        const userId = getTokenFromCookies(req);
+        const userId = req.user.id;
         console.log('Extracted userId:', userId);
         if (!userId) {
             console.log('User ID not found. Redirecting to login.');
@@ -315,14 +314,15 @@ async function handleUpdateAccount(req, res) {
 
         if (file) {
             console.log('Updating profile picture from uploaded file.');
-            updateData.pic_1 = file.buffer.toString('base64');
+            updateData.pic = file.buffer.toString('base64');
         } else if (!user.pic) {
             console.log('No current image found. Using default profile picture.');
-            updateData.pic_1 = '/images/default-profile-icon.jpg'; // Replace with actual default image in base64 or URL
+            updateData.pic = '/images/profile.jpg'; // fallback image
         } else {
             console.log('Retaining existing profile picture.');
-            updateData.pic_1 = user.pic;
+            updateData.pic = user.pic;
         }
+        
 
         if (pwd_1) {
             console.log('Hashing new password...');
@@ -346,7 +346,7 @@ async function handleUpdateAccount(req, res) {
         }
 
         // Generate a new token with updated data
-        const newToken = generateToken(updatedUser._id);
+        const newToken = generateTeacherToken(updatedUser._id,updatedUser.email,updatedUser.role);
         console.log('Generated new token:', newToken);
 
         res.cookie('token', newToken, { httpOnly: true });
@@ -354,7 +354,7 @@ async function handleUpdateAccount(req, res) {
 
         // Redirect to teacher console
         console.log('Redirecting to teacher console...');
-        res.redirect('/tchrConsole');
+        res.redirect('/tchr/tchrConsole');
     } catch (error) {
         console.error('Error updating user:', error);
         res.status(500).send('Server error.');

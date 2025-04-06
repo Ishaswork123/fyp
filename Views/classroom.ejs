@@ -9,7 +9,7 @@
     <meta name="author" content="Template Mo">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-    <title>Education - List of Meetings</title>
+    <title>List of Classes</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/vendor_1/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,6 +20,14 @@
     <link rel="stylesheet" href="/assets_1/css/templatemo-edu-meeting.css">
     <link rel="stylesheet" href="/assets_1/css/owl.css">
     <link rel="stylesheet" href="/assets_1/css/lightbox.css">
+    <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+    <link rel="stylesheet" href="/css-file/tchrConsole.css">
+  
+    <!-- External resources -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+  <link rel="stylesheet" href="/css-file/QuizStyle.css">
 <!--
 
 TemplateMo 569 Edu Meeting
@@ -73,6 +81,26 @@ https://templatemo.com/tm-569-edu-meeting
     width: 48%; /* Original value for two-per-row, restored */
 
 }
+  
+.header-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  .footer_links_container li{ 
+    background-color: #232835;
+  }
+  .footer_social li{
+    background-color: #1e2434;
+  }
+  .footer_contact_info li{
+    background-color: #1e2434;
+
+  }
 </style>
   </head>
 
@@ -104,39 +132,56 @@ https://templatemo.com/tm-569-edu-meeting
   </div> -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-      <div class="container">
+  <div class="super_container">
+    <!-- Header Section -->
+    <header class="header">
+      <!-- Top Bar -->
+     
+
+      <!-- Header Content -->
+      <div class="header_container">
+        <div class="container">
           <div class="row">
-              <div class="col-12">
-                  <nav class="main-nav">
-                      <!-- ***** Logo Start ***** -->
-                      <a href="index.html" class="logo">
-                          Phy_Meet_Hub
-                      </a>
-                      <!-- ***** Logo End ***** -->
-                      <!-- ***** Menu Start ***** -->
-                      <ul class="nav">
-                          <li><a href="/classroom/class">Home</a></li>
-                          <li><a href="/classroom/list" class="active">Meetings</a></li>
-                          <li class="has-sub">
-                              <a href="javascript:void(0)">Meeting-details</a>
-                              <ul class="sub-menu">
-                                  <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                  <li><a href="meeting-details.html">Meeting Details</a></li>
-                              </ul>
-                          </li>
-                         
-                      </ul>        
-                      <a class='menu-trigger'>
-                          <span>Menu</span>
-                      </a>
-                      <!-- ***** Menu End ***** -->
-                  </nav>
-              </div>
+            <div class="col">
+              <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                <div
+                class="header_content d-flex flex-row align-items-center justify-content-start">
+                <a href="/classroom/class" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+                  <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i>
+                  <!-- <i class="fas fa-arrow-left"></i>  -->
+                </a>
+                  <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
+                <div class="logo_container">
+                  <a href="#">
+                    <div class="logo_text">Physics<span>Verse</span></div>
+                  </a>
+                </div>
+    <!-- HTML !-->
+
+    
+  
+
+     
+            </div>
+            <nav class="main_nav_contaner ml-auto">
+              <ul class="main_nav" ">
+              
+                <li>
+                  <a href="/tchr/tchrConsole" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px; ">
+                    <i class="fa fa-home" style="margin-right: 2px; "></i>
+                  </a>
+                </li>
+              </ul>>
+             
+            </nav>
           </div>
+           <!-- Filter Form -->
+   
+        </div>
       </div>
-  </header>
- 
+    </header>
+
+  
   <section class="meetings-page" id="meetings">
     <div class="container">
       <div class="row">
@@ -222,7 +267,8 @@ https://templatemo.com/tm-569-edu-meeting
         </div>
       </div>
     </section>
-    
+    <!-- <br><br> -->
+    <hr>
     
 	<footer class="footer">
 		<div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>

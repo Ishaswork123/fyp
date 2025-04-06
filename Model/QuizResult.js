@@ -12,9 +12,14 @@ const quizResultSchema = new Schema({
     type: String,
     required: true,
   },
+
   marks_obtained: { type: Number, required: true }, // Marks obtained by the student
   total_questions: { type: Number, required: true }, // Total number of questions in the quiz
-  answers_submitted: { type: [String], required: true } // Array of student's submitted answers
+  answers_submitted: { type: [String], required: true } ,// Array of student's submitted answers
+  correctAnswers: {
+    type:[ String],
+    required: true,
+  },
 }, {
   timestamps: true
 });

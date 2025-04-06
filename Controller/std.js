@@ -191,50 +191,59 @@ function handleLogout(req, res) {
     // Redirect to the home page or login page after logout
     res.redirect('/');
 }
-
-async function handleProfile(req, res) {
+async function handleProfile(req, res, allExperiments = false) {
     try {
-        // console.log("Authenticated, rendering console page");
-
-        // Fetch the logged-in student based on the JWT user ID
-        const student = await User.findById(req.user.id);  // Use req.userId here
-        console.log(student)
-
+        const student = await User.findById(req.user.id);
         if (!student) {
             return res.status(404).send('User not found');
         }
 
-        // Fetch two random teachers from the database
-        const teachers = await Teacher.aggregate([{ $sample: { size: 2 } }]); // Randomly fetch 2 teachers
-    const communities = await Community.find();
-   for (const community of communities) {
+        const teachers = await Teacher.aggregate([{ $sample: { size: 2 } }]);
+        const communities = await Community.find();
+        for (const community of communities) {
             await addUserToCommunity(req, community._id);
         }
-  
-        // Check if a profile picture exists for the student, or use a default one
+
+        // Experiment Data
+        const experiments = [
+            { id: "penExp", exp_no: "1", title: "Pendulum", description: "Verification of the laws of simple pendulum", image: "/images/pendulum.jpg" },
+            { id: "massExp", exp_no: "2", title: "Mass Spring System", description: "To determine the acceleration due to gravity by oscillating mass spring system", image: "/images/mass-spring.jpg" },
+            { id: "meterExp", exp_no: "3", title: "Meter Rod Method", description: "Verify the conditions of equilibrium by suspended meter rod method", image: "/images/meter-rod.jpg" },
+            { id: "forceExp", exp_no: "4", title: "Force Table", description: "To find the unknown weight of a body by the method of rectangular component of forces", image: "/images/incline-plane.jpg" },
+            { id: "inclineExp", exp_no: "5", title: "Resonance Exp", description: "Determine the velocity of sound at 0 degree C by resonance tube apparatus", image: "/images/resonance.jpg" }
+          ];
+          
+
         const profilePic = student.pic ? `data:image/jpeg;base64,${student.pic}` : '/images/default-profile-icon.jpg';
 
-        // Pass the necessary data to the EJS template for the sidebar and teachers
+        // Only show first three experiments in stdConsole, all in std/view-all
+        const filteredExperiments = allExperiments ? experiments : experiments.slice(0, 3);
+
         res.render('stdConsole', {
             name: student.fname + ' ' + student.lname,
             email: student.email,
             joinDate: student.createdAt,
-            profilePic: profilePic,  // Profile picture path
-            teachers: teachers  ,    // Pass the teachers data to the template
-            user: req.user, communities
-
+            profilePic: profilePic,
+            teachers: teachers,
+            user: req.user,
+            communities: communities,
+            experiments: filteredExperiments,
+            allExperiments: allExperiments
         });
+
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');
     }
-};
+}
+
 
 async function handlegetUpdate(req, res) {
     try{ 
-     const userId = getTokenFromCookies(req);
+        const userid=req.user.id;
+    //  const userId = getTokenFromCookies(req);
  
-     const user = await User.findById(userId);
+     const user = await User.findById(userid);
      if (!user) {
          return res.status(404).send('User not found.');
      }
@@ -259,7 +268,7 @@ async function handlegetUpdate(req, res) {
          console.log('Starting account update process...');
          
          // Extract user ID from the token
-         const userId = getTokenFromCookies(req);
+         const userId = req.user.id;
          console.log('Extracted userId:', userId);
          if (!userId) {
              console.log('User ID not found. Redirecting to login.');
@@ -301,15 +310,15 @@ async function handlegetUpdate(req, res) {
          }
  
          if (file) {
-             console.log('Updating profile picture from uploaded file.');
-             updateData.pic_1 = file.buffer.toString('base64');
-         } else if (!user.pic) {
-             console.log('No current image found. Using default profile picture.');
-             updateData.pic_1 = '/images/default-profile-icon.jpg'; // Replace with actual default image in base64 or URL
-         } else {
-             console.log('Retaining existing profile picture.');
-             updateData.pic_1 = user.pic;
-         }
+            console.log('Updating profile picture from uploaded file.');
+            updateData.pic = file.buffer.toString('base64');
+        } else if (!user.pic) {
+            console.log('No current image found. Using default profile picture.');
+            updateData.pic = '/images/profile.jpg'; // fallback image
+        } else {
+            console.log('Retaining existing profile picture.');
+            updateData.pic = user.pic;
+        }
  
          if (pwd_1) {
              console.log('Hashing new password...');
@@ -333,14 +342,14 @@ async function handlegetUpdate(req, res) {
          }
  
          // Generate a new token with updated data
-         const newToken = generateToken(updatedUser._id);
+         const newToken = generateStudentToken(updatedUser._id);
          console.log('Generated new token:', newToken);
  
          res.cookie('token', newToken, { httpOnly: true });
          console.log('Token set in cookies.');
  
          // Redirect to teacher console
-         console.log('Redirecting to teacher console...');
+         console.log('Redirecting to student console...');
          res.redirect('/stdConsole');
      } catch (error) {
          console.error('Error updating user:', error);

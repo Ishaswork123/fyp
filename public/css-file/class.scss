@@ -1,14 +1,19 @@
-$primary: #11998e;
-$secondary: #38ef7d;
+$primary:  #051a41;
+$secondary: #e2e2e6;
 $white: #fff;
 $gray: #9b9b9b;
+
+
+.title{
+  margin-top: 100px;
+}
+
 .form__group {
   position: relative;
   padding: 15px 0 0;
-  margin-top: 10px;
+  margin-top: 50px;
   width: 50%;
 }
-
 .form__field {
   font-family: inherit;
   width: 100%;
@@ -54,7 +59,7 @@ $gray: #9b9b9b;
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, $primary, $secondary);
+  // border-image: linear-gradient(to right, $primary, $secondary);
   border-image-slice: 1;
 }
 /* reset input */

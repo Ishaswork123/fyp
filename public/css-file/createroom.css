@@ -124,7 +124,7 @@ form .button {
 form .button input {
   height: 100%;
   width: 100%;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   border: none;
   color: #fff;
   font-size: 18px;
@@ -132,10 +132,10 @@ form .button input {
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, #0a456d, #5d5361);
+  /* background: linear-gradient(135deg, #0a456d, #5d5361); */
 }
 form .button input:hover {
-  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+  /* background: linear-gradient(-135deg, #71b7e6, #9b59b6); */
 }
 /* Responsive media query code for mobile devices */
 @media(max-width: 584px) {

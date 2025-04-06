@@ -90,7 +90,7 @@ console.log('enter 1 ')
   }
 }
 async function handleQuizSubmission(req, res) {
-  const { exp_no, answers} = req.body;
+  const { exp_no, answers,correctAnswers} = req.body;
   console.log('POST request received at /std/submit-quiz');
   console.log('Request body:', req.body); // Debug log
 
@@ -127,13 +127,18 @@ console.log(`Experiment Title: ${exp_title}`);
     // Calculate marks
     let marksObtained = 0;
     const totalQuestions = quizData.length;
-
+    const submittedAnswers = []; // Array to store user's selected answers
+    const correctAnswersArray = []; // Array to store correct answers from DB
     quizData.forEach((question, index) => {
       const correctAnswer = question.Answer.toString().trim();
       const correctAnswerFirstLetter = correctAnswer.charAt(0).toUpperCase();
       const userAnswerLetter = answers[index]; // User-selected answer, e.g., 'option3'
       const userAnswer = optionMapping[parseInt(userAnswerLetter.replace('option', '')) - 1];
+// Store the correct answer from the DB
+correctAnswersArray.push(correctAnswer);
 
+// Store user's selected answer
+submittedAnswers.push(userAnswer);
       if (correctAnswerFirstLetter === userAnswer.trim().toUpperCase()) {
         marksObtained += 5; // Increment marks for correct answer
       }
@@ -142,7 +147,9 @@ console.log(`Experiment Title: ${exp_title}`);
     console.log('Marks obtained:', marksObtained);
 
     // Save the result in MongoDB
-    const flattenedAnswers = answers.flat();
+    const flattenedAnswers = submittedAnswers.flat();
+    // const flattenedAnswers_1 = submittedAnswers.flat();
+
     const result = new quizresult({
       student_id: userId,
       exp_no,
@@ -150,12 +157,14 @@ console.log(`Experiment Title: ${exp_title}`);
       marks_obtained: marksObtained,
       total_questions: totalQuestions,
       answers_submitted: flattenedAnswers,
+      correctAnswers: correctAnswersArray, // Save correct answers from DB
+
       fname: student.fname,
     });
 
     await result.save();
     console.log('Result saved successfully');
-    res.redirect(`/std/quiz-results?exp_no=${exp_no}&marksObtained=${marksObtained}`);
+    res.redirect(`/std/quiz-results?exp_no=${encodeURIComponent(exp_no || '')}&marksObtained=${encodeURIComponent(marksObtained || '')}`);
   } catch (error) {
     console.error(error);
     if (error.name === 'JsonWebTokenError') {
@@ -164,23 +173,23 @@ console.log(`Experiment Title: ${exp_title}`);
     res.status(500).send('Server error');
   }
 }
-
 async function quizResult(req,res){
-    const { exp_no, marksObtained } = req.query;
-  
-    try {
-      const quizData = await Quiz.find({ exp_no });
-      if (!quizData || quizData.length === 0) {
-        return res.status(404).send('Quiz not found');
-      }
-  
-      // Render the results EJS page
-      res.render('quizResults', { quizData, marksObtained });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Server error');
+  const { exp_no, marksObtained } = req.query;
+
+  try {
+    const quizData = await Quiz.find({ exp_no });
+    if (!quizData || quizData.length === 0) {
+      return res.status(404).send('Quiz not found');
     }
+
+    // Render the results EJS page
+    res.render('quizResults_1', { quizData, marksObtained });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
 }
+
 module.exports={
     getQuiz,postQuiz,
     handleQuizSubmission,

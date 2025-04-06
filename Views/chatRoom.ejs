@@ -3,9 +3,19 @@
 <head>
   <title>Chat Room - <%= community.communityName %></title>
   <link rel="stylesheet" href="/css-file/chat2.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+  <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" /> -->
+  <link rel="stylesheet" href="/css-file/tchrConsole.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  
+<style>
+    body{
+	background: #ffffff;
+	font-family: 'Open Sans', Arial, sans-serif;
+	font-size: 12px;
+	color: #333f4d;
+}
+</style>
  <body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
@@ -70,6 +80,53 @@ document.addEventListener("DOMContentLoaded", function () {
   </script>
 </head>
 <body>
+    <div class="super_container">
+        <!-- Header Section -->
+        <header class="header">
+          <!-- Top Bar -->
+         
+    
+          <!-- Header Content -->
+          <div class="header_container">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                    <div
+                    class="header_content d-flex flex-row align-items-center justify-content-start">
+                    <a href="javascript:history.back()"  style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+                      <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i> 
+                      <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
+                    <div class="logo_container">
+                      <a href="#">
+                        <div class="logo_text">Physics<span>Verse</span></div>
+                      </a>
+                    </div>
+        <!-- HTML !-->
+    
+        
+      
+    
+         
+                </div>
+                <nav class="main_nav_contaner ml-auto">
+                  <ul class="main_nav" ">
+                  
+                    <li>
+                      <a href="/stdConsole" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px; ">
+                        <i class="fa fa-home" style="margin-right: 2px; "></i>
+                      </a>
+                    </li>
+                  </ul>>
+                 
+                </nav>
+              </div>
+               <!-- Filter Form -->
+       
+            </div>
+          </div>
+        </header>
+    
   <div class="window-wrapper">
     <div class="window-title">
         <div class="dots">
@@ -220,7 +277,75 @@ document.addEventListener("DOMContentLoaded", function () {
         
     </div>
 </div>
+<footer class="footer">
+    <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+    <div class="container">
+      <div class="row footer_row">
+        <!-- About Section -->
+        <div class="col-lg-4 col-md-6 footer_col">
+          <div class="footer_section footer_about">
+            <div class="footer_logo_container">
+              <a href="#">
+                <div class="footer_logo_text">Physics<span>Verse</span></div>
+              </a>
+            </div>
+            <div class="footer_about_text">
+              <p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+            </div>
+            <div class="footer_social">
+              <ul>
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                  
+              </ul>
+            </div>
+          </div>
+        </div>
 
+        <!-- Useful Links Section -->
+        <div class="col-lg-3 col-md-6 footer_col">
+          <div class="footer_section footer_links">
+            <div class="footer_title">Useful Links</div>
+            <div class="footer_links_container">
+              <ul>
+                <li><a href="#" id="footer_home">Home</a></li>
+                <li><a href="#" id="footer_about">About Us</a></li>
+                <!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+                <li><a href="#" id="footer_contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="col-lg-5 col-md-12 footer_col">
+          <div class="footer_section footer_contact">
+            <div class="footer_title">Contact Us</div>
+            <div class="footer_contact_info">
+              <ul>
+                <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+                <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+                  fa21-bcs-046@cuiatk.edu.pk</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div> <!-- Close footer_row -->
+
+      <!-- Copyright Section -->
+      <div class="row">
+        <div class="col">
+          <div class="footer_copyright">
+            <p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     const tabs = document.querySelectorAll(".tabs li");
@@ -247,5 +372,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
   </body>
 </html>

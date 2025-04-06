@@ -1,10 +1,20 @@
 const mongoose = require('mongoose');
 
 const penExpSchema = new mongoose.Schema({
-    studentName: {
+      studentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Std',
+        required: true
+      },
+      studentName: {
         type: String,
         required: true
       },
+      exp_no: {
+        type: String,
+        required: true
+      },
+    
   mass1: Number,
   radius1: Number,
   threadLength1: Number,

@@ -9,9 +9,15 @@ router.get('/massExp', (req, res) => {
     res.render("guided-Mass-spring");
 });
 
-router.get('/resonance', (req, res) => {
+router.get('/inclineExp', (req, res) => {
     res.render("guided-resonance");
 });
 
+router.get('/meterExp', (req, res) => {
+    res.render("guided-meter");
+});
 
+router.get('/forceExp', (req, res) => {
+    res.render("guided-grav");
+});
 module.exports=router;

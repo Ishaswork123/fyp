@@ -156,26 +156,26 @@ async function handledeleteQuiz(req, res) {
   async function quizResult(req, res) {
     try {
       const { student_id, exp_no } = req.query;
-  
+    
       // Building dynamic filter object
       let filter = {};
       if (student_id) filter.student_id = student_id;
       if (exp_no) filter.exp_no = exp_no;
-  
+    
       // Fetch filtered quiz results from the database
       const quizResults = await QuizResult.find(filter);
-      const correctAnswers = await Quiz.find({ exp_no }, 'question_no Answer');
-
-      // ✅ Convert correctAnswers into a structured array
-      const formattedCorrectAnswers = correctAnswers.map(q => ({
-        question_no: q.question_no,
-        answer: q.Answer  // Handle possible lowercase
-    }));
-    
     
       if (!quizResults || quizResults.length === 0) {
         return res.status(404).send('No quiz results found');
       }
+    
+      // ✅ Extract correctAnswers from QuizResult model
+      const formattedCorrectAnswers = quizResults.map(result => ({
+        exp_no: result.exp_no,
+        correctAnswers: result.correctAnswers // Already stored in the database
+      }));
+    
+      // Fetch unique student IDs for filters
       const students = await QuizResult.aggregate([
         {
           $group: {
@@ -184,22 +184,24 @@ async function handledeleteQuiz(req, res) {
           }
         }
       ]);
-  
-      // Fetch unique student IDs and experiment numbers for filters
-      // const students = await QuizResult.find().distinct('student_id');
-      const studentDetails = await QuizResult.find({ student_id: { $in: students } }, 'student_id fname');
+    
+      // Get student details
+      const studentDetails = await QuizResult.find({ student_id: { $in: students.map(s => s._id) } }, 'student_id fname');
+    
+      // Get unique experiment numbers for filtering
       const expNumbers = await QuizResult.find().distinct('exp_no');
-  
-      // Render the EJS file and pass data
+    
+      // Render the EJS file and pass the correct data
       res.render('quizResults', {
         quizResults,
         students: studentDetails,
-        expNumbers, 
-        correctAnswers:formattedCorrectAnswers 
+        expNumbers,
+        correctAnswers: formattedCorrectAnswers
       });
     } catch (error) {
       console.error(error);
       res.status(500).send('Server error');
     }
-  }
+  }    
+  
 module.exports={handleQuiz,showQuiz,getQuizEdit,postQuizEdit,handledeleteQuiz,quizResult};

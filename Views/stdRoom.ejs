@@ -9,12 +9,16 @@
     <meta name="author" content="Template Mo">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-    <title>Education - List of Meetings</title>
+    <title>- List of Classes</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/vendor_1/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-
+    <link rel="stylesheet" href="/css-file/QuizStyle.css">
+    <link rel="stylesheet" href="/css-file/tchrConsole.css">
+    <!-- External resources -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="/assets_1/css/fontawesome.css">
     <link rel="stylesheet" href="/assets_1/css/templatemo-edu-meeting.css">
@@ -73,6 +77,17 @@ https://templatemo.com/tm-569-edu-meeting
     width: 48%; /* Original value for two-per-row, restored */
 
 }
+
+.footer_links_container li{ 
+    background-color: #232835;
+  }
+  .footer_social li{
+    background-color: #1e2434;
+  }
+  .footer_contact_info li{
+    background-color: #1e2434;
+
+  }
 </style>
   </head>
 
@@ -104,39 +119,33 @@ https://templatemo.com/tm-569-edu-meeting
   </div> -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-      <div class="container">
+  <div class="super_container">
+    <!-- Header Section -->
+    <header class="header">
+      <!-- Top Bar -->
+      
+      <!-- Header Content -->
+      <div class="header_container">
+        <div class="container">
           <div class="row">
-              <div class="col-12">
-                  <nav class="main-nav">
-                      <!-- ***** Logo Start ***** -->
-                      <a href="index.html" class="logo">
-                          Phy_Hub
-                      </a>
-                      <!-- ***** Logo End ***** -->
-                      <!-- ***** Menu Start ***** -->
-                      <ul class="nav">
-                          <li><a href="/std/class">Home</a></li>
-                          <!-- <li><a href="/classroom/list" class="active">Meetings</a></li> -->
-                          <!-- <li class="has-sub">
-                              <a href="javascript:void(0)">Meeting-details</a>
-                              <ul class="sub-menu">
-                                  <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                  <li><a href="meeting-details.html">Meeting Details</a></li>
-                              </ul>
-                          </li> -->
-                         
-                      </ul>        
-                      <a class='menu-trigger'>
-                          <span>Menu</span>
-                      </a>
-                      <!-- ***** Menu End ***** -->
-                  </nav>
+            <div class="col">
+              <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                  <a href="javascript:history.back()"  style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+                    <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i> 
+                  <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
+                <div class="logo_container">
+                  <a href="#">
+                    <div class="logo_text">Physics<span>Verse</span></div>
+                  </a>
+                </div></div>
               </div>
+            </div>
           </div>
+        </div>
       </div>
-  </header>
- 
+    </header>
+
   <section class="meetings-page" id="meetings">
     <div class="container">
       <div class="row">
@@ -194,26 +203,82 @@ https://templatemo.com/tm-569-edu-meeting
                 </div>
               </div>
   
-  
-              <div class="col-lg-12">
-                <div class="pagination">
-                  <ul>
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="footer">
-        <p>Copyright © 2025 Phy_Meet_Hub Co., Ltd. All Rights Reserved.
-            <br>Design: <a href="https://templatemo.com/page/1" target="_parent" title="website templates">TemplateMo</a></p>
-      </div>
+    
     </section>
+     <!-- Footer Section -->
+     <footer class="footer">
+      <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+      <div class="container">
+        <div class="row footer_row">
+          <!-- About Section -->
+          <div class="col-lg-4 col-md-6 footer_col">
+            <div class="footer_section footer_about">
+              <div class="footer_logo_container">
+                <a href="#">
+                  <div class="footer_logo_text">Physics<span>Verse</span></div>
+                </a>
+              </div>
+              <div class="footer_about_text">
+                <p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+              </div>
+              <div class="footer_social">
+                <ul>
+                  <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                  <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Useful Links Section -->
+          <div class="col-lg-3 col-md-6 footer_col">
+            <div class="footer_section footer_links">
+              <div class="footer_title">Useful Links</div>
+              <div class="footer_links_container">
+                <ul>
+                  <li><a href="#" id="footer_home">Home</a></li>
+                  <li><a href="#" id="footer_about">About Us</a></li>
+                  <!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+                  <li><a href="#" id="footer_contact">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Contact Section -->
+          <div class="col-lg-5 col-md-12 footer_col">
+            <div class="footer_section footer_contact">
+              <div class="footer_title">Contact Us</div>
+              <div class="footer_contact_info">
+                <ul>
+                  <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+                  <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                  <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+                    fa21-bcs-046@cuiatk.edu.pk</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Close footer_row -->
+  
+        <!-- Copyright Section -->
+        <div class="row">
+          <div class="col">
+            <div class="footer_copyright">
+              <p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+      </div>
     
  <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
@@ -307,6 +372,7 @@ $(function () {
 
   </script>
 
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 </body>
 

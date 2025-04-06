@@ -2,18 +2,37 @@
 <html lang="en">
 <head>
   <title>Student Results</title>
+  <link rel="stylesheet" type="text/css" href="/css-file/main_styles.css" />
+  <link rel="stylesheet" type="text/css" href="/css-file/responsive.css" />
+
+  <!-- External resources -->
+   <!-- main css file -->
+<link rel="stylesheet" href="/css-file/QuizStyle.css">
+<link rel="stylesheet" href="/css-file/tchrConsole.css">
+<!-- External resources -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/styles.css">
   <style>
    body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background-color: #f5f5f5;
+   }
+ h2 {
+  text-align: center;
+  color: #000000;
+  border-radius: 10px;
+  margin: 5px;
+  font-weight: bold;
 }
 
-h1, h2 {
-  text-align: center;
-  color: #333;
-}
+h1{
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #090341;
+    text-align: center;
+  }
 
 section {
   margin: 30px 0;
@@ -45,7 +64,7 @@ th, td {
 }
 
 th {
-  background-color: #007bff;
+  background-color:#090341;;
   color: white;
 }
 
@@ -63,7 +82,14 @@ tr:nth-child(even) {
     font-size: 14px;
   }
 
-  h1, h2 {
+  h1{
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    border: 1px solid blue;
+    color: #090341;
+  }
+  h2 {
     font-size: 1.5rem;
   }
 }
@@ -82,17 +108,64 @@ tr:nth-child(even) {
   .modal-active {
     display: block;
   }
+  .section{
+    margin-top: 60px;
+  }
   /* .blur-background {
     filter: blur(5px);
     pointer-events: none;
   } */
+  hr.styled {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to right, #0e032b, #fdfcfd);
+  margin: 20px 0;
+  width: 100%;
+}
+.footer_links_container li{ 
+    background-color: #232835;
+  }
+  .footer_social li{
+    background-color: #1e2434;
+  }
+  .footer_contact_info li{
+    background-color: #1e2434;
 
+  }
   </style>
 </head>
 <body>
-  <h1>Mark Summary</h1>
+  <div class="super_container">
+    <!-- Header Section -->
+    <header class="header">
+      <!-- Top Bar -->
+      
+      <!-- Header Content -->
+      <div class="header_container">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                  <a href="javascript:history.back()"  style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+                    <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i> 
+                  <img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
+                <div class="logo_container">
+                  <a href="#">
+                    <div class="logo_text">Physics<span>Verse</span></div>
+                  </a>
+                </div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
 
-  <section>
+
+  <section class="section">
+    <h1>Mark Summary</h1>
+<hr class="styled">
     <h2>Quiz Results</h2>
     <% if (quizResults.length > 0) { %>
       <div class="table-container">
@@ -164,7 +237,75 @@ tr:nth-child(even) {
       <p style="text-align: center;">No experiment results available.</p>
     <% } %>
   </section>
-  
+  <footer class="footer">
+    <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
+    <div class="container">
+      <div class="row footer_row">
+        <!-- About Section -->
+        <div class="col-lg-4 col-md-6 footer_col">
+          <div class="footer_section footer_about">
+            <div class="footer_logo_container">
+              <a href="#">
+                <div class="footer_logo_text">Physics<span>Verse</span></div>
+              </a>
+            </div>
+            <div class="footer_about_text">
+              <p>A virtual physics Lab. Explore the wonders of physics with PhysicsVerse.</p>
+            </div>
+            <div class="footer_social">
+              <ul>
+                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Useful Links Section -->
+        <div class="col-lg-3 col-md-6 footer_col">
+          <div class="footer_section footer_links">
+            <div class="footer_title">Useful Links</div>
+            <div class="footer_links_container">
+              <ul>
+                <li><a href="#" id="footer_home">Home</a></li>
+                <li><a href="#" id="footer_about">About Us</a></li>
+                <!-- <li><a href="#" id="footer_courses">Experiments</a></li> -->
+                <li><a href="#" id="footer_contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="col-lg-5 col-md-12 footer_col">
+          <div class="footer_section footer_contact">
+            <div class="footer_title">Contact Us</div>
+            <div class="footer_contact_info">
+              <ul>
+                <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
+                <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
+                  fa21-bcs-046@cuiatk.edu.pk</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div> <!-- Close footer_row -->
+
+      <!-- Copyright Section -->
+      <div class="row">
+        <div class="col">
+          <div class="footer_copyright">
+            <p>&copy; 2025 PhysicsVerse. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div><
+  </footer>
+
+    </div>
 </body>
 <script>
   function openModal(index) {
@@ -183,4 +324,6 @@ tr:nth-child(even) {
         document.body.classList.remove('blur-background');
       }
 </script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 </html>
