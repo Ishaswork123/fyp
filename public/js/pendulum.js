@@ -36,6 +36,99 @@ let massDisplay= document.getElementById("mass")
 let showScaleCheckbox = document.getElementById("showScale");
 let graphContainer = document.getElementById("graphContainer");
 
+//-------------------------------------------------------------------------------
+// tootlip
+
+// Tooltip functionality
+function setupTooltips() {
+  // Create tooltip element
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  document.body.appendChild(tooltip);
+
+  // Function to position and show tooltip
+  function showTooltip(element, text) {
+    const rect = element.getBoundingClientRect();
+    tooltip.textContent = text;
+    tooltip.style.left = `${rect.left + rect.width/2 - tooltip.offsetWidth/2}px`;
+    tooltip.style.top = `${rect.bottom + 8}px`;
+    tooltip.classList.add('active');
+  }
+
+  // Add tooltips to all elements with data-intro
+  document.querySelectorAll('[data-intro]').forEach(el => {
+    el.addEventListener('mouseenter', () => showTooltip(el, el.dataset.intro));
+    el.addEventListener('mouseleave', () => tooltip.classList.remove('active'));
+  });
+
+  // Add tooltips to buttons and controls
+  document.querySelectorAll('button').forEach(button => {
+    if (!button.dataset.intro) {
+      button.addEventListener('mouseenter', () => {
+        let tooltipText = '';
+        if (button.id === 'controlButton') tooltipText = 'Start/pause the pendulum';
+        else if (button.id === 'reset') tooltipText = 'Reset the experiment';
+        else if (button.id === 'start') tooltipText = 'Start the simulation';
+        else if (button.id === 'saveGraphsBtn') tooltipText = 'Save graph data as CSV';
+        else if (button.id === 'saveGraphsBtnimg') tooltipText = 'Save graphs as images';
+        else if (button.id === 'addValuesBtn') tooltipText = 'Show data table';
+        else if (button.classList.contains('dropbtn')) tooltipText = 'Show/hide graphs';
+        
+        if (tooltipText) showTooltip(button, tooltipText);
+      });
+      button.addEventListener('mouseleave', () => tooltip.classList.remove('active'));
+    }
+  });
+
+  // Add tooltip to canvas when hovering the bob
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Calculate distance to bob
+    const bobX = originX + length * 400 * Math.sin(angle);
+    const bobY = originY + length * 400 * Math.cos(angle);
+    const distToBob = Math.sqrt(Math.pow(x - bobX, 2) + Math.pow(y - bobY, 2));
+    
+    if (distToBob <= radius + 20) {
+      showTooltip(canvas, 'Drag to change pendulum position');
+      tooltip.style.left = `${e.clientX}px`;
+      tooltip.style.top = `${e.clientY + 20}px`;
+    } else {
+      tooltip.classList.remove('active');
+    }
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    tooltip.classList.remove('active');
+  });
+
+  // Add tooltips to input sliders
+  document.querySelectorAll('.input-group').forEach(group => {
+    const label = group.querySelector('label');
+    if (label) {
+      group.addEventListener('mouseenter', () => {
+        let tooltipText = '';
+        if (label.htmlFor === 'length') tooltipText = 'Adjust pendulum length';
+        else if (label.htmlFor === 'radius') tooltipText = 'Adjust bob radius';
+        else if (label.htmlFor === 'gravity') tooltipText = 'Adjust gravity value';
+        else if (label.htmlFor === 'Iangle') tooltipText = 'Set initial angle';
+        else if (label.htmlFor === 'damping') tooltipText = 'Adjust damping factor';
+        
+        if (tooltipText) showTooltip(group, tooltipText);
+      });
+      group.addEventListener('mouseleave', () => tooltip.classList.remove('active'));
+    }
+  });
+}
+
+// Call this in your initialization
+window.addEventListener('load', function() {
+  resizeCanvas();
+  setupTooltips();  // Add this line
+});
+
 // Show table --------------------------------------------------------------------------------------
 document.getElementById('addValuesBtn').addEventListener('click', function() {
 
@@ -46,6 +139,23 @@ document.getElementById('addValuesBtn').addEventListener('click', function() {
 
 let isGraphVisible = true;
 document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll(".navigation-bar .tab");
+    tabs.forEach(function(tab) {
+      tab.addEventListener("click", function(e) {
+        // e.preventDefault(); ❌ remove or comment this line
+      
+        tabs.forEach(function(t) {
+          t.classList.remove("active");
+        });
+      
+        this.classList.add("active");
+      
+        const section = this.getAttribute("data-section");
+        console.log("Navigated to: " + section);
+      });
+      
+    });
+
   
   document.getElementById('showGraph').addEventListener('change', function () {
     graphCanvas.style.display = this.checked ? 'block' : 'none';
@@ -177,6 +287,41 @@ let currentDataIndex = 0;
 let zoomOutFactor = 0.5;
 let maxPointsVisible = 10000;
 
+document.getElementById("zoomInBtn").addEventListener("click", () => {
+  if (maxPointsVisible > 100) {
+    maxPointsVisible = Math.floor(maxPointsVisible / 2);
+    drawGraphs();
+  }
+});
+
+document.getElementById("zoomOutBtn").addEventListener("click", () => {
+  if (maxPointsVisible < maxPoints) {
+    maxPointsVisible = Math.min(maxPointsVisible * 2, maxPoints);
+    drawGraphs();
+  }
+});
+
+
+function drawCanvasButtons(ctx) {
+  // Zoom In Button
+  ctx.fillStyle = "#f0f0f0";
+  ctx.fillRect(700, 10, 70, 30); // x, y, width, height
+  ctx.strokeStyle = "#000";
+  ctx.strokeRect(700, 10, 70, 30);
+  ctx.fillStyle = "#000";
+  ctx.font = "16px sans-serif";
+  ctx.fillText("Zoom +", 710, 30);
+
+  // Zoom Out Button
+  ctx.fillStyle = "#f0f0f0";
+  ctx.fillRect(700, 50, 70, 30);
+  ctx.strokeStyle = "#000";
+  ctx.strokeRect(700, 50, 70, 30);
+  ctx.fillStyle = "#000";
+  ctx.fillText("Zoom -", 710, 70);
+}
+
+
 function drawGraphs() {
   drawLineChart(
     graphCtx,
@@ -236,9 +381,10 @@ function drawGraphs() {
     ctx.beginPath();
     ctx.strokeStyle = color;
     let yScaleFactor = height / (Math.max(...data) - Math.min(...data)) || 1;
-    for (let i = 0; i < data.length; i++) {
-      let x = 10 + i * ((width - 10) / maxPointsVisible); 
-      let y = height / 2 - data[i] * yScaleFactor;
+    const startIdx = Math.max(0, data.length - maxPointsVisible);
+for (let i = startIdx; i < data.length; i++) {
+  let x = 10 + i * ((width - 10) / maxPointsVisible); 
+  let y = height / 2 - data[i] * yScaleFactor;
       if (i === 0) {
         ctx.moveTo(x, y);
       } else {
@@ -390,8 +536,9 @@ function plotLine(
 ) {
   graphCtx.beginPath();
   graphCtx.strokeStyle = color;
-  for (let i = 0; i < data.length; i++) {
-    let x = i * xScaleFactor + 50; 
+  const startIdx = Math.max(0, data.length - maxPointsVisible);
+for (let i = startIdx; i < data.length; i++) {
+  let x = (i - startIdx) * xScaleFactor + 50;
     let y = graphOffsetY - data[i] * yScaleFactor; 
     if (i === 0) {
       graphCtx.moveTo(x, y); 
@@ -753,6 +900,20 @@ lengthInput.addEventListener("input", () => {
   drawPendulum();
 });
 
+document.getElementById("length-increase").addEventListener("click", () => {
+  length = Math.min(parseFloat(lengthInput.max), length + 0.01);
+  lengthInput.value = length.toFixed(2);
+  lengthValue.innerText = `${length.toFixed(2)} m`;
+drawPendulum(); 
+});
+
+document.getElementById("length-decrease").addEventListener("click", () => {
+  length = Math.max(parseFloat(lengthInput.min), length - 0.01);
+  lengthInput.value = length.toFixed(2);
+  lengthValue.innerText = `${length.toFixed(2)} m`;
+drawPendulum(); 
+});
+
 IangleInput.addEventListener("input", () => {
   let inputAngle = parseFloat(IangleInput.value);
   angle = (inputAngle * Math.PI) / 180;
@@ -794,25 +955,7 @@ gravityInput.addEventListener("input", () => {
   drawPendulum(); 
 });
 
-document
-  .getElementById("length-increase")
-  .addEventListener("click", () => {
-    length = Math.min(parseFloat(lengthInput.max), length + 0.01);
-    lengthInput.value = length.toFixed(2);
-    lengthValue.innerText = `${length.toFixed(2)} m`;
-  drawPendulum(); 
 
-  });
-
-document
-  .getElementById("length-decrease")
-  .addEventListener("click", () => {
-    length = Math.max(parseFloat(lengthInput.min), length - 0.01);
-    lengthInput.value = length.toFixed(2);
-    lengthValue.innerText = `${length.toFixed(2)} m`;
-  drawPendulum(); 
-
-  });
 
 document.getElementById("radius-increase").addEventListener("click", () => {
   radius = Math.min(parseFloat(radiusInput.max), radius + 0.01);

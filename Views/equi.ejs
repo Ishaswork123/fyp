@@ -3,32 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equilibrium Experiment</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-
-    <link rel="stylesheet" href="/css-file/sai.css">
+    <link rel="stylesheet" href="/css-file/equi.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <style>
-        .weights {
-            display: flex;
-            gap: 10px;
-        }
 
-        .weight {
-            cursor: pointer;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-        }
-    </style>
 </head>
 
 <body>
-
     <canvas id="simulationCanvas"></canvas>
     <div class="controls-container">
-        <div class="massInput">
+        <!-- ... (rest of your controls) ... -->
+         <div class="massInput">
             <div class="control-header">
                 <label for="massSlider">Mass <i class="fas fa-weight-hanging"></i></label>
                 <span id="massValue">500 g</span>
@@ -37,29 +24,29 @@
                 <button id="mass-decrease" class="arrow-btn"><i class="fas fa-chevron-left"></i></button>
                 <div class="slider-wrapper">
                     <span class="slider-limit">0</span>
-                    <input type="range" id="massSlider" min="0" max="650" value="0" step="10"
-                        oninput="massValue.innerText = this.value + ' g'; updateWeight()" />
+                    <input type="range" id="massSlider" min="0" max="650" value="0" step="10" />
                     <span class="slider-limit">650</span>
                 </div>
                 <button id="mass-increase" class="arrow-btn"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
+
         <div class="springInput">
             <div class="control-header">
                 <label for="springSlider">Spring Strength</label>
                 <span id="springValue">0.5</span>
             </div>
             <div class="slider-container">
-                <span class="slider-label">0.1</span>
                 <button id="spring-decrease" class="arrow-btn"><i class="fas fa-chevron-left"></i></button>
                 <div class="slider-wrapper">
-                    <input type="range" id="springSlider" min="0.1" max="1.0" value="0.5" step="0.1"
-                        oninput="springValue.innerText = this.value" />
+                     <span class="slider-label">0.1</span>
+                    <input type="range" id="springSlider" min="0.1" max="1.0" value="0.5" step="0.1" />
                     <span class="slider-label">1.0</span>
                 </div>
                 <button id="spring-increase" class="arrow-btn"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
+
         <div class="ShowCheckBoxs">
             <span> Show</span>
             <div class="checkbox-container">
@@ -72,7 +59,6 @@
             </div>
         </div>
 
-
         <div class="radioButtons">
             <span> Position</span>
             <div class="checkbox-container">
@@ -83,12 +69,16 @@
                 <input type="radio" id="Rulers" name="position">
                 <label for="Rulers"> Rulers</label>
             </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="showMassLabels" checked>
+                <label for="showMassLabels">Show Mass Labels</label>
+            </div>
         </div>
+
         <div class="gravity-container">
             <input type="button" id="gravityBtn" value="+" />
             <label for="gravity">Gravity</label>
-
-            <div id="gravity-control">
+            <div id="gravity-control" style="display: none;"> <!-- Start hidden -->
                 <div class="input-group">
                     <label for="gravity">Gravity (m/s²): </label>
                     <div class="limits">
@@ -97,62 +87,53 @@
                     </div>
                     <div class="arrow-buttons">
                         <button id="gravity-decrease">◄</button>
-                        <input type="range" id="gravity" min="0" max="15" step="0.1" value="9.8"
-                            oninput="updateGravityValue(this.value)" />
+                        <input type="range" id="gravity" min="0" max="15" step="0.1" value="9.8" />
                         <button id="gravity-increase">►</button>
                     </div>
                     <div class="input-value" id="gravity-value">9.8 m/s²</div>
                 </div>
-
                 <div class="input-group">
-                    <select id="gravitySelect"
-                        onchange="document.getElementById('gravity').value = this.value; document.getElementById('gravity-value').innerText = this.value + ' m/s²';">
+                    <select id="gravitySelect">
                         <option value="9.8">Earth (9.8 m/s²)</option>
                         <option value="1.62">Moon (1.62 m/s²)</option>
                         <option value="3.71">Mars (3.71 m/s²)</option>
-                        <!-- <option value="24.79">Jupiter (24.79 m/s²)</option> -->
                     </select>
                 </div>
             </div>
         </div>
     </div>
 
-
     <div class="controls-left">
-       
         <div class="playback-controls">
-            <img id="meterRodIcon" src="/images/image_sai.png" alt="Meter Rod Icon">
+            <img id="meterRodIcon" src="/images/image_sai.png" alt="Meter Rod Icon"> <!-- Ensure image.png exists -->
         </div>
         <div id="wedgeIcon" class="wedge-container"> ▲</div>
-       
         <div class="canvasButton">
             <i id="addValuesBtn" class="fas fa-edit"></i>
-        </div>
-       
-        <div class="canvasButton">
-            <!-- <i id="rotateBtn" class="fas fa-mobile-alt"></i> -->
-            <img id="rotateBtn" src="/images/rotate_16622018.png" alt="rotate_icon">
         </div>
         <div class="reset-container">
             <i id="resetBtn" class="fas fa-redo-alt"></i>
         </div>
     </div>
 
-    <div id="meterRodsContainer" class="hidden">
-        <div class="meterRod" id="meterRod1"></div>
-        <div class="meterRod" id="meterRod2"></div>
-
+    <!-- Container for the draggable weights -->
+    <div id="draggable-weights-container" >
+        <div id="extinguisher1" class="draggable-weight" data-mass="5">5 kg</div>
+        <div id="extinguisher2" class="draggable-weight" data-mass="5">5 kg</div>
+        <div id="trashcan1" class="draggable-weight" data-mass="10">10 kg</div>
     </div>
 
-    <div class="weights">
+    <!-- Container for the older static weights (if still needed for spring balance) -->
+    <div class="weights" id="static-weights-container">
         <div class="weight" id="weight1" data-weight="100">100 g</div>
-        <div class="weight" id="weight2" data-weight="350">350 g</div>
-        <div class="weight" id="weight3" data-weight="250">250 g</div>
+        <div class="weight" id="weight2" data-weight="300">300 g</div>
+        <div class="weight" id="weight3" data-weight="200">200 g</div>
         <div class="weight" id="weight4" data-weight="500">500 g</div>
-
     </div>
+
     <div id="tableContainer" style="display: none;">
-        <form action="/exp/meterExp" method="POST">
+        <!-- ... (rest of your table) ... -->
+         <form action="/exp/meterExp" method="POST">
             <table>
                 <thead>
                     <tr>
@@ -168,56 +149,65 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Trial 1 -->
                     <tr>
-                        <td><input type="number" name="weightSuspended1" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="rInverse1" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="observedReading1" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="correctedReading1" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="qInverseRInverse1" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="condition1F1_1" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="loopPosition1" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="distance1" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="condition2Tau1" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                      </tr>
-                      <tr>
-                        <td><input type="number" name="weightSuspended2" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="rInverse2" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="observedReading2" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="correctedReading2" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="qInverseRInverse2" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="condition1F1_2" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="loopPosition2" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="distance2" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="condition2Tau2" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                      </tr>
-                      <tr>
-                        <td><input type="number" name="weightSuspended3" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="rInverse3" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="observedReading3" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="correctedReading3" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="qInverseRInverse3" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="condition1F1_3" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="loopPosition3" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="distance3" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                        <td><input type="number" name="condition2Tau3" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
-                      </tr>
-                      
-                </tbody>
+                      <td><input type="number" name="weightSuspended1" placeholder="Weight Suspended 1" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="rInverse1" placeholder="1/R 1" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="observedReading1" placeholder="Observed Reading 1" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="correctedReading1" placeholder="Corrected Reading 1" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="qInverseRInverse1" placeholder="q × 1/R 1" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="condition1F1_1" placeholder="F1 Condition 1" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="loopPosition1" placeholder="Loop Position 1" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="distance1" placeholder="Distance 1" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="condition2Tau1" placeholder="Tau Condition 1" min="-1000" max="1000" step="0.01"></td>
+                    </tr>
+                  
+                    <!-- Trial 2 -->
+                    <tr>
+                      <td><input type="number" name="weightSuspended2" placeholder="Weight Suspended 2" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="rInverse2" placeholder="1/R 2" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="observedReading2" placeholder="Observed Reading 2" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="correctedReading2" placeholder="Corrected Reading 2" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="qInverseRInverse2" placeholder="q × 1/R 2" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="condition1F1_2" placeholder="F1 Condition 2" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="loopPosition2" placeholder="Loop Position 2" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="distance2" placeholder="Distance 2" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="condition2Tau2" placeholder="Tau Condition 2" min="-1000" max="1000" step="0.01"></td>
+                    </tr>
+                  
+                    <!-- Trial 3 -->
+                    <tr>
+                      <td><input type="number" name="weightSuspended3" placeholder="Weight Suspended 3" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="rInverse3" placeholder="1/R 3" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="observedReading3" placeholder="Observed Reading 3" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="correctedReading3" placeholder="Corrected Reading 3" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="qInverseRInverse3" placeholder="q × 1/R 3" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="condition1F1_3" placeholder="F1 Condition 3" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="loopPosition3" placeholder="Loop Position 3" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="distance3" placeholder="Distance 3" min="-1000" max="1000" step="0.01"></td>
+                      <td><input type="number" name="condition2Tau3" placeholder="Tau Condition 3" min="-1000" max="1000" step="0.01"></td>
+                    </tr>
+                  </tbody>
+                  
             </table>
             <button type="submit" id="saveInDB">Save Data</button>
         </form>
-       
-
     </div>
+    <br><br>
+    <div class="navigation-bar">
+        <div class="home-button">
+          <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+        </div>
+        <div class="tabs">
+          <a href="/exp/meterExp" class="tab active" data-section="intro">Custom</a>
+          <a href="/guided/meterExp" class="tab" data-section="balance-lab">Guided Lab</a>
+          <a href="/std/resource/3" class="tab" data-section="game">Resources</a>
+        </div>
+        <div class="logo">
+          <!-- <img src="/images/R.jpeg" alt="CUI logo" /> -->
+        </div>
+      </div>
 
-    <script src="/js/sai.js"></script>
-    <script>
-        document.getElementById("rotateBtn").addEventListener("click", function() {
-  document.body.classList.toggle("rotated"); // Rotates the screen
-  this.classList.toggle("rotated"); // Rotates the icon itself
-});
-
-    </script>
+    <script src="/js/equi.js"></script>
 </body>
-
 </html>

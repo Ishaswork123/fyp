@@ -14,6 +14,7 @@
 </head>
 <body>
   <canvas id="ResonanceTubeCanvas"></canvas>
+
    <div class="controls">
     <div class="input-group">
       <label for="tubePosition">Tube position: </label>
@@ -58,8 +59,9 @@
     </div>
       
     <button class="controls-button" id="startVibration">Vibrate</button>
-    <button id="reset" class="reset-button">Reset</button>
+    <button id="reset" class="controls-button reset-button">Reset</button>
   </div>
+
   <div class="output-container">
     <div class="display">
       Length: <span id="length">0.0 cm</span>
@@ -70,6 +72,7 @@
     <div class="display">Calculated frequency: <span id="Cal-freq">0 Hz</span></div>
     <div class="display">Sound Velocity: <span id="sound-velocity">0 cm/s</span></div>
   </div>
+
   <div class="exp-tools">
     <div class="clamp-stand"></div>
     <div class="clamp-holder" id="clampHolder"></div>
@@ -91,29 +94,23 @@
       </div>
       
 
-  <!-- <div class="graph-container">
-    <canvas id="lengthFreqChart"></canvas>
-  </div> -->
-;
   <div id="length-vs-freq-chart" >
     <canvas id="lengthFreqChart"></canvas>
 </div>
-
- 
   
   <div class="checkBoxex">
     <img
     id="rulerIcon"
-    src="/images/scale.jpg"
+    src="/images/ruler.jpg"
     alt="Ruler Icon"
     style="cursor: pointer; width: 32px;"
   />
-  
-  </div>
+    </div>
 
-  <div class="canvasButton">
-    <button id="addValuesBtn">Add Values</button>
-  </div>
+    <div class="canvasButton">
+      <button id="addValuesBtn">Add Values</button>
+    </div>
+ 
 
   
   <div class="forks">
@@ -153,8 +150,7 @@
   </div>
 
   <div id="tableContainer" style="display: none">
-    <form action="/exp/inclineExp" method="POST">
-
+    <form action="/exp/inclineExp" method="post">
     <table>
       <thead>
         <tr>
@@ -225,12 +221,26 @@
         </tr>
       </tbody>
     </table>
-
-    <button id="saveInDB">Save Data</button></form>
+    <button id="saveInDB" type="submit">Save Data</button>
+  </form>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <div class="navigation-bar">
+    <div class="home-button">
+      <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+    </div>
+    <div class="tabs">
+      <a href="/exp/inclineExp" class="tab active" data-section="intro">Custom</a>
+      <a href="/guided/inclineExp" class="tab" data-section="balance-lab">Guided Lab</a>
+      <a href="/std/resource/5" class="tab" data-section="game">Resources</a>
+    </div>
+    <div class="logo">
+      <img src="/images/R.jpeg" alt="CUI logo" />
+    </div>
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="chart-config.js"></script>
-  <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
 <script src="/js/Resonance.js"></script>
 </body>
 </html>

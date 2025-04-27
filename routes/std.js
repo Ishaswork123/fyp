@@ -11,6 +11,7 @@ const { getTokenFromCookies } = require('../config/tchr');
 const mongoose=require('mongoose');
 const methodOverride = require('method-override');
 router.use(methodOverride('_method'));
+const tchr=require('../Model/tchr');
 
 function isAuthenticated(req, res, next) {
 //   console.log('Cookies in request:', req.cookies);
@@ -189,6 +190,7 @@ router.get('/chat/:id', isAuthenticated, async (req, res) => {
         if (!community) {
             return res.status(404).send('Community not found');
         }
+        const teacher = await tchr.findById(community.teacherId).lean();
 
         if (!req.user || !req.user.id) {
             console.error("User authentication error: req.user is missing");
@@ -219,6 +221,8 @@ router.get('/chat/:id', isAuthenticated, async (req, res) => {
             user: req.user, 
             community,
             communities, // Pass communities list to the template
+            teacher,
+
             messages,
             members: community.users
         });

@@ -1,2 +1,5 @@
-
-
+update fname ,lname instead of email
+show student performance in exp  in show quizes 
+in quiz validation checkbox 
+no show to check duplicate answer 
+no add auto prefix for answer 

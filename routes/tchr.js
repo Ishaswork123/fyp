@@ -151,7 +151,7 @@ router.post('/dashboard', isAuthenticated, async (req, res) => {
   
       try {
         const { communityName, commDescription } = req.body;
-
+const teacherId=req.user.id;
         // Check if a community with the same name already exists
         const existingCommunity = await Community.findOne({ communityName });
 
@@ -180,6 +180,7 @@ router.post('/dashboard', isAuthenticated, async (req, res) => {
         // Create new community with user details
         const newCommunity = new Community({
             communityName,
+            teacherId,
             commDescription,  // Add commDescription field
             role,             // Add role field
 
@@ -215,7 +216,8 @@ router.post('/dashboard', isAuthenticated, async (req, res) => {
                console.error("User authentication error: req.user is missing");
                return res.redirect('/tchr/login');
            }
-   
+           const teacher = await tchr.findById(community.teacherId).lean();
+
            const userId = new mongoose.Types.ObjectId(req.user.id);
            let existingUser = community.users.find(u => u.userId && u.userId.equals(userId));
    
@@ -241,6 +243,7 @@ router.post('/dashboard', isAuthenticated, async (req, res) => {
                community,
                communities, // Pass communities list to the template
                messages,
+               teacher,
                members: community.users
            });
    

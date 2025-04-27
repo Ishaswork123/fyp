@@ -1,6 +1,7 @@
 const Quiz = require('../Model/quiz');
 // const quizresult=require('../Model/QuizResult');
 const User=require('../Model/std');
+const  ExpResult=require('../Model/expResult.');
  // Import the Quiz model
  const mongoose=require('mongoose');
 const Classroom=require('../Model/classroom')
@@ -187,7 +188,8 @@ async function handledeleteQuiz(req, res) {
     
       // Get student details
       const studentDetails = await QuizResult.find({ student_id: { $in: students.map(s => s._id) } }, 'student_id fname');
-    
+      const expResults = await ExpResult.find(filter).populate('studentId teacherId'); // Assuming the teacherId and studentId need population for name
+
       // Get unique experiment numbers for filtering
       const expNumbers = await QuizResult.find().distinct('exp_no');
     
@@ -196,7 +198,9 @@ async function handledeleteQuiz(req, res) {
         quizResults,
         students: studentDetails,
         expNumbers,
-        correctAnswers: formattedCorrectAnswers
+        correctAnswers: formattedCorrectAnswers,
+        expResults  // Pass experiment results to the EJS template
+
       });
     } catch (error) {
       console.error(error);

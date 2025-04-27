@@ -135,9 +135,11 @@
   </div>
 
   <div id="graphContainer" data-intro="Graphs will be shown here" data-step="16">
+    
     <canvas id="graphCanvas" width="1000" height="350"></canvas>
   </div>
   <div class="graphContainer2">
+
     <canvas class="canvasParts" id="displacementCanvas"></canvas>
     <canvas class="canvasParts" id="velocityCanvas"></canvas>
     <canvas class="canvasParts" id="accelerationCanvas"></canvas>
@@ -221,6 +223,22 @@
     <button id="saveInDB">Save Data</button>
   </div>
 
+  <div class="navigation-bar">
+    <div class="home-button">
+      <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+    </div>
+    <div class="tabs">
+      <a href="/exp/penExp" class="tab active" data-section="intro">Custom</a>
+      <a href="/guided/penExp" class="tab" data-section="balance-lab">Guided Lab</a>
+      <a href="/std/resource/1" class="tab" data-section="game">Resources</a>
+    </div>
+    <div class="logo">
+      <!-- <img src="/images/R.jpeg" alt="CUI logo" /> -->
+    </div>
+  </div>
+<script>
+ 
+</script>
   <script src="/js/pendulum.js"></script>
   <script src="/js/start-tour.js"></script>
 </body>

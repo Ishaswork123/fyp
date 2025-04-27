@@ -3,32 +3,30 @@
     display: flex;
     justify-content: center; /* Centers horizontally */
     align-items: center; /* Centers vertically */
-    height: 100vh;
-    background: linear-gradient(to bottom, #6b6980, #c5c4c7, #1c1c1d);}
-
-.modal {
+     height: 1000vh;
+    /*background: linear-gradient(to bottom, #6b6980, #c5c4c7, #1c1c1d);} */
+}.modal {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centers the modal */
-    width: 600px; /* Adjust as needed */
-    height: auto; /* Allow content to define height */
-    /* background: rgba(0, 0, 0, 0.5); */
+    position: fixed; /* Stick on screen */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; /* Full viewport height */
+    background: rgba(255, 255, 255, 0.5); /* Optional dark overlay */
+    z-index: 9999; /* Stay on top */
     padding: 20px;
-    border-radius: 10px;
-    color: rgb(110, 107, 107);
 }
-
 
 .modal-content {
     background: white;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
-    text-align: center;
     width: 100%;
+    max-width: 800px; /* Keep it responsive */
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); */
+    text-align: center;
 }
 
 input {

@@ -14,11 +14,11 @@
 </head>
 <body>
     <div class="massInput">
-        <div>
+  
           <label for="massSlider">Mass (g):</label>
           <input type="range" id="massSlider" min="100" max="1000" value="100" step="10" />
           <span id="massValue">500 g</span>
-        </div>
+        
       </div>
       <div class="springInput">
         <label for="springSlider">Spring Constant:</label>
@@ -32,7 +32,7 @@
           <img id="buttonIcon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABMElEQVR4nO2ZsWpDIRSGjUJyl9zXa/MQiXbIHNBuTYeUC02f5A5ZQ3UNBKp5GYv7uehwQkP5Pzib/PLrt4hCAADA/yTn2dz+6M6msbPxRM3Cxb3Y3fpq1u7WL2x6n8rpbBrnr2lT9mTv0bm06lzK1bHxWM+KX01ZLq34i9j40VYkXepZ6dJ4KIc7FElD2ynGazXLxWvjoQwoMgVuhABqcQC1CKAWB1CLAGpxALUIoBYHUOvR1FLaD8qEXBupffU9Uta0ZCntUWQS3AgB1OIAahFALQ6gFgHU4gBqEUAtDqDWw6llwqHpPWJC9aOnrGkqYgL/R4988c+Np/hZy1LGHxsfaU/sRYTIM6n9RuowSh1O1Cjt38T2vKxGrUOvdNhP5ciyh/lelz3vUAQAAMTf8wuBrki0KqZ7PAAAAABJRU5ErkJggg==" />
         </button>
         <label id></label>
-      <button class="startBtn" id="startBtn">Start</button>
+      <!-- <button class="startBtn" id="startBtn">Start</button> -->
         <button id="resetBtn" class="resetBtn">Reset</button>
     </div>
     <div class="gravity-container">
@@ -178,6 +178,21 @@
     <button type="submit" id="saveInDB">Save Data</button>
   </form>
 </div>
-<script src="/js/mass-spring.js"></script>
+<div class="navigation-bar">
+  <div class="home-button">
+    <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+  </div>
+  <div class="tabs">
+    <div class="tabs">
+      <a href="/exp/massExp" class="tab active" data-section="intro"">Custom</a>
+      <a href="/guided/massExp" class="tab" data-section="balance-lab">Guided Lab</a>
+      <a href="/std/resource/2" class="tab" data-section="game">Resources</a>
+    </div>
+  </div>
+  <div class="logo">
+    <img src="/images/R.jpeg" alt="CUI logo" />
+  </div>
+</div>
+<script src="/mass-spring.js"></script>
 </body>
 </html>

@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const QuizResult = require('../Model/QuizResult'); // Adjust path if needed
 const ExpResult = require('../Model/expResult.'); // Adjust path if needed
-const Quiz=require('../Model/quiz');
 const { getTokenFromCookies } = require('../config/tchr');  
 
-
+const mongoose=require('mongoose');
 function isAuthenticated(req, res, next) {
   console.log('Cookies in request:', req.cookies);
 
@@ -41,28 +40,26 @@ router.get('/results', isAuthenticated, async (req, res) => {
   try {
     const studentId = req.user.id; // Extract student_id from JWT token
 
-    // **Step 1: Fetch all unique experiment numbers (exp_no) for the student**
-    const expNumbers = await QuizResult.find({ student_id: studentId }).distinct('exp_no');
-
-    // **Step 2: Fetch correct answers from `Quiz` based on `exp_no`**
-    // const correctAnswers = await Quiz.find({ exp_no }, 'question_no Answer');
-    const correctAnswers = await Quiz.find({ exp_no: { $in: expNumbers } }, 'exp_no question_no Answer').lean();
-
-    // **Step 3: Format correct answers into a structured array**
-    const formattedCorrectAnswers = correctAnswers.map(q => ({
-      question_no: q.question_no,
-      answer: q.Answer  // Handle possible lowercase
-  }));
-
-    // **Step 4: Fetch all quiz results from `QuizResult`**
+    // **Step 1: Fetch all quiz results for the student**
     const quizResults = await QuizResult.find({ student_id: studentId }).lean();
-    const expResults = await ExpResult.find({ student_id: studentId }).lean();
 
-    // **Render EJS page with required data**
+    // **Step 2: Extract unique experiment numbers (exp_no) for the student**
+    const expNumbers = [...new Set(quizResults.map(result => result.exp_no))];
+
+    // **Step 3: Extract correct answers from quizResults**
+    const formattedCorrectAnswers = quizResults.map(result => ({
+      exp_no: result.exp_no,
+      correctAnswers: result.correctAnswers // Already an array in the result
+    }));
+
+    // **Step 4: Fetch additional experiment results from ExpResult**
+    const expResults = await ExpResult.find({ studentId: new mongoose.Types.ObjectId(studentId) }).lean();
+
+    // **Render EJS page with quiz results, experiment numbers, and correct answers**
     res.render('stdResultss', { 
       quizResults, 
       expNumbers, 
-      correctAnswers:formattedCorrectAnswers ,
+      correctAnswers: formattedCorrectAnswers,
       expResults
     });
 

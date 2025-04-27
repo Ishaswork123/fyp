@@ -159,17 +159,29 @@ document.addEventListener("DOMContentLoaded", function () {
     <% }); %>
 </ul>
 
+
             <div class="my-account">
                 <div class="image">
                     <img src="/images/profile.jpg">
                     <i class="fa fa-circle online"></i>
-                </div>
-                <div class="name">
-                    <span><%= community.userType %></span>
-                    <i class="fa fa-angle-down"></i>
-                    <span class="availability">
-                        <%= community.role === 'tchr' ? 'Admin' : 'User/Std' %>
+                 
+                    <span class="availability" style="margin-bottom: 5px; ">   Admin:
                     </span>
+                </div>
+                <span class="availability" style="margin-right: 5px; padding: 4px; color: rgb(9, 9, 46); font-weight: bold;"> Created by: </span>
+
+                <div class="name">
+                  <% if (teacher) { %>
+                    <span class="availability" style="color: black;">
+                      <%= `${teacher.fname} ${teacher.lname}` %>
+                    </span>
+                  <% } else { %>
+                    <span class="availability" style="color: red;">Unknown Teacher</span>
+                  <% } %>
+                  
+                    <!-- <span class="availability">   Admin
+                    </span> -->
+                    
                 </div>
             </div>
         </div>

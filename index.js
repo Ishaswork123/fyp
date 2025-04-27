@@ -102,22 +102,21 @@ app.use(cookieParser());
     
     app.use(express.urlencoded({ extended: true })); // For URL-encoded form data
     app.use(express.json()); // For JSON data
-    
     app.use((req, res, next) => {
       const cspValue = [
-          "default-src 'self'",
-          "connect-src 'self' ws://localhost:5008",
-          "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
-          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com",
-          "script-src 'self' 'unsafe-inline' http://localhost:5004/js https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com https://ajax.googleapis.com https://cdnjs.cloudflare.com/ajax/libs/popper.js https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic",
-          "img-src 'self' data: https://media.istockphoto.com https://5004",
-          "frame-ancestors 'none'"
+        "default-src 'self'",
+        "connect-src 'self' ws://localhost:5008",
+        "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com",
+        "script-src 'self' 'unsafe-inline' http://localhost:5004/js https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com https://ajax.googleapis.com https://cdnjs.cloudflare.com/ajax/libs/popper.js https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic https://kit.fontawesome.com",
+        "img-src 'self' data: https://media.istockphoto.com https://5004",
+        "frame-ancestors 'none'"
       ].join('; ');
-  
+    
       res.setHeader("Content-Security-Policy", cspValue);
       next();
-  });
-  
+    });
+    
     
   // app.use((req, res, next) => {
   //   console.log('Request Headers:', req.headers);
@@ -212,6 +211,16 @@ app.get('/std/view-all', isAuthenticated, (req, res) => handleProfile(req, res, 
 app.use((req, res, next) => {
   res.status(404).render('404', { title: 'Page Not Found', url: req.url });
 });
+// Global error handling middleware
+app.use((err, req, res, next) => {
+  console.error('🔥 Error:', err.stack || err); // Optional: Log it
+  res.status(500).render('error', {
+    title: 'Server Error',
+    message: err.message || 'Something went wrong!',
+    url: req.originalUrl,
+  });
+});
+
 const PORT = process.env.PORT || 5012;
 
 app.listen(PORT, () => {

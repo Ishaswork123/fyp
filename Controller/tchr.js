@@ -208,15 +208,17 @@ async function handleProfileTchr (req, res, showAllExperiments = false) {
         // Profile picture logic
         const profilePic = teacher.pic
             ? `data:image/jpeg;base64,${teacher.pic}`
-            : '/images/default-profile-icon.jpg';
+            : '/images/profile.jpg';
 
-            const experiments = [
-                { id: "penExp", exp_no: "1", title: "Pendulum", description: "Verification of the laws of simple pendulum", image: "/images/pendulum.jpg" },
-                { id: "massExp", exp_no: "2", title: "Mass Spring System", description: "To determine the acceleration due to gravity by oscillating mass spring system", image: "/images/mass-spring.jpg" },
-                { id: "meterExp", exp_no: "3", title: "Meter Rod Method", description: "Verify the conditions of equilibrium by suspended meter rod method", image: "/images/meter-rod.jpg" },
-                { id: "forceExp", exp_no: "4", title: "Force Table", description: "To find the unknown weight of a body by the method of rectangular component of forces", image: "/images/incline-plane.jpg" },
-                { id: "inclineExp", exp_no: "5", title: "Resonance Exp", description: "Determine the velocity of sound at 0 degree C by resonance tube apparatus", image: "/images/resonance.jpg" }
-              ];
+         // Experiment Data
+         const experiments = [
+            { id: "penExp", exp_no: "1", title: "Pendulum", description: "Verification of the laws of simple pendulum", image: "/images/pend.jpg" },
+            { id: "massExp", exp_no: "2", title: "Mass Spring System", description: "To determine the acceleration due to gravity by oscillating mass spring system", image: "/images/mass2.jpg" },
+            { id: "meterExp", exp_no: "3", title: "Meter Rod Method", description: "Verify the conditions of equilibrium by suspended meter rod method", image: "/images/physic-meter-rod.jpg" },
+            { id: "forceExp", exp_no: "4", title: "Force Table", description: "To find the unknown weight of a body by the method of rectangular component of forces", image: "/images/incline-plane.jpg" },
+            { id: "inclineExp", exp_no: "5", title: "Resonance Exp", description: "Determine the velocity of sound at 0 degree C by resonance tube apparatus", image: "/images/resonance.jpg" }
+          ];
+          
               
         // Random experiments logic
         const experimentsToShow = showAllExperiments

@@ -1,11 +1,18 @@
+
+html {
+  overflow: auto;
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
 .tooltip {
   position: absolute;
   background-color: #333;
   color: #fff;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 14px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  font-size: 1.2rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.3);
   z-index: 1000;
   animation: fadeIn 0.3s ease;
 }
@@ -63,14 +70,68 @@
   pointer-events: none; 
 }
 
+/* Tooltip styles */
+[data-intro] {
+  position: relative;
+  cursor: pointer;
+}
+
+[data-intro]::after {
+  content: attr(data-intro);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  white-space: nowrap;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  pointer-events: none;
+  width: auto;
+  text-align: left;
+}
+
+[data-intro]:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Position adjustments for specific elements */
+.tuning-fork[data-intro]::after {
+  bottom: auto;
+  top: 100%;
+  left: 50%;
+}
+
+.controls[data-intro]::after,
+.output-container[data-intro]::after,
+.exp-tools[data-intro]::after,
+.forks[data-intro]::after,
+#length-vs-freq-chart[data-intro]::after,
+.checkBoxex[data-intro]::after,
+.canvasButton[data-intro]::after {
+  bottom: auto;
+  top: 100%;
+  left: 50%;
+}
+
+#ResonanceTubeCanvas[data-intro]::after {
+  bottom: auto;
+  top: 100%;
+  left: 50%;
+  width: 300px;
+  white-space: normal;
+}
  
 
 
-html {
-  overflow: auto;
-  box-sizing: border-box;
-  font-size: 62.5%;
-}
 
 
 #scaleIcon {
@@ -102,6 +163,75 @@ html {
   box-shadow: 0 0 1rem rgba(0, 123, 255, 0.5);
 }
 
+/* Navigation Bar */
+.navigation-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  background-color: #333;
+  box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.05);
+  background: #112d42df; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+.home-button {
+  margin-left: 1.5rem;
+}
+
+.home-button img {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.tabs {
+  display: flex;
+  height: 100%;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  height: 100%;
+  color: white;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 1.4rem;
+  transition: background-color 0.3s;
+}
+
+.tab:hover {
+  color: #acb0bb;
+}
+
+.tab.active {
+  color: #384158;
+  background: #14bdee;
+}
+
+
+.logo {
+  margin-right: 1.5rem;
+}
+
+.logo img {
+  height: 3rem;
+}
+
 
 /* --- Background Design --- */
 body {
@@ -115,6 +245,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  width: 100%;
   overflow: auto;
   position: relative;
   background: linear-gradient(to bottom, #e3f2fd, #ffffff);

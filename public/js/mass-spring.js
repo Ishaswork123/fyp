@@ -21,6 +21,13 @@ let currentDivisor = NORMAL_DIVISOR;
 
 let showScaleCheckbox = document.getElementById("showScale");
 
+let selectedWeightData = {
+  weight: 10, 
+  width: 10, 
+  height: 10, 
+  color: "grey", 
+};
+
 showScaleCheckbox.addEventListener("change", () => {
   showScale = showScaleCheckbox.checked;
   drawSetup();
@@ -184,12 +191,6 @@ function handleMouseUp(e) {
   }
 }
 
-let selectedWeightData = {
-  weight: 10, 
-  width: 10, 
-  height: 10, 
-  color: "grey", 
-};
 
 
 function handleWeightClick(event) {
@@ -301,68 +302,6 @@ function animateSpring() {
   });
 }
 
-// function startOscillation() {
-//   if (!isOscillating) {
-//     mass = document.getElementById("massSlider").value;
-//     springConstant = document.getElementById("springSlider").value;
-//     isOscillating = true;
-//     bobRadius = Math.round(mass / 30);
-//     maxOscillations = 10; 
-//     oscillationCount = 0;
-//     springLength = calculateSpringLength(); 
-//     recordedLength = springLength;
-//     displacementData = [];
-//     velocityData = [];
-//     accelerationData = [];
-//     energyData = [];
-
-
-//     drawSetup(); 
-//     startTime = performance.now(); 
-//     document.getElementById("output").style.display = "block"; 
-//     animateSpring(); 
-//   }
-// }
-
-// let springAnimation;
-// let lastTime = 0;
-// function animateSpring() {
-//   const duration = currentDivisor === NORMAL_DIVISOR ? 1000 : 2000; 
-//   springAnimation = anime({
-//     targets: { value: springTopY + naturalLength },
-//     value: springLength, 
-//     duration: duration, 
-//     easing: "easeInOutSine",
-//     direction: "alternate", 
-//     loop: maxOscillations * 2, 
-//     update: function (anim) {
-//       springLength = anim.animations[0].currentValue;
-
-//       const displacement = springLength - recordedLength;
-//       const velocity = calculateVelocity(displacement, elapsedTime);
-//       const acceleration = calculateAcceleration(displacement);
-      
-//       const kineticEnergy = 0.5 * mass * velocity * velocity;
-//       const potentialEnergy = 0.5 * springConstant * displacement * displacement;
-//       const totalEnergy = kineticEnergy + potentialEnergy;
-
-//       displacementData.push(displacement);
-//       velocityData.push(velocity);
-//       accelerationData.push(acceleration);
-//       energyData.push(totalEnergy);
-
-//       drawSetup(); 
-//     },
-//     complete: function () {
-//       isOscillating = false; 
-//       const endTime = performance.now();
-//       const totalTime = (endTime - startTime) / 1000; 
-//       const timePeriod = totalTime / maxOscillations; 
-//       document.getElementById("timePeriod").innerText =
-//         totalTime.toFixed(2) + " s";
-//     },
-//   });
-// }
 
 function calculateVelocity(displacement, elapsedTime) {
   return displacement / elapsedTime;
@@ -400,7 +339,7 @@ function resetExperiment() {
 }
 
 
-document.getElementById("startBtn").addEventListener("click", startOscillation);
+// document.getElementById("startBtn").addEventListener("click", startOscillation);
 document.getElementById("resetBtn").addEventListener("click", resetExperiment);
 
 document.getElementById("playNormal").addEventListener("click", function () {
@@ -422,18 +361,6 @@ document.getElementById("playSlow").addEventListener("click", function () {
 
 document.getElementById("massSlider").addEventListener("input", handleSliderChange);
 document.getElementById("springSlider").addEventListener("input", handleSpringConSliderChange);
-
-// document.getElementById("springSlider").addEventListener("input", function () {
-//   isOscillating=false;
-//   if (springAnimation) {
-//     springAnimation.pause(); 
-//   }
-//   document.getElementById("springValue").textContent = `${this.value}`;
-//   springLength = calculateSpringLength();
-//   drawSetup();
-// });
-
-
 
 
 
@@ -581,6 +508,157 @@ startBtn.addEventListener("click", startStopwatch);
 pauseResumeBtn.addEventListener("click", togglePauseResume);
 resetBtn.addEventListener("click", resetStopwatch);
 
+
+// toooltippppp
+
+function setupTooltips() {
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip bottom'; // Add 'bottom' class for positioning
+  document.body.appendChild(tooltip);
+
+  // Position tooltip at bottom with offset
+  const positionTooltip = (element, text) => {
+    const rect = element.getBoundingClientRect();
+    tooltip.textContent = text;
+    tooltip.style.left = `${rect.left + rect.width/2 - tooltip.offsetWidth/2}px`;
+    tooltip.style.top = `${rect.bottom + 8}px`; // 8px below element
+    tooltip.classList.add('active');
+  };
+
+  // For elements with data-intro
+  document.querySelectorAll('[data-intro]').forEach(el => {
+    el.addEventListener('mouseenter', (e) => {
+      positionTooltip(e.target, e.target.dataset.intro);
+    });
+    
+    el.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('active');
+    });
+  });
+
+  // For weight elements
+  document.querySelectorAll('.weight').forEach(weight => {
+    weight.addEventListener('mouseenter', (e) => {
+      positionTooltip(e.target, `Use ${weight.textContent} weight`);
+    });
+    
+    weight.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('active');
+    });
+  });
+
+  
+  // For canvas hover detection
+  const canvas = document.getElementById('simulationCanvas');
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const distToBob = Math.sqrt(
+      Math.pow(x - springTopX, 2) + 
+      Math.pow(y - (springLength + bobRadius), 2)
+    );
+    
+    if (distToBob <= bobRadius + 20) {
+      tooltip.textContent = 'Drag to stretch the spring';
+      tooltip.style.left = `${e.clientX - tooltip.offsetWidth/2}px`;
+      tooltip.style.top = `${e.clientY + 20}px`; // 20px below cursor
+      tooltip.classList.add('active');
+    } else {
+      tooltip.classList.remove('active');
+    }
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    tooltip.classList.remove('active');
+  });
+
+  // For elements with data-tooltip
+  document.querySelectorAll('[data-tooltip]').forEach(el => {
+    el.addEventListener('mouseenter', (e) => {
+      positionTooltip(e.target, e.target.dataset.tooltip);
+    });
+    
+    el.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('active');
+    });
+  });
+}
+
+// Add this near the top of your mass-spring.js file
+function setupTooltips() {
+  // Create tooltip element
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  document.body.appendChild(tooltip);
+
+  // Function to position and show tooltip
+  function showTooltip(element, text) {
+    const rect = element.getBoundingClientRect();
+    tooltip.textContent = text;
+    
+    // Position below the element
+    tooltip.style.left = `${rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2)}px`;
+    tooltip.style.top = `${rect.bottom + 8}px`;
+    
+    tooltip.classList.add('active');
+  }
+
+  // Add tooltips to all elements with data-intro
+  document.querySelectorAll('[data-intro]').forEach(el => {
+    el.addEventListener('mouseenter', () => showTooltip(el, el.dataset.intro));
+    el.addEventListener('mouseleave', () => tooltip.classList.remove('active'));
+  });
+
+  // Add tooltips to weight elements
+  document.querySelectorAll('.weight').forEach(weight => {
+    weight.addEventListener('mouseenter', () => 
+      showTooltip(weight, `Click to use ${weight.textContent} weight`)
+    );
+    weight.addEventListener('mouseleave', () => tooltip.classList.remove('active'));
+  });
+
+  // Add tooltip to canvas when hovering the bob
+  const canvas = document.getElementById('simulationCanvas');
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const distToBob = Math.sqrt(
+      Math.pow(x - springTopX, 2) + 
+      Math.pow(y - (springLength + bobRadius), 2)
+    );
+    
+    if (distToBob <= bobRadius + 20) {
+      showTooltip(canvas, 'Drag to stretch the spring');
+    } else {
+      tooltip.classList.remove('active');
+    }
+  });
+
+  canvas.addEventListener('mouseleave', () => tooltip.classList.remove('active'));
+}
+
+// Add this to the end of your existing mass-spring.js file
+
+tab.addEventListener("click", function(e) {
+  // e.preventDefault(); ❌ remove or comment this line
+
+  tabs.forEach(function(t) {
+    t.classList.remove("active");
+  });
+
+  this.classList.add("active");
+
+  const section = this.getAttribute("data-section");
+  console.log("Navigated to: " + section);
+});
+
+// Call this in your initialization
+window.addEventListener('load', function() {
+  initializeCanvas();
+  setupTooltips();  // Make sure this is called
+});
 
 window.onload = initializeCanvas;
 window.onresize = initializeCanvas;

@@ -147,7 +147,7 @@ router.post('/grade', isAuthenticated, async (req, res) => {
         });
 
         await result.save();
-        res.redirect('/tchr/experiments');
+        res.redirect('/tchr/quiz-results');
     } catch (error) {
         console.error('Error submitting grade:', error);
         res.status(500).send('Error submitting grade');

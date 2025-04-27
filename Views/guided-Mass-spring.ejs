@@ -20,11 +20,9 @@
         <button id="startTourBtn" class="tour-button">Start Tour</button>
       </div>
     <div class="massInput" data-intro="Adjust the mass slider to change the mass of the bob." data-step="1">
-        <div>
           <label for="massSlider" >Mass (g):</label>
           <input type="range" id="massSlider" min="100" max="1000" value="100" step="10" />
           <span id="massValue">500 g</span>
-        </div>
       </div>
       <div class="springInput" data-intro="Adjust the spring constant slider to change the stiffness of the spring." data-step="2">
         <label for="springSlider">Spring Constant:</label>
@@ -160,6 +158,19 @@
     </tbody>
   </table>
   <button id="saveInDB" >Save Data</button>
+</div>
+<div class="navigation-bar">
+  <div class="home-button">
+    <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+  </div>
+  <div class="tabs">
+    <a href="/exp/massExp" class="tab active" data-section="intro" ">Custom</a>
+    <a href="/guided/massExp" class="tab" data-section="balance-lab">Guided Lab</a>
+    <a href="/std/resource/2" class="tab" data-section="game">Resources</a>
+  </div>
+  <div class="phet-logo">
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNjAiPgogIDx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiPlBoRVQ8L3RleHQ+Cjwvc3ZnPg==" alt="PhET" />
+  </div>
 </div>
 <script src="/js/mass-spring.js"></script>
 <script src="/js/start-tour.js"></script>

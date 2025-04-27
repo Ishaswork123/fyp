@@ -1486,8 +1486,84 @@ function initializeCanvas() {
     }
 }
 
+// Initialize tooltips for all elements with data-intro
+function initializeTooltips() {
+    const elements = document.querySelectorAll('[data-intro]');
+    
+    elements.forEach(el => {
+      // Create tooltip element
+      const tooltip = document.createElement('div');
+      tooltip.className = 'custom-tooltip';
+      tooltip.textContent = el.getAttribute('data-intro');
+      document.body.appendChild(tooltip);
+      
+      // Position tooltip on mouseenter
+      el.addEventListener('mouseenter', (e) => {
+        const rect = el.getBoundingClientRect();
+        tooltip.style.left = `${rect.left + rect.width/2 - tooltip.offsetWidth/2}px`;
+        
+        if (el.id === 'tuningFork' || el.classList.contains('controls') || 
+            el.classList.contains('output-container') || el.classList.contains('exp-tools') ||
+            el.classList.contains('forks') || el.id === 'length-vs-freq-chart' ||
+            el.classList.contains('checkBoxex') || el.classList.contains('canvasButton')) {
+          tooltip.style.top = `${rect.bottom + window.scrollY + 10}px`;
+        } else {
+          tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 10}px`;
+        }
+        
+        tooltip.style.opacity = '1';
+        tooltip.style.visibility = 'visible';
+      });
+      
+      // Hide tooltip on mouseleave
+      el.addEventListener('mouseleave', () => {
+        tooltip.style.opacity = '0';
+        tooltip.style.visibility = 'hidden';
+      });
+    });
+  }
+  
+  // Call this in your window.onload
+  window.onload = function() {
+    initializeCanvas();
+    initializeTooltips();
+    createAudioContext();
+  };
+  
+  // Remove this block from start-tour.js
+document.querySelectorAll('[data-tooltip]').forEach(el => {
+    el.addEventListener('mouseenter', (e) => {
+      const rect = e.target.getBoundingClientRect();
+      tooltip.textContent = e.target.dataset.tooltip;
+      tooltip.style.left = `${rect.left + rect.width/2 - tooltip.offsetWidth/2}px`;
+      tooltip.style.top = `${rect.top - tooltip.offsetHeight - 10}px`;
+      tooltip.classList.add('active');
+    });
+    
+    el.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('active');
+    });
+  });
+window.onresize = initializeCanvas;
+
 document.addEventListener('DOMContentLoaded', function () {
     drawLengthVsFreqChart();
+        const tabs = document.querySelectorAll(".navigation-bar .tab");
+        tabs.forEach(function(tab) {
+            tab.addEventListener("click", function(e) {
+                // e.preventDefault(); ❌ remove or comment this line
+              
+                tabs.forEach(function(t) {
+                  t.classList.remove("active");
+                });
+              
+                this.classList.add("active");
+              
+                const section = this.getAttribute("data-section");
+                console.log("Navigated to: " + section);
+              });
+              
+        });
 });
 
 function drawLengthVsFreqChart() {

@@ -72,116 +72,149 @@
         </div>
       </div>
     </header>
+<!-- Experiment Selection -->
+<div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-md sticky top-0 z-50" style="margin-top: 50px; ">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="text-center my-4">
+      <h1 class="text-xl md:text-2xl font-bolder">Student Experiment Performance</h1>
+      <hr class="mt-2 border-t-2 border-gray-300 w-1/2 mx-auto md:w-1/3" />
+    </div>  </div>
+</div>
 
-  <div class="container exp-form <%= showStudentModal || showGradeSection ? 'hidden' : '' %>">
+<div class="exp-form-1 px-3 py-4 <%= showStudentModal || showGradeSection ? 'd-none' : '' %>">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+      <div class="text-center my-4">
 
-    <h2>Select Experiment</h2>
-    <form action="/tchr/select-exp" method="POST">
-      <select name="exp_no" required>
-        <option value="">-- Select Experiment --</option>
-        <option value="1" <%= exp_no === '1' ? 'selected' : '' %>>Pendulum</option>
-        <option value="2" <%= exp_no === '2' ? 'selected' : '' %>>Spring</option>
-        <option value="3" <%= exp_no === '3' ? 'selected' : '' %>>Meter Rod</option>
-        <option value="4" <%= exp_no === '4' ? 'selected' : '' %>>Force Table</option>
-        <option value="5" <%= exp_no === '5' ? 'selected' : '' %>>Resonance Column</option>
-      </select>
-      <button type="submit" class="continue-btn">
-        Continue <i class="fas fa-arrow-right"></i>
-      </button>    </form>
-  </div>
-  
-  <% if (showStudentModal) { %>
-  <div class="container student-form">>
-    <h2>Select Student</h2>
-    <form action="/tchr/select-student" method="POST">
-      <input type="hidden" name="exp_no" value="<%= exp_no %>">
-      <select name="studentName" required class="student-select">
-        <option value="">-- Select Student --</option>
-        <% students.forEach(name => { %>
-          <option value="<%= name %>"><%= name %></option>
-        <% }) %>
-      </select>
-      
-      <button type="submit" class="view-btn">
-        <i class="fas fa-eye"></i> View
-      </button>    </form>
-  </div>
-  <% } %>
-  
-      
-    <% if (showGradeSection && studentData.length > 0) { %>
-  <% 
-    const experiments = {
-      '1': {
-        title: 'Pendulum',
-        headers: ['Mass', 'Radius', 'Thread Length', 'Pendulum Length', 'Trial 1 Time', 'Trial 2 Time', 'Mean Time', 'Time Period'],
-        keys: ['mass', 'radius', 'threadLength', 'PenndulumLength', 'trial1Time', 'trial2Time', 'meanTime', 'timePeriod']
-      },
-      '2': {
-        title: 'Spring',
-        headers: ['Mass', 'Initial Length', 'Final Length', 'Extension', 'Trial 1 Time', 'Trial 2 Time', 'Mean Time', 'Time Period', 'Gravity'],
-        keys: ['mass', 'initialLength', 'finalLength', 'extension', 'trial1Time', 'trial2Time', 'meanTime', 'timePeriod', 'gravity']
-      },
-      '3': {
-        title: 'Meter Rod',
-        headers: ['Weight', '1/R', 'Observed Reading', 'Corrected Reading', '1/q × 1/R', 'F1', 'Loop Position', 'Distance', 'τ'],
-        keys: ['weightSuspended', 'rInverse', 'observedReading', 'correctedReading', 'qInverseRInverse', 'condition1F1_', 'loopPosition', 'distance', 'condition2Tau']
-      },
-      '4': {
-        title: 'Force Table',
-        headers: ['Force P', 'Force Q', 'Angle P', 'Angle Q', 'Psin(θP)', 'Qsin(θQ)', 'Weight', 'Error'],
-        keys: ['forceP', 'forceQ', 'angleP', 'angleQ', 'PsinAngleP', 'QsinAngleQ', 'weightW', 'weightError']
-      },
-      '5': {
-        title: 'Resonance Column',
-        headers: ['Frequency', 'Water Level', 'Diameter', 'Air Column', 'Correct Length', 'Wavelength', 'Temp', 'Velocity'],
-        keys: ['freq', 'waterLevel', 'diameter', 'airColumn', 'correctLength', 'waveLength', 'temp', 'velocity']
-      }
-    };
-
-    const currentExp = experiments[exp_no];
-  %>
-
-  <% if (currentExp) { %>
-    <div class="container grade-section">
-      <h2><%= currentExp.title %> Experiment - <%= selectedStudent %></h2>
-      <table>
-        <tr>
-          <% currentExp.headers.forEach(header => { %>
-            <th><%= header %></th>
-          <% }) %>
-        </tr>
-
-        <% studentData.forEach(exp => { %>
-          <% for (let i = 1; i <= 3; i++) { %>
-            <tr>
-              <% currentExp.keys.forEach(key => { %>
-                <td><%= exp[key + i] %></td>
-              <% }) %>
-            </tr>
-          <% } %>
-          <tr>
-            <td colspan="<%= currentExp.headers.length %>">
-              <form action="/tchr/grade" method="POST">
-                <input type="hidden" name="exp_no" value="<%= exp_no %>">
-                <input type="hidden" name="exp_title" value="<%= currentExp.title %>">
-                <input type="hidden" name="studentId" value="<%= exp.studentId || exp._id %>">
-                Grade:
-                <input type="number" name="grade" min="0" max="15" value="15" required>
-                <button type="submit" class="submit-grade-btn">
-                  <i class="fas fa-check-circle"></i> 
-                </button>              </form>
-            </td>
-          </tr>
-        <% }) %>
-      </table>
+      <h2 class="text-xl md:text-2xl font-bolder" >Select Experiment</h2></div></div>
+      <form action="/tchr/select-exp" method="POST">
+        <div class="mb-3">
+          <select class="form-select" name="exp_no" required>
+            <option value="">-- Select Experiment --</option>
+            <option value="1" <%= exp_no === '1' ? 'selected' : '' %>>Pendulum</option>
+            <option value="2" <%= exp_no === '2' ? 'selected' : '' %>>Spring</option>
+            <option value="3" <%= exp_no === '3' ? 'selected' : '' %>>Meter Rod</option>
+            <option value="4" <%= exp_no === '4' ? 'selected' : '' %>>Force Table</option>
+            <option value="5" <%= exp_no === '5' ? 'selected' : '' %>>Resonance Column</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">
+          Continue <i class="fas fa-arrow-right ms-2"></i>
+        </button>
+      </form>
     </div>
-  <% } %>
-<% } else if (!showStudentModal && !showGradeSection) { %>
-  <div class="container grade-section">
-    <p>Please select an experiment to begin grading.</p>
+  </div>
+</div>
+</div>
+</div>
+<!-- Student Modal -->
+<% if (showStudentModal) { %>
+  <div class="student-form px-3 py-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+        <div class="text-center my-4">
+
+        <h2         class="text-xl md:text-2xl font-bolder"        >Select Student</h2></div></div>
+        <form action="/tchr/select-student" method="POST">
+          <input type="hidden" name="exp_no" value="<%= exp_no %>">
+          <select name="studentName" required class="form-select mb-3">
+            <option value="">-- Select Student --</option>
+            <% students.forEach(name => { %>
+              <option value="<%= name %>"><%= name %></option>
+            <% }) %>
+          </select>
+          <button type="submit"  class="btn btn-primary w-100">
+            <i class="fas fa-eye me-2"></i> View
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
 <% } %>
+
+<!-- Grade Section -->
+<% if (showGradeSection && studentData.length > 0 ) { %>
+  <% 
+  const experiments = {
+    '1': {
+      title: 'Pendulum',
+      headers: ['Mass', 'Radius', 'Thread Length', 'Pendulum Length', 'Trial 1 Time', 'Trial 2 Time', 'Mean Time', 'Time Period'],
+      keys: ['mass', 'radius', 'threadLength', 'PenndulumLength', 'trial1Time', 'trial2Time', 'meanTime', 'timePeriod']
+    },
+    '2': {
+      title: 'Spring',
+      headers: ['Mass', 'Initial Length', 'Final Length', 'Extension', 'Trial 1 Time', 'Trial 2 Time', 'Mean Time', 'Time Period', 'Gravity'],
+      keys: ['mass', 'initialLength', 'finalLength', 'extension', 'trial1Time', 'trial2Time', 'meanTime', 'timePeriod', 'gravity']
+    },
+    '3': {
+      title: 'Meter Rod',
+      headers: ['Weight', '1/R', 'Observed Reading', 'Corrected Reading', '1/q × 1/R', 'F1', 'Loop Position', 'Distance', 'τ'],
+      keys: ['weightSuspended', 'rInverse', 'observedReading', 'correctedReading', 'qInverseRInverse', 'condition1F1_', 'loopPosition', 'distance', 'condition2Tau']
+    },
+    '4': {
+      title: 'Force Table',
+      headers: ['Force P', 'Force Q', 'Angle P', 'Angle Q', 'Psin(θP)', 'Qsin(θQ)', 'Weight', 'Error'],
+      keys: ['forceP', 'forceQ', 'angleP', 'angleQ', 'PsinAngleP', 'QsinAngleQ', 'weightW', 'weightError']
+    },
+    '5': {
+      title: 'Resonance Column',
+      headers: ['Frequency', 'Water Level', 'Diameter', 'Air Column', 'Correct Length', 'Wavelength', 'Temp', 'Velocity'],
+      keys: ['freq', 'waterLevel', 'diameter', 'airColumn', 'correctLength', 'waveLength', 'temp', 'velocity']
+    }
+  };
+
+  const currentExp = experiments[exp_no];
+%>
+  <div class="grade-section px-2 py-4">
+    <% if (currentExp) { %>
+      <div class="text-center my-4">
+
+    <h2    class="text-xl md:text-2xl font-bolder" "><%= currentExp.title %> Experiment - <%= selectedStudent %></h2></div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <% currentExp.headers.forEach(header => { %>
+              <th><%= header %></th>
+            <% }) %>
+          </tr>
+        </thead>
+        <tbody>
+          <% studentData.forEach(exp => { %>
+            <% for (let i = 1; i <= 3; i++) { %>
+              <tr>
+                <% currentExp.keys.forEach(key => { %>
+                  <td><%= exp[key + i] %></td>
+                <% }) %>
+              </tr>
+            <% } %>
+            <tr>
+              <td colspan="<%= currentExp.headers.length %>">
+                <form action="/tchr/grade" method="POST" class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+                  <input type="hidden" name="exp_no" value="<%= exp_no %>">
+                  <input type="hidden" name="exp_title" value="<%= currentExp.title %>">
+                  <input type="hidden" name="studentId" value="<%= exp.studentId || exp._id %>">
+                  <label class="me-2 mb-0">Grade:</label>
+                  <input type="number" name="grade" min="0" max="15" value="15" class="form-control w-auto" required style="margin: 8px ;">
+                  <button type="submit" class="submit-grade-btn">
+                    <i class="fas fa-check-circle"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </div></div>
+    <% } else if (!showStudentModal && !showGradeSection) { %>
+      <div class="container grade-section">
+        <p>Please select an experiment to begin grading.</p>
+      </div>
+    <% } %>
+
 
 <footer class="footer">
   <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Quiz</title>
+    <title>Update Quiz</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -99,39 +99,72 @@
         </div>
       </header>
 
-    <div class="superContainer">
-      <h1 style="font-weight: bold; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Edit Quiz</h1>
-    <form action="/tchr/quizedit/<%= quiz._id %>" method="POST" class="form">
-      <label>Experiment Number:</label>
-      <input type="text" name="exp_no" value="<%= quiz.exp_no %>" readonly required><br>
-  
-      <label>Experiment Title:</label>
-      <input type="text" name="exp_title" value="<%= quiz.exp_title %>" readonly required><br>
-  
-        <label>Question Number:</label>
-        <input type="text" name="question_no" value="<%= quiz.question_no %>" required><br>
-
-        <label>Question:</label>
-        <input type="text" name="Question" value="<%= quiz.Question %>" required><br>
-
-        <label>Option 1:</label>
-        <input type="text" name="option1" value="<%= quiz.option1 %>" required><br>
-
-        <label>Option 2:</label>
-        <input type="text" name="option2" value="<%= quiz.option2 %>" required><br>
-
-        <label>Option 3:</label>
-        <input type="text" name="option3" value="<%= quiz.option3 %>" required><br>
-
-        <label>Option 4:</label>
-        <input type="text" name="option4" value="<%= quiz.option4 %>" required><br>
-
-        <label>Answer:</label>
-        <input type="text" name="Answer" value="<%= quiz.Answer %>" required><br>
-
-        <button type="submit" style="background-color: rgb(2, 2, 48);">Update Quiz</button>
-    </form>
-    </div>
+      <div class="container mt-5 superContainer">
+        <h1 class="text-center fw-bold" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+          Edit Quiz
+        </h1>
+        <form action="/tchr/quizedit/<%= quiz._id %>" method="POST" class="row g-3">
+          
+          <!-- Experiment Number -->
+          <div class="col-12 col-md-6">
+            <label class="form-label">Experiment Number:</label>
+            <input type="text" name="exp_no" value="<%= quiz.exp_no %>" readonly required class="form-control">
+          </div>
+      
+          <!-- Experiment Title -->
+          <div class="col-12 col-md-6">
+            <label class="form-label">Experiment Title:</label>
+            <input type="text" name="exp_title" value="<%= quiz.exp_title %>" readonly required class="form-control">
+          </div>
+      
+          <!-- Question Number -->
+          <div class="col-12 col-md-6">
+            <label class="form-label">Question Number:</label>
+            <input type="text" name="question_no" value="<%= quiz.question_no %>" required class="form-control">
+          </div>
+      
+          <!-- Question -->
+          <div class="col-12">
+            <label class="form-label">Question:</label>
+            <input type="text" name="Question" value="<%= quiz.Question %>" required class="form-control">
+          </div>
+      
+          <!-- Options -->
+          <div class="col-12 col-md-6">
+            <label class="form-label">Option 1:</label>
+            <input type="text" name="option1" value="<%= quiz.option1 %>" required class="form-control">
+          </div>
+      
+          <div class="col-12 col-md-6">
+            <label class="form-label">Option 2:</label>
+            <input type="text" name="option2" value="<%= quiz.option2 %>" required class="form-control">
+          </div>
+      
+          <div class="col-12 col-md-6">
+            <label class="form-label">Option 3:</label>
+            <input type="text" name="option3" value="<%= quiz.option3 %>" required class="form-control">
+          </div>
+      
+          <div class="col-12 col-md-6">
+            <label class="form-label">Option 4:</label>
+            <input type="text" name="option4" value="<%= quiz.option4 %>" required class="form-control">
+          </div>
+      
+          <!-- Answer -->
+          <div class="col-12">
+            <label class="form-label">Answer:</label>
+            <input type="text" name="Answer" value="<%= quiz.Answer %>" required class="form-control">
+          </div>
+      
+          <!-- Submit -->
+          <div class="col-12 text-center">
+            <button type="button" onclick="validateCurrentQuestion(event)" class="btn text-white px-4" style="background-color: rgb(2, 2, 48);">
+              Update Quiz
+            </button>
+          </div>
+        </form>
+      </div>
+      
     <!-- Footer Section -->
   <footer class="footer">
     <div class="footer_background" style="background-image: url(/images/footer_background.png)"></div>
@@ -221,7 +254,82 @@
     <script src="/plugins/parallax-js-master/parallax.min.js"></script>
 <script src="/js/quiz.js"></script>
     <!-- Custom JavaScript -->
-    <script src="/js/custom.js"></script>
+    <!-- <script src="/js/custom.js"></script> -->
+    <script>
+    function validateCurrentQuestion(event) {
+    // Prevent form submission initially
+    event.preventDefault();
+    
+    let count = 0; // Reset count initially
+
+    // Get form elements by name (not ID)
+    const question = document.querySelector('input[name="Question"]').value.trim();
+    const options = [
+        document.querySelector('input[name="option1"]').value.trim(),
+        document.querySelector('input[name="option2"]').value.trim(),
+        document.querySelector('input[name="option3"]').value.trim(),
+        document.querySelector('input[name="option4"]').value.trim()
+    ];
+    const answer = document.querySelector('input[name="Answer"]').value.trim();
+
+    // Check if all fields are filled
+    if (!question || options.some(opt => !opt) || !answer) {
+        alert('Please fill out all fields before proceeding.');
+        return false;
+    }
+
+    // Clean option text (remove prefixes like 'A:', '1)', etc.)
+    const cleanedOptions = options.map(option => {
+        const parts = option.split(':'); 
+        return parts.length > 1 ? parts.slice(1).join(':').trim() : option.trim();
+    });
+
+    // Validate no duplicate options
+    for (let i = 0; i < cleanedOptions.length; i++) {
+        for (let j = i + 1; j < cleanedOptions.length; j++) {
+            if (cleanedOptions[i] === cleanedOptions[j]) {
+                alert(`Duplicate option found: "${options[i]}"`);
+                return false;
+            }
+        }
+    }
+
+    const optionPattern =  /^[A-Za-z]{2,}$|^\d{1,}$|^[A-Za-z\s\.,\-$$$$\?\!;:\"\']{2,}$/;;
+
+    for (const option of options) {
+        // Extract the content after "D:", "1:", etc.
+        const content = option.split(':').slice(1).join(':').trim() || option.trim();
+        
+        // Validate the content based on the pattern
+        if (!optionPattern.test(content)) {
+            alert(`Option "${content}" is invalid. Options must be either:
+            - A number (e.g., 1, 42)
+            - A word with at least two letters (e.g., "ab", "word")
+            - A sentence with at least two characters (e.g., "A sentence")
+            
+            Single letters like "a", "b", "k" are not allowed.`);
+            return false;
+        }
+    }
+    
+    const validAnswerPattern = /^[A-Za-z]{2,}$|^\d{1,}$|^[A-Za-z\s\.,\-$$$$\?\!;:\"\']{2,}$/;
+
+    // Validate the answer content
+    if (!validAnswerPattern.test(answer)) {
+        alert(`Answer "${answer}" is invalid. Answers must be either:
+        - A number (e.g., 1, 42)
+        - A word with at least two letters (e.g., "ab", "word")
+        - A sentence with at least two characters (e.g., "A sentence")
+        
+        Single letters like "a", "b", "k" are not allowed.`);
+        return false;
+    }
+
+    // If all validations passed, submit the form
+    document.querySelector('form').submit();
+    return true;
+}
+    </script>
     <!-- <script src="/js/quiz.js"></script> -->
   </body>
 </html>

@@ -93,8 +93,7 @@ tr:nth-child(even) {
     font-size: 1.5rem;
   }
 }
-
-  .modal {
+.modal {
     display: none;
     position: fixed;
     top: 50%;
@@ -111,10 +110,7 @@ tr:nth-child(even) {
   .section{
     margin-top: 60px;
   }
-  /* .blur-background {
-    filter: blur(5px);
-    pointer-events: none;
-  } */
+  
   hr.styled {
   border: 0;
   height: 2px;
@@ -132,6 +128,7 @@ tr:nth-child(even) {
     background-color: #1e2434;
 
   }
+
   </style>
 </head>
 <body>
@@ -177,7 +174,7 @@ tr:nth-child(even) {
             <th>Total Questions</th>
             <th>Actions</th>
           </tr>
-          <% quizResults.forEach((result, i) => { %> <!-- Corrected loop position -->
+          <% quizResults.forEach((result, i) => { %>
             <tr>
               <td><%= result.exp_no %></td>
               <td><%= result.exp_title %></td>
@@ -186,27 +183,34 @@ tr:nth-child(even) {
               <td>
                 <!-- Hidden Inputs for Correct & User Answers -->
                 <% correctAnswers.forEach((q, index) => { %>
-                  <input type="hidden" id="correctAnswers-<%= index %>" value="<%= q.answer %>">
+                  <% if (q.exp_no === result.exp_no) { %>
+                    <input type="hidden" id="correctAnswers-<%= i %>" value="<%= q.correctAnswers %>">
+                    <input type="hidden" id="userAnswers-<%= i %>" value="<%= result.answers_submitted.join(', ') %>">
+                  <% } %>
                 <% }); %>
-                <input type="hidden" id="userAnswers-<%= i %>" value="<%= result.answers_submitted.join(', ') %>">
                 
                 <!-- View Button -->
-                <button onclick="openModal('<%= i %>')">View</button> <!-- Wrapped 'i' in quotes -->
+                <button onclick="openModal('<%= i %>')">View</button>  <!-- Wrapped i in quotes -->
               </td>
             </tr>
-          <% }) %> <!-- Closed the loop correctly -->
+          <% }) %>
         </table>
         
-        <div id="modal" class="modal">
-          <div class="modal-content">
-            <h2>Quiz Details</h2>
-            <p><strong>Correct Answers:</strong></p>
-            <ul id="correctAnswersList"></ul>
-            <p><strong>User Submitted Answers:</strong></p>
-            <ul id="userAnswersList"></ul>
-            <button onclick="closeModal()">Close</button>
-          </div>
-        </div>
+        <!-- <div id="modal" class="modal">
+          <div class="modal-content"> -->
+            <div id="modal" class="modal">
+              <div class="modal-content">
+                <h2>Quiz Details</h2>
+                <p><strong>Correct Answers:</strong></p>
+                <ul id="correctAnswersList"></ul>
+                 <p><strong>User Submitted Answers:</strong></p> 
+                <ul id="userAnswersList"></ul>
+                <button onclick="closeModal()">Close</button>
+              </div>
+            </div>
+            
+          <!-- </div>
+        </div> -->
         
       </div>
     <% } else { %>
@@ -228,7 +232,7 @@ tr:nth-child(even) {
             <tr>
               <td><%= result.exp_no %></td>
               <td><%= result.exp_title %></td>
-              <td><%= result.grade %> / 5</td>
+              <td><%= result.grade %> / 15</td>
             </tr>
           <% }) %>
         </table>
@@ -307,17 +311,35 @@ tr:nth-child(even) {
 
     </div>
 </body>
-<script>
+<script>  const quizData = JSON.parse('<%- JSON.stringify(quizResults) %>');
   function openModal(index) {
-        const correctAnswers = document.getElementById(`correctAnswers-${index}`).value.split(', ');
-        const userAnswers = document.getElementById(`userAnswers-${index}`).value.split(', ');
-    
-        document.getElementById('correctAnswersList').innerHTML = correctAnswers.map((ans, i) => `<li>Q${i + 1}: ${ans}</li>`).join('');
-        document.getElementById('userAnswersList').innerHTML = userAnswers.map((ans, i) => `<li>Q${i + 1}: ${ans}</li>`).join('');
-    
-        document.getElementById('modal').classList.add('modal-active');
-        document.body.classList.add('blur-background');
-      }
+  const result = quizData[index];
+
+  // Fetching the correct and user-submitted answers
+  const correctAnswers = result.correctAnswers || [];
+  const userAnswers = result.answers_submitted || [];
+
+  // Creating the list for correct answers
+  const correctList = correctAnswers.map((ans, i) => {
+    return `<li>Q${i + 1}: <span style="color: green;">${ans}</span></li>`; // Correct answers in green
+  }).join('');
+
+  // Creating the list for user answers
+  const userList = userAnswers.map((ans, i) => {
+    const isCorrect = ans === correctAnswers[i];  // Check if user answer is correct
+    return `<li>Q${i + 1}: <span style="color: ${isCorrect ? 'green' : 'red'};">${ans}</span></li>`; // Color user answers accordingly
+  }).join('');
+
+  // Update the modal lists with correct and user answers
+  document.getElementById('correctAnswersList').innerHTML = correctList;
+  document.getElementById('userAnswersList').innerHTML = userList;
+
+  // Display the modal and apply blur to background
+  document.getElementById('modal').classList.add('modal-active');
+  document.body.classList.add('blur-background');
+}
+
+
     
       function closeModal() {
         document.getElementById('modal').classList.remove('modal-active');

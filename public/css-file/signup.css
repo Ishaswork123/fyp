@@ -27,9 +27,10 @@ body {
     align-items: center;
     width: 100%;
     height:auto; /* Set a fixed height or use min-height */
-    background: #e7f6fc url(/images/image.png) repeat ; /* Fallback color */
-    background-size: auto;
+    background: radial-gradient(circle, #ffffff 0%, #585858 50%, #13033f 100%);
     background-position: center;
+    background-size: cover;
+    
 }
 
 .login-box {

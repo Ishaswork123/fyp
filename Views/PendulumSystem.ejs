@@ -127,6 +127,9 @@
 
   <div id="graphContainer">
     <canvas id="graphCanvas" width="1000" height="350"></canvas>
+ <button id="zoomInBtn">🔍 Zoom In</button>
+<button id="zoomOutBtn">🔍 Zoom Out</button>
+
   </div>
   <div class="graphContainer2">
     <canvas class="canvasParts" id="displacementCanvas"></canvas>
@@ -163,13 +166,12 @@
   <!-- ------------------------------------------------------------------------------------------------------------ -->
   <!-- Table values -->
 
-  <div id="tableContainer" style="display: none;">
-    <form action="/exp/penExp" method="POST">
-  
+  <div id="tableContainer" style="display: none">
+    <form action="/exp/penExp" method="post">
     <table>
       <thead>
         <tr>
-          <th>Mass of the Bob(m) cm </th>
+          <th>Mass of the Bob(m) Kg</th>
           <th>Radius of bob(r) cm</th>
           <th>Length of thread (l₁)cm</th>
           <th>Length of Pendulum(L= l₁+ r) cm</th>
@@ -181,65 +183,53 @@
       </thead>
       <tbody>
         <tr>
-          <td><input type="number" placeholder="Enter value" name="mass1"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="radius1"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name=" threadLength1"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name=" PenndulumLength1"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="trial1Time1"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="trial2Time1"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="meanTime1"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="timePeriod1"  min="-1000" 
-            max="1000" step="0.01"></td>
+          <td><input type="text" name="mass1" placeholder="Enter value" /></td>
+          <td><input type="text" name="radius1" placeholder="Enter value" /></td>
+          <td><input type="text" name="threadLength1" placeholder="Enter value" /></td>
+          <td><input type="text" name="PenndulumLength1" placeholder="Enter value" /></td>
+          <td><input type="text" name="trial1Time1" placeholder="Enter value" /></td>
+          <td><input type="text" name="trial2Time1" placeholder="Enter value" /></td>
+          <td><input type="text" name="meanTime1" placeholder="Enter value" /></td>
+          <td><input type="text" name="timePeriod1" placeholder="Enter value" /></td>
         </tr>
         <tr>
-          <td><input type="number" placeholder="Enter value" name="mass2"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="radius2"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name=" threadLength2"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name=" PenndulumLength2"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="trial1Time2"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="trial2Time2"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="meanTime2"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="timePeriod2"  min="-1000" 
-            max="1000" step="0.01"></td>
+          <td><input type="text" name="mass2" placeholder="Enter value" /></td>
+          <td><input type="text" name="radius2" placeholder="Enter value" /></td>
+          <td><input type="text" name="threadLength2" placeholder="Enter value" /></td>
+          <td><input type="text" name="PenndulumLength2" placeholder="Enter value" /></td>
+          <td><input type="text" name="trial1Time2" placeholder="Enter value" /></td>
+          <td><input type="text" name="trial2Time2" placeholder="Enter value" /></td>
+          <td><input type="text" name="meanTime2" placeholder="Enter value" /></td>
+          <td><input type="text" name="timePeriod2" placeholder="Enter value" /></td>
         </tr>
         <tr>
-          <td><input type="number" placeholder="Enter value" name="mass3"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="radius3"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name=" threadLength3"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name=" PenndulumLength3"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="trial1Time3"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="trial2Time3"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="meanTime3"  min="-1000" 
-            max="1000" step="0.01"></td>
-          <td><input type="number" placeholder="Enter value" name="timePeriod3"  min="-1000" 
-            max="1000" step="0.01"></td>
+          <td><input type="text" name="mass3" placeholder="Enter value" /></td>
+          <td><input type="text" name="radius3" placeholder="Enter value" /></td>
+          <td><input type="text" name="threadLength3" placeholder="Enter value" /></td>
+          <td><input type="text" name="PenndulumLength3" placeholder="Enter value" /></td>
+          <td><input type="text" name="trial1Time3" placeholder="Enter value" /></td>
+          <td><input type="text" name="trial2Time3" placeholder="Enter value" /></td>
+          <td><input type="text" name="meanTime3" placeholder="Enter value" /></td>
+          <td><input type="text" name="timePeriod3" placeholder="Enter value" /></td>
         </tr>
       </tbody>
     </table>
-    <button id="saveInDB" >Save Data</button>
-    </form>
+    <button id="saveInDB" type="submit">Save Data</button>
+  </form>
   </div>
-
+<div class="navigation-bar">
+  <div class="home-button">
+    <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+  </div>
+  <div class="tabs">
+    <a href="/exp/penExp" class="tab active" data-section="intro">Custom</a>
+    <a href="/guided/penExp" class="tab" data-section="balance-lab">Guided Lab</a>
+    <a href="/std/resource/1" class="tab" data-section="game">Resources</a>
+  </div>
+  <div class="logo">
+    <img src="/images/R.jpeg" alt="CUI logo" />
+  </div>
+</div>
   <script src="/js/pendulum.js"></script>
 </body>
 

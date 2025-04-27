@@ -67,6 +67,16 @@
     font-size: 28px;
     cursor: pointer;
 }
+#timer {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  background: #fff3cd;
+  padding: 10px 20px;
+  border: 2px solid #ffc107;
+  border-radius: 10px;
+  z-index: 1000;
+}
 
 /* Initially hide quiz form */
 .quizContainer {
@@ -142,6 +152,10 @@
   
       <!-- Quiz Form -->
       <div class="quizContainer" id="quizContainer">
+        <div id="timer" style="font-size: 20px; font-weight: bold; color: rgb(3, 37, 20); margin-bottom: 10px;">
+          Time Remaining: <span id="time">15:00</span>
+        </div>
+        
         <% if (quizData && quizData.length > 0) { %>
           <h2>Quiz for Experiment <%= quizData[0].exp_no %></h2>
           <form id="quizForm" method="POST" action='/std/submit-quiz' class="quizForm">
@@ -265,26 +279,57 @@
     const quizContainer = document.getElementById("quizContainer");
     const closeModalBtn = document.getElementById("closeModalBtn");
 
-    // If quizData exists (backend response), show quiz and hide modal
-    const quizDataLength = '<%= quizData && quizData.length > 0 ? quizData.length : 0 %>';
-
-if (quizDataLength > 0) {
-    const modal = document.getElementById('modal');
-    const quizContainer = document.getElementById('quizContainer');
-    const openModalBtn = document.getElementById('openModalBtn');
-
-    modal.classList.add("hidden");  // Hide modal
-    modal.style.display = "none";   // Hide modal
-    quizContainer.style.display = "block";  // Show quiz
-    openModalBtn.style.display = "none";  // Hide the 'Select Experiment' button
-    quizContainer.classList.add("visible"); // Show quiz
-}
+    <% if (quizData && quizData.length > 0) { %>
+        modal.classList.add("hidden");  // Hide modal
+        modal.style.display = "none";   // Hide modal
+          quizContainer.style.display = "block";  // Show quiz
+          openModalBtn.style.display = "none";  // Hide the 'Select Experiment' button
+        quizContainer.classList.add("visible"); // Show quiz
+    <% } %>
 
     // Close modal manually
     closeModalBtn.addEventListener("click", function () {
         modal.classList.add("hidden");
     });
 });
+
+  let totalSeconds = 15 * 60; // 15 minutes
+  const timerDisplay = document.getElementById('time');
+  const quizForm = document.getElementById('quizForm');
+
+  function startTimer() {
+    const interval = setInterval(() => {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      totalSeconds--;
+
+      if (totalSeconds < 0) {
+        clearInterval(interval);
+        alert("Time is up! Quiz will be submitted automatically.");
+
+        // Disable all checkboxes
+        const checkboxes = quizForm.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = false);
+
+        // Create a hidden field to indicate timeout
+        const timeoutInput = document.createElement('input');
+        timeoutInput.type = 'hidden';
+        timeoutInput.name = 'timeout';
+        timeoutInput.value = 'true';
+        quizForm.appendChild(timeoutInput);
+
+        // Submit the form
+        quizForm.submit();
+      }
+    }, 1000);
+  }
+
+  // Start timer when quiz loads
+  if (quizForm) {
+    startTimer();
+  }
+
 
 </script>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

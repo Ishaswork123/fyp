@@ -57,7 +57,7 @@ async function handle_Save_Spring_Exp(req, res) {
 
     await newEntry.save();
     console.log('Result saved successfully');
-    res.redirect('/guided/massExp'); // Render the student console view
+    res.redirect('/stdConsole'); // Render the student console view
 
   } catch (error) {
     console.error('Error saving data:', error);
@@ -104,7 +104,7 @@ async function handle_pen_exp(req, res) {
     console.log('Result saved successfully');
 
     // Render the student console
-    res.redirect('/guided/penExp'); // Adjust the path if necessary
+    res.redirect('/stdConsole'); // Adjust the path if necessary
   } catch (error) {
     console.error('Error saving data:', error);
     res.status(500).send('Error saving data');
@@ -138,7 +138,7 @@ async function handleResonancePost(req, res) {
 
     await newResonance.save();
     console.log("Resonance data saved.");
-    res.redirect('/guided/inclineExp'); // Adjust the render view as needed
+    res.redirect('/stdConsole'); // Adjust the render view as needed
   } catch (error) {
     console.error("Error saving resonance data:", error);
     res.status(500).send("Server error while saving data.");
@@ -172,7 +172,7 @@ async function handleEquilibriumPost(req, res) {
 
     await newEquilibrium.save();
     console.log("Equilibrium experiment data saved.");
-    res.redirect('/guided/meterExp'); // or any other success page
+    res.redirect('/stdConsole'); // or any other success page
   } catch (err) {
     console.error("Error saving equilibrium data:", err);
     res.status(500).send("Error saving data.");
@@ -207,7 +207,7 @@ async function handleForceExperimentPost(req, res) {
 
     await newForceExp.save();
     console.log("Force experiment data saved.");
-    res.redirect('/guided/forceExp') // or any other success page
+    res.redirect('/stdConsole') // or any other success page
   } catch (err) {
     console.error("Error saving force experiment data:", err);
     res.status(500).send("Error saving data.");

@@ -53,8 +53,7 @@ async function postQuiz(req, res) {
 console.log('enter 1 ')
       // Fetch all quizzes for the selected experiment
       const quizzes = await Quiz.find({ exp_no });
-
-      // Get unique class IDs from the quizzes
+console.log('quizes',quizzes);      // Get unique class IDs from the quizzes
       const quizClassIds = [...new Set(quizzes.map(q => q.classId).filter(id => id))];
 
       // Find classes where this student is enrolled
@@ -90,13 +89,34 @@ console.log('enter 1 ')
   }
 }
 async function handleQuizSubmission(req, res) {
-  const { exp_no, answers,correctAnswers} = req.body;
+  const { exp_no, answers,correctAnswers,timeout} = req.body;
   console.log('POST request received at /std/submit-quiz');
   console.log('Request body:', req.body); // Debug log
-
+let quizData =[];
 
 const exp_title = titles[exp_no];
 
+if (timeout === 'true') {
+  // Time exceeded — all answers considered blank
+  marksObtained = 0;
+  submittedAnswers = Array(correctAnswers.length).fill(''); // empty answers
+  correctAnswersArray = correctAnswers; // Still record correct answers
+} else {
+  // Your original answer checking logic
+  quizData.forEach((question, index) => {
+    const correctAnswer = question.Answer.toString().trim();
+    const correctAnswerFirstLetter = correctAnswer.charAt(0).toUpperCase();
+    const userAnswerLetter = answers[index]; // e.g. 'option3'
+    const userAnswer = optionMapping[parseInt(userAnswerLetter.replace('option', '')) - 1];
+    
+    correctAnswersArray.push(correctAnswer);
+    submittedAnswers.push(userAnswer);
+
+    if (correctAnswerFirstLetter === userAnswer.trim().toUpperCase()) {
+      marksObtained += 5;
+    }
+  });
+}
 // Save or use the exp_title
 console.log(`Experiment Title: ${exp_title}`);
   try {

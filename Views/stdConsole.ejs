@@ -83,24 +83,58 @@
 .modal-links a:hover {
     opacity: 0.8;
 }
-.main_nav {
+/* .main_nav {
     display: flex;
-    gap: 5px; /* Adjust spacing between items */
+    gap: 5px; 
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
 .main_nav li {
-    padding: 0 2px; /* Reduce padding between items */
+    padding: 0 2px; 
     margin: 0;
 }
 
 .main_nav a {
     text-decoration: none;
     display: inline-block;
-    padding: 2px 2px; /* Adjust link padding */
+    padding: 2px 2px; 
+} */
+html {
+            scroll-behavior: smooth;
+        }
+		.course_image {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px; /* optional */
+  background: #f0f0f0; /* optional */
 }
+
+/* Use media queries to adapt aspect ratio */
+.course_image::before {
+  content: '';
+  display: block;
+  padding-top: 75%; /* 4:3 ratio by default (height = 75% of width) */
+}
+
+.exp_img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 'cover' crops a bit, but keeps it neat and ratio-preserving */
+}
+
+/* Optional: adjust ratio on smaller screens */
+@media (max-width: 768px) {
+  .course_image::before {
+    padding-top: 100%; /* 1:1 ratio for square images */
+  }
+}
+
 
 
 </style>
@@ -218,14 +252,12 @@
 			  <div class="row">
 				<div class="col">
 				  <div class="header_content d-flex flex-row align-items-center justify-content-start">
-					<a href="javascript:history.back()">
-						<i class="fas fa-arrow-left" style="padding-right: 40px; margin: 5px;"></i> 
+					<a href="/" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+						<i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i>
+						<!-- <i class="fas fa-arrow-left"></i>  -->
 					  </a>
 					<img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
-									<!-- <li>
-										<i class="fa" aria-hidden="true"></i>
-										<div>Comsats University Islamabad Attock Campus</div>
-									</li> -->
+									\
 					<div class="logo_container">
 					  <a href="#">
 						<div class="logo_text">Physics<span>Verse</span></div>
@@ -233,99 +265,21 @@
 					</div>
 					<nav class="main_nav_contaner ml-auto">
 					  <ul class="main_nav mb-0">
-						<li><a href="/home">Home</a></li>
-						<li><a href="/std/get-quiz">Quizes</a></li>
-					<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Experiment 
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="experimentDropdown"> -->
-								<!-- Guided Option -->
-								<li class="dropdown-submenu">
-									<a class="dropdown-item" href="#" onclick="toggleSubmenu(event, 'guidedMenu');">Guided</a>
-									<ul class="submenu dropdown-menu" id="guidedMenu" style="display: none;">
-										<a class="dropdown-item" href="/guided/penExp" >Experiment 1</a>
-										<a class="dropdown-item" href="/guided/massExp" >Experiment 2</a>
-										<a class="dropdown-item" href="/guided/resonance" >Experiment 3</a>
-										
-									</ul>
-								</li>
-								<!-- Experiment Option -->
-								<li class="dropdown-submenu">
-									<a class="dropdown-item" href="#" onclick="toggleSubmenu(event, 'experimentMenu');">Experiment</a>
-									<ul class="submenu dropdown-menu" id="experimentMenu" style="display: none;">
-										<a href="/exp/penExp">Pendulum <i class="uil uil-arrow-right"></i></a>
-										<a href="/exp/massExp">Mass Spring System <i class="uil uil-arrow-right"></i></a>
-										<a href="/exp/resonance">Resonance <i class="uil uil-arrow-right"></i></a>
-										 
-									</ul>
-								</li>
-							</ul>
-						</li>
-						
-						<!-- Experiment Dropdown -->
-						<!-- <li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Guided  Experiment
-							</a>
-							<div class="dropdown-menu" aria-labelledby="experimentDropdown">
-							  <a class="dropdown-item" href="/guided/penExp" >Experiment 1</a>
-							  <a class="dropdown-item" href="/guided/massExp" >Experiment 2</a>
-							  <a class="dropdown-item" href="/guided/resonance" >Experiment 3</a>
-						
-							</div>
-						  </li> -->
-						  <!-- Trigger Button
-<li>
-<a href="#" id="openModalButton"> Experiments</a>
-</li> -->
-<!-- <li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-Experiment
-</a>
-<div class="dropdown-menu" aria-labelledby="experimentDropdown">
-<a class="dropdown-item" href="/exp/penExp" >Experiment 1</a>
-<a class="dropdown-item" href="/exp/massExp" >Experiment 2</a>
-<a class="dropdown-item" href="/exp/resonance" >Experiment 3</a>
-
-</div>
-</li> -->
-						  
-<li><a href="/std/class">Classroom</a></li>
-<!-- <li><a href="/std/dashboard">Community</a></li> -->
-<li><a href="/std/results">Result</a></li>
-
-
-
-						  <!-- Modal -->
-						  <!-- <div id="modal" class="modal">
-							<div class="modal-content">
-							  <button class="close">&times;</button>
-							  <div class="content">
-								<header>Select an Option</header>
-								<div class="options">
-								  <div class="option">
-									<img src="images/customized-experiment.jpg" alt="Customized Experiment">
-									<button class="option-button">Customized Experiment</button>
-								  </div>
-								  <div class="option">
-									<img src="images/guided-experiment.jpg" alt="Guided Experiment">
-									<button class="option-button">Guided Experiment</button>
-								  </div>
-								  <div class="option">
-									<img src="images/quiz.jpg" alt="Quiz">
-									<button class="option-button">Quiz</button>
-								  </div>
-								  <div class="option">
-									<img src="images/details.jpg" alt="Details">
-									<button class="option-button">Details</button>
-								  </div>
-								</div>
-							  </div>
-							</div>
-						  </div>
+						<li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="/std/get-quiz" class="nav-link">Quizes</a></li>
 					
-						 Community Dropdown -->
+						<li class="nav-item"><a href="#experimentSection" class="nav-link">Experiment</a>
+
+						</li>
+							
+						
+						  
+<li class="nav-item"><a href="/std/class" class="nav-link">Classroom</a></li>
+<!-- <li><a href="/std/dashboard">Community</a></li> -->
+<li class="nav-item"><a href="/std/results" class="nav-link">Result</a></li>
+
+
+
 						 <li class="nav-item">
 							<a class="nav-link" href="#" id="communityLink">
 							  Community
@@ -361,53 +315,9 @@ Experiment
 					
 					
 			  
-					  <!-- <div class="field">
-						<label>
-						  <input type="checkbox" id="createNewCommunityCheckbox" />
-						  Create New Community
-						</label>
-					  </div>
-					  <form action="/std/create" method="post">
-
-					  <div id="createCommunityFields" style="display: none;">
-						<div class="field createCommunity">
-						  <span class="fa-solid fa-plus"></span>
-						  <input placeholder="New Community Name" type="text" id="new_room" name="communityName">
-						</div>
-						<div class="field">
-						  <span class="fa fa-info-circle"></span>
-						  <input placeholder="Community Bio" type="text" id="community_bio" name="commDescription">
-						</div>
-						
-					  </div>
-			  
-					  <button class="submit" type="submit" id="login">Join</button>
-					</form> -->
+					  
 				  </div>
-				<!-- </div>
-			  </div> -->
-								  <!-- <div class="field">
-									<label>
-									  <input type="checkbox" id="createNewCommunityCheckbox" />
-									  Create New Community
-									</label>
-								  </div> -->
-						  
-								  <!-- Create Community Fields (Initially Hidden) -->
-								  <!-- <div id="createCommunityFields" style="display: none;">
-									<div class="field createCommunity">
-									  <span class="fa-solid fa-plus"></span>
-									  <input placeholder="New Community Name" type="text" id="new_room" name="new_room">
-									</div>
-									<div class="field">
-									  <span class="fa fa-info-circle"></span>
-									  <input placeholder="Community Bio" type="text" id="community_bio" name="community_bio">
-									</div>
-									
-								  </div> -->
-						  
-								
-							
+				
 							</div>
 						  </div> 
 						  
@@ -418,6 +328,7 @@ Experiment
 					</div>		
 						</li>
 					  </ul>
+					  </nav>
 					  <div class="hamburger menu_mm">
 						<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
 					</div>
@@ -470,7 +381,8 @@ Experiment
     </div>
 
  </div>
-		  
+</ul>
+</nav>
 	</header>
 
 	 <div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
@@ -480,15 +392,7 @@ Experiment
 			<ul class="menu_mm">
 				<li class="menu_mm"><a href="/stdConsole">Home</a></li>
 				<li class="menu_mm"><a href="/std/get-quiz">Quizes</a></li>
-				<li class="menu_mm"><li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					  Experiment
-					</a>
-					<div class="dropdown-menu" aria-labelledby="experimentDropdown">
-					  <a class="dropdown-item" href="/penExp">Experiment 1</a>
-					  <a class="dropdown-item" href="/exp/massExp">Experiment 2</a>
-					</div>
-				  </li>
+				<li class="menu_mm><a href="#experimentSection">Experiment</a>
 				</li>				  
 				<!-- <li class="menu_mm"><a href="#">Manage Student </a></li> -->
 				<li class="menu_mm">
@@ -556,7 +460,8 @@ Experiment
 						<h2 class="head">Welcome to<br> PhysicsVerse</h2>
 						<div class="col-lg-12">
 							<div class="tagLine main-blue-button scroll-to-section">
-								<a href="/std/view-all">Physics Virtual Lab</a>
+								<a href="#experimentSection">Physics Virtual Lab</a>
+								<!-- <a href="#experimentSection">Experiment</a> -->
 							</div>
 
 						</div>
@@ -571,15 +476,16 @@ Experiment
 
 		
 	<!-- Popular Courses -->
+    <div id="experimentSection">
 
 	<div class="courses">
-		<h2>Experiments</h2>
+		<h2 style="text-align: center; font-weight: bold; margin-bottom: 10px; color: #0a0647;">Experiments</h2>
 		<div class="row courses_row">
 			<% experiments.forEach(function(exp, index) { %>
 				<div class="col-lg-4 course_col">
 					<div class="course" onclick="openModal('<%= index %>')">
 						<div class="course_image">
-							<img src="<%= exp.image %>" alt="<%= exp.title %>" />
+							<img src="<%= exp.image %>" alt="<%= exp.title %>" class="exp_img"/>
 						</div>
 						<div class="course_body">
 							<h3 class="course_title"> <%= exp.title %>
@@ -605,7 +511,7 @@ Experiment
 			<% }) %>
 			
 		</div> <br>
-		<div class="text-center">
+		<div class="text-center"  style="margin: 20px;" >
 			<% if (allExperiments) { %>
 				<!-- Show Less Button -->
 				<a href="/stdConsole" class="btn btn-secondary">Show Less</a>

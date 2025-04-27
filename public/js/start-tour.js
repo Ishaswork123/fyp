@@ -20,6 +20,22 @@ document.addEventListener("DOMContentLoaded", () => {
       hideTourButton();
       introJs().start();
     });
+    // For elements with data-tooltip
+document.querySelectorAll('[data-tooltip]').forEach(el => {
+  el.addEventListener('mouseenter', (e) => {
+    const rect = e.target.getBoundingClientRect();
+    tooltip.textContent = e.target.dataset.tooltip;
+    tooltip.style.left = `${rect.left + rect.width/2 - tooltip.offsetWidth/2}px`;
+    tooltip.style.top = `${rect.top - tooltip.offsetHeight - 10}px`;
+    tooltip.classList.add('active');
+  });
+  
+  el.addEventListener('mouseleave', () => {
+    tooltip.classList.remove('active');
+  });
+});
+
+
   
     showTourButton();  
   });

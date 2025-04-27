@@ -1,11 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>guided meter rod </title>
+    <title>Guided Equilibrium Experiment</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/introjs.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/intro.min.js"></script>
+    <link rel="stylesheet" href="/css-file/equi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
+
 <body>
-    <h1>guided meter rod </h1>
+    <div id="tourContainer">
+        <button id="startTourBtn" class="tour-button">Start Tour</button>
+      </div>
+    <canvas id="simulationCanvas" data-intro="Experiment method: Drag the weight and put on the scale, And then see the simulations." data-step="1"></canvas>
+    <div class="controls-container">
+        <!-- ... (rest of your controls) ... -->
+         <div class="massInput" data-intro="Mass of attached object with spring balance can also changed from here. " data-step="13">
+            <div class="control-header">
+                <label for="massSlider">Mass <i class="fas fa-weight-hanging"></i></label>
+                <span id="massValue">500 g</span>
+            </div>
+            <div class="slider-container">
+                <button id="mass-decrease" class="arrow-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="slider-wrapper">
+                    <span class="slider-limit">0</span>
+                    <input type="range" id="massSlider" min="0" max="650" value="0" step="10" />
+                    <span class="slider-limit">650</span>
+                </div>
+                <button id="mass-increase" class="arrow-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="springInput" data-intro="Change the spring constant from here to check the stiffness of the spring." data-step="14">
+            <div class="control-header">
+                <label for="springSlider">Spring Strength</label>
+                <span id="springValue">0.5</span>
+            </div>
+            <div class="slider-container">
+                <button id="spring-decrease" class="arrow-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="slider-wrapper">
+                     <span class="slider-label">0.1</span>
+                    <input type="range" id="springSlider" min="0.1" max="1.0" value="0.5" step="0.1" />
+                    <span class="slider-label">1.0</span>
+                </div>
+                <button id="spring-increase" class="arrow-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="ShowCheckBoxs">
+            <span> Show</span>
+            <div class="checkbox-container"  data-intro="Click to see the direction of the weight(placed on the meter rod). " data-step="7">
+                <input type="checkbox" id="showAllForces">
+                <label for="showAllForces">Forces from Objects</label>
+            </div>
+            <div class="checkbox-container" data-intro="Click to see the direction of the weight(attached on spring balance). " data-step="15">
+                <input type="checkbox" id="showWeightForce">
+                <label for="showWeightForce">Force (Weight) Direction</label>
+            </div>
+        </div>
+
+        <div class="radioButtons">
+            <span> Position</span>
+            <div class="checkbox-container">
+                <input type="radio" id="NoDisplayScale" name="position" checked>
+                <label for="NoDisplayScale"> None</label>
+            </div>
+            <div class="checkbox-container"  data-intro="Click to see the numbering on the meter rod " data-step="8">
+                <input type="radio" id="Rulers" name="position">
+                <label for="Rulers"> Rulers</label>
+            </div>
+            <div class="checkbox-container"  data-intro="Click to see the labels of the weight(attached on spring balance)." data-step="9">
+                <input type="checkbox" id="showMassLabels" checked>
+                <label for="showMassLabels">Show Mass Labels</label>
+            </div>
+        </div>
+
+        <div class="gravity-container"  data-intro="Click to change the gravity, to see the change in the weight of the object." data-step="16">
+            <input type="button" id="gravityBtn" value="+" />
+            <label for="gravity">Gravity</label>
+            <div id="gravity-control" style="display: none;"> <!-- Start hidden -->
+                <div class="input-group">
+                    <label for="gravity">Gravity (m/s²): </label>
+                    <div class="limits">
+                        <span>0.0</span>
+                        <span>15.0</span>
+                    </div>
+                    <div class="arrow-buttons">
+                        <button id="gravity-decrease">◄</button>
+                        <input type="range" id="gravity" min="0" max="15" step="0.1" value="9.8" />
+                        <button id="gravity-increase">►</button>
+                    </div>
+                    <div class="input-value" id="gravity-value">9.8 m/s²</div>
+                </div>
+                <div class="input-group">
+                    <select id="gravitySelect">
+                        <option value="9.8">Earth (9.8 m/s²)</option>
+                        <option value="1.62">Moon (1.62 m/s²)</option>
+                        <option value="3.71">Mars (3.71 m/s²)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls-left" data-intro="Controls" data-step="3">
+        <div class="playback-controls" data-intro="Click to view the Spring Balance system on the canvas." data-step="10">
+            <img id="meterRodIcon" src="image.png" alt="Meter Rod Icon"> <!-- Ensure image.png exists -->
+        </div>
+        <div id="wedgeIcon" class="wedge-container" data-intro="Click to remove/add the wedge." data-step="3"> ▲</div>
+        <div class="canvasButton" data-intro="Click to add the values in the table." data-step="6">
+            <i id="addValuesBtn" class="fas fa-edit"></i>
+        </div>
+        <div class="reset-container" data-intro="Reset Experiment container." data-step="17">
+            <i id="resetBtn" class="fas fa-redo-alt"></i>
+        </div>
+    </div>
+
+    <!-- Container for the draggable weights -->
+    <div id="draggable-weights-container" data-intro="Drag the weight and put it on the scale.And click the simulation button to see the simulations.." data-step="2">
+        <div id="extinguisher1" class="draggable-weight" data-mass="5">5 kg</div>
+        <div id="extinguisher2" class="draggable-weight" data-mass="5">5 kg</div>
+        <div id="trashcan1" class="draggable-weight" data-mass="10">10 kg</div>
+    </div>
+ 
+    <div class="weights" id="static-weights-container" data-intro="Click to attach the weights on the spring balance." data-step="12">
+        <div class="weight" id="weight1" data-weight="100">100 g</div>
+        <div class="weight" id="weight2" data-weight="300">300 g</div>
+        <div class="weight" id="weight3" data-weight="200">200 g</div>
+        <div class="weight" id="weight4" data-weight="500">500 g</div>
+    </div>
+
+    <div id="tableContainer" style="display: none;">
+        <!-- ... (rest of your table) ... -->
+         <form action="/exp1/save-data" method="POST">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Weight suspended at meter rod W₁</th>
+                        <th>R²⁻¹ W₂⁺W₃⁻¹</th>
+                        <th>Observed reading of balance</th>
+                        <th>Corrected reading of balance</th>
+                        <th>Q²⁻¹ R²⁻¹</th>
+                        <th>1st condition of equilibrium ΣF₁=0 P+Q-R=0</th>
+                        <th>Position of loops</th>
+                        <th>Distance</th>
+                        <th>2nd condition of equilibrium Στ=0 P×AG-Q×BG=0</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="number" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
+                        <td><input type="number" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
+                        <td><input type="number" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
+                        <td><input type="number" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
+                        <td><input type="number" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
+                        <td><input type="number" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
+                        <td><input type="number" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
+                        <td><input type="number" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
+                        <td><input type="number" placeholder="Enter value" min="-1000" max="1000" step="0.01"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" id="saveInDB">Save Data</button>
+        </form>
+    </div>
+
+    <div class="navigation-bar">
+        <div class="home-button">
+          <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+        </div>
+        <div class="tabs">
+            <a href="/exp/meterExp" class="tab active" data-section="intro">Custom</a>
+            <a href="/guided/meterExp" class="tab" data-section="balance-lab">Guided Lab</a>
+            <a href="/std/resource/3" class="tab" data-section="game">Resources</a>
+        </div>
+        <div class="logo">
+          <!-- <img src="/images/R.jpeg" alt="CUI logo" /> -->
+        </div>
+      </div>
+    <script src="/js/equi.js"></script>
+    <script src="/js/start-tour.js"></script>
 </body>
 </html>

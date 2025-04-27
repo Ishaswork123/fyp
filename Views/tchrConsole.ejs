@@ -32,35 +32,30 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<link rel="stylesheet" href="/assets_1/css/templatemo-edu-meeting.css">
 	<style>
-		.submenu {
+	/*	.submenu {
 			position: absolute;
 			left: 100%;
 			top: 0;
-			/* display: none; */
 		}
 
-		.dropdown-menu .dropdown-submenu:hover>.submenu {
-			display: block;
-			position: absolute;
-		}
 		.main_nav {
     display: flex;
-    gap: 5px; /* Adjust spacing between items */
+    gap: 5px; 
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
 .main_nav li {
-    padding: 0 2px; /* Reduce padding between items */
+    padding: 0 2px; 
     margin: 0;
 }
 
 .main_nav a {
     text-decoration: none;
     display: inline-block;
-    padding: 2px 2px; /* Adjust link padding */
-}
+    padding: 2px 2px; 
+}*/
 /* Modal Styling */
 .modal {
     display: none; /* Initially hidden */
@@ -105,6 +100,41 @@
     margin: 5px 0;
 }
 
+html {
+            scroll-behavior: smooth;
+        }
+		.course_image {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px; /* optional */
+  background: #f0f0f0; /* optional */
+}
+
+/* Use media queries to adapt aspect ratio */
+.course_image::before {
+  content: '';
+  display: block;
+  padding-top: 75%; /* 4:3 ratio by default (height = 75% of width) */
+}
+
+.exp_img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 'cover' crops a bit, but keeps it neat and ratio-preserving */
+}
+
+/* Optional: adjust ratio on smaller screens */
+@media (max-width: 768px) {
+  .course_image::before {
+    padding-top: 100%; /* 1:1 ratio for square images */
+  }
+}
+
+
 	</style>
 </head>
 
@@ -122,8 +152,9 @@
 						<div class="col">
 							
 							<div class="header_content d-flex flex-row align-items-center justify-content-start">
-								<a href="javascript:history.back()">
-									<i class="fas fa-arrow-left" style="padding-right: 40px; margin: 5px;"></i> 
+								<a href="/" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+									<i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i>
+									<!-- <i class="fas fa-arrow-left"></i>  -->
 								  </a>
 							
 								<img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
@@ -137,46 +168,13 @@
 								</div>
 								<nav class="main_nav_contaner ml-auto">
 									<ul class="main_nav mb-0">
-										<li class="active"><a href="/tchr/tchrConsole">Home</a></li>
-										<li><a href="/tchr/quiz">Quizes</a></li>
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" href="#" id="experimentDropdown"
-												role="button" data-bs-toggle="dropdown" aria-expanded="false">
-												Experiment
-											</a>
-											<ul class="dropdown-menu" aria-labelledby="experimentDropdown">
-												<!-- Guided Option -->
-												<li class="dropdown-submenu">
-													<a class="dropdown-item" href="#"
-														onclick="toggleSubmenu(event, 'guidedMenu');">Guided</a>
-													<ul class="submenu dropdown-menu" id="guidedMenu">
-														<a class="dropdown-item" href="/guided/penExp">Pendulum</a>
-														<a class="dropdown-item" href="/guided/massExp">Mass spring
-															system</a>
-														<a class="dropdown-item" href="/guided/resonance">Resonance</a>
-														<!-- <li><a class="dropdown-item" href="/exp/guided4">Guided 4</a></li>
-													<li><a class="dropdown-item" href="/exp/guided5">Guided 5</a></li> -->
-													</ul>
-												</li>
-												<!-- Experiment Option -->
-												<li class="dropdown-submenu">
-													<a class="dropdown-item" href="#"
-														onclick="toggleSubmenu(event, 'experimentMenu');">Experiment</a>
-													<ul class="submenu dropdown-menu" id="experimentMenu">
-														<a href="/exp/penExp">Pendulum <i
-																class="uil uil-arrow-right"></i></a>
-														<a href="/exp/massExp">Mass Spring System <i
-																class="uil uil-arrow-right"></i></a>
-														<a href="/exp/resonance">Resonance <i
-																class="uil uil-arrow-right"></i></a>
-
-													</ul>
-												</li>
-											</ul>
+										<li class="nav-item"><a href="/tchr/tchrConsole"class="nav-link" >Home</a></li>
+										<li class="nav-item"><a href="/tchr/quiz" class="nav-link">Quizes</a></li>
+										<li class="nav-item">
+											<a href="#experimentSection" class="nav-link">Experiment</a>
 										</li>
 
-
-										<li><a href="/classroom/class">Classroom</a></li>
+										<li class="nav-item"><a href="/classroom/class" class="nav-link">Classroom</a></li>
 
 
 
@@ -345,11 +343,9 @@
 				<ul class="menu_mm">
 					<li class="menu_mm"><a href="/">Home</a></li>
 					<li class="menu_mm"><a href="/tchr/quiz">Quizes</a></li>
-					<li class="menu_mm"><a href="#">Guided Experiments</a></li>
-					<li><a href="/tchr/managestudent">Experiment Result</a></li>
-					<!-- <li class="menu_mm">
-						<a id="myBtn" href="/community">Community</a> -->
-
+				<li class="menu_mm">
+					<a href="#experimentSection">Experiment</a>
+</li>
 					<li class="menu_mm">
 						<a class="nav-link" href="#" id="communityLink">
 							Community
@@ -429,7 +425,9 @@
 						<h2 class="head">Welcome to<br> PhysicsVerse</h2>
 						<div class="col-lg-12">
 							<div class="tagLine main-blue-button scroll-to-section">
-								<a href="#contact">Physics Virtual Lab</a>
+								<a href="#experimentSection">Physics Virtual Lab</a>
+								<!-- <a href="#experimentSection">Experiment</a> -->
+
 							</div>
 
 						</div>
@@ -464,15 +462,17 @@
 
 
 	<!-- Popular Courses -->
+	<div id="experimentSection">
 
 	<div class="courses">
-		<h2>Experiments</h2>
+		<h2 style="text-align: center; font-weight: bold; margin-bottom: 20px; color: #0a0647;;">Experiments</h2>
+<br>
 		<div class="row courses_row">
 			<% experiments.forEach(function(exp, index) { %>
 				<div class="col-lg-4 course_col">
 					<div class="course" onclick="openModal('<%= index %>')">
 						<div class="course_image">
-							<img src="<%= exp.image %>" alt="<%= exp.title %>" />
+							<img src="<%= exp.image %>" alt="<%= exp.title %>" class="exp_img" />
 						</div>
 						<div class="course_body">
 							<h3 class="course_title"> <%= exp.title %>
@@ -500,7 +500,7 @@
 			
 		</div>
 		<!-- View All Experiments Button -->
-		<div class="text-center">
+		<div class="text-center" style="margin: 20px;">
 			<% if (allExperiments) { %>
 				<!-- Show Less Button -->
 				<a href="/tchr/tchrConsole" class="btn btn-secondary">Show Less</a>
@@ -509,7 +509,7 @@
 					<button class="btn btn-primary" onclick="window.location.href='/view-all'">View All Experiments</button>
 					<% } %>
 		</div>
-		
+		</div>
 	</div>
 
 	<!-- Footer -->
@@ -633,10 +633,18 @@
   };
 
  // Close all modals on any key press
-document.addEventListener("keydown", function () {
+ document.addEventListener("keydown", function () {
   const modals = document.querySelectorAll(".modal");
-  modals.forEach((modal) => (modal.style.display = "none"));
+
+  modals.forEach((modal) => {
+    // Skip the community modal (don't close it)
+    if (modal.id === "communityModal") return;
+
+    // Otherwise, hide the modal
+    modal.style.display = "none";
+  });
 });
+
 
 
   // Make openModal and closeModal globally available (optional)
@@ -665,7 +673,11 @@ document.addEventListener("keydown", function () {
 			// Toggle the clicked submenu
 			submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
 		}
-
+		$(document).ready(function () {
+    $('.nav-link').on('click', function () {
+      $('.navbar-collapse').collapse('hide');
+    });
+  });
 
 
 	</script>

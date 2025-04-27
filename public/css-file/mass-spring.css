@@ -1,19 +1,188 @@
- /* Body styles */
- html {
-    overflow: auto;
-    box-sizing: border-box;
-  
+
+html {
+  overflow: auto;
+  box-sizing: border-box;
+  /* overflow-y: auto; */
+  font-size: 62.5%;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#tourContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  visibility: hidden; 
+  opacity: 0; 
+  transition: visibility 0.3s, opacity 0.3s; 
+}
+
+#tourContainer.active {
+  visibility: visible;
+  opacity: 1; 
+}
+
+#startTourBtn {
+  padding: 1.5rem 3rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+  background-color: #041f3d;
+  border: none;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+#startTourBtn:hover {
+  background-color: #031121;
+  transform: scale(1.05); 
+}
+
+/* Add to mass-spring.css */
+.tooltip {
+  position: absolute;
+  background-color: #2d3748;
+  color: #f7fafc;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.6rem;
+  font-size: 1.4rem;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  max-width: 22rem;
+  text-align: center;
+  line-height: 1.4;
+  /* transform: translateY(5px); */
+}
+
+/* Bottom position arrow */
+.tooltip.bottom::after {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 0.5rem 0.5rem;
+  border-style: solid;
+  border-color: transparent transparent #2d3748 transparent;
+}
+
+.tooltip.active {
+  opacity: 1;
+ }
+
+.blur {
+  filter: blur(0.5rem);
+  pointer-events: none; 
+}
+/* Navigation Bar */
+.navigation-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  background-color: #333;
+  box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.05);
+  background: #112d42df; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+.home-button {
+  margin-left: 1.5rem;
+}
+
+.home-button img {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.tabs {
+  display: flex;
+  height: 100%;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  height: 100%;
+  color: white;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 1.4rem;
+  transition: background-color 0.3s;
+}
+
+.tab:hover {
+  color: #acb0bb;
+}
+
+.tab.active {
+  color: #384158;
+  background: #14bdee;
+}
+
+
+.logo {
+  margin-right: 1.5rem;
+}
+
+.logo img {
+  height: 3rem;
+}
+
+
+ 
+ 
+ /* Body styles */
+ 
   body {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     font-family: Arial, sans-serif;
-    margin: 0;
+    margin-bottom: 2rem;
+    margin-top: -0.75rem;
+    margin-left: 0;
+    margin-right: 0; 
     padding: 0;
     height: 100%;
     overflow: auto;
+
   }
   .container {
     display: flex;
@@ -21,57 +190,115 @@
     height: 100%;
     box-sizing: border-box;
   }
-.massInput {
+/* .massInput {
     position: absolute;
-    top: 10px;
+    top: 0.5rem;
     left: 30%;
     transform: translateX(-50%);
     display: flex;
-    width: auto;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 23%;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
     background-color: #fff;
+     font-size: 1rem;
   }
   
   .springInput {
     position: absolute;
-    top: 10px;
+    top: 0.5rem;
     left: 70%;
     transform: translateX(-50%);
     display: flex;
-    width: auto;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 23%;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    font-size: 1rem;
+
+  } */
+
+
+  .massInput, .springInput {
+    position: absolute;
+    top: 0.5rem;
+    display: flex;
+    align-items: center;
+    width: 23%;
+    max-width: 20rem;
+    padding: 0.75rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    /* box-sizing: border-box; */
   }
+  
+  .massInput {
+    left: 18%;
+  }
+  
+  .springInput {
+    left: auto;
+    right: 18%;
+  }
+  
+  /* Style the labels and spans */
+  .massInput label,
+  .springInput label,
+  .massInput span,
+  .springInput span {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  /* Style the sliders */
+  input[type="range"] {
+    width: 90%;
+    appearance: none;
+    height: 0.4rem;
+    border-radius: 0.3rem;
+    background: #ddd;
+    outline: none;
+    transition: background 0.3s;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    background: #3498db;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  input[type="range"]::-moz-range-thumb {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    background: #3498db;
+    cursor: pointer;
+  }
+  
+
   #simulationCanvas {
     display: block;
     margin: 0;
     background-color: #fdf6e3;
   }
 
-  
-  /* .pendulum-container {
-    flex-grow: 1;
-    width: 100%;
-    display: flex;
-    height: auto;
-    max-height: none;
-    position: relative;
-  } */
-  
   .controls {
     width: 20%;
     background-color: #e0e0e0;
-    padding: 10px;
-    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    box-shadow: 0.2rem 0.2rem 1.2rem rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     box-sizing: border-box;
-    font-size: 12px;
+    font-size: 1.2rem;
   }
   
   canvas {
@@ -79,32 +306,32 @@
     height: auto;
     background-color: #ffedf8d4;
     display: block;
-    border: 1px solid #000;
+    border: 0.1rem solid #000;
     margin: 0 auto;
   }
   
   .button-controls{
     display: flex;
     position: absolute;
-    bottom: 20px;
+    bottom: 2rem;
     right: 40%;
     justify-content: center;
-    font-size: 10px;
+    font-size: 1rem;
   
   }
 
   .startBtn , #controlButton  {
-    padding: 10px;
+    padding: 1rem;
     background-color: #111438f9;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     cursor: pointer;
-    margin: 10px;
+    margin: 1rem;
   }
   .button-controls img {
-    width: 20px;
-    height: 20px;
+    width: 1.5rem;
+    height: 1.5rem;
     cursor: pointer;
   }
   .startBtn:hover, .controlButton:hover {
@@ -114,9 +341,9 @@
   .resetBtn {
     color: white;
     background-color: #730f19;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 10px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem;
 
   }
   
@@ -130,35 +357,35 @@
     right: 1%;
     top: 5%;
     background-color: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
     width: 13%;
   }
   
   .gravity-container input[type="button"] {
     background-color: #91bdf6;
-    font-size: 15px;
+    font-size: 1.5rem;
     color: #062446;
-    border: 0.5px solid #0c3768;
-    padding: 5px;
-    border-radius: 5px;
+    border: 0.05rem solid #0c3768;
+    padding: o.5rem;
+    border-radius: 0.5rem;
   }
   
   .gravity-container label {
     right: 5%;
-    top: 10px;
+    top: 1rem;
     color: #0b3e79;
-    font-size: 15px;
+    font-size: 1.5rem;
   }
   
   #gravity-control {
     display: none;
-    margin-top: 10px;
+    margin-top: 1rem;
 
   }
   .input-group {
-    margin-top: 10px;
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
   }
@@ -166,7 +393,7 @@
   .limits {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
+    font-size: 1.2rem;
     color: #555;
   }
   
@@ -181,9 +408,9 @@
     color: white;
     border: none;
     border-radius: 50%;
-    font-size: 8px;
-    width: 15px;
-    height: 15px;
+    font-size: 0.8rem;
+    width: 1.5rem;
+    height: 1.5rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
@@ -197,8 +424,8 @@
   }
   
   .input-value {
-    margin-top: 5px;
-    font-size: 12px;
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
     color: #333;
@@ -210,11 +437,11 @@
   }
   
   #gravitySelect {
-    padding: 5px;
-    font-size: 14px;
+    padding: 0.5rem;
+    font-size: 1.4rem;
     color: #062446;
-    border: 0.5px solid #0c3768;
-    border-radius: 5px;
+    border: 0.05rem solid #0c3768;
+    border-radius: 0.5rem;
   }
   
   
@@ -223,19 +450,19 @@
     justify-content: center;
     position: absolute;
     bottom: 10%;
-    right: 0px;
+    right: 0rem;
     flex-direction: column;
     width: auto;
   }
   
   .playback-controls button {
     background-color: #0056b3;
-    font-size: 12px;
-    width: 55px;
+    font-size: 1.2rem;
+    width: 5.5rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     cursor: pointer;
-    padding: 10px;
+    padding: 1rem;
   }
   
   .playback-controls button.active {
@@ -244,53 +471,53 @@
   }
   
   .canvasButton{
-    margin-top: 0px;
+    margin-top: 0rem;
     top: 33%;
     left: 1%;
     position: absolute;
     display: flex;
     flex-direction: column;  
-    font-size: 12px;
+    font-size: 1.2rem;
 
   }
  
   #addValuesBtn{
     background-color: #61919f;
     color: white;
-    padding: 10px;
+    padding: 1rem;
     border: none;
-    margin: 2px;
+    margin: 0.2rem;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 1rem;
   }
      
   .checkBoxex {
     position: absolute;
-    top: 40px;
-    left: 20px;
+    top: 4rem;
+    left: 2rem;
     display: block;
   }
   
   .checkBoxex label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
   }
   
 
   .weights {
     position: absolute;
-    bottom: 20px;
-    left: 11%;
+    bottom: 9%;
+    left: 10%;
     transform: translateX(-50%);
     display: flex;
-    gap: 10px;
+    gap: 1rem;
     justify-content: center;
     align-items: flex-end;
   }
   
   .weight {
     text-align: center;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     color: white;
     font-weight: bold;
     display: flex;
@@ -300,32 +527,32 @@
   }
   
   #weight1 {
-    width: 50px;
-    height: 30px;
+    width: 5rem;
+    height: 3rem;
     background-color: orange;
   }
   
   #weight2 {
-    width: 55px;
-    height: 80px;
+    width: 5.5rem;
+    height: 8rem;
     background-color: blue;
   }
   
   #weight3 {
-    width: 50px;
-    height: 60px;
+    width: 5rem;
+    height: 6rem;
     background-color: green;
   }
   
   #weight4 {
-    width: 60px;
-    height: 120px;
+    width: 6rem;
+    height: 8rem;
     background-color: red;
   }
   
   #graphContainer {
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 3rem;
   }
   
   .graphContainer2 {
@@ -336,9 +563,9 @@
   
   .canvasParts {
     width: 100%;
-    max-width: 380px;
+    max-width: 38rem;
     height: auto;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   }
   #graphCanvas {
     background-color: rgb(249, 244, 244);
@@ -351,18 +578,19 @@
     justify-content: flex-start;
   }
   table {
-    width: 100%;
+    width: 95%;
     border-collapse: collapse;
-    margin-top: 20px;
-    border: 1px solid black;
+    margin-top: 2rem;
+    border: 0.1rem solid black;
+    margin-left: 1rem;
   }
   
   th, td {
-    padding: 5px;
-    border: 1px solid #ddd;
+    padding: 0.5rem;
+    border: 0.1rem solid #ddd;
     text-align: center;
-    font-size: 12px;
-    width: 500px;
+    font-size: 1.2rem;
+    width: 50rem;
   }
   
   th {
@@ -371,55 +599,58 @@
   }
   
   table input{
-   font-size: 14px;
-   width: 100px;
+   font-size: 1.4rem;
+   width: 10rem;
   }
   
   #saveInDB{
-    padding: 15px;
+    padding: 1.5rem;
     background-color: #111438f9;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     cursor: pointer;
+    align-self: center;
+    margin-left: 47%;
+    margin-bottom: 2rem;
   }
   
   /* Stop watch =------------------------------------------*/
   .stopwatch-container {
     position: absolute;
-    top: 70px;
-    left: 15px;
+    top: 7rem;
+    left: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgba(43, 82, 128, 0.838);
-    padding: 12px;
-    border-radius: 20px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+    padding: 1.2rem;
+    border-radius: 2rem;
+    box-shadow: 0rem 1rem 2rem rgba(0, 0, 0, 0.15);
     text-align: center;
-    width: 100px;
+    width: 10rem;
   }
   
   .stopwatch-container label{
     color: white;
-    margin-bottom: 10px;
-    font-size: 15px;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
   }
   
   .stopwatch-display {
-    width: 115px;
+    width: 11.5rem;
     text-align: center;
     font-family: "Courier New", Courier, monospace;
-    font-size: 12px;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
     /* padding: 10px; */
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: 2px solid #7c6862;
-    border-radius: 10px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border: 0.2rem solid #7c6862;
+    border-radius: 1rem;
     background-color: #dddee0;
     color: #0b0808;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0rem 0rem 0.5rem rgba(0, 0, 0, 0.1);
   }
   
   .buttons button{
@@ -427,13 +658,13 @@
     border: none;
     color: white;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
+    width: 2.5rem;
+    height: 2.5rem;
     display: inline;
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.15);
   }
   
   .buttons button:hover {
@@ -448,7 +679,7 @@
   }
   
   .buttons i {
-    font-size: 12px;
+    font-size: 1.2rem;
     pointer-events: none;
   }
   
@@ -475,40 +706,70 @@
   #reset-btn:hover {
     background-color: #f87673;
   }
-/*   
-  @media only screen and (max-width: 768px) {
-    .controls {
-      width: 30%;
-      font-size: 10px;
-      padding: 5px;}
   
-    #tableContainer {
-      flex-direction: column;
-      width: 100%;}
-    .dropdown-content {
-      min-width: 100px;
-      padding: 3px;
-      font-size: 8px;
-      right: 17%;}
-  
-    .output-container {
-      height: auto;
-      left: 0;
-      padding: 10px;
-      border-radius: 10px;
-    font-size: 14px;
-  top: 160px;}
-  
-    .stopwatch-container {
-      width: 100px;
-      padding: 5px;
-      left: 0;
-      border-radius: 10px;
-      top: 60px;}
-  
-    .stopwatch-display {
-      width: 80%;
-      font-size: 10px;
-      padding: 5px;}
+  /* Extra Large Devices (Desktop, > 1200px) */
+@media (min-width: 1200px) {
+  html {
+    font-size: 60%; 
   }
-   */
+}
+
+/* Large Devices (Laptop, 998px to 1200px) */
+@media (max-width: 1200px) and (min-width: 998px) {
+  html {
+    font-size: 60%;
+  }
+}
+
+/* Medium Devices (Tablet, 768px to 998px) */
+@media (max-width: 998px) and (min-width: 770px) {
+  html {
+    font-size: 45%;
+  }
+}
+
+@media (max-width: 770px) and (min-width: 220px) {
+  html {
+    font-size: 30%;
+  }
+ 
+
+  .stopwatch-container, .stopwatch-display {
+    top: auto;
+    width: 40%;
+    position: relative;
+    margin: 1rem auto;
+    font-size: 1.5rem;
+  }
+  .canvasButton{
+    margin: 1rem;
+    right: auto;
+    top: auto;
+    width: auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;  
+    font-size: 0.8rem;
+  }
+.weights{
+overflow-x: auto;
+left: auto;
+}
+
+table{
+width: 95%;
+overflow-x: auto;
+margin-left: 2rem;
+
+}
+th,td{
+  font-size: 0.9rem;
+}
+
+table input{
+  font-size: 1rem;
+  width: 5rem;
+
+ }
+ 
+}

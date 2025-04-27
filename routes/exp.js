@@ -37,9 +37,9 @@ router.get('/forceExp', (req, res) => {
     res.render("grav");
 });
 
-router.post('/penExp',  handle_Save_Spring_Exp);
+router.post('/penExp',   handle_pen_exp);
 
-router.post('/massExp',handle_pen_exp);
+router.post('/massExp',handle_Save_Spring_Exp);
 
 router.post('/inclineExp',handleResonancePost);
 

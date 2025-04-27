@@ -17,9 +17,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
 
-
+<style>
+  @keyframes fadein {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeout {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(20px); }
+  }
+  </style>
 
 
 
@@ -76,58 +87,77 @@
             </div>
           </div>
         </header>
-    
+        <div id="toast" style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #f44336;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        font-family: sans-serif;
+        z-index: 9999;
+        display: none;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    "></div>
     <!-- Form to input the number of questions -->
 
-   <!-- Modal for Experiment Selection -->
-   <div id="questionModal" class="modal">
-    <div class="modal-content">
-      <form id="questionNumberForm" name="questionNumberForm" method="get" action="/tchr/submit-quiz">
-          <label for="experimentNo">Experiment Number:</label>
-          <input type="number" id="exp_no" name="exp_no" oninput="updateTitle()" required>
-          <label for="exp_title">Experiment Title:</label>
-          <input type="text" id="exp_title" name="exp_title" readonly>
-            <!-- Access Selection -->
-            <!-- <div class="input-group"> -->
-              <label for="access">Quiz Access</label>
-              <select name="assignedTo" id="access" required>
-                  <option value="all">All Students</option>
-                  <option value="class">Specific Class</option>
-              </select>
-          <!-- </div> -->
-
-          <!-- Class ID Field (Only Used if 'class' is selected) -->
-          <div class="input-group" id="classField" style="display: none;">
-              <label for="classId">Select Class</label>
-             
-  <% if (classes.length > 0) { %>
-      <select name="classId" id="classId">
-          <% classes.forEach(classroom => { %>
-              <option value="<%= classroom._id %>"><%= classroom.className %></option>
-          <% }); %>
+  <!-- Modal for Experiment Selection -->
+<div id="questionModal" class="modal responsive-modal-wrapper">
+  <div class="modal-content responsive-modal-content">
+    <form id="questionNumberForm" name="questionNumberForm" method="get" action="/tchr/submit-quiz">
+      <label for="experimentNo">Experiment Number:</label>
+      <select name="exp_no" id="exp_no" onchange="updateTitle()" required>
+        <option value="" disabled selected>Select an experiment</option>
+        <% const experiments = [
+            { exp_no: 1, title: "penExp" },
+            { exp_no: 2, title: "massExp" },
+            { exp_no: 3, title: "MeterRod" },
+            { exp_no: 4, title: "ForceExp" },
+            { exp_no: 5, title: "resonance" }
+        ]; %>
+        <% experiments.forEach(exp => { %>
+          <option value="<%= exp.exp_no %>"><%= exp.exp_no %> - <%= exp.title %></option>
+        <% }); %>
       </select>
-  <% } else { %>
-      <p>No classes available. Please create a class first.</p>
-  <% } %>
-              </select>
-          </div>
+      
+      <label for="exp_title">Experiment Title:</label>
+      <input type="text" id="exp_title" name="exp_title" readonly>
 
-         
-          <label for="total_questions">Total Questions:</label>
-          <input type="number" id="total_questions" name="total_questions" required>
-          <button type="button" onclick="startQuizCreation()" >Start</button>
-        </form>
+      <label for="access">Quiz Access</label>
+      <select name="assignedTo" id="access" required>
+        <option value="all">All Students</option>
+        <option value="class">Specific Class</option>
+      </select>
+
+      <div class="input-group" id="classField" style="display: none;">
+        <label for="classId">Select Class</label>
+        <% if (classes.length > 0) { %>
+        <select name="classId" id="classId">
+          <% classes.forEach(classroom => { %>
+          <option value="<%= classroom._id %>"><%= classroom.className %></option>
+          <% }); %>
+        </select>
+        <% } else { %>
+        <p>No classes available. Please create a class first.</p>
+        <% } %>
+      </div>
+
+      <label for="total_questions">Total Questions:</label>
+      <input type="number" id="total_questions" name="total_questions" min="0" max="10" required oninput="validateTotalQuestions(this)">
+
+      <button type="button" onclick="startQuizCreation()">Start</button>
+    </form>
   </div>
-  </div>
-  
-  <div id="quizForm" style="display: none;" class="quizForm" name="quizForm">
-      <form id="quizQuestionForm" method="POST" action="/tchr/submit-quiz" name="quizQuestionForm">
-          <!-- <input type="hidden" id="hidden_exp_no" name="exp_no" value="">
-          <input type="hidden" id="hidden_exp_title" name="exp_title" value="">
-          <input type="hidden" id="hidden_total_questions" name="total_questions" value=""> -->
-  
-      </form>
-  </div>
+</div>
+
+<!-- Quiz Form -->
+<div id="quizForm" style="display: none;" class="quizForm responsive-quiz-wrapper" name="quizForm">
+  <form id="quizQuestionForm" method="POST" action="/tchr/submit-quiz" name="quizQuestionForm">
+    <!-- dynamic question input fields will go here -->
+  </form>
+</div>
 
   
 

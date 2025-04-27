@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const communitySchema = new mongoose.Schema({
   communityName: { type: String, required: true, unique: true }, // Ensuring uniqueness
+      teacherId: { type: mongoose.Schema.Types.ObjectId, ref: "tchr", required: true },
+  
   commDescription: { type: String, required: true }, 
   role: { type: String, enum: ['std', 'tchr'], required: true }, 
   users: [

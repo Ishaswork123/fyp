@@ -574,3 +574,4 @@ resetBtn.addEventListener("click", resetStopwatch);
 
 window.onload = initializeCanvas;
 window.onresize = initializeCanvas;
+

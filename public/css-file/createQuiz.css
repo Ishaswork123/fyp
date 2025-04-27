@@ -203,3 +203,60 @@ button {
 .horizontal-button:hover {
     background-color: #0056b3;
 } */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #access {
+        font-size: 0.95rem;
+        padding: 8px 10px;
+        width: 100%;
+      }
+    .responsive-modal-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+  
+    .responsive-modal-content {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 1rem !important;
+      box-sizing: border-box;
+    }
+  
+    .responsive-modal-content form input,
+    
+    
+    .responsive-modal-content form button {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+  
+    .responsive-quiz-wrapper {
+      padding: 1rem;
+    }
+  
+    .responsive-quiz-wrapper form {
+      width: 100%;
+    }
+  }
+  #access {
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: none;
+    appearance: none; /* Removes default arrow on some browsers */
+  }
+  
+  #access:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none;
+  }
+      

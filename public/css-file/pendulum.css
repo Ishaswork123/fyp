@@ -1,6 +1,6 @@
  /*Guided experiment  */
  /* Style for the Start Tour button */
- .tooltip {
+ /* .tooltip {
   position: absolute;
   background-color: #333;
   color: #fff;
@@ -10,6 +10,12 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   animation: fadeIn 0.3s ease;
+} */
+
+html {
+  overflow: auto;
+  box-sizing: border-box;
+  font-size: 62.5%;
 }
 
 @keyframes fadeIn {
@@ -65,12 +71,130 @@
   pointer-events: none; 
 }
 
- 
-  html {
-  overflow: auto;
-  box-sizing: border-box;
-  font-size: 62.5%;
+
+/* Tooltip styles */
+.tooltip {
+  position: absolute;
+  background-color: #2d3748;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.6rem;
+  font-size: 1.4rem;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  max-width: 2.2rem;
+  text-align: center;
+  line-height: 1.4;
 }
+
+.tooltip.active {
+  opacity: 1;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 0.5rem 0.5rem;
+  border-style: solid;
+  border-color: transparent transparent #2d3748 transparent;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tooltip.active {
+  animation: tooltipFadeIn 0.2s ease forwards;
+}
+
+
+/* Navigation Bar */
+.navigation-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  background-color: #333;
+  box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.05);
+  background: #112d42df; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+.home-button {
+  margin-left: 1.5rem;
+}
+
+.home-button img {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.tabs {
+  display: flex;
+  height: 100%;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  height: 100%;
+  color: white;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 1.4rem;
+  transition: background-color 0.3s;
+}
+
+.tab:hover {
+  color: #acb0bb;
+}
+
+.tab.active {
+  color: #384158;
+  background: #14bdee;
+}
+
+
+.logo {
+  margin-right: 1.5rem;
+}
+
+.logo img {
+  height: 3rem;
+}
+
+
+
+ 
+
 
 body {
   display: flex;
@@ -81,7 +205,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: auto;
+  /* overflow: auto; */
+  width: 100%;
 }
 
 .container {
@@ -108,6 +233,7 @@ canvas {
   display: block;
   border: 0.1rem solid #000;
   margin: 0 auto;
+  
 }
 
 
@@ -205,8 +331,6 @@ canvas {
   color: #333;
 }
 
-
-
 .controls-button {
   padding: 1.0rem;
   background-color: #111438f9;
@@ -299,6 +423,7 @@ canvas {
   background-color: rgb(249, 244, 244);
   width: 100%;
   height: auto;
+
 }
 #tableContainer{
   display: flex;
@@ -589,6 +714,9 @@ table input{
     width: 80%; 
     height: 1rem; 
     margin: 0.2rem 0rem;
+  }
+  .navigation-bar{
+
   }
 }
 @media (max-width: 480px)and (min-width: 50px) {
