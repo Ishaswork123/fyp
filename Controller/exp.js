@@ -42,6 +42,16 @@ async function handle_Save_Spring_Exp(req, res) {
     if (!student) {
       return res.status(404).send('Student not found');
     }
+   // Step 2: Check if the student has already submitted the experiment for this exp_no
+   const existingExp = await springExp.findOne({
+    studentId: student._id,
+    exp_no: "2"  // change this based on your experiment number
+  });
+
+  if (existingExp) {
+    return res.send(
+      `<script>alert('You have already performed this experiment  earlier. You cannot attempt it again.'); window.location.href='/stdConsole';</script>`,
+    )    }
 
     const newEntry = new springExp({
       studentId: student._id,
@@ -87,6 +97,17 @@ async function handle_pen_exp(req, res) {
     if (!student) {
       return res.status(404).send('Student not found');
     }
+       // Step 2: Check if the student has already submitted the experiment for this exp_no
+       const existingExp = await penExp.findOne({
+        studentId: student._id,
+        exp_no: "1"  // change this based on your experiment number
+      });
+  
+      if (existingExp) {
+        return res.send(
+          `<script>alert('You have already performed this experiment  earlier. You cannot attempt it again.'); window.location.href='/stdConsole';</script>`,
+        )    }
+  
 
     // Create a new entry for the pendulum experiment
     const newEntry = new penExp({
@@ -125,6 +146,16 @@ async function handleResonancePost(req, res) {
 
     const student = await User.findById(tokenPayload.id);
     if (!student) return res.status(404).send('Student not found');
+   // Step 2: Check if the student has already submitted the experiment for this exp_no
+   const existingExp = await Resonance.findOne({
+    studentId: student._id,
+    exp_no: "5"  // change this based on your experiment number
+  });
+
+  if (existingExp) {
+    return res.send(
+      `<script>alert('You have already performed this experiment  earlier. You cannot attempt it again.'); window.location.href='/stdConsole';</script>`,
+    )    }
 
     // Step 2: Create new resonance experiment entry
     const newResonance = new Resonance({
@@ -159,6 +190,16 @@ async function handleEquilibriumPost(req, res) {
 
     const student = await User.findById(tokenPayload.id);
     if (!student) return res.status(404).send('Student not found');
+   // Step 2: Check if the student has already submitted the experiment for this exp_no
+   const existingExp = await meterRod.findOne({
+    studentId: student._id,
+    exp_no: "3"  // change this based on your experiment number
+  });
+
+  if (existingExp) {
+    return res.send(
+      `<script>alert('You have already performed this experiment  earlier. You cannot attempt it again.'); window.location.href='/stdConsole';</script>`,
+    )    }
 
     // Step 2: Create new equilibrium experiment record
     const newEquilibrium = new meterRod({
@@ -178,7 +219,6 @@ async function handleEquilibriumPost(req, res) {
     res.status(500).send("Error saving data.");
   }
 }
-
 async function handleForceExperimentPost(req, res) {
   const {
     forceP1, forceQ1, angleP1, angleQ1, PsinAngleP1, QsinAngleQ1, weightW1, weightError1,
@@ -194,7 +234,18 @@ async function handleForceExperimentPost(req, res) {
     const student = await User.findById(tokenPayload.id);
     if (!student) return res.status(404).send('Student not found');
 
-    // Step 2: Create new force experiment entry
+    // Step 2: Check if the student has already submitted the experiment for this exp_no
+    const existingExp = await grav.findOne({
+      studentId: student._id,
+      exp_no: "4"  // change this based on your experiment number
+    });
+
+    if (existingExp) {
+      return res.send(
+        `<script>alert('You have already performed this experiment  earlier. You cannot attempt it again.'); window.location.href='/stdConsole';</script>`,
+      )    }
+
+    // Step 3: Create new force experiment entry if no existing record is found
     const newForceExp = new grav({
       studentId: student._id,
       studentName: student.fname,
@@ -207,13 +258,12 @@ async function handleForceExperimentPost(req, res) {
 
     await newForceExp.save();
     console.log("Force experiment data saved.");
-    res.redirect('/stdConsole') // or any other success page
+    res.redirect('/stdConsole'); // or any other success page
   } catch (err) {
     console.error("Error saving force experiment data:", err);
     res.status(500).send("Error saving data.");
   }
 }
-
 
 
 

@@ -8,7 +8,7 @@ const Classroom=require('../Model/classroom');
 const { getTokenFromCookies } = require('../config/tchr');  
 
 
-
+const ExperimentResult=require('../Model/expResult.');
 function isAuthenticated(req, res, next) {
   console.log('Cookies in request:', req.cookies);
 
@@ -44,8 +44,33 @@ router.get('/submit-quiz', isAuthenticated,async(req, res) => {
 router.get('/quizedit/:id', getQuizEdit);
 router.post('/quizedit/:id', postQuizEdit);
 router.post('/quizdelete/:id',handledeleteQuiz);
+async function handledeleteExperiment(req, res) {
+ 
+}
+router.get('/delete-experiment/:id',async (req,res)=>{
 
 
+   const expId = req.params.id;
+
+  try {
+    // Check if the ID is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(expId)) {
+      return res.redirect('/tchr/quiz-results?error=Invalid Experiment ID.');
+    }
+
+    // Find and delete the experiment by ID
+    const deletedExperiment = await ExperimentResult.findByIdAndDelete(expId);
+
+    if (!deletedExperiment) {
+      return res.redirect('/tchr/quiz-results?error=Experiment not found.');
+    }
+
+    // Redirect with success message
+    res.redirect('/tchr/quiz-results?success=Experiment deleted successfully.');
+  } catch (error) {
+    console.error(error);
+    res.redirect('/tchr/quiz-results?error=An error occurred while deleting the experiment.');
+  }});
 router.get('/manage-quizzes',showQuiz);
 router.post('/submit-quiz', handleQuiz);
 router.get('/quiz-results',isAuthenticated,quizResult),

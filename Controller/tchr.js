@@ -281,9 +281,9 @@ async function handleUpdateAccount(req, res) {
         }
 
         // Extract form data
-        const { email_1, pwd_1, pwd_2 } = req.body;
+        const { fname_1,lname_1, pwd_1, pwd_2 } = req.body;
         const file = req.file; // This handles the uploaded file (field name is "pic_1")
-        console.log('Form data received:', { email_1, pwd_1, pwd_2,file });
+        console.log('Form data received:', { fname_1,lname_1, pwd_1, pwd_2,file });
 
         const errors = {};
 
@@ -309,9 +309,11 @@ async function handleUpdateAccount(req, res) {
 
         // Prepare update data
         const updateData = {};
-        if (email_1) {
-            console.log('Updating email:', email_1);
-            updateData.email = email_1;
+        if (fname_1 || lname_1) {
+            console.log('Updating username:', fname_1);
+            updateData.fname = fname_1;
+            updateData.lname = lname_1;
+
         }
 
         if (file) {

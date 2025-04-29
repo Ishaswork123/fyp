@@ -38,7 +38,7 @@ const tchrUpload=require('./routes/learning');
 // Model Imports 
 const {handleProfile}=require('./Controller/std');
 const {handleProfileTchr}=require('./Controller/tchr');
-
+const LearningMaterial=require('./Model/learning');
 const cookieParser = require('cookie-parser');
 const http = require('http');
 const socketio = require('socket.io');
@@ -73,6 +73,25 @@ io.on('connection', (socket) => {
   });
 });
 
+app.get("/resource/:exp_no", async(req,res)=>{
+    try {
+        const expId = req.params.exp_no; // Fetch experiment number from URL params
+        console.log("Experiment ID:", expId);
+
+        // Find learning materials for the given experiment number
+        const materials = await LearningMaterial.find({ exp_no: expId });
+
+        console.log("Materials Found:", materials);
+
+        // Render the resource page and pass materials to the EJS template
+        res.render("resource", { materials });
+    } catch (error) {
+        console.error("Error fetching resources:", error);
+        res.status(500).send("Server Error");
+    }
+}
+
+);
 
 
 app.use(cookieParser());
@@ -153,7 +172,7 @@ function isAuthenticated(req, res, next) {
     console.log('No valid token found. Redirecting to login.');
     res.clearCookie('teacher_token');
     res.clearCookie('student_token');
-    return res.redirect('/login');
+    return res.redirect('/');
   }
 }
 
@@ -221,6 +240,15 @@ app.use((err, req, res, next) => {
   });
 });
 
+// General error handler
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.render('error-server', {
+      message: err.message,
+      error: process.env.NODE_ENV === 'development' ? err : {} 
+      // show full error only in development mode
+  });
+});
 const PORT = process.env.PORT || 5012;
 
 app.listen(PORT, () => {

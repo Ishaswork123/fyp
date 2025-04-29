@@ -163,7 +163,8 @@ https://templatemo.com/tm-569-edu-meeting
             <div class="col-lg-12">
                 <div class="row grid">
   
-                    <% if (classes.length > 0) { %>
+                  <% if (classes.length > 0) { %>
+                    <div class="row"> <!-- Added a row container -->
                         <% classes.forEach((classroom, index) => { %>
                             <div class="col-lg-4 templatemo-item-col all two-per-row">
                                 <div class="meeting-item">
@@ -175,20 +176,45 @@ https://templatemo.com/tm-569-edu-meeting
                                         %>
                                         <a href="#"><img src="/assets_1/images/meeting-<%= imageName %>.jpg" alt="<%= classroom.className %>"></a>
                                     </div>
-                                    <div class="down-content">
-                                        <div class="date">
-                                            <h6>Class Code: <span><%= classroom.classCode %></span></h6>
+                                    <div class="classroom-card">
+                                        <div class="down-content">
+                                            <table class="layout-table">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <div class="date">
+                                                            <h6>Class Code: <span><%= classroom.classCode %></span></h6>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <a href="#"><h4><%= classroom.className %></h4></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <p><strong>Description:</strong> <%= classroom.classDescription %></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <p><strong>Teacher:</strong> <%= classroom.teacher ? classroom.teacher.fname : "Unknown" %></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
-                                        <a href="#"><h4><%= classroom.className %></h4></a>
-                                        <p><strong>Description:</strong> <%= classroom.classDescription %></p>
-                                        <p><strong>Teacher:</strong> <%= classroom.teacher ? classroom.teacher.fname : "Unknown" %></p>
                                     </div>
-                                </div>
-                            </div>
+                                </div> <!-- Properly closed meeting-item div -->
+                            </div> <!-- Properly closed col-lg-4 div -->
                         <% }) %>
-                    <% } else { %>
-                        <p>You are not enrolled in any classes.</p>
-                    <% } %>
+                    </div> <!-- Closed row div -->
+                <% } else { %>
+                    <div class="row">
+                        <div class="col-12" style="color: aliceblue; margin: 500px;">
+                            <p class="no-classes-message" style="color: aliceblue; margin: 500px;">You are not enrolled in any classes.</p>
+                        </div>
+                    </div>
+                <% } %>
                 </div>
             </div>
         

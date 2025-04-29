@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oops! Something went wrong</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .error-container {
+            background-color: #f5c6cb;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+        }
+        .error-message {
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .error-stack {
+            background: #fff;
+            color: #333;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            text-align: left;
+            margin-top: 20px;
+            font-size: 14px;
+            max-height: 300px;
+        }
+        .home-button {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #721c24;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .home-button:hover {
+            background-color: #501416;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>Something went wrong 😢</h1>
+        <p class="error-message"><%= message || 'Unknown error occurred' %></p>
+
+        <% if (error && error.stack) { %>
+            <div class="error-stack">
+                <pre><%= error.stack %></pre>
+            </div>
+        <% } %>
+
+        <a href="/" class="home-button">Back to Home</a>
+    </div>
+</body>
+</html>

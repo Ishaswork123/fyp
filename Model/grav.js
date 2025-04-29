@@ -16,8 +16,8 @@ const forceExpSchema = new mongoose.Schema({
   },
 
   // Trial 1
-  forceP1: Number,
-  forceQ1: Number,
+  weightP1: Number,
+  weightQ1: Number,
   angleP1: Number,
   angleQ1: Number,
   PsinAngleP1: Number,
@@ -26,8 +26,8 @@ const forceExpSchema = new mongoose.Schema({
   weightError1: Number,
 
   // Trial 2
-  forceP2: Number,
-  forceQ2: Number,
+  weightP2: Number,
+  weightQ2: Number,
   angleP2: Number,
   angleQ2: Number,
   PsinAngleP2: Number,
@@ -36,8 +36,8 @@ const forceExpSchema = new mongoose.Schema({
   weightError2: Number,
 
   // Trial 3
-  forceP3: Number,
-  forceQ3: Number,
+  weightP3: Number,
+  weightQ3: Number,
   angleP3: Number,
   angleQ3: Number,
   PsinAngleP3: Number,

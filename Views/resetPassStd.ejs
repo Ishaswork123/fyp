@@ -98,8 +98,12 @@
         <div class="modal-content">
             <h2>Enter Your Email</h2>
             <form action="/std/send-otp" method="POST" onsubmit="showModal('otpModal')">
-                <input type="email" name="email" placeholder="Enter your email" required>
-                <button type="submit" >Send OTP</button>
+              <select name="email" id="teacherEmail">
+                <option value="">Select your email</option>
+                <% teachers.forEach(teacher => { %>
+                  <option value="<%= teacher.email %>"><%= teacher.email %></option>
+                <% }); %>
+              </select>                   <button type="submit" >Send OTP</button>
             </form>
         </div>
     </div>

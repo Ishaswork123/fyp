@@ -143,7 +143,7 @@ async function deleteRes(req,res){
     if (material.teacherEmail !== req.user.email) return res.status(403).send("Unauthorized");
 
     await learning.findByIdAndDelete(req.params.id);
-    res.redirect("/tchr/resources"); // Redirect after deletion
+    res.redirect("/tchr/resource"); // Redirect after deletion
 } catch (error) {
     console.error("Error deleting file:", error);
     res.status(500).send("Server Error");

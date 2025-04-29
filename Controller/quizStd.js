@@ -39,160 +39,153 @@ async function getQuiz(req, res) {
       res.status(500).send('Error loading quiz page');
   }
 }
-
 async function postQuiz(req, res) {
-  const exp_no = req.body.exp_no; // Fetch the selected experiment number
+  const exp_no = req.body.exp_no
 
   try {
-      // Check if the user is authenticated
-      if (!req.user) {
-          return res.status(401).send('Unauthorized');
-      }
+    if (!req.user) {
+      return res.status(401).send("Unauthorized")
+    }
 
-      const studentId = req.user.id; // Extract student ID from token
-console.log('enter 1 ')
-      // Fetch all quizzes for the selected experiment
-      const quizzes = await Quiz.find({ exp_no });
-console.log('quizes',quizzes);      // Get unique class IDs from the quizzes
-      const quizClassIds = [...new Set(quizzes.map(q => q.classId).filter(id => id))];
+    const studentId = req.user.id
+    console.log("enter 1")
 
-      // Find classes where this student is enrolled
-      const classrooms = await Classroom.find({ _id: { $in: quizClassIds }, students: studentId });
+    const quizzes = await Quiz.find({ exp_no })
+    console.log("quizzes", quizzes)
 
-      // Extract enrolled class IDs
-      const enrolledClassIds = classrooms.map(c => c._id.toString());
+    const quizClassIds = [...new Set(quizzes.map((q) => q.classId).filter((id) => id))]
+    const classrooms = await Classroom.find({ _id: { $in: quizClassIds }, students: studentId })
+    const enrolledClassIds = classrooms.map((c) => c._id.toString())
 
-      // Filter quizzes: keep those assigned to "all" or assigned to enrolled classes
-      const filteredQuizzes = quizzes.filter(q =>
-          q.assignedTo === "all" || (q.classId && enrolledClassIds.includes(q.classId.toString()))
-      );
+    const filteredQuizzes = quizzes.filter(
+      (q) => q.assignedTo === "all" || (q.classId && enrolledClassIds.includes(q.classId.toString())),
+    )
 
-      // Fetch unique experiment numbers again for dropdown
-      const expNumbers = await Quiz.distinct('exp_no');
+    // Fetch quiz ids
+    const quizIds = filteredQuizzes.map((q) => q._id)
 
-      // Map experiment numbers to titles
-      const experiments = await Quiz.find({ exp_no: { $in: expNumbers } })
-          .select('exp_no exp_title')
-          .then((quizzes) => {
-              return [...new Map(quizzes.map(q => [q.exp_no, q.exp_title])).values()]
-                  .map((exp_title, index) => ({
-                      exp_no: expNumbers[index],
-                      exp_title: exp_title || "Unknown"
-                  }));
-          });
+    // Check if the student has already submitted the quiz for this exp_no
+    const existingResult = await quizresult.findOne({
+      student_id: studentId,
+      exp_no: exp_no,
+      quiz_ids: { $all: quizIds }, // Check if these quiz IDs already performed
+    })
 
-      res.render('stdQuiz', { experiments, quizData: filteredQuizzes, marksObtained: null });
+    if (existingResult) {
+      console.log("Student already submitted this quiz")
+      return res.send(
+        `<script>alert('You have already performed this quiz earlier. You cannot attempt it again.'); window.location.href='/stdConsole';</script>`,
+      )
+    }
 
+    const expNumbers = await Quiz.distinct("exp_no")
+    const experiments = await Quiz.find({ exp_no: { $in: expNumbers } })
+      .select("exp_no exp_title")
+      .then((quizzes) => {
+        return [...new Map(quizzes.map((q) => [q.exp_no, q.exp_title])).values()].map((exp_title, index) => ({
+          exp_no: expNumbers[index],
+          exp_title: exp_title || "Unknown",
+        }))
+      })
+
+    res.render("stdQuiz", { experiments, quizData: filteredQuizzes, marksObtained: null })
   } catch (err) {
-      console.error('Error fetching quiz data:', err);
-      res.status(500).send('Error fetching quiz data');
+    console.error("Error fetching quiz data:", err)
+    res.status(500).send("Error fetching quiz data")
   }
 }
+
 async function handleQuizSubmission(req, res) {
-  const { exp_no, answers,correctAnswers,timeout} = req.body;
-  console.log('POST request received at /std/submit-quiz');
-  console.log('Request body:', req.body); // Debug log
-let quizData =[];
+  const { exp_no, answers, correctAnswers, timeout } = req.body
+  // We need to handle multiple quiz IDs, not just a single one
+  // const quizId = req.body.quiz_id; // This is incorrect
 
-const exp_title = titles[exp_no];
+  console.log("POST request received at /std/submit-quiz")
+  console.log("Request body:", req.body)
 
-if (timeout === 'true') {
-  // Time exceeded — all answers considered blank
-  marksObtained = 0;
-  submittedAnswers = Array(correctAnswers.length).fill(''); // empty answers
-  correctAnswersArray = correctAnswers; // Still record correct answers
-} else {
-  // Your original answer checking logic
-  quizData.forEach((question, index) => {
-    const correctAnswer = question.Answer.toString().trim();
-    const correctAnswerFirstLetter = correctAnswer.charAt(0).toUpperCase();
-    const userAnswerLetter = answers[index]; // e.g. 'option3'
-    const userAnswer = optionMapping[parseInt(userAnswerLetter.replace('option', '')) - 1];
-    
-    correctAnswersArray.push(correctAnswer);
-    submittedAnswers.push(userAnswer);
+  const exp_title = titles[exp_no]
+  const optionMapping = ["A", "B", "C", "D"]
 
-    if (correctAnswerFirstLetter === userAnswer.trim().toUpperCase()) {
-      marksObtained += 5;
-    }
-  });
-}
-// Save or use the exp_title
-console.log(`Experiment Title: ${exp_title}`);
   try {
-    // Extract and verify the student JWT token
-    const tokenData = getTokenFromCookies(req, 'student_token'); // Decoded payload
+    const tokenData = getTokenFromCookies(req, "student_token")
     if (!tokenData) {
-      return res.status(401).send('User not authenticated'); // If no token, respond with an error
+      return res.status(401).send("User not authenticated")
     }
 
-    const userId = tokenData.id; // Use the decoded token payload
-    console.log('Decoded User ID:', userId);
+    const userId = tokenData.id
+    console.log("Decoded User ID:", userId)
 
-    // Find the student by ID
-    const student = await User.findById(userId);
+    const student = await User.findById(userId)
     if (!student) {
-      return res.status(404).send('Student not found');
+      return res.status(404).send("Student not found")
     }
 
-    // Fetch all questions for the experiment number
-    const quizData = await Quiz.find({ exp_no });
-    const optionMapping = ['A', 'B', 'C', 'D'];
+    const quizData = await Quiz.find({ exp_no })
 
-    // Check if quizData is empty
     if (!quizData || quizData.length === 0) {
-      return res.status(404).send('Quiz not found');
+      return res.status(404).send("Quiz not found")
     }
 
-    // Calculate marks
-    let marksObtained = 0;
-    const totalQuestions = quizData.length;
-    const submittedAnswers = []; // Array to store user's selected answers
-    const correctAnswersArray = []; // Array to store correct answers from DB
-    quizData.forEach((question, index) => {
-      const correctAnswer = question.Answer.toString().trim();
-      const correctAnswerFirstLetter = correctAnswer.charAt(0).toUpperCase();
-      const userAnswerLetter = answers[index]; // User-selected answer, e.g., 'option3'
-      const userAnswer = optionMapping[parseInt(userAnswerLetter.replace('option', '')) - 1];
-// Store the correct answer from the DB
-correctAnswersArray.push(correctAnswer);
+    // Fetch quiz IDs to save in result
+    const quizIds = quizData.map((q) => q._id)
 
-// Store user's selected answer
-submittedAnswers.push(userAnswer);
-      if (correctAnswerFirstLetter === userAnswer.trim().toUpperCase()) {
-        marksObtained += 5; // Increment marks for correct answer
-      }
-    });
+    let marksObtained = 0
+    const totalQuestions = quizData.length
+    const submittedAnswers = []
+    const correctAnswersArray = []
 
-    console.log('Marks obtained:', marksObtained);
+    if (timeout === "true") {
+      marksObtained = 0
+      submittedAnswers.push(...Array(totalQuestions).fill(""))
+      correctAnswersArray.push(...quizData.map((q) => q.Answer))
+    } else {
+      quizData.forEach((question, index) => {
+        const correctAnswer = question.Answer.toString().trim()
+        const correctAnswerFirstLetter = correctAnswer.charAt(0).toUpperCase()
+        const userAnswerLetter = answers[index]
+        const userAnswer = optionMapping[Number.parseInt(userAnswerLetter.replace("option", "")) - 1]
 
-    // Save the result in MongoDB
-    const flattenedAnswers = submittedAnswers.flat();
-    // const flattenedAnswers_1 = submittedAnswers.flat();
+        correctAnswersArray.push(correctAnswer)
+        submittedAnswers.push(userAnswer)
+
+        if (correctAnswerFirstLetter === userAnswer.trim().toUpperCase()) {
+          marksObtained += 5
+        }
+      })
+    }
+
+    console.log("Marks obtained:", marksObtained)
+
+    const flattenedAnswers = submittedAnswers.flat()
 
     const result = new quizresult({
       student_id: userId,
+      // Store the array of quiz IDs instead of a single ID
+      quiz_ids: quizIds, // 👈 Save all quiz ids here as an array
+
       exp_no,
       exp_title,
       marks_obtained: marksObtained,
       total_questions: totalQuestions,
       answers_submitted: flattenedAnswers,
-      correctAnswers: correctAnswersArray, // Save correct answers from DB
-
+      correctAnswers: correctAnswersArray,
       fname: student.fname,
-    });
+    })
 
-    await result.save();
-    console.log('Result saved successfully');
-    res.redirect(`/std/quiz-results?exp_no=${encodeURIComponent(exp_no || '')}&marksObtained=${encodeURIComponent(marksObtained || '')}`);
+    await result.save()
+    console.log("Result saved successfully")
+    res.redirect(
+      `/std/quiz-results?exp_no=${encodeURIComponent(exp_no || "")}&marksObtained=${encodeURIComponent(marksObtained || "")}`,
+    )
   } catch (error) {
-    console.error(error);
-    if (error.name === 'JsonWebTokenError') {
-      return res.status(401).send('Invalid token');
+    console.error(error)
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).send("Invalid token")
     }
-    res.status(500).send('Server error');
+    res.status(500).send("Server error")
   }
 }
+
 async function quizResult(req,res){
   const { exp_no, marksObtained } = req.query;
 

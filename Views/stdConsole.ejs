@@ -137,6 +137,7 @@ html {
 
 
 
+
 </style>
 </head>
 
@@ -252,12 +253,12 @@ html {
 			  <div class="row">
 				<div class="col">
 				  <div class="header_content d-flex flex-row align-items-center justify-content-start">
-					<a href="/" style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
+					<a href="/" style="text-decoration: none;  font-size: 30px;">
 						<i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i>
 						<!-- <i class="fas fa-arrow-left"></i>  -->
 					  </a>
 					<img src="/images/R.jpeg" class="uniLogo" alt="UniLogo">
-									\
+									
 					<div class="logo_container">
 					  <a href="#">
 						<div class="logo_text">Physics<span>Verse</span></div>
@@ -534,42 +535,6 @@ html {
 
 	<!-- Team -->
 
-	<div class="team">
-		<div class="team_background parallax-window" data-parallax="scroll" data-image-src="images/team_background.jpg" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="section_title_container text-center">
-						<h2 class="section_title">Tutors</h2>
-					</div>
-				</div>
-			</div>
-			<div class="row team_row">
-				<% teachers.forEach(function(teacher) { %>
-					<!-- Team Item -->
-					<div class="col-lg-6 col-md-6 team_col">
-						<div class="team_item">
-							<div class="team_image">
-								<img src="<%= teacher.pic ? `data:image/jpeg;base64,${teacher.pic}` : '/images/profile.jpg' %>" alt="profile-image-teacher">
-							</div>
-							<div class="team_body">
-								<div class="team_title"><a href="#"><%= teacher.fname + ' ' + teacher.lname %></a></div>
-								<div class="team_subtitle"><%= teacher.role %></div>
-								<div class="social_list">
-									<ul>
-										<li><a href="#"><i class="fab fa-facebook"></i></a></li>
-										<li><a href="#"><i class="fab fa-google"></i></a></li>
-										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				<% }); %>
-			</div>
-		</div>
-	</div>
 	
 
 				<!-- Team Item -->

@@ -12,6 +12,7 @@ const mongoose=require('mongoose');
 const methodOverride = require('method-override');
 router.use(methodOverride('_method'));
 const tchr=require('../Model/tchr');
+const std = require('../Model/std');
 
 function isAuthenticated(req, res, next) {
 //   console.log('Cookies in request:', req.cookies);
@@ -72,23 +73,38 @@ router.get('/signup', (req, res) => {
       
     });
   });
-  router.get("/passreset", (req, res) => {
-    const email = req.query.email || ""; // Extract email from query params, default to empty string
-
-    res.render("resetPassStd",{email}); // Load the EJS file
+  router.get("/passreset", async(req, res) => {
+    try {
+        // Fetch teacher data (just the email field in this case)
+        const teachers = await std.find({}, 'email'); // Fetch only email field
+        res.render('resetPassStd', { teachers, email: "" }); // Add email: ""
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching teachers');
+      }
 })
+router.get("/send-otp",async (req, res) => {
+    try {
+        // Fetch teacher data (just the email field in this case)
+        const teachers = await std.find({}, 'email'); // Fetch only email field
+        res.render('resetPassStd', { teachers, email: "" }); // Add email: ""
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching teachers');
+      }
+});
 router.get("/verify-otp", (req, res) => {
     const email = req.query.email || ""; // Extract email from query params, default to empty string
 
     console.log("Received email in verify-otp route:", {email});
-    res.render("resetPassStd", { email });
+    res.render("resetPassStd", { teachers: [], email }); // Provide empty teachers
 });
 
 router.get("/reset-password", (req, res) => {
     const email = req.query.email || ""; // Extract email from query params, default to empty string
 
     console.log("Received email in reset-password route:", {email});
-    res.render("resetPassStd", { email});
+    res.render("resetPassStd", { teachers: [], email }); // Provide empty teachers
 });
   router.post('/signup', upload.single('pic'), handleSignup);
   router.post('/login', handleLogin);

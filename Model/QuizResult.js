@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const quizResultSchema = new Schema({
   student_id: { type: mongoose.Schema.Types.ObjectId, ref: 'std', required: true }, // Reference to the student
+  quiz_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz', required: true }],
+
   fname:{
     type: String,
     required:true

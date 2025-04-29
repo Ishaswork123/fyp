@@ -10,7 +10,6 @@
 }
 
 
-
 /* General Modal Styling */
 .modal {
     display: none; /* Initially hidden */
@@ -26,6 +25,7 @@
     display: flex;
     align-items: center;
     justify-content: center; /* Center modal in the viewport */
+    /* margin-bottom: 1000px; */
 }
 
 /* Centered Modal Content */
@@ -42,6 +42,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     animation: fadeIn 0.3s ease-in-out;
+    /* margin-bottom: 1000px; */
+
 }
 
 /* Form Elements Styling */
@@ -50,6 +52,8 @@
     flex-direction: column;
     align-items: center; /* Ensures form elements are centered */
     width: 100%;
+    margin-bottom: 200px;
+
 }
 
 .modal-content form label,
@@ -65,7 +69,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 90%;
+    width: 100%;
 }
 
 .modal-content form button {
@@ -259,4 +263,39 @@ button {
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
     outline: none;
   }
-      
+  .modal-content form select {
+    padding: 12px 19px;
+    border: 1px solid #ccc;
+    width: 100%;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  select:hover {
+    background-color: #f1f1f1;
+  }
+
+  .answer-select {
+    padding: 8px 12px;
+    width: 250px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    appearance: none; /* For cleaner dropdown look */
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .answer-select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  

@@ -1,98 +1,234 @@
 html {
   box-sizing: border-box;
   font-size: 62.5%;
+  overflow-x: hidden;
 }
+
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#tourContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  visibility: hidden; 
+  opacity: 0; 
+  transition: visibility 0.3s, opacity 0.3s; 
+}
+
+#tourContainer.active {
+  visibility: visible;
+  opacity: 1; 
+}
+
+#startTourBtn {
+  padding: 1.5rem 3rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+  background-color: #041f3d;
+  border: none;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+#startTourBtn:hover {
+  background-color: #031121;
+  transform: scale(1.05); 
+}
+
+/* Add to mass-spring.css */
+.tooltip {
+  position: absolute;
+  background-color: #2d3748;
+  color: #f7fafc;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.6rem;
+  font-size: 1.4rem;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  max-width: 22rem;
+  text-align: center;
+  line-height: 1.4;
+  /* transform: translateY(5px); */
+}
+
+/* Bottom position arrow */
+.tooltip.bottom::after {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 0.5rem 0.5rem;
+  border-style: solid;
+  border-color: transparent transparent #2d3748 transparent;
+}
+
+.tooltip.active {
+  opacity: 1;
+ }
+
+.blur {
+  filter: blur(0.5rem);
+  pointer-events: none; 
+}
+/* Navigation Bar */
+.navigation-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  background-color: #333;
+  box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.05);
+  background: #112d42df; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+.home-button {
+  margin-left: 1.5rem;
+}
+
+.home-button img {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.tabs {
+  display: flex;
+  height: 100%;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  height: 100%;
+  color: white;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 1.4rem;
+  transition: background-color 0.3s;
+}
+
+.tab:hover {
+  color: #acb0bb;
+}
+
+.tab.active {
+  color: #384158;
+  background: #14bdee;
+}
+
+
+.logo {
+  margin-right: 1.5rem;
+}
+
+.logo img {
+  height: 3rem;
+}
+
+
+
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0rem;
-  min-height: 150vh;
+  margin: 0rem;
+  width: 100%;
+  height: auto;
+
   display: flex;
   flex-direction: column;
-  align-items:center;
-  /* max-width: 200%; */
-  /* width: 100%; */
-  /* background-color: #ffffff; */
+  overflow-x: hidden;
   background-color: rgba(253, 253, 255, 0.922);
-
 }
 
 .container {
   display: flex;
-  width: 100%;  /* Make container responsive */
-  /* max-width: 120rem; */
+  width: auto;
   background-color: rgb(0, 15, 18);
   height: auto;
-  /* border-radius: 1rem; */
+  overflow-x: hidden;
   box-shadow: 0 0.4rem 1rem rgba(255, 254, 254, 0.1);
-  /* overflow: hidden; */
 }
 
 .exp-container {
-  margin: 1rem;
+  margin: 0.5rem;
   flex-direction: column;
   flex-grow: 2;
   padding: 0.5rem;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
-  height: 60%; /* Adjust height for better screen usage */
+  
 }
 
 canvas {
-  max-width: 100%;
-  height: 50%;
+
   border: 0.1rem solid #ddd;
   border-radius: 1rem;
   cursor: grab;
-  background-color: #efe9efe9;  /* Added background */
-  box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.1); /* Added shadow */
-   padding: 2rem;
-   /* font-size: 1rem; */
+  background-color: #efe9efe9;
+  box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  padding: 2rem;
 }
 
 canvas:active {
   cursor: grabbing;
 }
 
-#graphContainer {
-  /* display: flex;
-  flex-direction: column; */
-  position: relative;
-  /* margin-top: 40%; */
-  /* padding: 1rem; */
-  /* background-color: #e5edf1f6; */
-  /* border-radius: 0.5rem; */
-  box-shadow: 0 0.2rem 0.5rem rgba(249, 245, 245, 0.1);
-  height:60%;
-  width:60%;
-  margin-bottom: 1rem;
-}
 
-#realTimeGraph {
-  background-color: rgba(255, 255, 255, 0.1);
-  margin: 1rem;
-}
 
 .canvasButton {
   margin: auto;
   margin-top: 2rem;
 }
 
-#showValuesBtn{
-    background-color: #13182c;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    font-size: 1.2rem;
-    border-radius: 1.5rem;
-    transition: background-color 0.3s;
-    box-shadow: 0.1rem 0.2rem 0.3rem rgba(0, 0, 0, 0.2); /* Added button shadow */
-  }
-
+#showValuesBtn {
+  background-color: #13182c;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 1.5rem;
+  font-size: 1.2rem;
+  transition: background-color 0.3s;
+  box-shadow: 0.1rem 0.2rem 0.3rem rgba(0, 0, 0, 0.2);
+}
 
 #showValuesBtn:hover {
   background-color: #0e0d6e;
@@ -101,8 +237,8 @@ canvas:active {
 .controls {
   margin: 0.5rem;
   color: #000000;
-  width: 23%;  /* Reduced to make more room for canvas */
-  min-width: 25rem; /* Minimum width for controls */
+  width: 23%;
+  min-width: 18rem;
   background-color: #d4ddef;
   padding: 1rem;
   box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 14, 15, 0.977);
@@ -111,11 +247,11 @@ canvas:active {
   justify-content: flex-start;
   box-sizing: border-box;
   font-size: 1.2rem;
-   border-radius: 1rem;
+  border-radius: 1rem;
 }
 
 .input-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
 }
@@ -137,7 +273,6 @@ canvas:active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
 }
 
 .arrow-buttons input[type="range"] {
@@ -148,7 +283,6 @@ canvas:active {
   height: 0.5rem;
   border-radius: 0.5rem;
   background: #375a7f;
-  /* background: #aeb7cda0; */
   outline: none;
 }
 
@@ -184,19 +318,45 @@ canvas:active {
   color: #495057;
 }
 
+#graphContainer {
+  box-shadow: 0 0.2rem 0.5rem rgba(249, 245, 245, 0.1);
+  height: 35rem;
+  width: 100%;
+  max-width: 120rem;
+  min-width: 60rem;
+  gap: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 1rem;
+  padding: 2rem;
+}
+
+#AngleWeighGraph {
+  width: 65;
+  display: flex;
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 1rem;
+  box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
 .output-container {
-  margin-top: 2rem;
+  height: auto;
+  width: 30%;
   display: flex;
   color: rgb(255, 255, 255);
   align-items: center;
   flex-direction: column;
   background-color: #3d636e;
   border-radius: 1.5rem;
-  padding: 2rem;
+  padding: 1.5rem;
   border: 0.1rem solid rgb(31, 57, 72);
   font-weight: bold;
   font-size: 1.4rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Added text shadow */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .weight-display {
@@ -209,96 +369,33 @@ canvas:active {
   border-radius: 1rem;
   margin: 1rem;
   padding: 0.5rem;
-  box-shadow: inset 0.1rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1); /* Added inner shadow */
-}
-
-
-
-.weights {
-  position: relative; 
-  display: flex;
-  position: absolute;
-  margin-top: 40.5%;
-  margin-left: 1rem;
-  justify-content: center;  
-  align-items: flex-end;
-  gap: 1rem;
-  padding: 1rem;
-  background-color: rgba(85, 73, 73, 0.301);
-  border-radius: 0.5rem;
   box-shadow: inset 0.1rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
-  width: 75%;
-  box-sizing: border-box; /* Include padding in width */
-
-}
-
-.weight {
-  text-align: center;
-  /* border-radius: 50%;  Make rounder for visual appeal */
-  color: white;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: grab;
-  width: 5rem;  /* Fixed width for circular shape */
-  height: 5rem;  /* Fixed height for circular shape */
-  border: 2px solid #ccc;
-  box-shadow: 0.1rem 0.2rem 0.3rem rgba(0, 0, 0, 0.2); /* Added weight shadow */
-  transition: transform 0.2s;
-}
-
-.weight:active {
-  cursor: grabbing;
-  transform: scale(1.5); /* Add a slight zoom effect */
-}
-
-#weight1 {
-  background-color: orange;
-  width: 50px;
-  height: 30px;
-}
-
-#weight2 {
-  background-color: blue;
-  width: 55px;
-  height: 80px;
-}
-
-#weight3 {
-  background-color: green;
-  width: 50px;
-  height: 60px;
-}
-
-#weight4 {
-  background-color: red;
-  width: 60px;
-  height: 120px;
 }
 
 #tableContainer {
   margin-top: 2rem;
   width: 100%;
-  max-width: 90rem;
   overflow-x: auto;
-  text-align: center;
+  margin-bottom: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+
 }
 
 table {
-  width: 100%;
+  width: 95%;
   border-collapse: collapse;
   background-color: white;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  margin-bottom: 2rem;
-
+  margin: 1rem;
 }
 
 th,
 td {
   padding: 0.75rem;
-  border: 1px solid #dee2e6;
+  border: 1px solid #a4a6a9;
   text-align: center;
   font-size: 1rem;
 }
@@ -310,55 +407,64 @@ th {
 }
 
 .table-controls {
-    margin-bottom: 1rem;
-    text-align: center;
-    display: flex;       /* Use flexbox for layout */
-    align-items: center;   /* Vertically align items */
-    justify-content: center; /* Space items evenly */
-    gap: 1rem;            /* Add some space between items */
+  margin-bottom: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .table-controls label {
-    font-weight: bold;
-    margin-right: 0.5rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
 }
 
 .table-controls select {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 0.3rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.3rem;
 }
-
-#addTrial {
-    background-color: #28a745; /* A green color */
-    color: white;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-#addTrial:hover {
-    background-color: #218838; /* Darker green on hover */
-}
-
-
 
 table input[type="text"] {
-    width: 8rem; /* Set a fixed width for all inputs */
-    padding: 0.5rem; /* Add some padding */
-    margin: 0;   /* Ensure no extra margin */
-    box-sizing: border-box;  /* Include padding in width */
-    border: 1px solid #ced4da; /* Match the border */
-    border-radius: 0.25rem;  /* Rounded corners */
-    text-align: center; /* Center the text */
-    font-size: 1rem;
-    font-family: inherit; /* Inherit the font */
+  width: 8rem;
+  padding: 0.5rem;
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  text-align: center;
+  font-size: 1rem;
+  font-family: inherit;
+}
+#saveInDB{
+  padding: 1.5rem;
+  background-color: #111438f9;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  margin-left: 50%;
+}
+@media (min-width: 1200px) {
+  html {
+    font-size: 60%; 
+  }
+
 }
 
-@media (max-width: 768px) {
+
+@media(max-width: 1200px)and (min-width: 912px) {
+  .html{
+    font-size: 50%;
+  }
+}
+@media(max-width: 912px) and (min-width:712px) {
+  .html{
+    font-size: 50%;
+  }
   .container {
     flex-direction: column;
   }
@@ -370,355 +476,52 @@ table input[type="text"] {
     border-top: 1px solid #e9ecef;
   }
 
-  .canvasButton {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+#graphContainer{
+  height: auto;
+  width: auto;
+  flex-direction: column;
+  justify-content: center;
+  
+}
+#AngleWeighGraph{
+  overflow-x: scroll;
+  max-width: 80rem;
+}
+
+#tableContainer {
+  margin-top: 20rem;
+}
+}
+
+@media (max-width: 712px) and (min-width: 220px)  {
+
+  html {
+      font-size: 35%;
+  }
+  .container {
+    flex-direction: column;
+  }
+
+  .controls {
     width: 100%;
+    min-width: auto;
+    border-left: none;
+    border-top: 1px solid #e9ecef;
   }
 
-  .canvasButton button{
-   margin: 0.5rem;html {
-      box-sizing: border-box;
-      font-size: 62.5%;
-    }
-    
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 2rem;
-      min-height: 150vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: #ffffff;
-    }
-    
-    .container {
-      display: flex;
-      width: 90%;  /* Make container responsive */
-      max-width: 120rem;
-      background-color: rgba(47, 55, 87, 0.922);
-      border-radius: 1rem;
-      box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-    
-    .exp-container {
-      flex-grow: 1;
-      padding: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 60vh; /* Adjust height for better screen usage */
-    }
-    
-    canvas {
-      max-width: 100%;
-      height: auto;
-      border: 0.1rem solid #ddd;
-      border-radius: 0.5rem;
-      cursor: grab;
-      background-color: #f9f9f9;  /* Added background */
-      box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.1); /* Added shadow */
-    }
-    
-    canvas:active {
-      cursor: grabbing;
-    }
-    
-    .controls {
-      color: #000000;
-      width: 30%;  /* Reduced to make more room for canvas */
-      min-width: 25rem; /* Minimum width for controls */
-      background-color: #c8daff;
-      padding: 1rem;
-      box-shadow: 0.2rem 0.2rem 1.2rem rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      box-sizing: border-box;
-      font-size: 1.2rem;
-    }
-    
-    .input-group {
-      margin-bottom: 1.5rem;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .input-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-    
-    .limits {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .arrow-buttons {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    
-    }
-    
-    .arrow-buttons input[type="range"] {
-      flex: 1;
-      margin: 0 1rem;
-      -webkit-appearance: none;
-      width: 100%;
-      height: 0.5rem;
-      border-radius: 0.5rem;
-      background: #ddd;
-      outline: none;
-    }
-    
-    .arrow-buttons input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 50%;
-      background: #375a7f;
-      cursor: pointer;
-    }
-    
-    .arrow-buttons button {
-      background-color: #3a6696;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 0.3rem;
-      transition: background-color 0.3s;
-    }
-    
-    .arrow-buttons button:hover {
-      background-color: #0056b3;
-    }
-    
-    .input-value {
-      text-align: center;
-      margin-top: 0.5rem;
-      font-weight: bold;
-      color: #495057;
-    }
-    
-    .output-container {
-      margin-top: 2rem;
-      display: flex;
-      color: rgb(255, 255, 255);
-      align-items: center;
-      flex-direction: column;
-      background-color: #61919f;
-      border-radius: 1.5rem;
-      padding: 2rem;
-      border: 0.1rem solid rgb(31, 57, 72);
-      font-weight: bold;
-      font-size: 1.4rem;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Added text shadow */
-    }
-    
-    .weight-display {
-      color: rgb(30, 53, 69);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #d0d8f0f4;
-      width: 100%;
-      border-radius: 1rem;
-      margin: 1rem;
-      padding: 0.5rem;
-      box-shadow: inset 0.1rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1); /* Added inner shadow */
-    }
-    
-    .canvasButton {
-      margin: auto;
-      margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    #showValuesBtn,
-    #addTrial {
-      background-color: #13182c;
-      color: white;
-      padding: 1rem 2rem;
-      border: none;
-      cursor: pointer;
-      border-radius: 0.5rem;
-      font-size: 1.4rem;
-      border-radius: 1.2rem;
-      transition: background-color 0.3s;
-      box-shadow: 0.1rem 0.2rem 0.3rem rgba(0, 0, 0, 0.2); /* Added button shadow */
-    }
-    
-    #showValuesBtn:hover,
-    #addTrial:hover {
-      background-color: #0e0d6e;
-    }
-    
-    .weights {
-      position: relative; /* Changed from absolute */
-      display: flex;
-      justify-content: center; /* Center weights horizontally */
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 0.5rem;
-      box-shadow: inset 0.1rem 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
-      width: 100%; /* Take full width */
-      box-sizing: border-box; /* Include padding in width */
-      margin-top: 1rem; /* Added margin */
-    
-    }
-    
-    .weight {
-      text-align: center;
-      border-radius: 50%;  /* Make rounder for visual appeal */
-      color: white;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: grab;
-      width: 5rem;  /* Fixed width for circular shape */
-      height: 5rem;  /* Fixed height for circular shape */
-      border: 2px solid #ccc;
-      box-shadow: 0.1rem 0.2rem 0.3rem rgba(0, 0, 0, 0.2); /* Added weight shadow */
-      transition: transform 0.2s;
-    }
-    
-    .weight:active {
-      cursor: grabbing;
-      transform: scale(1.1); /* Add a slight zoom effect */
-    }
-    
-    #weight1 {
-      background-color: orange;
-    }
-    
-    #weight2 {
-      background-color: blue;
-    }
-    
-    #weight3 {
-      background-color: green;
-    }
-    
-    #weight4 {
-      background-color: red;
-    }
-    
-    #tableContainer {
-      margin-top: 2rem;
-      width: 100%;
-      max-width: 90rem;
-      overflow-x: auto;
-      text-align: center;
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: white;
-      box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
-      margin: 0 auto;
-    }
-    
-    th,
-    td {
-      padding: 0.75rem;
-      border: 1px solid #dee2e6;
-      text-align: center;
-      font-size: 1rem;
-    }
-    
-    th {
-      background-color: #f8f9fa;
-      font-weight: bold;
-      color: #495057;
-    }
-    
-    .table-controls {
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-    
-    .table-controls label {
-        font-weight: bold;
-        margin-right: 1rem;
-    }
-    
-    .table-controls select {
-        padding: 0.5rem;
-        font-size: 1rem;
-        border-radius: 0.3rem;
-    }
-    
-    
-    table input[type="text"] {
-        width: 8rem; /* Set a fixed width for all inputs */
-        padding: 0.5rem; /* Add some padding */
-        margin: 0;   /* Ensure no extra margin */
-        box-sizing: border-box;  /* Include padding in width */
-        border: 1px solid #ced4da; /* Match the border */
-        border-radius: 0.25rem;  /* Rounded corners */
-        text-align: center; /* Center the text */
-        font-size: 1rem;
-        font-family: inherit; /* Inherit the font */
-    }
-    
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-    
-      .controls {
-        width: 100%;
-        min-width: auto;
-        border-left: none;
-        border-top: 1px solid #e9ecef;
-      }
-    
-      .canvasButton {
-        margin-top: 1rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
-      }
-    
-      .canvasButton button{
-       margin: 0.5rem;
-      }
-    
-      .output-container {
-        margin-top: 1rem;
-      }
-    
-      .weights{
-        position: static; /*Change relative position*/
-        margin: 1rem;
-        padding: 0.5rem;
-      }
-    }
-  }
+#graphContainer{
+  height: auto;
+  width: auto;
+  flex-direction: column;
+  justify-content: center;
+  
+}
+#AngleWeighGraph{
+  overflow-x: scroll;
+  width: 30rem;
+  height: 50rem;
+}
 
-  .output-container {
-    margin-top: 1rem;
-  }
-
-  .weights{
-    position: static; /*Change relative position*/
-    margin: 1rem;
-    padding: 0.5
-  }}
+#tableContainer {
+  margin-top: 20rem;
+}}

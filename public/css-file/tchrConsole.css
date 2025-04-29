@@ -89,6 +89,55 @@ p a {
 p:last-of-type {
   margin-bottom: 0;
 }
+.header_content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 80px; /* Adjust height as needed */
+  /* padding: 0 15px; */
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.back-link {
+  text-decoration: none;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  color: #333; /* Adjust color as needed */
+}
+
+.back-link i {
+  padding: 10px;
+}
+
+.uniLogo {
+  height: 50px; /* Adjust height as needed */
+  width: auto;
+  /* margin-right: 15px; */
+  object-fit: contain;
+  margin-bottom: 10px;
+
+}
+
+.logo_container {
+  display: flex;
+  align-items: center;
+
+}
+
+.logo_text {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 10px;
+
+}
+
+.logo_text span {
+  color: #007bff; /* Adjust accent color as needed */
+}
 a,
 a:hover,
 a:visited,

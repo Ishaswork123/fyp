@@ -186,3 +186,74 @@
   z-index: 1;
   height: 100%;
   width: 100%; }
+
+
+
+  /* Center text and button in the middle of the screen */
+.video-overlay.header-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.video-overlay .Home {
+  width: 80%;
+  text-align: center;
+  margin-bottom: 200px;
+}
+
+/* Heading styles */
+.head {
+  font-size: 2.5rem;
+  font-weight: 600;
+  font-family: sans-serif;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.head br {
+  margin-bottom: 5px; /* or whatever you like */
+  display: block;
+  padding: 5px;
+  content: "";
+}
+
+/* Button styles */
+.tagLine {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.tagLine a {
+  display: inline-block;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 300;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.tagLine a:hover {
+  background-color: #2980b9;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .head {
+    font-size: 2.5rem;
+  }
+
+  .tagLine a {
+    font-size: 1rem;
+    padding: 10px 25px;
+  }
+}

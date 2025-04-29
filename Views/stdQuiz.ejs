@@ -92,6 +92,113 @@
 .quizContainer.visible {
     display: block;
 }
+/* Scrollable Quiz Container */
+.quizContainer {
+  /* Fixed height - adjust based on your needs */
+  height: 800px;
+width: 100%;
+  /* Enable vertical scrolling */
+  overflow-y: auto;
+
+  /* Disable horizontal scrolling */
+  overflow-x: hidden;
+
+  /* Smooth scrolling behavior */
+  scroll-behavior: smooth;
+
+  /* Add some padding and styling */
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+
+  /* Ensure the container has proper spacing */
+  margin-bottom: 20px;
+
+  /* Scrollbar styling for WebKit browsers (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+
+  /* Firefox scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+/* Fixed timer position at the top of the quiz */
+/* #timer {
+  position: sticky;
+  top: 0;
+  background-color: #f9f9f9;
+  padding: 10px 0;
+  z-index: 10;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 15px;
+} */
+
+/* Style for quiz questions */
+.quizForm > div {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Style for question text */
+.quizForm p {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Style for answer options */
+.quizForm label {
+  display: block;
+  padding: 8px 10px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.quizForm label:hover {
+  background-color: #f0f0f0;
+}
+
+/* Style for submit button */
+.quizForm button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+/* .quizForm button[type="submit"]:hover {
+  background-color: #45a049;
+} */
+
+/* For IE and Edge */
+.quizContainer {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
 
 </style>
 
@@ -153,12 +260,13 @@
       <!-- Quiz Form -->
       <div class="quizContainer" id="quizContainer">
         <div id="timer" style="font-size: 20px; font-weight: bold; color: rgb(3, 37, 20); margin-bottom: 10px;">
-          Time Remaining: <span id="time">15:00</span>
+          Time Remaining: <span id="time">5:00</span>
         </div>
         
         <% if (quizData && quizData.length > 0) { %>
-          <h2>Quiz for Experiment <%= quizData[0].exp_no %></h2>
+          <h2 style="text-align: center;">Quiz for Experiment <%= quizData[0].exp_no %></h2>
           <form id="quizForm" method="POST" action='/std/submit-quiz' class="quizForm">
+
               <% quizData.forEach(function(question, index) { %>
                   <div>
                       <p><%= index + 1 %>. <%= question.Question %></p>
@@ -279,13 +387,13 @@
     const quizContainer = document.getElementById("quizContainer");
     const closeModalBtn = document.getElementById("closeModalBtn");
 
-    <% if (quizData && quizData.length > 0) { %>
-        modal.classList.add("hidden");  // Hide modal
-        modal.style.display = "none";   // Hide modal
-          quizContainer.style.display = "block";  // Show quiz
-          openModalBtn.style.display = "none";  // Hide the 'Select Experiment' button
-        quizContainer.classList.add("visible"); // Show quiz
-    <% } %>
+  "<% if (quizData && quizData.length > 0) { %>"
+  modal.classList.add("hidden");  // Hide modal
+  modal.style.display = "none";   // Hide modal
+  quizContainer.style.display = "block";  // Show quiz
+  openModalBtn.style.display = "none";  // Hide the 'Select Experiment' button
+  quizContainer.classList.add("visible"); // Show quiz
+"<% } %>"
 
     // Close modal manually
     closeModalBtn.addEventListener("click", function () {
@@ -293,7 +401,7 @@
     });
 });
 
-  let totalSeconds = 15 * 60; // 15 minutes
+  let totalSeconds = 5 * 60; // 5minutes
   const timerDisplay = document.getElementById('time');
   const quizForm = document.getElementById('quizForm');
 
@@ -329,7 +437,87 @@
   if (quizForm) {
     startTimer();
   }
+  document.addEventListener("DOMContentLoaded", () => {
+  // Add validation alert div to the container
+  const quizContainer = document.getElementById("quizContainer")
+  const timer = document.getElementById("timer")
 
+  // Create validation alert element
+  const validationAlert = document.createElement("div")
+  validationAlert.id = "validationAlert"
+  validationAlert.textContent = "Please answer all questions before submitting."
+  quizContainer.insertBefore(validationAlert, timer.nextSibling)
+
+  const quizForm = document.getElementById("quizForm")
+  const submitButton = quizForm.querySelector('button[type="submit"]')
+
+  // Initially disable the submit button
+  submitButton.disabled = true
+
+  // Function to check if all questions are answered
+  function checkAllQuestionsAnswered() {
+    // Get all question divs (direct children of the form that contain checkboxes)
+    const questionDivs = Array.from(quizForm.querySelectorAll("div"))
+
+    // Check if each question has at least one checkbox checked
+    let allAnswered = true
+    const unansweredQuestions = []
+
+    questionDivs.forEach((div, index) => {
+      const checkboxes = div.querySelectorAll('input[type="checkbox"]')
+      if (checkboxes.length === 0) return // Skip if not a question div
+
+      let isAnswered = false
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          isAnswered = true
+        }
+      })
+
+      if (!isAnswered) {
+        allAnswered = false
+        unansweredQuestions.push(div)
+        div.classList.add("question-unanswered")
+      } else {
+        div.classList.remove("question-unanswered")
+      }
+    })
+
+    // Enable or disable submit button based on all questions being answered
+    submitButton.disabled = !allAnswered
+
+    // Show or hide validation alert
+    if (!allAnswered) {
+      validationAlert.classList.add("show")
+    } else {
+      validationAlert.classList.remove("show")
+    }
+
+    return { allAnswered, unansweredQuestions }
+  }
+
+  // Add event listeners to all checkboxes
+  const allCheckboxes = quizForm.querySelectorAll('input[type="checkbox"]')
+  allCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      checkAllQuestionsAnswered()
+    })
+  })
+
+  // Add submit event listener
+  quizForm.addEventListener("submit", (event) => {
+    const { allAnswered, unansweredQuestions } = checkAllQuestionsAnswered()
+
+    if (!allAnswered) {
+      event.preventDefault()
+
+      // Scroll to the first unanswered question
+      if (unansweredQuestions.length > 0) {
+        unansweredQuestions[0].scrollIntoView({ behavior: "smooth", block: "center" })
+      }
+    }
+  })
+})
 
 </script>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

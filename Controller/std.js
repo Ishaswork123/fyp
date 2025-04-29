@@ -251,7 +251,7 @@ async function handlegetUpdate(req, res) {
      res.render('updateStd', {
          fname: user.fname,
          lname: user.lname,
-         email: user.email,
+        //  email: user.email,
          pic: user.pic,
      });
     }
@@ -276,9 +276,9 @@ async function handlegetUpdate(req, res) {
          }
  
          // Extract form data
-         const { email_1, pwd_1, pwd_2 } = req.body;
+         const { fname_1,lname_1, pwd_1, pwd_2 } = req.body;
          const file = req.file; // This handles the uploaded file (field name is "pic_1")
-         console.log('Form data received:', { email_1, pwd_1, pwd_2,file });
+         console.log('Form data received:', { fname_1,lname_1, pwd_1, pwd_2,file });
  
          const errors = {};
  
@@ -304,9 +304,11 @@ async function handlegetUpdate(req, res) {
  
          // Prepare update data
          const updateData = {};
-         if (email_1) {
-             console.log('Updating email:', email_1);
-             updateData.email = email_1;
+         if (fname_1 || lname_1) {
+             console.log('Updating email:', fname_1,lname_1);
+             updateData.fname = fname_1;
+             updateData.lname = lname_1;
+
          }
  
          if (file) {
@@ -384,11 +386,11 @@ async function verifyOTP  (req, res) {
     const { code } = req.body;
     
     const email = req.query.email; // Get email from query params
-console.log("email and otp",email,code )
+// console.log("email and otp",email,code )
     if (!email || !code) return res.status(400).send("Email and OTP are required");
 
     const user = await User.findOne({ email }); // Ensure correct query
-    console.log("email from route2")
+    // console.log("email from route2")
 
 
     if (!user) return res.status(404).send("User not found");
@@ -414,7 +416,7 @@ async function resetPassword  (req, res)  {
     }
 
     const user = await User.findOne({ email });
-    console.log("user from route3", user);
+    // console.log("user from route3", user);
     if (!user) return res.status(404).send("User not found");
 
     // Hash the new password

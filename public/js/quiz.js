@@ -86,19 +86,25 @@ totalQuestion_1=totalQuestions;
 
           <!-- Options with pre-filled values -->
           <label for="option1">Option A:</label>
-          <input type="text" id="option1" name="option1${currentQuestion}" value="${questionData.option1 || ''}" onblur="addPrefix(this, 'A')" required><br>
+          <input type="text" id="option1" name="option1${currentQuestion}" value="${questionData.option1 || ''}" onblur="addPrefix(this, 'A')" ;required><br>
 
           <label for="option2">Option B:</label>
-          <input type="text" id="option2" name="option2${currentQuestion}" value="${questionData.option2 || ''}" onblur="addPrefix(this, 'B')" required><br>
+          <input type="text" id="option2" name="option2${currentQuestion}" value="${questionData.option2 || ''}" onblur="addPrefix(this, 'B')"; required><br>
 
           <label for="option3">Option C:</label>
-          <input type="text" id="option3" name="option3${currentQuestion}" value="${questionData.option3 || ''}" onblur="addPrefix(this, 'C')" required><br>
+          <input type="text" id="option3" name="option3${currentQuestion}" value="${questionData.option3 || ''}" onblur="addPrefix(this, 'C')" ; required><br>
 
           <label for="option4">Option D:</label>
-          <input type="text" id="option4" name="option4${currentQuestion}" value="${questionData.option4 || ''}" onblur="addPrefix(this, 'D')" required><br>
+          <input type="text" id="option4" name="option4${currentQuestion}" value="${questionData.option4 || ''}" onblur="addPrefix(this, 'D')" ;  required><br>
+<label for="answer">Correct Answer:</label>
+<select id="answer${currentQuestion}" name="answer${currentQuestion}" class="answer-select" required>
+  <option value="">--Select Correct Option--</option>
+  <option value="A"></option>
+  <option value="B"></option>
+  <option value="C"></option>
+  <option value="D"></option>
+</select><br>
 
-          <label for="answer">Correct Answer:</label>
-        <input type="text" id="answer" name="answer${currentQuestion}" value="${questionData.answer || ''}" required><br>
 
 
 <!-- Checkbox (aligned to left) -->
@@ -185,9 +191,6 @@ totalQuestion_1=totalQuestions;
 //     validateAndAutoPrefixAnswer(document.getElementById('answer'));
 // }
 
-
-
-
 function validateAndAutoPrefixAnswer(input) {
     const answer = input.value.trim().toLowerCase();
 
@@ -252,13 +255,49 @@ function validateAndAutoPrefixAnswer(input) {
 //     }
 // }
 // Add prefix like "A: " automatically if not already present
-function addPrefix(input, prefix) {
-    const val = input.value.trim();
-    if (val && !val.startsWith(prefix + ":")) {
-      input.value = `${prefix}: ${val}`;
-    }
-  }
 
+// Add event listeners when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+    // Add input event listeners to all option fields
+    document.getElementById("option1").addEventListener("input", updateOptionLabels)
+    document.getElementById("option2").addEventListener("input", updateOptionLabels)
+    document.getElementById("option3").addEventListener("input", updateOptionLabels)
+    document.getElementById("option4").addEventListener("input", updateOptionLabels)
+  
+    // Initial update of the dropdown
+    updateOptionLabels()
+  })
+  
+  // Function to add prefix to option text (A, B, C, D)
+  function addPrefix(inputElement, prefix) {
+    const value = inputElement.value
+    if (value && !value.startsWith(`${prefix}. `)) {
+      inputElement.value = `${prefix}. ${value}`
+    }
+    // Update dropdown after adding prefix
+    updateOptionLabels()
+  }
+  
+  // Function to update the dropdown options based on input values
+  function updateOptionLabels() {
+    // Get all option input values
+    const option1Value = document.getElementById("option1").value
+    const option2Value = document.getElementById("option2").value
+    const option3Value = document.getElementById("option3").value
+    const option4Value = document.getElementById("option4").value
+  
+    // Get the select element
+    const select = document.getElementById(`answer${currentQuestion}`)
+  
+    // Update each option in the dropdown
+    select.options[1].text = option1Value ? `A. ${option1Value.replace(/^A\.\s*/, "")}` : "A"
+    select.options[2].text = option2Value ? `B. ${option2Value.replace(/^B\.\s*/, "")}` : "B"
+    select.options[3].text = option3Value ? `C. ${option3Value.replace(/^C\.\s*/, "")}` : "C"
+    select.options[4].text = option4Value ? `D. ${option4Value.replace(/^D\.\s*/, "")}` : "D"
+  
+    console.log("Updated dropdown options")
+  }
+  
 
 // //   // Prevent duplicate options
 // //   const optionInputs = ["option1", "option2", "option3", "option4"];

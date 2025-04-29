@@ -50,7 +50,9 @@
     margin-right: 8px; /* Space between icon and text */
     font-size: 20px;
 }
-
+.label{
+  color: white;
+}
 
 </style>
   </head>
@@ -108,15 +110,19 @@
                             
                                 <!-- Current Details (Read-only fields) -->
                                 <div class="group">
-                                    <label for="current_email" class="label">Current Email</label>
-                                    <input id="current_email" name="current_email" type="email" class="input form-control" value="<%= email || '' %>" readonly>
+                                  <label for="current_name" class="label">Current Username </label>
+                                  <input id="full_name" name="full_name" type="text" class="input form-control" value="<%= fname %> <%= lname %>" readonly>
                                 </div>
-                            
-                                <!-- Editable Fields -->
-                                <div class="group">
-                                    <label for="email_1" class="label">New Email</label>
-                                    <input id="email_1" name="email_1" type="email" class="input form-control" placeholder="Enter new email">
-                                </div>
+                          
+                              <!-- Editable Fields -->
+                              <div class="group">
+                                  <label for="fname_1" class="label">Enter new First Name </label>
+                                  <input id="fname_1" name="fname_1"  class="input form-control" placeholder="Enter First name ">
+                              </div>
+                              <div class="group">
+                                <label for="fname_1" class="label"> Enter new Last name </label>
+                                <input id="lname_1" name="lname_1"  class="input form-control" placeholder="Enter last name ">
+                            </div>
                                 <div class="group">
                                     <label for="pwd_1" class="label">New Password</label>
                                     <input id="pwd_1" name="pwd_1" type="password" class="input form-control" placeholder="Enter new password">

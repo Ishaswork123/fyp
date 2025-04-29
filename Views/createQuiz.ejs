@@ -30,6 +30,7 @@
       from { opacity: 1; transform: translateY(0); }
       to { opacity: 0; transform: translateY(20px); }
   }
+
   </style>
 
 
@@ -51,7 +52,7 @@
                 <div class="col">
                   <div class="header_content d-flex flex-row align-items-center justify-content-start">
                     <a href="javascript:history.back()"  style="display: flex; align-items: center; text-decoration: none;  font-size: 30px;">
-                      <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px;"></i> 
+                      <i class="fa fa-arrow-left" style="margin: 9px; padding: 10px; color: rgb(255, 255, 255);"></i> 
                   
                     <!-- <i class="fas fa-arrow-left"></i>  -->
                   </a>
@@ -123,7 +124,7 @@
       </select>
       
       <label for="exp_title">Experiment Title:</label>
-      <input type="text" id="exp_title" name="exp_title" readonly>
+      <input type="text" id="exp_title" name="exp_title" readonly placeholder="Experiemnt-title ">
 
       <label for="access">Quiz Access</label>
       <select name="assignedTo" id="access" required>
@@ -145,7 +146,7 @@
       </div>
 
       <label for="total_questions">Total Questions:</label>
-      <input type="number" id="total_questions" name="total_questions" min="0" max="10" required oninput="validateTotalQuestions(this)">
+      <input type="number" id="total_questions" name="total_questions" min="1" max="10" required oninput="validateTotalQuestions(this)">
 
       <button type="button" onclick="startQuizCreation()">Start</button>
     </form>
@@ -234,6 +235,23 @@
             let classField = document.getElementById("classField");
             classField.style.display = this.value === "class" ? "block" : "none";
         });
+        function validateTotalQuestions(input) {
+  const value = parseInt(input.value);
+  const startBtn = document.getElementById("startBtn");
+
+  if (isNaN(value) || value < 1) {
+    alert("Please enter a number between 1 and 10. Negative or zero not allowed.");
+    input.value = "";
+    startBtn.disabled = true;
+  } else if (value > 10) {
+    alert("Maximum allowed questions is 10.");
+    input.value = "";
+    startBtn.disabled = true;
+  } else {
+    startBtn.disabled = false;
+  }
+}
+
 </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap JS Bundle -->

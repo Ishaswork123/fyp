@@ -1,12 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>guided gravesand </title>
-</head>
-<body>
-    <h1>guided gravesand </h1>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guided Gravesand's Apparatus Simulation</title>
+  <link rel="stylesheet" href="/css-file/grav.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/introjs.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/intro.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body data-intro="Welcome to Gravisand's simulation!, Follow the steps to understand the controls. " data-step="1">
+    <div id="tourContainer">
+        <button id="startTourBtn" class="tour-button">Start Tour</button>
+      </div>
+  <div class="container">
+    <div id="exp-container" class="exp-container" data-intro="Obsserve the simulations from here." data-step="2">
+      <canvas id="expCanvas" width="600" height="300"></canvas>
+    </div>
+
+    <div class="controls">
+      <div class="input-group" data-intro="Change the weight P from here" data-step="3">
+        <label for="weightP">Weight P (g): </label>
+        <div class="limits">
+          <span>5</span>
+          <span>250</span>
+        </div>
+        <div class="arrow-buttons">
+          <button id="weightP-decrease">◄</button>
+          <input type="range" id="weightP" min="5" max="250" step="5" value="50" />
+          <button id="weightP-increase">►</button>
+        </div>
+        <div class="input-value" id="weightP-value">50 g</div>
+      </div>
+
+      <div class="input-group" data-intro="Change the weight Q from here" data-step="4">
+        <label for="weightQ">Weight Q (g): </label>
+        <div class="limits">
+          <span>5</span>
+          <span>250</span>
+        </div>
+        <div class="arrow-buttons">
+          <button id="weightQ-decrease">◄</button>
+          <input type="range" id="weightQ" min="5" max="250" step="5" value="30" />
+          <button id="weightQ-increase">►</button>
+        </div>
+        <div class="input-value" id="weightQ-value">30 g</div>
+        </div>
+
+        <div class="input-group" data-intro="Change the length of vertical string from here." data-step="5">
+        <label for="verticalLength">Vertical String Length:</label>
+          <div class="limits">
+            <span>30</span>
+            <span>150</span>
+          </div>
+          <div class="arrow-buttons">
+            <button id="VL-decrease">◄</button>
+            <input type="range" id="verticalLength" min="30" max="150" step="1" value="60" />
+            <button id="VL-increase">►</button>
+          </div>
+          <div class="input-value" id="VL-value">30</div>
+          </div>
+        
+          <div class="input-group" data-intro="Change the weight of Unknown object(W) from here" data-step="6">
+            <label for="unknownWeight">Unknown Weight (g): </label>
+            <div class="limits">
+              <span>10</span>
+              <span>250</span>
+            </div>
+            <div class="arrow-buttons">
+              <button id="unknownWeight-decrease">◄</button>
+              <input type="range" id="unknownWeight" min="10" max="250" step="5" value="100" />
+              <button id="unknownWeight-increase">►</button>
+            </div>
+            <div class="input-value" id="unknownWeight-value">100 g</div>
+          </div>
+
+        
+    </div>
+  </div>
+
+    <div id="graphContainer">
+        <canvas id="AngleWeighGraph" data-intro="See the relationship between Vertical Coponents of forces P and Q with weight W." data-step="7"></canvas>
+        <div class="output-container" data-intro="Check output from here." data-step="8">
+          Output:
+          <div class="weight-display">
+            Weight W: <span id="weightW">0.00 g</span>
+          </div>
+  
+          <div class="weight-display">
+            Error: <span id="weightError">0.00 g</span>
+          </div>
+          <div class="canvasButton" data-intro="Click to enter the observations into table" data-step="9">
+            <button id="showValuesBtn">Show Values</button>
+          </div>
+        </div>
+    </div>
+
+    <div id="tableContainer" style="display: none;">
+      <table>
+          <thead>
+              <tr>
+                  <th>Force P (g)</th>
+                  <th>Force Q (g)</th>
+                  <th>θ1 (angle with P's string)</th>
+                  <th>θ2 (angle with Q's string)</th>
+                  <th>P sin θ1</th>
+                  <th>Q sin θ2</th>
+                  <th>Weight of unknown mass (g)</th>
+                  <th>Error (g)</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td><input type="text" id="table-weightP-1" name="table-weightP-1" value="" /></td>
+                  <td><input type="text" id="table-weightQ-1" name="table-weightQ-1" value="" /></td>
+                  <td><input type="text" id="table-angleP-1" name="table-angleP-1" value="" /></td>
+                  <td><input type="text" id="table-angleQ-1" name="table-angleQ-1" value="" /></td>
+                  <td><input type="text" id="table-PsinAngleP-1" name="table-PsinAngleP-1" value="" /></td>
+                  <td><input type="text" id="table-QsinAngleQ-1" name="table-QsinAngleQ-1" value="" /></td>
+                  <td><input type="text" id="table-weightW-1" name="table-weightW-1" value="" /></td>
+                  <td><input type="text" id="table-weightError-1" name="table-weightError-1" value="" /></td>
+              </tr>
+              <tr>
+                  <td><input type="text" id="table-weightP-2" name="table-weightP-2" value="" /></td>
+                  <td><input type="text" id="table-weightQ-2" name="table-weightQ-2" value="" /></td>
+                  <td><input type="text" id="table-angleP-2" name="table-angleP-2" value="" /></td>
+                  <td><input type="text" id="table-angleQ-2" name="table-angleQ-2" value="" /></td>
+                  <td><input type="text" id="table-PsinAngleP-2" name="table-PsinAngleP-2" value="" /></td>
+                  <td><input type="text" id="table-QsinAngleQ-2" name="table-QsinAngleQ-2" value="" /></td>
+                  <td><input type="text" id="table-weightW-2" name="table-weightW-2" value="" /></td>
+                  <td><input type="text" id="table-weightError-2" name="table-weightError-2" value="" /></td>
+              </tr>
+              <tr>
+                  <td><input type="text" id="table-weightP-3" name="table-weightP-3" value="" /></td>
+                  <td><input type="text" id="table-weightQ-3" name="table-weightQ-3" value="" /></td>
+                  <td><input type="text" id="table-angleP-3" name="table-angleP-3" value="" /></td>
+                  <td><input type="text" id="table-angleQ-3" name="table-angleQ-3" value="" /></td>
+                  <td><input type="text" id="table-PsinAngleP-3" name="table-PsinAngleP-3" value="" /></td>
+                  <td><input type="text" id="table-QsinAngleQ-3" name="table-QsinAngleQ-3" value="" /></td>
+                  <td><input type="text" id="table-weightW-3" name="table-weightW-3" value="" /></td>
+                  <td><input type="text" id="table-weightError-3" name="table-weightError-3" value="" /></td>
+              </tr>
+          </tbody>
+      </table>
+      <button id="saveInDB" >Save Data</button>
+  </div>
+  
+  <div class="navigation-bar">
+    <div class="home-button">
+      <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+    </div>
+    <div class="tabs">
+        <a href="/exp/forceExp" class="tab " data-section="intro">Custom</a>
+        <a href="/guided/forceExp" class="tab active" data-section="balance-lab">Guided Lab</a>
+        <a href="/resource/4" class="tab" data-section="game">Resources</a>
+    </div>
+    <div class="phet-logo">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNjAiPgogIDx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiPlBoRVQ8L3RleHQ+Cjwvc3ZnPg==" alt="PhET" />
+    </div>
+  </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/grav.js"></script>
+<script src="/js/start-tour.js"></script>
 </body>
+
 </html>

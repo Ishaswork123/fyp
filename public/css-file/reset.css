@@ -38,7 +38,7 @@ input {
 }
 
 button {
-    width: 100%;
+    width: 50%;
     padding: 10px;
     background: #007BFF;
     color: white;
@@ -62,6 +62,33 @@ button:hover {
     width: 100%;
 }
 
+
+.otp-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 10px; /* Create space between digits */
+  }
+  
+  .otp-inputs input {
+    font-size: 32px;
+    width: 260px; /* Wider to accommodate spacing */
+    padding: 10px;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    letter-spacing: 42px; /* Adjust as needed */
+    background: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  
+  .otp-inputs input:focus {
+    outline: none;
+    border-color: #007bff;
+    background: #fff;
+  }
+  
+
 /* Media Query for responsiveness */
 @media (max-width: 768px) {
     .modal {
@@ -83,4 +110,21 @@ h1, h2 {
   .form-content{
     padding-bottom: 20px;
 
+  }
+    select {
+    padding: 12px 19px;
+    border: 1px solid #ccc;
+    width: 100%;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  select:hover {
+    background-color: #f1f1f1;
   }

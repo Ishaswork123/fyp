@@ -80,24 +80,41 @@ router.get('/signup', (req, res) => {
   router.get('/verifyemail',(req,res)=>{
     res.render('tchrOtp');
   });
-  router.get("/passreset", (req, res) => {
-    const email = req.query.email || ""; // Extract email from query params, default to empty string
+  router.get("/passreset",async (req, res) => {
+    try {
+        // Fetch teacher data (just the email field in this case)
+        const teachers = await tchr.find({}, 'email'); // Fetch only email field
+        res.render('resetPassTchr', { teachers, email: "" }); // Add email: ""
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching teachers');
+      }
 
-    res.render("resetPassTchr",{email}); // Load the EJS file
 })
+router.get("/send-otp",async (req, res) => {
+    try {
+        // Fetch teacher data (just the email field in this case)
+        const teachers = await tchr.find({}, 'email'); // Fetch only email field
+        res.render('resetPassTchr', { teachers, email: "" }); // Add email: ""
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching teachers');
+      }
+});
 router.get("/verify-otp", (req, res) => {
     const email = req.query.email || ""; // Extract email from query params, default to empty string
 
     console.log("Received email in verify-otp route:", {email});
-    res.render("resetPassTchr", { email });
+    res.render("resetPassTchr", { teachers: [], email }); // Provide empty teachers
 });
 
 router.get("/reset-password", (req, res) => {
     const email = req.query.email || ""; // Extract email from query params, default to empty string
 
     console.log("Received email in reset-password route:", {email});
-    res.render("resetPassTchr", { email});
+    res.render("resetPassTchr", { teachers: [], email }); // Provide empty teachers
 });
+// res.render("resetPassTchr", { email});
 
   router.post('/verifyemail',verifyEmail);
   router.post('/signup', upload.single('pic'), handleSignup);
