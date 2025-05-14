@@ -14,13 +14,26 @@ async function handleSignup(req,res){
         console.log(req.body)
         let signupErrors = {};  
       let  loginErrors={}; 
-        // Validate fields
-        if (validator.isEmpty(fname)) signupErrors.fname = "First name is required";
-        if (validator.isEmpty(lname)) signupErrors.lname = "Last name is required";
-        if (!validator.isEmail(email)) signupErrors.email = "Please enter a valid email address";
-        if (!validator.isLength(pwd, { min: 8 }) || !validator.isStrongPassword(pwd)) {
-            signupErrors.pwd = "Password must be at least 8 characters, with one uppercase letter, one number, and one special character.";
-        }
+      const nameRegex = /^[A-Za-z\s'-]+$/;
+const repeatedCharRegex = /^([a-zA-Z])\1+$/; // matches same character repeated
+
+// Validate First Name
+if (validator.isEmpty(fname)) {
+    signupErrors.fname = "First name is required";
+} else if (!nameRegex.test(fname)) {
+    signupErrors.fname = "First name must contain only letters, spaces, hyphens or apostrophes";
+} else if (repeatedCharRegex.test(fname.trim())) {
+    signupErrors.fname = "First name cannot be made of a single repeated letter";
+}
+
+// Validate Last Name
+if (validator.isEmpty(lname)) {
+    signupErrors.lname = "Last name is required";
+} else if (!nameRegex.test(lname)) {
+    signupErrors.lname = "Last name must contain only letters, spaces, hyphens or apostrophes";
+} else if (repeatedCharRegex.test(lname.trim())) {
+    signupErrors.lname = "Last name cannot be made of a single repeated letter";
+}
 
         if (pwd !== confirm_pwd) signupErrors.confirm_pwd = "Passwords do not match";
     
@@ -57,7 +70,7 @@ async function handleSignup(req,res){
         console.log(newTchr.email);
         return res.redirect('/tchr/verifyemail');
 
-        // res.redirect('/tchr/login');
+        // res.redirectr('/tchr/login');
     } catch (error) {
         console.error("Error during signup:", error);
         res.render('tchrSignup', {
@@ -216,7 +229,9 @@ async function handleProfileTchr (req, res, showAllExperiments = false) {
             { id: "massExp", exp_no: "2", title: "Mass Spring System", description: "To determine the acceleration due to gravity by oscillating mass spring system", image: "/images/mass2.jpg" },
             { id: "meterExp", exp_no: "3", title: "Meter Rod Method", description: "Verify the conditions of equilibrium by suspended meter rod method", image: "/images/physic-meter-rod.jpg" },
             { id: "forceExp", exp_no: "4", title: "Force Table", description: "To find the unknown weight of a body by the method of rectangular component of forces", image: "/images/incline-plane.jpg" },
-            { id: "inclineExp", exp_no: "5", title: "Resonance Exp", description: "Determine the velocity of sound at 0 degree C by resonance tube apparatus", image: "/images/resonance.jpg" }
+            { id: "inclineExp", exp_no: "5", title: "Resonance Exp", description: "Determine the velocity of sound at 0 degree C by resonance tube apparatus", image: "/images/resonance.jpg" },
+                        { id: "Arch", exp_no: "6", title: "Archimedes’ Principle", description: "Verification of Archimedes' Principle and Buoyant Force", image: "/images/coming.jpeg" }
+
           ];
           
               
@@ -232,8 +247,8 @@ async function handleProfileTchr (req, res, showAllExperiments = false) {
             role: teacher.role,
             joinDate: teacher.createdAt,
             profilePic: profilePic,
-            experiments: experimentsToShow,
-            allExperiments: showAllExperiments,
+            experiments: experiments, // Send ALL experiments
+            initiallyShowAll: false, // Just a flag for initial state
             user: req.user, communities
         });
     } catch (err) {
@@ -256,7 +271,7 @@ async function handlegetUpdate(req, res) {
     res.render('updateTchr', {
         fname: user.fname,
         lname: user.lname,
-        email: user.email,
+        // email: user.email,
         pic: user.pic,
     });
    }

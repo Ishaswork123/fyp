@@ -25,7 +25,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
+    <style>
+      .tab{
+      padding-left: 10px;
+      }
+      .login-snip{
+        padding: 30px;
+      }
+      .input form-control{
+        padding: 70px;
+      }
+      </style>
   
   </head>
   <body>
@@ -233,7 +243,7 @@
       <input id="pwd" name="pwd" type="password" 
           class="input form-control <% if (signupError && signupError.confirm_pwd) { %> is-invalid <% } %>" 
           placeholder="Enter your password">
-      <i class="fa fa-eye togglePassword" ></i>
+      <i class="fa fa-eye togglePassword" style="color: black;" ></i>
   </div>
   <% if (typeof signupErrors !== 'undefined' && signupErrors.pwd) { %>
     <div class="error-text"><%= signupErrors.pwd %></div>
@@ -246,7 +256,7 @@
       <input id="confirm_pwd" name="confirm_pwd" type="password" 
           class="input form-control <% if (signupError && signupError.confirm_pwd) { %> is-invalid <% } %>" 
           placeholder="Repeat your password">
-      <i class="fa fa-eye togglePassword" ></i>
+      <i class="fa fa-eye togglePassword" style="color: black;" ></i>
   </div>
   <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %>
     <div class="error-text"><%= signupErrors.confirm_pwd %></div>
@@ -377,6 +387,7 @@ document.querySelectorAll('.togglePassword').forEach(function(icon) {
     });
 });
 </script>
-
+<!-- Add this at the end of your HTML, just before the closing </body> tag -->
+<script src="/js/signup-validation.js"></script>
   </body>
 </html>

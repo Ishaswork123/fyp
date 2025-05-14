@@ -12,7 +12,8 @@ const titles = {
   2: 'Mass Spring System',
   3: 'Meter Rod Method',
   4: 'Force Table',
-  5: 'Resonance Exp'
+  5: 'Resonance Exp',
+  6:'Archimedes’ Principle'
 };
 
 async function getQuiz(req, res) {

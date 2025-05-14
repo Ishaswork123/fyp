@@ -7,9 +7,98 @@
   <title>Pendulum System Experiment</title>
   <link rel="stylesheet" href="/css-file/pendulum.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+  <link rel="stylesheet" href="/css-file/model.css" />
+
 </head>
 
 <body >
+  <!-- Completely Isolated Modal (no Bootstrap, no external dependencies) -->
+  <div id="isolatedModal">
+    <div id="modalOverlay"></div>
+    <div id="modalContent">
+      <div id="modalHeader">
+        <div id="modalTitle">
+          <i class="fas fa-balance-scale"></i>
+          Experiment Details
+        </div>
+        <button id="closeModalBtn">&times;</button>
+      </div>
+      <div id="modalBody">
+        <div class="experiment-title">
+          <h2>🔍 Experiment Title:</h2>
+          <h3>Verification of Laws Governing the Time Period of a Simple Pendulum</h3>
+        </div>
+
+        <div class="experiment-section">
+          <h4><i class="fas fa-bullseye me-2"></i>🎯 Learning Objectives:</h4>
+          <ul class="objectives-list">
+            <li>Verify that the time period is independent of the amplitude (for small angles).</li>
+            <li>Confirm the time period is independent of the mass of the bob.</li>
+            <li>Establish that the time period is directly proportional to the square root of the pendulum's length.</li>
+            <li>Learn how to accurately measure physical quantities such as time, length, and radius.</li>
+            <li>Understand and apply the formula: <code>T = 2π√(L/g)</code>.</li>
+          </ul>
+        </div>
+
+        <div class="experiment-section">
+          <h4><i class="fas fa-tools me-2"></i>🛠️ How to Perform the Experiment:</h4>
+          <div class="procedure-steps">
+           
+
+            <div class="procedure-step">
+              <h5>1. Prepare the Pendulum:</h5>
+              <p>Tie one end of a 1.5 m fine thread to the bob’s hook and fix the other end securely between split corks held by an iron stand.</p>
+            </div>
+
+            <div class="procedure-step">
+              <h5>2. Adjust Position:</h5>
+              <p>Ensure the lower surface of the cork is horizontal and the pendulum swings in a single vertical plane.</p>
+            </div>
+
+            <div class="procedure-step">
+              <h5>3. Define the Length:</h5>
+              <p>Total length (L) = length of thread + radius of bob. Ensure accurate vertical alignment and motion.</p>
+            </div>
+
+            <div class="procedure-step">
+              <h5>4. Mark Reference Lines:</h5>
+              <p>Draw intersecting chalk lines on the floor. Position the bob at their intersection to define the equilibrium position.</p>
+            </div>
+
+            <div class="procedure-step">
+              <h5>5. Perform Trials:</h5>
+              <p>Release the bob with small amplitude. Use a stopwatch to time 20 oscillations and calculate the time period.</p>
+            </div>
+
+            <div class="procedure-step">
+              <h5>6. Vary Parameters:</h5>
+              <p>Change amplitude, length, and mass to verify dependencies and independencies of the time period.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="experiment-section">
+          <h4><i class="fas fa-check-circle me-2"></i>✅ What You Will Learn:</h4>
+          <ul class="outcomes-list">
+            <li>The time period of a pendulum does not depend on amplitude or bob's mass.</li>
+            <li>It is directly proportional to the square root of its length.</li>
+            <li>How to record and analyze data from oscillations.</li>
+            <li>How to plot graphs like T² vs L and derive relationships.</li>
+            <li>Application of theoretical physics through practical setup.</li>
+          </ul>
+        </div>
+      </div>
+      <div id="modalFooter">
+        <button id="startExperimentBtn">Start Experiment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Show modal button (fixed position) -->
+  <button id="showModalBtn" title="Show Experiment Information">
+    <i class="fas fa-info-circle"></i>
+  </button>
   <div class="container">
     <div id="pendulum-container" class="pendulum-container">
       <canvas id="pendulumCanvas" width="100%" height="80%"></canvas>
@@ -219,7 +308,7 @@
   </div>
 <div class="navigation-bar">
   <div class="home-button">
-    <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+    <a href="/home"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
   </div>
   <div class="tabs">
     <a href="/exp/penExp" class="tab active" data-section="intro">Custom</a>
@@ -231,6 +320,43 @@
   </div>
 </div>
   <script src="/js/pendulum.js"></script>
+  <script>
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get modal elements
+      const modal = document.getElementById('isolatedModal');
+      const modalOverlay = document.getElementById('modalOverlay');
+      const closeBtn = document.getElementById('closeModalBtn');
+      const startBtn = document.getElementById('startExperimentBtn');
+      const showModalBtn = document.getElementById('showModalBtn');
+      
+      // Function to open modal
+      function openModal() {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+      }
+      
+      // Function to close modal
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+      }
+      
+      // Show modal on page load
+      openModal();
+      
+      // Event listeners
+      closeBtn.addEventListener('click', closeModal);
+      startBtn.addEventListener('click', closeModal);
+      modalOverlay.addEventListener('click', closeModal);
+      showModalBtn.addEventListener('click', openModal);
+      
+      // Prevent clicks inside modal content from closing the modal
+      document.getElementById('modalContent').addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -9,7 +9,7 @@ const meterRod=require('../Model/meterRod');
 const grav=require('../Model/grav');
 const resonance = require('../Model/resonance');
 
-
+const Arch=require('../Model/archimedesPrinciple');
 
 function isAuthenticated(req, res, next) {
   console.log('Cookies in request:', req.cookies);
@@ -39,13 +39,14 @@ router.get('/experiments', isAuthenticated, async (req, res) => {
         const meterrod= await meterRod.find({});
         const resonance= await Resonance.find({});
         const force_exp= await grav.find();
-
+const Archs=await Arch.find();
         res.render('experiments', {
             penExperiments,
             springExperiments,
             meterrod,
             resonance,
             force_exp,
+            Archs,
             showStudentModal: false,
             showGradeSection: false,
             exp_no: null,
@@ -73,6 +74,9 @@ router.get('/experiments', isAuthenticated, async (req, res) => {
         } else if (exp_no === '5') {
             students = await resonance.find().distinct('studentName');
         }
+        else if (exp_no === '6') {
+            students = await Arch.find().distinct('studentName');
+        }
 
         res.render('experiments', {
             penExperiments: [],
@@ -80,6 +84,8 @@ router.get('/experiments', isAuthenticated, async (req, res) => {
             meterrod:[],
             resonance :[],
             force_exp : [],
+            Archs:[],
+
             showStudentModal: true,
             showGradeSection: false,
             exp_no,
@@ -108,6 +114,9 @@ router.post('/select-student', isAuthenticated, async (req, res) => {
         } else if (exp_no === '5') {
             studentData = await resonance.find({ studentName });
         }
+          else if (exp_no === '6') {
+            studentData = await Arch.find({ studentName });
+        }
 
         res.render('experiments', {
             penExperiments: [],
@@ -115,6 +124,7 @@ router.post('/select-student', isAuthenticated, async (req, res) => {
             meterrod: [],
             resonance: [],
             force_exp: [],
+            Archs:[],
             showStudentModal: false,
             showGradeSection: true,
             exp_no,

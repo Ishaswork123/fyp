@@ -3,7 +3,7 @@ const express=require('express');
 const router=express.Router();
 const path = require('path');
 const {handle_Save_Spring_Exp,handle_pen_exp,handleResonancePost,handleEquilibriumPost
-    ,handleForceExperimentPost
+    ,handleForceExperimentPost,handleArchimedesExperimentPost
 } = require('../Controller/exp');
 const experiments = [
     { id: "penExp", title: "Pendulum", description: "Verification of the laws of simple pendulum", image: "/images/course_1.jpg" },
@@ -37,6 +37,12 @@ router.get('/forceExp', (req, res) => {
     res.render("grav");
 });
 
+
+router.get('/Arch',(req,res)=>{
+    res.render('Archimedes')
+})
+
+router.post('/Arch',handleArchimedesExperimentPost);
 router.post('/penExp',   handle_pen_exp);
 
 router.post('/massExp',handle_Save_Spring_Exp);

@@ -116,7 +116,9 @@
             { exp_no: 2, title: "massExp" },
             { exp_no: 3, title: "MeterRod" },
             { exp_no: 4, title: "ForceExp" },
-            { exp_no: 5, title: "resonance" }
+            { exp_no: 5, title: "resonance" },
+                        // { exp_no: 6, title: "Archimedes’ Principle" },
+
         ]; %>
         <% experiments.forEach(exp => { %>
           <option value="<%= exp.exp_no %>"><%= exp.exp_no %> - <%= exp.title %></option>
@@ -148,7 +150,7 @@
       <label for="total_questions">Total Questions:</label>
       <input type="number" id="total_questions" name="total_questions" min="1" max="10" required oninput="validateTotalQuestions(this)">
 
-      <button type="button" onclick="startQuizCreation()">Start</button>
+      <button type="button" onclick="startQuizCreation()" id="startBtn">Start</button>
     </form>
   </div>
 </div>
@@ -210,7 +212,7 @@
                 <div class="footer_contact_info">
                   <ul>
                     <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
-                    <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                    <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064 | +92-3019575969</li>
                     <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
                       fa21-bcs-046@cuiatk.edu.pk</li>
                   </ul>

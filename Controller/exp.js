@@ -6,7 +6,7 @@ const penExp=require('../Model/penExp');
 const meterRod=require('../Model/meterRod');
 const grav=require('../Model/grav');
 
-
+const ArchimedesExp=require('../Model/archimedesPrinciple');
 
 
 
@@ -266,9 +266,54 @@ async function handleForceExperimentPost(req, res) {
 }
 
 
+async function handleArchimedesExperimentPost(req, res) {
+  const {
+    weightInAir1, weightInLiquid1, volumeDisplaced1, buoyantForce1, apparentWeight1,
+    weightInAir2, weightInLiquid2, volumeDisplaced2, buoyantForce2, apparentWeight2,
+    weightInAir3, weightInLiquid3, volumeDisplaced3, buoyantForce3, apparentWeight3
+  } = req.body;
 
+  try {
+    // Step 1: Extract student from token
+    const tokenPayload = getTokenFromCookies(req, 'student_token');
+    if (!tokenPayload) return res.status(401).send('User not authenticated');
+
+    const student = await User.findById(tokenPayload.id);
+    if (!student) return res.status(404).send('Student not found');
+
+    // Step 2: Check if student already submitted experiment no. 6
+    const existingExp = await ArchimedesExp.findOne({
+      studentId: student._id,
+      exp_no: "6"
+    });
+
+    if (existingExp) {
+      return res.send(
+        `<script>alert('You have already performed this experiment earlier. You cannot attempt it again.'); window.location.href='/stdConsole';</script>`,
+      );
+    }
+
+    // Step 3: Create new entry
+    const newArchimedesExp = new ArchimedesExp({
+      studentId: student._id,
+      studentName: student.fname,
+      exp_no: "6",
+
+      weightInAir1, weightInLiquid1, volumeDisplaced1, buoyantForce1, apparentWeight1,
+      weightInAir2, weightInLiquid2, volumeDisplaced2, buoyantForce2, apparentWeight2,
+      weightInAir3, weightInLiquid3, volumeDisplaced3, buoyantForce3, apparentWeight3
+    });
+
+    await newArchimedesExp.save();
+    console.log("Archimedes experiment data saved.");
+    res.redirect('/stdConsole');
+  } catch (err) {
+    console.error("Error saving Archimedes experiment data:", err);
+    res.status(500).send("Error saving data.");
+  }
+}
 module.exports = {handle_Save_Spring_Exp,handle_pen_exp,handleResonancePost
-  ,handleEquilibriumPost,handleForceExperimentPost
+  ,handleEquilibriumPost,handleForceExperimentPost,handleArchimedesExperimentPost
 
 }
 

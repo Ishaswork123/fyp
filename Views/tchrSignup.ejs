@@ -25,7 +25,14 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
-
+<style>
+.tab{
+padding-left: 10px;
+}
+.login-snip{
+  padding: 30px;
+}
+</style>
 </head>
 <body>
 
@@ -87,7 +94,7 @@
       <!-- <div class="container"> -->
     <div class="row d-flex justify-content-center align-items-center">
       <div class="col-md-8 col-sm-10 mx-auto p-0">
-               <div class="login-box">
+               <div class="login-box" >
                   <div class="login-snip">
                       <!-- Use a variable to set which tab is active based on form submission -->
                       <input id="tab-1" type="radio" name="tab" class="sign-in" <% if (activeTab === 'login') { %> checked <% } %>>
@@ -199,7 +206,7 @@
                                         <input id="pwd" name="pwd" type="password" 
                                             class="input form-control <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
                                             placeholder="Enter your password">
-                                        <i class="toggle-password fa fa-eye"></i>
+                                        <i class="toggle-password fa fa-eye" style="color: black;"></i>
                                     </div>
                                     <% if (typeof signupErrors !== 'undefined' && signupErrors.pwd) { %>
                                         <div class="error-text"><%= signupErrors.pwd %></div>
@@ -212,7 +219,7 @@
                                         <input id="confirm_pwd" name="confirm_pwd" type="password" 
                                             class="input form-control <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %> is-invalid <% } %>" 
                                             placeholder="Repeat your password">
-                                        <i class="toggle-password fa fa-eye"></i>
+                                        <i class="toggle-password fa fa-eye" style="color: black;"></i>
                                     </div>
                                     <% if (typeof signupErrors !== 'undefined' && signupErrors.confirm_pwd) { %>
                                         <div class="error-text"><%= signupErrors.confirm_pwd %></div>
@@ -318,6 +325,7 @@ document.querySelectorAll('.toggle-password').forEach(function(icon) {
     });
 });
 </script>
-
+<!-- Add this at the end of your HTML, just before the closing </body> tag -->
+<script src="/js/signup-validation.js"></script>
   </body>
 </html>

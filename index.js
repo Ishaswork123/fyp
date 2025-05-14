@@ -5,11 +5,6 @@ const jwt=require('jsonwebtoken');
 
 const express=require('express');
 const app=express();
-const session = require("express-session");
-const MongoStore = require('connect-mongo');
-
-const mongoose =require('mongoose');
-const bcrypt = require("bcrypt");
 // const bodyParser = require("body-parser");
 const path =require('path');
 
@@ -115,26 +110,26 @@ app.use(cookieParser());
 
     app.use(express.static(path.join(__dirname, 'public')));
 
-
     // app.use(bodyParser.json());
     
     
     app.use(express.urlencoded({ extended: true })); // For URL-encoded form data
     app.use(express.json()); // For JSON data
-    app.use((req, res, next) => {
-      const cspValue = [
-        "default-src 'self'",
-        "connect-src 'self' ws://localhost:5008",
-        "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com",
-        "script-src 'self' 'unsafe-inline' http://localhost:5004/js https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com https://ajax.googleapis.com https://cdnjs.cloudflare.com/ajax/libs/popper.js https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic https://kit.fontawesome.com",
-        "img-src 'self' data: https://media.istockphoto.com https://5004",
-        "frame-ancestors 'none'"
-      ].join('; ');
-    
-      res.setHeader("Content-Security-Policy", cspValue);
-      next();
-    });
+   app.use((req, res, next) => {
+  const cspValue = [
+    "default-src 'self'",
+    "connect-src 'self' ws://localhost:5008",
+    "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com",
+    "script-src 'self' 'unsafe-inline' http://localhost:5004/js https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com https://ajax.googleapis.com https://cdnjs.cloudflare.com/ajax/libs/popper.js https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic https://kit.fontawesome.com",
+    "img-src 'self' data: https://media.istockphoto.com https://5004",
+    "frame-ancestors 'self' http://localhost:5012"
+  ].join('; ');
+
+  res.setHeader("Content-Security-Policy", cspValue);
+  next();
+});
+
     
     
   // app.use((req, res, next) => {
@@ -145,6 +140,7 @@ app.use(cookieParser());
   
     
 
+
     // Experiment Data
 const experiments = [
   { id: "penExp", title: "Pendulum", description: "Verification of the laws of simple pendulum", image: "/images/course_1.jpg" },
@@ -154,6 +150,7 @@ const experiments = [
   { id: "inclineExp", title: "Resonance Exp", description: " Determine the velocity of sound at 0 degree C by resonance Tube  apparatus using first resonance position and applying end correction: "
       , image: "/images/course_5.jpg" }
 ];
+
 function isAuthenticated(req, res, next) {
   console.log('Cookies in request:', req.cookies);
 
@@ -180,7 +177,36 @@ function isAuthenticated(req, res, next) {
 
     
 
-
+// Home button route handler
+app.get('/home', (req, res) => {
+  try {
+    // Check for authentication tokens
+    const teacherToken = getTokenFromCookies(req, 'teacher_token');
+    const studentToken = getTokenFromCookies(req, 'student_token');
+    
+    // If no tokens, redirect to login
+    if (!teacherToken && !studentToken) {
+      console.log('No valid token found. Redirecting to login.');
+      res.clearCookie('teacher_token');
+      res.clearCookie('student_token');
+      return res.redirect('/');
+    }
+    
+    // Determine user type and redirect accordingly
+    if (teacherToken) {
+      console.log('Teacher detected. Redirecting to teacher console.');
+      return res.redirect('/tchr/tchrConsole');
+    } else {
+      console.log('Student detected. Redirecting to student console.');
+      return res.redirect('/stdConsole');
+    }
+  } catch (error) {
+    console.error('Error in home redirect:', error);
+    res.clearCookie('teacher_token');
+    res.clearCookie('student_token');
+    return res.redirect('/');
+  }
+});
 
      app.get('/',(req,res)=>{
         res.render('Home');
@@ -202,8 +228,8 @@ app.use('/tchr',expRes);
 app.use('/std',stdRes1);
 
 
-app.get('/tchr/tchrConsole', isAuthenticated,async (req, res) => {
-  handleProfileTchr(req, res, false); // Pass `false` to show only 3 random experiments
+app.get('/tchr/tchrConsole', isAuthenticated,(req, res) => {
+  handleProfileTchr(req, res, ); // Pass `false` to show only 3 random experiments
 });
 
 // Route to display all experiments
@@ -216,7 +242,7 @@ app.get('/view-all', isAuthenticated, async(req, res) => {
 // });
 
 // Route for showing only a few experiments
-app.get('/stdConsole', isAuthenticated, (req, res) => handleProfile(req, res, false));
+app.get('/stdConsole', isAuthenticated, (req, res) => handleProfile(req, res));
 
 // Route for showing all experiments
 app.get('/std/view-all', isAuthenticated, (req, res) => handleProfile(req, res, true));
@@ -249,7 +275,7 @@ app.use((err, req, res, next) => {
       // show full error only in development mode
   });
 });
-const PORT = process.env.PORT || 5012;
+const PORT = process.env.PORT || 5013;
 
 app.listen(PORT, () => {
     console.log(`Server started at port ${PORT}`);

@@ -15,8 +15,27 @@ async function handleSignup(req,res){
         let signupError = {};  
       let  loginError={}; 
         // Validate fields
-        if (validator.isEmpty(fname)) signupError.fname = "First name is required";
-        if (validator.isEmpty(lname)) signupError.lname = "Last name is required";
+        const nameRegex = /^[A-Za-z\s'-]+$/;
+        const repeatedCharRegex = /^([a-zA-Z])\1+$/; // matches same character repeated
+        
+        // Validate First Name
+        if (validator.isEmpty(fname)) {
+            signupError.fname = "First name is required";
+        } else if (!nameRegex.test(fname)) {
+            signupError.fname = "First name must contain only letters, spaces, hyphens or apostrophes";
+        } else if (repeatedCharRegex.test(fname.trim())) {
+            signupError.fname = "First name cannot be made of a single repeated letter";
+        }
+        
+        // Validate Last Name
+        if (validator.isEmpty(lname)) {
+            signupErrors.lname = "Last name is required";
+        } else if (!nameRegex.test(lname)) {
+            signupError.lname = "Last name must contain only letters, spaces, hyphens or apostrophes";
+        } else if (repeatedCharRegex.test(lname.trim())) {
+            signupError.lname = "Last name cannot be made of a single repeated letter";
+        }
+        
         if (!validator.isEmail(email)) signupError.email = "Please enter a valid email address";
         if (!validator.isLength(pwd, { min: 8 }) || !validator.isStrongPassword(pwd)) {
             signupError.pwd = "Password must be at least 8 characters, with one uppercase letter, one number, and one special character.";
@@ -210,14 +229,15 @@ async function handleProfile(req, res, allExperiments = false) {
             { id: "massExp", exp_no: "2", title: "Mass Spring System", description: "To determine the acceleration due to gravity by oscillating mass spring system", image: "/images/mass2.jpg" },
             { id: "meterExp", exp_no: "3", title: "Meter Rod Method", description: "Verify the conditions of equilibrium by suspended meter rod method", image: "/images/physic-meter-rod.jpg" },
             { id: "forceExp", exp_no: "4", title: "Force Table", description: "To find the unknown weight of a body by the method of rectangular component of forces", image: "/images/incline-plane.jpg" },
-            { id: "inclineExp", exp_no: "5", title: "Resonance Exp", description: "Determine the velocity of sound at 0 degree C by resonance tube apparatus", image: "/images/resonance.jpg" }
+            { id: "inclineExp", exp_no: "5", title: "Resonance Exp", description: "Determine the velocity of sound at 0 degree C by resonance tube apparatus", image: "/images/resonance.jpg" },
+                                    { id: "Arch", exp_no: "6", title: "Archimedes’ Principle", description: "Verification of Archimedes' Principle and Buoyant Force", image: "/images/coming.jpeg" }
+
           ];
           
 
         const profilePic = student.pic ? `data:image/jpeg;base64,${student.pic}` : '/images/default-profile-icon.jpg';
 
         // Only show first three experiments in stdConsole, all in std/view-all
-        const filteredExperiments = allExperiments ? experiments : experiments.slice(0, 3);
 
         res.render('stdConsole', {
             name: student.fname + ' ' + student.lname,
@@ -227,9 +247,9 @@ async function handleProfile(req, res, allExperiments = false) {
             teachers: teachers,
             user: req.user,
             communities: communities,
-            experiments: filteredExperiments,
-            allExperiments: allExperiments
-        });
+            experiments: experiments, // Send ALL experiments
+            initiallyShowAll: false, // Set to true or false based on your needs       
+             });
 
     } catch (err) {
         console.error(err);

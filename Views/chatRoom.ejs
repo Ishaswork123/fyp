@@ -275,12 +275,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
 
                  <!-- Leave Community Button -->
-                 <div class="leave-section">
-                    <form action="/std/leave" method="POST" onsubmit="return confirm('Are you sure you want to leave this community?');">
-                        <input type="hidden" name="communityId" value="<%= community._id %>">
-                        <button type="submit" class="leave-btn">Leave Community</button>
-                    </form>
-                </div>
+                 <div class="leave-section" >
+                  <a href="/stdConsole" class="leave-btn">
+                     Leave Community
+                  </a>
+              </div>
+              
             </div>
         </div>
         
@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="footer_contact_info">
               <ul>
                 <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
-                <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064 | +92-3019575969</li>
                 <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
                   fa21-bcs-046@cuiatk.edu.pk</li>
               </ul>

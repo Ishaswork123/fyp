@@ -11,8 +11,98 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
 />
+<link rel="stylesheet" href="/css-file/model.css">
 </head>
+
 <body>
+    <!-- Completely Isolated Modal (no Bootstrap, no external dependencies) -->
+    <div id="isolatedModal">
+      <div id="modalOverlay"></div>
+      <div id="modalContent">
+        <div id="modalHeader">
+          <div id="modalTitle">
+            <i class="fas fa-balance-scale"></i>
+            Experiment Details
+          </div>
+          <button id="closeModalBtn">&times;</button>
+        </div>
+        <div id="modalBody">
+          <div class="experiment-title">
+            <h2>🔍 Experiment Title:</h2>
+            <h3>To Determine the Acceleration Due to Gravity Using an Oscillating Mass-Spring System</h3>
+          </div>
+    
+          <div class="experiment-section">
+            <h4><i class="fas fa-bullseye me-2"></i>🎯 Learning Objectives:</h4>
+            <ul class="objectives-list">
+              <li>Understand the principles of simple harmonic motion (SHM) in a mass-spring system.</li>
+              <li>Measure the time period for different masses attached to a spring.</li>
+              <li>Establish the relationship between mass and square of time period (T² ∝ m).</li>
+              <li>Determine the spring constant and calculate the acceleration due to gravity (g).</li>
+            </ul>
+          </div>
+    
+          <div class="experiment-section">
+            <h4><i class="fas fa-tools me-2"></i>🛠️ How to Perform the Experiment:</h4>
+            <div class="procedure-steps">
+    
+              <div class="procedure-step">
+                <h5>1. Set Up the Apparatus:</h5>
+                <p>Fix a helical spring to a clamp stand and hang a slotted weight hanger with a pointer at the bottom end. Ensure a meter scale is placed vertically beside it.</p>
+              </div>
+    
+              <div class="procedure-step">
+                <h5>2. Zero Adjustment:</h5>
+                <p>Ensure the pointer is freely hanging and aligned parallel to the scale markings without touching the scale.</p>
+              </div>
+    
+              <div class="procedure-step">
+                <h5>3. Note Initial Position:</h5>
+                <p>Record the resting position of the pointer without any load on the spring.</p>
+              </div>
+    
+              <div class="procedure-step">
+                <h5>4. Add Load and Observe Extension:</h5>
+                <p>Add a known weight (e.g., 150g) to the hanger. Note the new pointer position to determine spring extension.</p>
+              </div>
+    
+              <div class="procedure-step">
+                <h5>5. Initiate Oscillations:</h5>
+                <p>Displace the hanger slightly (2–3 cm) and release it to start vertical oscillations.</p>
+              </div>
+    
+              <div class="procedure-step">
+                <h5>6. Time the Oscillations:</h5>
+                <p>Use a stopwatch to measure the time for 30 complete oscillations.</p>
+              </div>
+    
+              <div class="procedure-step">
+                <h5>7. Repeat for Different Masses:</h5>
+                <p>Increase the load in steps (e.g., 200g, 250g, 300g, 350g) and repeat the timing process for each case.</p>
+              </div>
+            </div>
+          </div>
+    
+          <div class="experiment-section">
+            <h4><i class="fas fa-check-circle me-2"></i>✅ What You Will Learn:</h4>
+            <ul class="outcomes-list">
+              <li>The nature of SHM in a vertical mass-spring system.</li>
+              <li>The time period increases with added mass.</li>
+              <li>The relationship between T² and mass is linear.</li>
+              <li>How to derive the value of acceleration due to gravity using experimental data and the formula: <code>T = 2π√(m/k)</code>.</li>
+            </ul>
+          </div>
+        </div>
+        <div id="modalFooter">
+          <button id="startExperimentBtn">Start Experiment</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Show modal button (fixed position) -->
+    <button id="showModalBtn" title="Show Experiment Information">
+      <i class="fas fa-info-circle"></i>
+    </button>
     <div class="massInput">
   
           <label for="massSlider">Mass (g):</label>
@@ -180,7 +270,7 @@
 </div>
 <div class="navigation-bar">
   <div class="home-button">
-    <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+    <a href="/home"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
   </div>
   <div class="tabs">
     <div class="tabs">
@@ -193,6 +283,43 @@
     <img src="/images/R.jpeg" alt="CUI logo" />
   </div>
 </div>
-<script src="/js/mass-spring.js"></script>
+<script src="/mass-spring.js"></script>
+<script>
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get modal elements
+    const modal = document.getElementById('isolatedModal');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const startBtn = document.getElementById('startExperimentBtn');
+    const showModalBtn = document.getElementById('showModalBtn');
+    
+    // Function to open modal
+    function openModal() {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+    
+    // Function to close modal
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+    }
+    
+    // Show modal on page load
+    openModal();
+    
+    // Event listeners
+    closeBtn.addEventListener('click', closeModal);
+    startBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+    showModalBtn.addEventListener('click', openModal);
+    
+    // Prevent clicks inside modal content from closing the modal
+    document.getElementById('modalContent').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  });
+</script>
 </body>
 </html>

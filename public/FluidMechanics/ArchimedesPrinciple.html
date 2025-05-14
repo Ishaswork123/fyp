@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Archimede's principle</title>
+    <link type="text/css" rel="Stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/controls.css">
+    <style>
+        
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.button-container.right {
+  justify-content: flex-end;
+}
+
+.button {
+  background-color: #040842;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #040842;
+}
+
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  
+}
+
+table th,
+table td {
+  border: 1px solid #0f0f0f;
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #ffffff;
+}
+
+table input {
+  width: 50%;
+  padding: 6px;
+  border: 1px solid #050505;
+  /* border-radius: 4px; */
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  table {
+    font-size: 14px;
+    /* color: white; */
+  }
+
+  table th,
+  table td {
+    padding: 6px;
+  }
+}
+
+    </style>
+</head>
+
+<body>
+
+    <script src="../js_1/framesRendering.js"></script>
+    <script src="../js_1/appMethods.js"></script>
+
+    <!-- Body weight input -->
+    <div class="content">
+        <div class="contentTitle">Body weight (kg): </div>
+        <div class="content">
+            <!-- Weight slider -->
+            <input type="range" min="1" max="100" value="50" step="1" class="slider" id="weightRange">
+            <!-- Value label-->
+            <div class="text"> </div>
+        </div>
+    </div>
+
+    <!--Liquid density -->
+    <div class="content">
+        <div class="contentTitle">Density of liquid (kg/m<sup>3</sup>): </div>
+        <div class="content">
+            <input id="liquidDensityTextBox" size="5" type="text" value="997" />
+        </div>
+    </div>
+
+
+    <!--Body density -->
+    <div class="content">
+        <div class="contentTitle">Density of body (kg/m<sup>3</sup>): </div>
+        <div class="content">
+            <input id="bodyDensityTextBox" size="5" type="text" value="1500" />
+        </div>
+    </div>
+
+
+
+    <!--Max dynam. value -->
+    <div class="content">
+        <div class="contentTitle">Max value (N): </div>
+        <div class="content">
+            <!-- Max dynam. value slider -->
+            <input type="range" min="5" max="1000" value="600" step="1" class="slider" id="maxValueRange">
+            <!-- Value label-->
+            <div class="text"> </div>
+        </div>
+    </div>
+
+
+
+    <br>
+    <!--Equation of body volume-->
+    <div class="content">
+        <span>V<sub>body</sub> = m / &#961; <sub>body</sub> = <span id="volumeLabel"> 0 </span> (m<sup>3</sup>)
+        </span>
+    </div>
+
+    <!--Equation of buyonant force-->
+    <div class="content">
+        <span>F<sub>buyonant</sub> = &#961; <sub>liquid</sub> * g * V<sub>body</sub>= <span id="forceLabel"> 0 </span> (N)
+        </span>
+    </div>
+
+    <!--Gravity force-->
+    <div class="content">
+        <span>F<sub>gravity</sub> = <span id="gravityLabel"> 0 </span> (N) </span> 
+    </div>
+
+
+    <br>
+
+    <!--Condition-->
+    <div class="content">
+        <span id="conditionLabel"> </span>
+    </div>
+
+
+
+
+<div class="content">
+      <div class="button-container">
+            <button id="toggleTableBtn" class="button">Show Experiment Table</button>
+        </div>
+</div>
+     <div id="experimentTable" class="table-container" style="display: none;">
+            <h2 style="text-align: center;">Experiment Data</h2>
+            <form action="/exp/Arch" method="post" target="_self">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Trial</th>
+                        <th>Weight in Air (N)</th>
+                        <th>Weight in Liquid (N)</th>
+                        <th>Volume Displaced (m³)</th>
+                        <th>Buoyant Force (N)</th>
+                        <th>Apparent Weight (N)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><input type="number" name="weightInAir1" placeholder="Enter value" /></td>
+                        <td><input type="number" name="weightInLiquid1" placeholder="Enter value" /></td>
+                        <td><input type="number" name="volumeDisplaced1" placeholder="Enter value" /></td>
+                        <td><input type="number" name="buoyantForce1" placeholder="Enter value" /></td>
+                        <td><input type="number" name="apparentWeight1" placeholder="Enter value" /></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input type="number" name="weightInAir2" placeholder="Enter value" /></td>
+                        <td><input type="number" name="weightInLiquid2" placeholder="Enter value" /></td>
+                        <td><input type="number" name="volumeDisplaced2" placeholder="Enter value" /></td>
+                        <td><input type="number" name="buoyantForce2" placeholder="Enter value" /></td>
+                        <td><input type="number" name="apparentWeight2" placeholder="Enter value" /></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><input type="number" name="weightInAir3" placeholder="Enter value" /></td>
+                        <td><input type="number" name="weightInLiquid3" placeholder="Enter value" /></td>
+                        <td><input type="number" name="volumeDisplaced3" placeholder="Enter value" /></td>
+                        <td><input type="number" name="buoyantForce3" placeholder="Enter value" /></td>
+                        <td><input type="number" name="apparentWeight3" placeholder="Enter value" /></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="button-container right">
+                <button id="submitBtn" class="button">Submit Data</button>
+            </div>
+            </form>
+        </div>
+    <script type="text/javascript">
+
+  const toggleTableBtn = document.getElementById("toggleTableBtn")
+  const experimentTable = document.getElementById("experimentTable")
+  const submitBtn = document.getElementById("submitBtn")
+
+  // Toggle table visibility
+  toggleTableBtn.addEventListener("click", () => {
+    if (experimentTable.style.display === "none") {
+      experimentTable.style.display = "block"
+      toggleTableBtn.textContent = "Hide Experiment Table"
+    } else {
+      experimentTable.style.display = "none"
+      toggleTableBtn.textContent = "Show Experiment Table"
+    }
+  })
+
+  // Submit button handler
+  submitBtn.addEventListener("click", () => {
+    // Collect all input values from the table
+    const tableData = []
+
+    for (let i = 1; i <= 3; i++) {
+      const rowData = {
+        trial: i,
+        weightInAir: document.querySelector(`input[name="weightInAir${i}"]`).value,
+        weightInLiquid: document.querySelector(`input[name="weightInLiquid${i}"]`).value,
+        volumeDisplaced: document.querySelector(`input[name="volumeDisplaced${i}"]`).value,
+        buoyantForce: document.querySelector(`input[name="buoyantForce${i}"]`).value,
+        apparentWeight: document.querySelector(`input[name="apparentWeight${i}"]`).value,
+      }
+
+      tableData.push(rowData)
+    }
+
+    console.log("Experiment data submitted:", tableData)
+    alert("Data submitted successfully!")
+  })
+
+        // function to post message to parent from IFrame with data
+        frameRender.passControlsMessage = function () {
+
+            let w = document.getElementById('weightRange').value;
+            let maxValue = document.getElementById("maxValueRange").value;
+            let liquidDensity = document.getElementById("liquidDensityTextBox").value;
+            let bodyDensity = document.getElementById("bodyDensityTextBox").value;
+
+            if (application.isNumber(liquidDensity) && application.isNumber(bodyDensity)) {
+                let pass_data = {
+                    'weight': w,
+                    'maxValue': maxValue,
+                    'liquidDensity': liquidDensity,
+                    'bodyDensity': bodyDensity
+                };
+
+                parent.postMessage(JSON.stringify(pass_data), "*");
+            }
+        } // passControlsMessage
+
+
+        // function to get data from the main window for IFrame
+        frameRender.receiveData = function (data) {
+            let vars = JSON.parse(data);
+            document.getElementById('forceLabel').innerHTML = vars.buyonantForce;
+            document.getElementById('volumeLabel').innerHTML = vars.volume;
+            document.getElementById('gravityLabel').innerHTML = vars.gravity;
+
+            if (vars.gravity > 0) {
+                if (vars.buyonantForce > vars.gravity)
+                    document.getElementById('conditionLabel').innerHTML = "The body is emerging";
+                if (vars.buyonantForce < vars.gravity)
+                    document.getElementById('conditionLabel').innerHTML = "The body is sinking";
+                if (vars.buyonantForce == vars.gravity)
+                    document.getElementById('conditionLabel').innerHTML = "The body is floating";
+            }
+            else{
+                document.getElementById('conditionLabel').innerHTML = "";
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

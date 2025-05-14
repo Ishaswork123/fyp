@@ -1,0 +1,104 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Physics</title>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/menu.css">
+      <link rel="stylesheet" href="/css-file/grav.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/introjs.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/intro.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <base target="BoardFrame">
+</head>
+
+<body data-intro="Welcome to Archimedes's simulation!, Follow the steps to understand the controls. " data-step="1">
+   <div id="tourContainer">
+        <button id="startTourBtn" class="tour-button">Start Tour</button>
+      </div>
+   <div class="grid-container">
+        <!-- Header area -->
+        <div class="headerArea" style="margin: 0; padding: 0;" data-intro="This is the header section showing the current application." data-step="2">
+            <div class="Title">
+                <p>Physics</p>
+            </div>
+
+            <div class="Title">
+                <p id="ApplicationHeader" data-intro="This shows the current simulation type you're working with." data-step="3">Modelling</p>
+            </div>
+        </div>
+
+        <!-- Canvas area -->
+        <div class="contentArea" id="divCanvas" data-intro="This is the main simulation area where the Archimedes' principle experiment will be visualized." data-step="4">
+            <div id="divCanvasInner">
+                <canvas id="Canvas"></canvas>
+            </div>
+        </div>
+
+        <!-- Menu area -->
+        <div class="menuArea" id="divMenu" data-intro="This menu allows you to navigate between different physics simulations." data-step="5">
+            <div id="divMenuInner">
+                <div id="divMenuBox">
+                    <div class="menu-item" id="level2" data-intro="Click on menu items to expand and see available simulations." data-step="6">
+                        <p class="firstLevelMenu">Pressure of liquids</p>
+
+                        <div hidden class="menu-sub-item" data-intro="These are the available simulations for this topic." data-step="7">
+                            <div data-topic="2" data-intro="Click here to access the Archimedes' Principle simulation." data-step="8">
+                                <a href="/FluidMechanics/guidedArch.html">Archimedes' Principle</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls area -->
+        <div class="sidebarArea" id="divControls" data-intro="This area displays the controls for the selected simulation." data-step="9">
+            <div id="divControlsInner">
+                <iframe name="BoardFrame" id="BoardFrame" width="100%" height="100%" style="border:0" data-intro="The simulation controls will appear here when you select a simulation." data-step="10">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Footer area -->
+        <div class="footerArea" style="margin-bottom: 200px;" data-intro="Additional information and navigation may appear here." data-step="11"></div>
+    </div>
+    <br><br>
+ <div class="navigation-bar">
+    <div class="home-button">
+      <a href="/home" target="_top"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+    </div>
+    <div class="tabs">
+   <a href="/exp/Arch" class="tab" data-section="intro" target="_top">Custom</a>
+<a href="/guided/Arch" class="tab active" data-section="balance-lab" target="_top">Guided Lab</a>
+<a href="/resource/6" class="tab" data-section="game" target="_top">Resources</a>
+
+    </div>
+    <div class="phet-logo">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNjAiPgogIDx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiPlBoRVQ8L3RleHQ+Cjwvc3ZnPg==" alt="PhET" />
+    </div>
+  </div>
+
+    <script src="/js_1/Tools/appliance.js"></script>
+    <script src="/js_1/Tools/dynamometer.js"></script>
+    <script src="/js_1/Tools/spring.js"></script>
+    <script src="/js_1/Tools/ruler.js"></script>
+    <script src="/js_1/Tools/springDynamometer.js"></script>
+    <script src="/js_1/Tools/stageElements.js"></script>
+    
+
+    <script src="/js_1/appMethods.js"></script>
+    <script src="/js_1/dragging.js"></script>
+    <script src="/js_1/topicsRender/forcesbyAngleRender.js"></script>
+    <script src="/js_1/topicsRender/archimedesPrincipleRender.js"></script>
+    <script src="/js_1/topicsRender/pendulumRender.js"></script>
+    <script src="/js_1/topicsRender/appliancesRender.js"></script>
+    <script src="/js_1/main.js"></script>
+  <script src="/js/start-tour.js"></script>
+
+</body>
+
+</html>

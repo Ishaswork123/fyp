@@ -25,7 +25,7 @@ function generateStudentToken(id, email) {
 function getTokenFromCookies(req, cookieName) {
     const token = req.cookies[cookieName];
     if (!token) {
-      console.log(`Token not found in cookie: ${cookieName}`);
+      // console.log(`Token not found in cookie: ${cookieName}`);
       return null;
     }
   

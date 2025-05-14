@@ -67,6 +67,12 @@
     background-color: #1e2434;
 
   }
+  .table-container{
+  overflow-x: auto;
+  }
+  .results-container{
+
+  min-width: 600px;}
 </style>
 
 </head>
@@ -111,7 +117,7 @@
                     <i class="fa fa-home" style="margin-right: 2px; "></i>
                   </a>
                 </li>
-              </ul>>
+              </ul>
              
             </nav>
           </div>
@@ -138,7 +144,7 @@
             </select>
           </label>
         </form>
-        <div style="text-align: center; margin-top: 10px; padding-right: 60px;">
+        <div style="text-align: center; margin-top: 10px; padding-right: 60px; padding-left: 20px;">
           <button class="btn btn-primary" onclick="openGraphModal()">View Graphs</button>
         </div>      </div>
 
@@ -200,14 +206,13 @@
     <% } %>
   </div>
  </div>
-  <div class="table-container">
+  <div class="table-container" style="margin-top: 20px; margin-right: 45px;"">
 <div class="results-container">
     <% if (expResults && expResults.length > 0) { %>
       <h2 style="text-align: center; font-weight: bold; font-size: 30px;">Experiemnt Result</h2>
       <table id="experimentTable" class="table table-striped">
         <thead>
           <tr>
-            <th>Student Name</th>
             <th>Experiment No</th>
             <th>Experiment Title</th>
             <th>Grade</th>
@@ -219,7 +224,6 @@
         <tbody>
           <% expResults.forEach((result, i) => { %>
             <tr data-exp="<%= result.exp_no %>">
-              <td><%= result.studentId ? result.studentId.fname : 'N/A' %></td>  <!-- Access populated studentId name -->
               <td><%= result.exp_no %></td>
               <td><%= result.exp_title %></td>
               <td class="grade"><%= result.grade %></td>
@@ -567,7 +571,7 @@ document.querySelector("select[name='exp_no']").addEventListener("change", apply
               <div class="footer_contact_info">
                 <ul>
                   <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
-                  <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                  <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064 | +92-3019575969</li>
                   <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
                     fa21-bcs-046@cuiatk.edu.pk</li>
                 </ul>

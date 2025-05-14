@@ -131,19 +131,18 @@
                           </td>
                           <td><%= quiz.Answer %></td>
                           <td>
-                              <div class="d-flex gap-2">
+                              <div class="d-flex gap-4" >
                                   <!-- Edit Button -->
                                   <form action="/tchr/quizedit/<%= quiz._id %>" method="get">
-                                      <button type="submit" class="btn btn-success btn-sm">
-                                          <i class="fas fa-edit"></i>
+                                      <button type="submit" class="btn btn-success btn-sm" style="margin-right: 10px;">
+                                          <i class="fas fa-edit" ></i>
                                       </button>
                                   </form>
-
                                   <!-- Delete Button -->
                                   <form action="/tchr/quizdelete/<%= quiz._id %>" method="POST"
                                       onsubmit="return confirm('Are you sure you want to delete this quiz?');">
                                       <button type="submit" class="btn btn-danger btn-sm">
-                                          <i class="fas fa-trash"></i>
+                                          <i class="fas fa-trash"  "></i>
                                       </button>
                                   </form>
                               </div>
@@ -210,7 +209,7 @@
             <div class="footer_contact_info">
               <ul>
                 <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
-                <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+                <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064 | +92-3019575969</li>
                 <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
                   fa21-bcs-046@cuiatk.edu.pk</li>
               </ul>

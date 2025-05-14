@@ -12,7 +12,7 @@ const sendVerificationEmail = async (email, verificationCode) => {
     console.log('Sending verification email to:', email);
 
     const response = await transporter.sendMail({
-      from: '"Tamroz" <univer7ity22o3@gmail.com>',
+      from: '"PhysicsVerse" <univer7ity22o3@gmail.com>',
       to: email, // list of receivers
       subject: "Verify your Email", // Subject line
       text: "Verify your Email", // plain text body
@@ -33,7 +33,7 @@ const sendWelcomeEmail = async (email, name) => {
     console.log('Sending welcome email to:', email);
 
     const response = await transporter.sendMail({
-      from: '"Tamroz" <univer7ity22o3@gmail.com>',
+      from: '"PhysicsVerse" <univer7ity22o3@gmail.com>',
       to: email, // list of receivers
       subject: "Welcome Email", // Subject line
       text: "Welcome Email", // plain text body
@@ -54,7 +54,7 @@ const sendVerificationEmail_reset = async (email, verificationCode) => {
     console.log('Sending verification email to:', email);
 
     const response = await transporter.sendMail({
-      from: '"Tamroz" <univer7ity22o3@gmail.com>',
+      from: '"PhysicsVerse" <univer7ity22o3@gmail.com>',
       to: email, // list of receivers
       subject: "Verify your Email", // Subject line
       text: "Verify your Email", // plain text body
@@ -75,7 +75,7 @@ const sendWelcomeEmail_reset = async (email, name) => {
     console.log('Sending welcome email to:', email);
 
     const response = await transporter.sendMail({
-      from: '"Tamroz" <univer7ity22o3@gmail.com>',
+      from: '"PhysicsVerse" <univer7ity22o3@gmail.com>',
       to: email, // list of receivers
       subject: "Welcome Email", // Subject line
       text: "Welcome Email", // plain text body
@@ -96,7 +96,7 @@ const sendWelcomeEmail_room = async (email, className, teacher, classCode) => {
     console.log('Sending welcome email to:', email);
 
     const response = await transporter.sendMail({
-      from: '"Tamroz" <univer7ity22o3@gmail.com>',
+      from: '"PhysicsVerse" <univer7ity22o3@gmail.com>',
       to: email, 
       subject: "Welcome to Your New Class!", 
       text: `Hello, welcome to ${className} class. Your class code is: ${classCode}`, 

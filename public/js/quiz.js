@@ -28,7 +28,8 @@
 
 let currentQuestion = 1;
 let totalQuestions = 0;
-let quizData = JSON.parse(localStorage.getItem('quizData')) || [];;
+let quizData=[];
+quizData = JSON.parse(localStorage.getItem('quizData')) || [];;
 let experimentNo;
 let experimentTitle;
 let exp_no;
@@ -40,6 +41,36 @@ let count=0
 window.onload = function () {
     document.getElementById('questionModal').style.display = 'block';
 };
+// Initialize the form when the document is loaded
+document.addEventListener("DOMContentLoaded", () => {
+    // Load saved data from localStorage if available
+    const savedData = localStorage.getItem("quizData")
+    if (savedData) {
+      quizData = JSON.parse(savedData)
+    }
+  
+    // Set up option input event listeners
+    setupOptionListeners()
+  })
+
+  
+function setupOptionListeners() {
+    const option1 = document.getElementById("option1")
+    const option2 = document.getElementById("option2")
+    const option3 = document.getElementById("option3")
+    const option4 = document.getElementById("option4")
+  
+    if (option1) option1.addEventListener("input", updateOptionLabels)
+    if (option2) option2.addEventListener("input", updateOptionLabels)
+    if (option3) option3.addEventListener("input", updateOptionLabels)
+    if (option4) option4.addEventListener("input", updateOptionLabels)
+  
+    // Initial update if all options exist
+    if (option1 && option2 && option3 && option4) {
+      updateOptionLabels()
+    }
+  }
+  
 
 function startQuizCreation() {
     experimentNo = document.getElementById("exp_no").value;
@@ -70,69 +101,92 @@ totalQuestion_1=totalQuestions;
     document.getElementById('questionNumberForm').style.display = 'none';
     document.getElementById('quizForm').style.display = 'block';
     showQuestionForm();
-}function showQuestionForm() {
-  const form = document.getElementById('quizQuestionForm');
-  form.innerHTML = ''; // Clear previous content
-
-  if (currentQuestion <= totalQuestions) {
-      const savedData = JSON.parse(localStorage.getItem('quizData')) || [];
-      const questionData = savedData[currentQuestion - 1] || {};
-
-      form.innerHTML += `
-          <h3>${exp_title} Quiz Question No${currentQuestion}</h3>
-
-          <label for="question">Question:</label>
-          <input type="text" id="question" name="question${currentQuestion}" value="${questionData.question || ''}" required><br>
-
-          <!-- Options with pre-filled values -->
-          <label for="option1">Option A:</label>
-          <input type="text" id="option1" name="option1${currentQuestion}" value="${questionData.option1 || ''}" onblur="addPrefix(this, 'A')" ;required><br>
-
-          <label for="option2">Option B:</label>
-          <input type="text" id="option2" name="option2${currentQuestion}" value="${questionData.option2 || ''}" onblur="addPrefix(this, 'B')"; required><br>
-
-          <label for="option3">Option C:</label>
-          <input type="text" id="option3" name="option3${currentQuestion}" value="${questionData.option3 || ''}" onblur="addPrefix(this, 'C')" ; required><br>
-
-          <label for="option4">Option D:</label>
-          <input type="text" id="option4" name="option4${currentQuestion}" value="${questionData.option4 || ''}" onblur="addPrefix(this, 'D')" ;  required><br>
-<label for="answer">Correct Answer:</label>
-<select id="answer${currentQuestion}" name="answer${currentQuestion}" class="answer-select" required>
-  <option value="">--Select Correct Option--</option>
-  <option value="A"></option>
-  <option value="B"></option>
-  <option value="C"></option>
-  <option value="D"></option>
-</select><br>
-
-
-
-<!-- Checkbox (aligned to left) -->
-<div style="display: flex; align-items: center; width: 100%; max-width: 500px; margin-bottom: 10px;">
-    <input type="checkbox" id="acceptTerms${currentQuestion}" 
-           onclick="validateCurrentQuestion(); validateAndAutoPrefixAnswer(document.getElementById('answer'));" 
-           style="margin: 0 8px 0 0; height: 16px; width: 16px; cursor: pointer;"
-           required>
-    <label for="acceptTerms${currentQuestion}" style="font-size: 14px; line-height: 1.4; color: #fff; cursor: pointer;">
-        I accept the Terms and Conditions of validation before moving to the next
-    </label>
-</div>
-
-
-
-          <div class="button-container">
-              ${currentQuestion > 1 ? `<button type="button" class="horizontal-button" onclick="previousQuestion()">Previous</button>` : ''}
-              <button type="submit" class="horizontal-button" onclick="nextQuestion()">Next</button>
-          </div>
-      `;
-  } else {
-      form.innerHTML += `
-          <h3>All questions have been entered.</h3>
-          <button type="button" class="horizontal-button" onclick="submitQuizForm()">Submit Quiz</button>
-          ${currentQuestion > 1 ? `<button type="button" class="horizontal-button" onclick="previousQuestion()">Previous</button>` : ""}
-      `;
-  }
 }
+function showQuestionForm() {
+    const form = document.getElementById("quizQuestionForm")
+    form.innerHTML = "" // Clear previous content
+  
+    if (currentQuestion <= totalQuestions) {
+      // Get saved data for this question
+      const questionData = quizData[currentQuestion - 1] || {}
+  
+      form.innerHTML += `
+        <h3>${exp_title} Quiz Question No${currentQuestion}</h3>
+  
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question${currentQuestion}" value="${questionData.question || ""}" required><br>
+  
+        <!-- Options with pre-filled values -->
+        <label for="option1">Option A:</label>
+        <input type="text" id="option1" name="option1${currentQuestion}" value="${questionData.option1 || ""}" required><br>
+  
+        <label for="option2">Option B:</label>
+        <input type="text" id="option2" name="option2${currentQuestion}" value="${questionData.option2 || ""}" required><br>
+  
+        <label for="option3">Option C:</label>
+        <input type="text" id="option3" name="option3${currentQuestion}" value="${questionData.option3 || ""}" required><br>
+  
+        <label for="option4">Option D:</label>
+        <input type="text" id="option4" name="option4${currentQuestion}" value="${questionData.option4 || ""}" required><br>
+  
+        <label for="answer${currentQuestion}">Correct Answer:</label>
+        <select id="answer${currentQuestion}" name="answer${currentQuestion}" class="answer-select" required>
+          <option value="">--Select Correct Option--</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select><br>
+  
+        <!-- Checkbox (aligned to left) -->
+        <div style="display: flex; align-items: center; width: 100%; max-width: 500px; margin-bottom: 10px;">
+          <input type="checkbox" id="acceptTerms${currentQuestion}" 
+                 onclick="validateCurrentQuestion();" 
+                 style="margin: 0 8px 0 0; height: 16px; width: 16px; cursor: pointer;"
+                 required>
+          <label for="acceptTerms${currentQuestion}" style="font-size: 14px; line-height: 1.4; color: #fff; cursor: pointer;">
+            I accept the Terms and Conditions of validation before moving to the next
+          </label>
+        </div>
+  
+        <div class="button-container">
+          ${currentQuestion > 1 ? `<button type="button" class="horizontal-button" onclick="previousQuestion()">Previous</button>` : ""}
+          <button type="button" class="horizontal-button" onclick="nextQuestion()">Next</button>
+        </div>
+      `
+  
+      // Set up event listeners after creating the form
+      setupOptionListeners()
+  
+      // Add blur event listeners to add prefixes
+      const option1El = document.getElementById("option1")
+      const option2El = document.getElementById("option2")
+      const option3El = document.getElementById("option3")
+      const option4El = document.getElementById("option4")
+  
+      if (option1El) option1El.addEventListener("blur", () => addPrefix(option1El, "A"))
+      if (option2El) option2El.addEventListener("blur", () => addPrefix(option2El, "B"))
+      if (option3El) option3El.addEventListener("blur", () => addPrefix(option3El, "C"))
+      if (option4El) option4El.addEventListener("blur", () => addPrefix(option4El, "D"))
+  
+      // Update dropdown options with option text
+      updateOptionLabels()
+  
+      // Set the previously selected answer if it exists
+      if (questionData.answer) {
+        const answerSelect = document.getElementById(`answer${currentQuestion}`)
+        if (answerSelect) {
+          answerSelect.value = questionData.answer
+        }
+      }
+    } else {
+      form.innerHTML += `
+        <h3>All questions have been entered.</h3>
+        <button type="button" class="horizontal-button" onclick="submitQuizForm()">Submit Quiz</button>
+        ${currentQuestion > 1 ? `<button type="button" class="horizontal-button" onclick="previousQuestion()">Previous</button>` : ""}
+      `
+    }
+  }
 
 
 
@@ -191,37 +245,44 @@ totalQuestion_1=totalQuestions;
 //     validateAndAutoPrefixAnswer(document.getElementById('answer'));
 // }
 
-function validateAndAutoPrefixAnswer(input) {
-    const answer = input.value.trim().toLowerCase();
+// function validateAndAutoPrefixAnswer(input) {
+//     const answerElement = document.getElementById(`answer${currentQuestion}`);
+//     if (!answerElement) {
+//       console.warn(`Answer input with id="answer${currentQuestion}" not found`);
+//       return;
+//     }
+    
+//     const answer = answerElement.value.trim();
+    
+  
+//     const options = [
+//         document.getElementById("option1").value.trim().toLowerCase(),
+//         document.getElementById("option2").value.trim().toLowerCase(),
+//         document.getElementById("option3").value.trim().toLowerCase(),
+//         document.getElementById("option4").value.trim().toLowerCase()
+//     ];
+//     console.log('Options during answer validation:', options);
 
-    const options = [
-        document.getElementById("option1").value.trim().toLowerCase(),
-        document.getElementById("option2").value.trim().toLowerCase(),
-        document.getElementById("option3").value.trim().toLowerCase(),
-        document.getElementById("option4").value.trim().toLowerCase()
-    ];
-    console.log('Options during answer validation:', options);
+//     const labels = ["A", "B", "C", "D"];
+//     let matched = false;
 
-    const labels = ["A", "B", "C", "D"];
-    let matched = false;
+//     for (let i = 0; i < options.length; i++) {
+//         const parts = options[i].split(':');
+//         const optionText = parts.length > 1 ? parts.slice(1).join(':').trim().toLowerCase() : options[i].trim();
 
-    for (let i = 0; i < options.length; i++) {
-        const parts = options[i].split(':');
-        const optionText = parts.length > 1 ? parts.slice(1).join(':').trim().toLowerCase() : options[i].trim();
+//         if (answer === optionText) {
+//             input.value = `${labels[i]}: ${optionText}`;
+//             matched = true;
+//             break;
+//         }
+//     }
 
-        if (answer === optionText) {
-            input.value = `${labels[i]}: ${optionText}`;
-            matched = true;
-            break;
-        }
-    }
-
-    if (!matched) {
-        alert("❌ Answer does not match any of the provided options.");
-        input.value = ""; // Clear wrong input
-        input.focus();    // Focus again
-    }
-}
+//     if (!matched) {
+//         alert("❌ Answer does not match any of the provided options.");
+//         input.value = ""; // Clear wrong input
+//         input.focus();    // Focus again
+//     }
+// }
 
 // function validateAndAutoPrefixAnswer(input) {
 //     const answer = input.value.trim().toLowerCase();
@@ -255,89 +316,117 @@ function validateAndAutoPrefixAnswer(input) {
 //     }
 // }
 // Add prefix like "A: " automatically if not already present
-
 // Add event listeners when the page loads
-document.addEventListener("DOMContentLoaded", () => {
-    // Add input event listeners to all option fields
-    document.getElementById("option1").addEventListener("input", updateOptionLabels)
-    document.getElementById("option2").addEventListener("input", updateOptionLabels)
-    document.getElementById("option3").addEventListener("input", updateOptionLabels)
-    document.getElementById("option4").addEventListener("input", updateOptionLabels)
+// document.addEventListener("DOMContentLoaded", () => {
+//   const option1 = document.getElementById("option1")
+//   const option2 = document.getElementById("option2")
+//   const option3 = document.getElementById("option3")
+//   const option4 = document.getElementById("option4")
+
+//   if (option1) option1.addEventListener("input", updateOptionLabels)
+//   if (option2) option2.addEventListener("input", updateOptionLabels)
+//   if (option3) option3.addEventListener("input", updateOptionLabels)
+//   if (option4) option4.addEventListener("input", updateOptionLabels)
+
+//   // Initial update if all options exist
+//   if (option1 && option2 && option3 && option4) {
+//     updateOptionLabels()
+//   }
+// })
+
+
+function addPrefix(inputElement, prefix) {
+    if (!inputElement) return
   
-    // Initial update of the dropdown
-    updateOptionLabels()
-  })
+    const value = inputElement.value.trim()
+    if (!value) return
   
-  // Function to add prefix to option text (A, B, C, D)
-  function addPrefix(inputElement, prefix) {
-    const value = inputElement.value
-    if (value && !value.startsWith(`${prefix}. `)) {
-      inputElement.value = `${prefix}. ${value}`
+    // Check if already has prefix
+    if (!value.startsWith(`${prefix}. `)) {
+      // Remove any existing prefix pattern like "A. ", "B. ", etc.
+      const cleanValue = value.replace(/^[A-D]\.\s+/, "")
+      inputElement.value = `${prefix}. ${cleanValue}`
     }
+  
     // Update dropdown after adding prefix
     updateOptionLabels()
   }
-  
   // Function to update the dropdown options based on input values
-  function updateOptionLabels() {
+ // Function to update the dropdown options based on input values
+function updateOptionLabels() {
+    const option1El = document.getElementById("option1")
+    const option2El = document.getElementById("option2")
+    const option3El = document.getElementById("option3")
+    const option4El = document.getElementById("option4")
+    const answerSelect = document.getElementById(`answer${currentQuestion}`)
+  
+    if (!option1El || !option2El || !option3El || !option4El || !answerSelect) return
+  
     // Get all option input values
-    const option1Value = document.getElementById("option1").value
-    const option2Value = document.getElementById("option2").value
-    const option3Value = document.getElementById("option3").value
-    const option4Value = document.getElementById("option4").value
+    const option1Value = option1El.value.trim()
+    const option2Value = option2El.value.trim()
+    const option3Value = option3El.value.trim()
+    const option4Value = option4El.value.trim()
   
-    // Get the select element
-    const select = document.getElementById(`answer${currentQuestion}`)
+    // Extract clean option text (without prefixes)
+    const cleanOption1 = option1Value.replace(/^A\.\s*/, "")
+    const cleanOption2 = option2Value.replace(/^B\.\s*/, "")
+    const cleanOption3 = option3Value.replace(/^C\.\s*/, "")
+    const cleanOption4 = option4Value.replace(/^D\.\s*/, "")
   
-    // Update each option in the dropdown
-    select.options[1].text = option1Value ? `A. ${option1Value.replace(/^A\.\s*/, "")}` : "A"
-    select.options[2].text = option2Value ? `B. ${option2Value.replace(/^B\.\s*/, "")}` : "B"
-    select.options[3].text = option3Value ? `C. ${option3Value.replace(/^C\.\s*/, "")}` : "C"
-    select.options[4].text = option4Value ? `D. ${option4Value.replace(/^D\.\s*/, "")}` : "D"
+    // Store the currently selected value
+    const currentSelectedValue = answerSelect.value
   
-    console.log("Updated dropdown options")
+    // Update each option in the dropdown with full option text
+    answerSelect.options[1].text = cleanOption1 ? `A. ${cleanOption1}` : "A"
+    answerSelect.options[2].text = cleanOption2 ? `B. ${cleanOption2}` : "B"
+    answerSelect.options[3].text = cleanOption3 ? `C. ${cleanOption3}` : "C"
+    answerSelect.options[4].text = cleanOption4 ? `D. ${cleanOption4}` : "D"
+  
+    // Restore the selected value
+    answerSelect.value = currentSelectedValue
+  
+    console.log("Updated dropdown options with full option text")
   }
   
-
-// //   // Prevent duplicate options
-// //   const optionInputs = ["option1", "option2", "option3", "option4"];
-// //   optionInputs.forEach(id => {
-// //     const el = document.getElementById(id);
-// //     el.addEventListener('blur', () => {
-// //       const values = optionInputs.map(optId => document.getElementById(optId).value.trim().toLowerCase());
-// //       const duplicates = values.filter((v, i, arr) => v && arr.indexOf(v) !== i);
-// //       if (duplicates.length > 0) {
-// //         alert("Each option must be unique. Duplicate found.");
-// //         el.focus();
-// //       }
-// //     });
-// //   });
+  
 function saveCurrentQuestionData() {
-    console.log('save current question called ');
-    const questionEl = document.getElementById('question');
-    const option1El = document.getElementById('option1');
-    const option2El = document.getElementById('option2');
-    const option3El = document.getElementById('option3');
-    const option4El = document.getElementById('option4');
-    const answerEl = document.getElementById('answer');
-
+    console.log("Saving current question data...")
+  
+    const questionEl = document.getElementById("question")
+    const option1El = document.getElementById("option1")
+    const option2El = document.getElementById("option2")
+    const option3El = document.getElementById("option3")
+    const option4El = document.getElementById("option4")
+    const answerEl = document.getElementById(`answer${currentQuestion}`)
+  
     if (!questionEl || !option1El || !option2El || !option3El || !option4El || !answerEl) {
-        console.warn('Some elements are missing. Cannot save data.');
-        return;
+      console.warn("Some elements are missing. Cannot save data.")
+      return
     }
-
-    const question = questionEl.value.trim();
-    const option1 = option1El.value.trim();
-    const option2 = option2El.value.trim();
-    const option3 = option3El.value.trim();
-    const option4 = option4El.value.trim();
-    const answer = answerEl.value.trim();
-
-    // Save the current question data to the quizData array and also in localStorage
-    quizData[currentQuestion - 1] = { question, option1, option2, option3, option4, answer };
-    localStorage.setItem('quizData', JSON.stringify(quizData)); // Saving to localStorage
-}
-
+  
+    const question = questionEl.value.trim()
+    const option1 = option1El.value.trim()
+    const option2 = option2El.value.trim()
+    const option3 = option3El.value.trim()
+    const option4 = option4El.value.trim()
+    const answer = answerEl.value.trim()
+  
+    // Save the current question data to the quizData array
+    quizData[currentQuestion - 1] = {
+      question,
+      option1,
+      option2,
+      option3,
+      option4,
+      answer,
+    }
+  
+    // Save to localStorage
+    localStorage.setItem("quizData", JSON.stringify(quizData))
+    console.log("Data saved for question", currentQuestion)
+  }
+  
 
 function nextQuestion() {
     const checkbox = document.getElementById(`acceptTerms${currentQuestion}`);
@@ -361,170 +450,178 @@ function nextQuestion() {
 }
 
 
+
+function validateCurrentQuestion() {
+  count = 0 // Reset count initially
+
+  const questionEl = document.getElementById("question")
+  const option1El = document.getElementById("option1")
+  const option2El = document.getElementById("option2")
+  const option3El = document.getElementById("option3")
+  const option4El = document.getElementById("option4")
+  const answerEl = document.getElementById(`answer${currentQuestion}`)
+  const checkboxEl = document.getElementById(`acceptTerms${currentQuestion}`)
+
+  if (!questionEl || !option1El || !option2El || !option3El || !option4El || !answerEl || !checkboxEl) {
+    console.warn("Some form elements are missing")
+    return false
+  }
+
+  const question = questionEl.value.trim()
+  const options = [option1El.value.trim(), option2El.value.trim(), option3El.value.trim(), option4El.value.trim()]
+  const answer = answerEl.value.trim()
+
+  // Check if all fields are filled
+  if (!question || options.some((opt) => !opt) || !answer) {
+    alert("Please fill out all fields before proceeding.")
+    checkboxEl.checked = false
+    count++
+    return false
+  }
+
+  // Clean options by removing prefixes (A., B., etc.)
+  const cleanedOptions = options.map((option) => {
+    return option.replace(/^[A-D]\.\s*/, "").trim()
+  })
+
+  // Validate no duplicate options
+  for (let i = 0; i < cleanedOptions.length; i++) {
+    for (let j = i + 1; j < cleanedOptions.length; j++) {
+      if (cleanedOptions[i] === cleanedOptions[j] && cleanedOptions[i] !== "") {
+        alert(`Duplicate option found: "${cleanedOptions[i]}"`)
+        checkboxEl.checked = false
+        count++
+        return false
+      }
+    }
+  }
+
+  // Fixed regex pattern for options
+  const optionPattern = /^(?:[A-D]\.\s+)?[A-Za-z0-9\s.,\-?!;:"']{2,}$/
+
+
+  // Validate each option
+  for (let i = 0; i < options.length; i++) {
+    const cleanOption = cleanedOptions[i]
+
+    if (!optionPattern.test(options[i])) {
+      alert(`Invalid option: "${cleanOption}". It must be:
+      - A number (e.g., 1, 42)
+      - A word with at least two letters (e.g., "word")
+      - A sentence (e.g., "Hello world.")
+      
+      Single letters like "a" or "z" are not allowed.`)
+      checkboxEl.checked = false
+      count++
+      return false
+    }
+  }
+
+  // If all validations passed
+  count = 0
+  return true
+}
+
+function nextQuestion() {
+  const checkbox = document.getElementById(`acceptTerms${currentQuestion}`)
+  if (!checkbox) {
+    console.warn("Checkbox element not found")
+    return
+  }
+
+  // Validate current question
+  if (!validateCurrentQuestion()) {
+    return // Block moving forward if validation fails
+  }
+
+  if (!checkbox.checked) {
+    alert("❌ Please accept the Terms and Conditions before proceeding.")
+    return // Block moving forward
+  }
+
+  // Save current question data before proceeding
+  saveCurrentQuestionData()
+
+  // Move to next
+  currentQuestion++
+  showQuestionForm()
+}
 function previousQuestion() {
-    if (currentQuestion > 1) {
-        saveCurrentQuestionData(); // Save the current question data before moving back
-        currentQuestion--; 
-        showQuestionForm(); // Show the form for the previous question
-    }
-}function validateCurrentQuestion() {
-    count = 0; // Reset count initially
+  if (currentQuestion > 1) {
+    // Save the current question data before moving back
+    saveCurrentQuestionData()
 
-    const question = document.getElementById('question').value.trim();
-    const options = [
-        document.getElementById('option1').value.trim(),
-        document.getElementById('option2').value.trim(),
-        document.getElementById('option3').value.trim(),
-        document.getElementById('option4').value.trim()
-    ];
-    const answer = document.getElementById('answer').value.trim();
-
-    // Check if all fields are filled
-    if (!question || options.some(opt => !opt) || !answer) {
-        alert('Please fill out all fields before proceeding.');
-        count++;
-        return false;
-    }
-
-    // Validate option format (must start with A)- or A: or 1)- or 1: )
-    // const format = /^([A-Da-d]\)|[A-Da-d]:|\d\)|\d:)\s.+$/;
-    // for (const option of options) {
-    //     if (!format.test(option)) {
-    //         alert(`Option "${option}" is invalid. Use the format "A: Answer", "A) Answer", "1: Answer", or "1) Answer".`);
-    //         count++;
-    //         return false;
-    //     }
-    // }
-
-    // Clean option text (remove prefixes like 'A:', '1)', etc.)
-    const cleanedOptions = options.map(option => {
-        const parts = option.split(':'); 
-        return parts.length > 1 ? parts.slice(1).join(':').trim() : option.trim();
-    });
-
-    // Validate no duplicate options
-    for (let i = 0; i < cleanedOptions.length; i++) {
-        for (let j = i + 1; j < cleanedOptions.length; j++) {
-            if (cleanedOptions[i] === cleanedOptions[j]) {
-                alert(`Duplicate option found: "${options[i]}"`);
-                count++;
-                return false;
-            }
-        }
-    }
-
-    // Validate answer matches exactly one of the options
-    // if (!options.includes(answer)) {
-    //     alert('The correct answer must exactly match one of the provided options.');
-    //     count++;
-    //     return false;
-    // }
-
-    const optionPattern =/^[A-Za-z]{2,}$|^\d{1,}$|^[A-Za-z\s]{2,}$/;  // Allow alphabetic words with at least two characters, single digits, or sentences with at least two characters
-
-    for (const option of options) {
-        // Extract the content after "D:", "1:", etc.
-        const content = option.split(':').slice(1).join(':').trim(); // Skip "D: ", "1: ", etc. and get the actual content
-        
-        // Validate the content based on the pattern
-        if (!optionPattern.test(content)) {
-        alert(`Option "${content}" is invalid. Options must be either:
-        - A number (e.g., 1, 42)
-        - A word with at least two letters (e.g., "ab", "word")
-        - A sentence with at least two characters (e.g., "A sentence")
-        
-        Single letters like "a", "b", "k" are not allowed.`);
-        checkbox.checked = false;
-        count++;
-        return false;
-    }
-    }
-    
-    const validAnswerPattern =  /^[A-Za-z]{2,}$|^\d{1,}$|^[A-Za-z\s]{2,}$/;  // Answer must be at least two characters (if alphabetic), a single digit, or a sentence
-
-    // Validate the answer content
-    if (!validAnswerPattern.test(answer)) {
-        alert(`Answer "${answer}" is invalid. Answers must be either:
-        - A number (e.g., 1, 42)
-        - A word with at least two letters (e.g., "ab", "word")
-        - A sentence with at least two characters (e.g., "A sentence")
-        
-        Single letters like "a", "b", "k" are not allowed.`);
-        checkbox.checked = false;
-        count++;
-        return false;
-    }
-    
-
-    // If all validations passed
-    count = 0;
-    return true;
+    // Move to previous question
+    currentQuestion--
+    showQuestionForm()
+  }
 }
 
 function submitQuizForm() {
-
-    if(currentQuestion<=totalQuestions)
-    {
-        if(!validateCurrentQuestion()){return;}
-        saveCurrentQuestionData();
+  // If we're still on a question page, validate and save it
+  if (currentQuestion <= totalQuestions) {
+    if (!validateCurrentQuestion()) {
+      return
     }
-  
+    saveCurrentQuestionData()
+  }
 
-    console.log('quizData:', quizData);
-    console.log('totalQuestions:', totalQuestions);
+  console.log("quizData:", quizData)
+  console.log("totalQuestions:", totalQuestions)
 
+  // Check if we have all the required data
+  if (quizData.length < totalQuestions) {
+    alert(`You've only completed ${quizData.length} of ${totalQuestions} questions. Please complete all questions.`)
+    return
+  }
 
-    // if (quizData.length !== totalQuestions || quizData.some(data => Object.values(data).some(value => !value))) {
-    //     alert('Please ensure all questions are filled properly.');
-    //     return;
-    // }
+  const form = document.getElementById("quizQuestionForm")
+  if (!form) {
+    alert("Form container is missing!")
+    return
+  }
 
-    const form = document.getElementById('quizQuestionForm');
-    if (!form) {
-        alert('Form container is missing!');
-        return;
-    }
+  // Clear the form and add hidden fields
+  form.innerHTML = ""
+  form.innerHTML += `
+    <input type="hidden" name="exp_no" value="${exp_no}">
+    <input type="hidden" name="exp_title" value="${exp_title}">
+    <input type="hidden" name="total_questions" value="${totalQuestion_1}">
+    <input type="hidden" name="assignedTo" value="${assignedTo}">
+    <input type="hidden" name="classId" value="${classId}">
+  `
 
-    // const expNo = document.getElementById('hidden_exp_no');
-    // const expTitle = document.getElementById('hidden_exp_title');
-    // const totalQuestionsInput = document.getElementById('hidden_total_questions');
+  console.log(
+    "expno,exp-title,totalquestion,assignedTo,classId",
+    exp_no,
+    exp_title,
+    totalQuestion_1,
+    assignedTo,
+    classId,
+  )
 
-    
+  if (!exp_no || !exp_title || !totalQuestion_1) {
+    alert("Missing experiment details! Please try again.")
+    return
+  }
 
-    form.innerHTML = '';
-
+  // Add all question data as hidden fields
+  quizData.forEach((data, index) => {
     form.innerHTML += `
-        <input type="hidden" name="exp_no" value="${exp_no}">
-        <input type="hidden" name="exp_title" value="${exp_title}">
-        <input type="hidden" name="total_questions" value="${totalQuestion_1}">
-        <input type="hidden" name="assignedTo" value="${assignedTo}">
-        <input type="hidden" name="classId" value="${classId}">
+      <input type="hidden" name="question${index + 1}" value="${data.question || ""}">
+      <input type="hidden" name="option1${index + 1}" value="${data.option1 || ""}">
+      <input type="hidden" name="option2${index + 1}" value="${data.option2 || ""}">
+      <input type="hidden" name="option3${index + 1}" value="${data.option3 || ""}">
+      <input type="hidden" name="option4${index + 1}" value="${data.option4 || ""}">
+      <input type="hidden" name="answer${index + 1}" value="${data.answer || ""}">
+    `
+  })
 
-    `;
-
-    console.log('expno,exp-title,totalquestion,assignedTo,classId',exp_no,exp_title,totalQuestion_1,assignedTo,classId)
-    if (!exp_no || !exp_title || ! totalQuestion_1) {
-        alert('Missing experiment details! Please try again.');
-        return;
-    }
-
-    quizData.forEach((data, index) => {
-        form.innerHTML += `
-            <input type="hidden" name="question${index + 1}" value="${data.question}">
-            <input type="hidden" name="option1${index + 1}" value="${data.option1}">
-            <input type="hidden" name="option2${index + 1}" value="${data.option2}">
-            <input type="hidden" name="option3${index + 1}" value="${data.option3}">
-            <input type="hidden" name="option4${index + 1}" value="${data.option4}">
-            <input type="hidden" name="answer${index + 1}" value="${data.answer}">
-        `;
-    });
-    localStorage.removeItem('quizData');
-    alert('Quiz Submitted Successfully!');
-    // currentQuestion = 1;
-    form.submit();
+  // Clear localStorage and submit the form
+  localStorage.removeItem("quizData")
+  alert("Quiz Submitted Successfully!")
+  form.submit()
 }
-
-
 function updateTitle() {
     const experimentNo = document.getElementById('exp_no').value;
     const titleInput = document.getElementById('exp_title');
@@ -534,7 +631,8 @@ function updateTitle() {
         2: 'Mass Spring System',
         3: 'Meter Rod Method',
         4: 'Force Table',
-        5: 'Resonance Exp'
+        5: 'Resonance Exp',
+        // 6: 'Archimedes’ Principle'
     }; titleInput.value = titles[experimentNo] || '';
 }
 

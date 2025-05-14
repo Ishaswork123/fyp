@@ -98,6 +98,7 @@ function drawSetup() {
   if (showScale) {
     drawVerticalScale();
   }
+//spring zig zag 
 
   const coils = 15; 
   const coilLength = (springLength - springTopY) / coils;
@@ -294,69 +295,6 @@ function animateSpring() {
   });
 }
 
-// function startOscillation() {
-//   if (!isOscillating) {
-//     mass = document.getElementById("massSlider").value;
-//     springConstant = document.getElementById("springSlider").value;
-//     isOscillating = true;
-//     bobRadius = Math.round(mass / 30);
-//     maxOscillations = 10; 
-//     oscillationCount = 0;
-//     springLength = calculateSpringLength(); 
-//     recordedLength = springLength;
-//     displacementData = [];
-//     velocityData = [];
-//     accelerationData = [];
-//     energyData = [];
-
-
-//     drawSetup(); 
-//     startTime = performance.now(); 
-//     document.getElementById("output").style.display = "block"; 
-//     animateSpring(); 
-//   }
-// }
-
-// let springAnimation;
-// let lastTime = 0;
-// function animateSpring() {
-//   const duration = currentDivisor === NORMAL_DIVISOR ? 1000 : 2000; 
-//   springAnimation = anime({
-//     targets: { value: springTopY + naturalLength },
-//     value: springLength, 
-//     duration: duration, 
-//     easing: "easeInOutSine",
-//     direction: "alternate", 
-//     loop: maxOscillations * 2, 
-//     update: function (anim) {
-//       springLength = anim.animations[0].currentValue;
-
-//       const displacement = springLength - recordedLength;
-//       const velocity = calculateVelocity(displacement, elapsedTime);
-//       const acceleration = calculateAcceleration(displacement);
-      
-//       const kineticEnergy = 0.5 * mass * velocity * velocity;
-//       const potentialEnergy = 0.5 * springConstant * displacement * displacement;
-//       const totalEnergy = kineticEnergy + potentialEnergy;
-
-//       displacementData.push(displacement);
-//       velocityData.push(velocity);
-//       accelerationData.push(acceleration);
-//       energyData.push(totalEnergy);
-
-//       drawSetup(); 
-//     },
-//     complete: function () {
-//       isOscillating = false; 
-//       const endTime = performance.now();
-//       const totalTime = (endTime - startTime) / 1000; 
-//       const timePeriod = totalTime / maxOscillations; 
-//       document.getElementById("timePeriod").innerText =
-//         totalTime.toFixed(2) + " s";
-//     },
-//   });
-// }
-
 function calculateVelocity(displacement, elapsedTime) {
   return displacement / elapsedTime;
 }
@@ -393,7 +331,7 @@ function resetExperiment() {
 }
 
 
-document.getElementById("startBtn").addEventListener("click", startOscillation);
+// document.getElementById("startBtn").addEventListener("click", startOscillation);
 document.getElementById("resetBtn").addEventListener("click", resetExperiment);
 
 document.getElementById("playNormal").addEventListener("click", function () {

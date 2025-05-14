@@ -58,51 +58,18 @@ const weights = [
   { id: "weight4", mass: 500, width: 55, height: 100, color: "#6488e4" },
 ]
 
-const draggableWeights = [
-  {
-    id: "extinguisher1",
-    type: "extinguisher",
-    mass: 5,
-    width: 48, // Match your CSS width (3rem = ~48px)
-    height: 96, // Match your CSS height (6rem = ~112px)
-    color: "red",
-    onScale: false,
-    scalePosition: 0,
-    element: null,
-  },
-  {
-    id: "extinguisher2",
-    type: "extinguisher",
-    mass: 5,
-    width: 48,
-    height: 96,
-    color: "red",
-    onScale: false,
-    scalePosition: 0,
-    element: null,
-  },
-  {
-    id: "trashcan1",
-    type: "trashcan",
-    mass: 10,
-    width: 64, // Match your CSS width (4rem = ~64px)
-    height: 112, // Match your CSS height (7rem = ~112px)
-    color: "#888888",
-    onScale: false,
-    scalePosition: 0,
-    element: null,
-  },
-]
+// Draggable weights array - the single source of truth
+let draggableWeights = []
 
 // Global variables for dragging
 let currentDraggedWeight = null
 let dragStartX = 0
 let dragStartY = 0
-let elementStartX = 0
-let elementStartY = 0
+const elementStartX = 0
+const elementStartY = 0
 
 // Dragging state
-let isDraggingWeight = false
+const isDraggingWeight = false
 let draggedWeightIndex = -1
 let isDraggingSpringBalance = false
 let draggedSpringBalance = ""
@@ -137,14 +104,13 @@ let meterRodLength, meterRodHeight, wedgeBase, wedgeHeight
 let wedgeFixedX, wedgeFixedY
 
 // Declare missing variables
-let drawScaleMarkings
-let drawExtinguisher
+// let drawScaleMarkings
+// let drawExtinguisher
 let drawTrashCanFn
 let resetScalePositionFn
-let drawSetup // Declare drawSetup
-let calculateTorque
-let handleWeightClick
-
+// let drawSetup // Declare drawSetup
+// let calculateTorque
+// let handleWeightClick
 
 // ============================== Utility Functions ==============================
 
@@ -197,29 +163,80 @@ function isClickOnScale(x, y) {
   return x >= scaleX && x <= scaleX + meterRodLength && y >= scaleY && y <= scaleY + meterRodHeight
 }
 
-function isClickOnWeight(index, x, y) {
-  const weight = draggableWeights[index]
-  return (
-    x >= weight.x - weight.width / 2 &&
-    x <= weight.x + weight.width / 2 &&
-    y >= weight.y - weight.height &&
-    y <= weight.y
-  )
+function isClickOnWeight(x, y) {
+  for (let i = 0; i < draggableWeights.length; i++) {
+    const weight = draggableWeights[i]
+    if (
+      !weight.onScale &&
+      x >= weight.x - weight.width / 2 &&
+      x <= weight.x + weight.width / 2 &&
+      y >= weight.y - weight.height &&
+      y <= weight.y
+    ) {
+      draggedWeightIndex = i
+      return true
+    }
+  }
+  return false
 }
 
 function isMouseOnScale(x, y) {
-  // Convert to canvas coordinates
-  const canvasRect = canvas.getBoundingClientRect()
-  const canvasX = x - canvasRect.left
-  const canvasY = y - canvasRect.top
-
   // Check if coordinates are within scale bounds
-  return (
-    canvasX >= scaleX && canvasX <= scaleX + meterRodLength && canvasY >= scaleY && canvasY <= scaleY + meterRodHeight
-  )
+  return x >= scaleX && x <= scaleX + meterRodLength && y >= scaleY && y <= scaleY + meterRodHeight
 }
 
 // ============================== Initialization Functions ==============================
+
+function initializeWeights() {
+  // Clear existing weights
+  draggableWeights = [];
+
+  // Create new weights
+  draggableWeights = [
+      {
+          id: "extinguisher1",
+          type: "extinguisher",
+          mass: 5,
+          // width: 48,
+          // height: 96,
+          color: "red",
+          onScale: false,
+          scalePosition: 0,
+          isDragging: false,
+          x: 0,
+          y: 0,
+      },
+      {
+          id: "extinguisher2",
+          type: "extinguisher",
+          mass: 5,
+          // width: 48,
+          // height: 96,
+          color: "red",
+          onScale: false,
+          scalePosition: 0,
+          isDragging: false,
+          x: 0,
+          y: 0,
+      },
+      {
+          id: "trashcan1",
+          type: "trashcan",
+          mass: 10,
+          // width: 64,
+          // height: 112,
+          color: "#888888",
+          onScale: false,
+          scalePosition: 0,
+          isDragging: false,
+          x: 0,
+          y: 0,
+      },
+  ];
+
+  // Position the weights
+  // resetWeightsPosition();
+}
 
 function initializeSizes() {
   // Calculate base size based on the smaller dimension
@@ -234,65 +251,88 @@ function initializeSizes() {
   naturalLength = baseSize * 14 // Example, adjust as needed
 
   // Initialize draggable weights dimensions
-  draggableWeights.forEach((weight) => {
-    weight.width = baseSize * 2
-    weight.height = baseSize * 3.5
-  })
+  // draggableWeights.forEach((weight) => {
+  //   weight.width = baseSize * (weight.type === "extinguisher" ? 2 : 3)
+  //   weight.height = baseSize * (weight.type === "extinguisher" ? 4 : 5)
+  // })
+  if (draggableWeights && draggableWeights.length > 0) {
+    draggableWeights.forEach((weight) => {
+        if (weight.type === "extinguisher") {
+            // Adjust these multipliers for desired proportions relative to baseSize
+            weight.width = baseSize * 2;
+            weight.height = baseSize * 3.5;
+        } else if (weight.type === "trashcan") {
+            // Adjust these multipliers for desired proportions relative to baseSize
+            weight.width = baseSize * 2.3;
+            weight.height = baseSize * 4; // Slightly taller/wider than extinguisher
+        } else {
+            // Fallback for any other types
+            weight.width = baseSize * 2;
+            weight.height = baseSize * 2;
+        }
+    });
+} else {
+    // This might happen if initializeSizes runs before initializeWeights somehow
+    console.warn("Attempted to size weights before they were initialized.");
+}
 }
 
 function initializePositions() {
   const canvasWidth = canvas.width
   const canvasHeight = canvas.height
 
+  // Initialize draggable weights if not already done
+  if (!draggableWeights) {
+    initializeDraggableWeights()
+  }
+
   // Meter rod centered horizontally, 60% down
-  scaleX = canvasWidth * config.scaleXPercentage - meterRodLength / 2 // shift by half the length for centering
+  scaleX = canvasWidth * config.scaleXPercentage - meterRodLength / 2
   scaleY = canvasHeight * config.scaleYPercentage
 
   // FIXED: Ensure the fixed G point is exactly at the center of the scale
   fixedGPoint = {
-    x: scaleX + meterRodLength / 2, // Exact center of the scale
+    x: scaleX + meterRodLength / 2,
     y: scaleY + meterRodHeight / 2,
   }
 
   // Wedge position (centered under the meter rod)
-  wedgeFixedX = canvasWidth * 0.5 - wedgeBase / 2 // centered
+  wedgeFixedX = canvasWidth * 0.5 - wedgeBase / 2
   wedgeFixedY = scaleY + meterRodHeight
 
   // Spring balance attachment points
   attachPointA = {
     x: canvasWidth * 0.3,
     y: canvasHeight * config.springBalanceYPercentage,
-  } // 30% from left, 10% from top
+  }
   attachPointB = {
     x: canvasWidth * 0.7,
     y: canvasHeight * config.springBalanceYPercentage,
-  } // 70% from left, 10% from top
+  }
 
   // Draggable weights initial positions (bottom right)
-  const weightSpacing = canvasWidth * config.weightSpacingPercentage // 5% spacing
-  const startX = canvasWidth * config.weightStartXPercentage // 80% from left
-  const startY = canvasHeight * config.weightStartYPercentage // 85% from top
+  const weightSpacing = canvasWidth * config.weightSpacingPercentage
+  const startX = canvasWidth * config.weightStartXPercentage
+  const startY = canvasHeight * config.weightStartYPercentage
 
-  weights.forEach((weight, index) => {
-    const element = document.getElementById(weight.id)
-    if (element) {
-      element.style.left = `${startX + index * weightSpacing}px`
-      element.style.top = `${startY}px`
-    }
-  })
-
-  draggableWeights[0].x = startX
-  draggableWeights[0].y = startY
-  draggableWeights[1].x = startX + weightSpacing
-  draggableWeights[1].y = startY
-  draggableWeights[2].x = startX + 2 * weightSpacing
-  draggableWeights[2].y = startY
+  // Only proceed if draggableWeights is initialized
+  if (draggableWeights && draggableWeights.length > 0) {
+    draggableWeights[0].x = startX
+    draggableWeights[0].y = startY
+    draggableWeights[1].x = startX + weightSpacing
+    draggableWeights[1].y = startY
+    draggableWeights[2].x = startX + 2 * weightSpacing
+    draggableWeights[2].y = startY
+  }
 
   springTopX = canvasWidth * config.springTopXPercentage
   springTopY = canvasHeight * config.springTopYPercentage
 
-  hookX = canvasWidth / 2 // Centered
+  hookX = canvasWidth / 2
   hookY = scaleY + meterRodHeight
+
+  // Position the weights
+  resetWeightsPosition()
 }
 
 function resetScalePosition() {
@@ -319,29 +359,17 @@ function resetWeightsPosition() {
   const canvasWidth = canvas.width
   const canvasHeight = canvas.height
 
-  const weightSpacing = canvasWidth * config.weightSpacingPercentage // 5% spacing
+  const spacingMultiplier = 1.2;
+  const weightSpacing = canvasWidth * config.weightSpacingPercentage * spacingMultiplier;
   const startX = canvasWidth * config.weightStartXPercentage // 80% from left
   const startY = canvasHeight * config.weightStartYPercentage // 85% from top
 
-  draggableWeights[0].x = startX
-  draggableWeights[0].y = startY
-  draggableWeights[1].x = startX + weightSpacing
-  draggableWeights[1].y = startY
-  draggableWeights[2].x = startX + 2 * weightSpacing
-  draggableWeights[2].y = startY
-
-  draggableWeights.forEach((weight) => (weight.onScale = false))
-
-  // Reset HTML weights
-  const weightElements = document.querySelectorAll(".weight")
-  weightElements.forEach((element) => {
-    resetWeightPosition(element)
-    element.style.position = ""
-    element.style.left = ""
-    element.style.top = ""
-    element.style.transform = ""
-    element.dataset.onScale = "false"
-    element.dataset.scalePosition = "0"
+  // Position each weight
+  draggableWeights.forEach((weight, index) => {
+    weight.x = startX + index * weightSpacing 
+    weight.y = startY
+    weight.onScale = false
+    weight.isDragging = false
   })
 }
 
@@ -468,13 +496,25 @@ function drawScale(x, y, rotation = 0) {
   ctx.lineWidth = 2
   ctx.strokeRect(x, y, meterRodLength, meterRodHeight)
 
+
+  if (springBalancesVisible) {
+    drawSpringBalanceScaleMarkings(x, y);
+    } else if (positionMode === "rulers") {
+      drawScaleMarkings(x, y);
+    }
+
+
   // Draw scale markings if rulers are enabled
-  if (positionMode === "rulers") {
-    drawScaleMarkingsFn(x, y)
-  }
+  // if (positionMode === "rulers") {
+  //   drawScaleMarkings(x, y)
+  // }
 
   // Draw the G point indicator only if showGPoint is true
   if (showGPoint) {
+
+    ctx.arc(fixedGPoint.x, fixedGPoint.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+
     ctx.fillStyle = "Green"
     ctx.font = "bold " + baseSize + "px Arial"
     const centerX = x + meterRodLength / 2
@@ -490,7 +530,57 @@ function drawScale(x, y, rotation = 0) {
   ctx.restore() // Restore the original context state
 }
 
-function drawScaleMarkingsFn(x, y) {
+function drawSpringBalanceScaleMarkings(x, y) {
+  const totalCm = 200; // The scale represents 200 cm
+  const stepCm = 10;   // Markings every 10 cm
+  const pixelsPerCm = meterRodLength / totalCm;
+
+  ctx.fillStyle = "black";
+  ctx.font = `bold ${baseSize * 0.6}px Arial`; // Slightly smaller font
+  ctx.textAlign = "center";
+  ctx.textBaseline = "bottom"; // Align text bottom edge just above the mark line
+
+  // --- Draw CM Markings and Labels ---
+  for (let cm = 0; cm <= totalCm; cm += stepCm) {
+      const markX = x + cm * pixelsPerCm;
+      const markStartY = y; // Top edge of the scale
+      const markEndY = y + baseSize * 0.6; // Length of the tick mark
+
+      // Draw tick mark
+      ctx.beginPath();
+      ctx.moveTo(markX, markStartY);
+      ctx.lineTo(markX, markEndY);
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Draw label (every 10 cm)
+      ctx.fillText(`${cm}`, markX, markStartY - baseSize * 0.2); // Position slightly above scale
+  }
+   // Add "cm" unit label near the center
+   ctx.fillText("cm", x + meterRodLength / 2, y - baseSize * 1.2);
+
+
+  // --- Draw A, G, B Labels ---
+  ctx.font = `bold ${baseSize * 0.8}px Arial`; // Slightly larger for A, G, B
+  ctx.fillStyle = "blue"; // Use a distinct color for A, G, B
+  ctx.textBaseline = "bottom"; // Align text bottom edge just above the scale
+
+  // Label A (Left Attachment Point)
+  // Map the spring balance X to the scale's coordinate system
+  const labelAX = attachPointA.x; // Directly use the spring balance attach X
+  ctx.fillText("A", labelAX, y + baseSize * 0.8);
+
+  // Label G (Center of Gravity - Fixed Point)
+  const labelGX = fixedGPoint.x; // Center of the scale
+  ctx.fillText("G", labelGX, y + baseSize * 0.8);
+
+  // Label B (Right Attachment Point)
+  const labelBX = attachPointB.x; // Directly use the spring balance attach X
+  ctx.fillText("B", labelBX, y + baseSize * 0.8);
+}
+
+function drawScaleMarkings(x, y) {
   ctx.fillStyle = "black"
   ctx.font = "bold " + baseSize / 2 + "px Arial"
   ctx.textAlign = "center"
@@ -717,6 +807,10 @@ function drawWeight(x, y) {
       const force = (selectedWeightData.weight / 1000) * gravity
       drawForceArrow(x, y + baseSize * 1.25 + weightHeight / 2, "down", `${force.toFixed(2)}N`)
     }
+    const massSlider= document.getElementById("massSlider");
+    massSlider.value = Number.parseInt(selectedWeightData.weight);
+  document.getElementById("massValue").textContent = `${selectedWeightData.weight} g`
+
   }
 }
 
@@ -747,47 +841,122 @@ function drawForceArrow(x, y, direction, label, angle = 0) {
   ctx.restore()
 }
 
-// Fix 2: Modify drawWeightsOnScale to ensure force arrows are always visible
-function drawWeightsOnScale() {
-  ctx.save()
 
-  // Only apply rotation if simulation is running
+function drawDraggableWeights() {
+  draggableWeights.forEach((weight) => {
+      if (!weight.onScale && !weight.isDragging) {
+          if (weight.type === "extinguisher") {
+              drawExtinguisher(weight.x, weight.y, weight.width, weight.height, weight.mass);
+          } else if (weight.type === "trashcan") {
+              drawTrashCan(weight.x, weight.y, weight.width, weight.height, weight.mass);
+          }
+      }
+  });
+
+  // Draw weights on scale with rotation if simulation is running
+  ctx.save();
   if (simulationRunning) {
-    ctx.translate(fixedGPoint.x, fixedGPoint.y)
-    ctx.rotate(scaleRotation)
-    ctx.translate(-fixedGPoint.x, -fixedGPoint.y)
+      ctx.translate(fixedGPoint.x, fixedGPoint.y);
+      ctx.rotate(scaleRotation);
+      ctx.translate(-fixedGPoint.x, -fixedGPoint.y);
   }
 
-  for (const weight of draggableWeights) {
-    if (weight.onScale && !weight.isDragging) {
-      // Calculate position on the scale
-      const x = weight.scalePosition
-      const y = scaleY
-
-      // Draw the appropriate weight type
-      if (weight.type === "extinguisher") {
-        drawExtinguisherFn(x, y, weight.width, weight.height, weight.mass)
-      } else if (weight.type === "trashcan") {
-        drawTrashCanWeightFn(x, y, weight.width, weight.height, weight.mass)
-      }
-    }
-  }
-
-  ctx.restore()
-
-  // CRITICAL: Draw force arrows AFTER restoring context to ensure they're not rotated
-  if (showAllForces) {
-    for (const weight of draggableWeights) {
+  draggableWeights.forEach((weight) => {
       if (weight.onScale && !weight.isDragging) {
-        const force = weight.mass * gravity
-        // Draw force arrow with original coordinates
-        drawForceArrow(weight.scalePosition, scaleY - weight.height / 2, "down", `${force.toFixed(1)}N`)
+          const x = weight.scalePosition;
+          const y = scaleY;
+
+          if (weight.type === "extinguisher") {
+              drawExtinguisher(x, y, weight.width, weight.height, weight.mass);
+          } else if (weight.type === "trashcan") {
+              drawTrashCan(x, y, weight.width, weight.height, weight.mass);
+          }
       }
-    }
+  });
+
+  ctx.restore();
+
+  // Draw weights being dragged (always on top)
+  draggableWeights.forEach((weight) => {
+      if (weight.isDragging) {
+          if (weight.type === "extinguisher") {
+              drawExtinguisher(weight.x, weight.y, weight.width, weight.height, weight.mass);
+          } else if (weight.type === "trashcan") {
+              drawTrashCan(weight.x, weight.y, weight.width, weight.height, weight.mass);
+          }
+      }
+  });
+
+  // Draw force arrows if enabled
+  if (showAllForces) {
+      draggableWeights.forEach((weight) => {
+          if (weight.onScale && !weight.isDragging) {
+              const force = weight.mass * gravity;
+              drawForceArrow(weight.scalePosition, scaleY - weight.height / 2, "down", `${force.toFixed(1)}N`);
+          }
+      });
   }
 }
 
-// Modify the drawToggleSwitch function to not draw when meter rod is visible
+function drawExtinguisher(x, y, width, height, mass) {
+  // Draw the extinguisher body with black border
+  const topLeftX = x - width / 2;
+  const topLeftY = y - height;
+  
+  ctx.fillStyle = "red";
+  ctx.fillRect(topLeftX, topLeftY, width, height);
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(topLeftX, topLeftY, width, height);
+
+  const nozzleWidth = width * 0.5; 
+  const nozzleHeight = width * 0.2; 
+  // Draw the nozzle
+  ctx.fillStyle = "black"
+  ctx.fillRect(x - nozzleWidth / 2, topLeftY - nozzleHeight, nozzleWidth, nozzleHeight);
+
+  // Draw the label if mass labels are enabled
+  if (showMassLabels) {
+        ctx.fillStyle = "white";
+        ctx.font = `bold ${baseSize * 0.8}px Arial`; 
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle"; 
+
+        const displayMass = Math.round(mass / displayedWeightScale);
+        ctx.fillText(`${displayMass} kg`, x, y - height / 2);
+    }
+}
+
+function drawTrashCan(x, y, width, height, mass) {
+  // Calculate top-left coordinates from center-bottom (x, y)
+  const topLeftX = x - width / 2;
+  const topLeftY = y - height;
+
+  // Draw the trashcan body
+  ctx.fillStyle = "#888888";
+  ctx.fillRect(topLeftX, topLeftY, width, height);
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(topLeftX, topLeftY, width, height);
+
+  // Draw the lid (proportional, positioned above body)
+  const lidWidth = width * 1.1; 
+  const lidHeight = height * 0.1; 
+  ctx.fillStyle = "#666666";
+  ctx.fillRect(x - lidWidth / 2, topLeftY - lidHeight, lidWidth, lidHeight);
+
+  // Draw the label if mass labels are enabled (responsive font size)
+  if (showMassLabels) {
+      ctx.fillStyle = "white";
+      ctx.font = `bold ${baseSize * 0.8}px Arial`; 
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle"; 
+
+      const displayMass = Math.round(mass / displayedWeightScale);
+      ctx.fillText(`${displayMass} kg`, x, y - height / 2);
+  }
+}
+
 function drawToggleSwitch() {
   // Don't draw the toggle switch if meter rod is visible
   if (meterRodVisible) {
@@ -857,7 +1026,7 @@ function updateSpringExtension() {
     duration: 800,
     easing: "easeInOutQuad",
     update: () => {
-      drawSetupFn()
+      drawSetup()
     },
   })
 }
@@ -874,7 +1043,7 @@ function updateIndicatorOffset() {
     indicatorOffset: targetIndicatorOffset,
     duration: 800,
     easing: "easeInOutQuad",
-    update: drawSetupFn,
+    update: drawSetup,
   })
 }
 
@@ -892,10 +1061,9 @@ function updateWeightFromSlider(event) {
   updateCurrentWeight()
   updateSpringExtension()
   updateIndicatorOffset()
-  drawSetupFn()
+  drawSetup()
 }
 
-// Modify the updateSpringConstant function to update the weight display scale
 function updateSpringConstant(event) {
   const sliderValue = Number.parseFloat(event.target.value)
   document.getElementById("springValue").textContent = sliderValue.toFixed(1)
@@ -910,7 +1078,7 @@ function updateSpringConstant(event) {
   }
 
   updateSpringExtension()
-  drawSetupFn() // Redraw to update displayed weights
+  drawSetup() // Redraw to update displayed weights
 }
 
 function updateGravity(event) {
@@ -919,7 +1087,7 @@ function updateGravity(event) {
   document.getElementById("gravity-value").innerText = `${newGravity} m/s²`
   updateSpringExtension()
   updateIndicatorOffset()
-  drawSetupFn()
+  drawSetup()
 }
 
 // ============================== Control Functions ==============================
@@ -974,25 +1142,25 @@ function increaseGravity() {
 
 function toggleShowAllForces(event) {
   showAllForces = event.target.checked
-  drawSetupFn()
+  drawSetup()
 }
 
 function toggleShowWeightForce(event) {
   showWeightForce = event.target.checked
-  drawSetupFn()
+  drawSetup()
 }
 
 function toggleNoDisplayScale(event) {
   if (event.target.checked) {
     positionMode = "none"
-    drawSetupFn()
+    drawSetup()
   }
 }
 
 function toggleRulers(event) {
   if (event.target.checked) {
     positionMode = "rulers"
-    drawSetupFn()
+    drawSetup()
   }
 }
 
@@ -1019,10 +1187,9 @@ function selectGravity(event) {
 
 // Replace toggleWedge with this simple version
 function toggleWedge() {
-  alert("Wedge button clicked!")
   wedgeVisible = !wedgeVisible
   console.log("Wedge visibility:", wedgeVisible)
-  drawSetupFn()
+  drawSetup()
 }
 
 // Modify the toggleSpringBalances function to update the meterRodVisible flag
@@ -1033,57 +1200,18 @@ function toggleSpringBalances() {
   // Update meter rod visibility flag
   meterRodVisible = springBalancesVisible
 
-  // Update UI elements visibility based on meter rod visibility
-  updateUIVisibility()
-
-  // Get the static weights container
-  const staticWeightsContainer = document.getElementById("static-weights-container")
-
-  if (springBalancesVisible) {
-    // When spring balances are visible, show static weights
-    if (staticWeightsContainer) {
-      staticWeightsContainer.style.display = "flex"
+  // Reset weights that were on the scale to their initial positions
+  draggableWeights.forEach((weight) => {
+    if (weight.onScale) {
+      weight.onScale = false
     }
+  })
 
-    // Reset weights that were on the scale to their initial positions
-    draggableWeights.forEach((weight) => {
-      if (weight.onScale && weight.element) {
-        weight.onScale = false
-        weight.element.dataset.onScale = "false"
+  // Center the hook on the meter rod when spring balances are visible
+  hookX = scaleX + meterRodLength / 2
+  hookY = scaleY + meterRodHeight
 
-        // Reset to initial position
-        const container = document.getElementById("draggable-weights-container")
-        if (container) {
-          const index = draggableWeights.findIndex((w) => w.id === weight.id)
-          const spacing = 20
-
-          // Reset position to container
-          weight.element.style.position = "static"
-          weight.element.style.display = "none" // Hide the weights
-          weight.element.style.visibility = "hidden"
-          weight.element.style.opacity = "0"
-          weight.element.style.transform = "none"
-          weight.element.style.left = ""
-          weight.element.style.top = ""
-
-          // Reset the weight's position in the array
-          if (index >= 0) {
-            draggableWeights[index].x = container.offsetLeft + index * (weight.width + spacing)
-            draggableWeights[index].y = container.offsetTop
-          }
-        }
-      }
-    })
-
-    // Center the hook on the meter rod when spring balances are visible
-    hookX = scaleX + meterRodLength / 2
-    hookY = scaleY + meterRodHeight
-  } else {
-    // When spring balances are not visible, hide static weights
-    if (staticWeightsContainer) {
-      staticWeightsContainer.style.display = "none"
-    }
-
+  if (!springBalancesVisible) {
     // Reset the hanging weight
     selectedWeightData.isHanging = false
   }
@@ -1091,78 +1219,11 @@ function toggleSpringBalances() {
   // Reset rotation
   scaleRotation = 0
 
-  // Update draggable weights visibility
-  updateDraggableWeightsVisibility()
-
-  // Force a reset of all weights to ensure they're properly hidden/shown
-  resetDraggableWeights()
+  // Reset all weights to ensure they're properly hidden/shown
+  resetWeightsPosition()
 
   // Redraw everything
-  drawSetupFn()
-}
-
-// Add a new function to update UI visibility based on meter rod visibility
-function updateUIVisibility() {
-  const simulationToggleContainer = document.getElementById("simulation-toggle-container")
-  const draggableWeightsContainer = document.getElementById("draggable-weights-container")
-
-  if (meterRodVisible) {
-    // Hide simulation button when meter rod is visible
-    if (simulationToggleContainer) {
-      simulationToggleContainer.style.display = "none"
-    }
-
-    // Hide draggable weights when meter rod is visible
-    if (draggableWeightsContainer) {
-      draggableWeightsContainer.style.display = "none"
-    }
-  } else {
-    // Show simulation button when meter rod is not visible
-    if (simulationToggleContainer) {
-      simulationToggleContainer.style.display = "flex"
-    }
-
-    // Show draggable weights when meter rod is not visible
-    if (draggableWeightsContainer) {
-      draggableWeightsContainer.style.display = "flex"
-    }
-  }
-}
-
-// Update the updateDraggableWeightsVisibility function to properly hide weights
-function updateDraggableWeightsVisibility() {
-  const draggableWeightsContainer = document.getElementById("draggable-weights-container")
-  if (draggableWeightsContainer) {
-    if (meterRodVisible) {
-      // Hide weights container when meter rod is visible
-      draggableWeightsContainer.style.display = "none"
-      draggableWeightsContainer.style.visibility = "hidden"
-      draggableWeightsContainer.style.opacity = "0"
-
-      // Make sure all weight elements are hidden
-      const weightElements = document.querySelectorAll(".draggable-weight")
-      weightElements.forEach((element) => {
-        element.style.display = "none"
-        element.style.visibility = "hidden"
-        element.style.opacity = "0"
-      })
-    } else {
-      // Show weights container when meter rod is not visible
-      draggableWeightsContainer.style.display = "flex"
-      draggableWeightsContainer.style.visibility = "visible"
-      draggableWeightsContainer.style.opacity = "1"
-
-      // Make sure all weight elements are visible
-      const weightElements = document.querySelectorAll(".draggable-weight")
-      weightElements.forEach((element) => {
-        if (!element.dataset.onScale || element.dataset.onScale === "false") {
-          element.style.display = "block"
-          element.style.visibility = "visible"
-          element.style.opacity = "1"
-        }
-      })
-    }
-  }
+  drawSetup()
 }
 
 function toggleTable() {
@@ -1184,37 +1245,9 @@ function toggleSimulation() {
 
     // Reset scale position
     resetScalePosition()
-
-    // Reset weight positions on scale
-    const canvasRect = canvas.getBoundingClientRect()
-    const weightsOnScale = document.querySelectorAll('.weight[data-on-scale="true"]')
-
-    weightsOnScale.forEach((weight) => {
-      const rect = weight.getBoundingClientRect()
-      const scalePosition = Number.parseFloat(weight.dataset.scalePosition || 0)
-
-      if (isNaN(scalePosition)) return
-
-      // Position without rotation
-      weight.style.left = `${scaleX + scalePosition - rect.width / 2 + canvasRect.left}px`
-      weight.style.top = `${scaleY - rect.height + canvasRect.top}px`
-      weight.style.transform = ""
-    })
-
-    // Reset draggable weights
-    draggableWeights.forEach((weight) => {
-      if (weight.onScale && weight.element) {
-        const rect = weight.element.getBoundingClientRect()
-
-        // Position without rotation
-        weight.element.style.left = `${scaleX + weight.scalePosition - rect.width / 2 + canvasRect.left}px`
-        weight.element.style.top = `${scaleY - rect.height + canvasRect.top}px`
-        weight.element.style.transform = ""
-      }
-    })
   }
 
-  drawSetupFn()
+  drawSetup()
 }
 
 // Update the resetExperiment function to also reset draggable weights
@@ -1272,14 +1305,8 @@ function resetExperiment() {
   // Reset positions
   resetScalePosition()
 
-  // Reset all weights
-  const weightElements = document.querySelectorAll(".weight")
-  weightElements.forEach((element) => {
-    resetWeightPosition(element)
-  })
-
   // Reset draggable weights
-  resetDraggableWeights()
+  initializeWeights()
 
   // Reset hanging weight
   selectedWeightData = {
@@ -1290,491 +1317,11 @@ function resetExperiment() {
     isHanging: false,
   }
 
-  // Show draggable weights container
-  const weightsContainer = document.getElementById("draggable-weights-container")
-  if (weightsContainer) {
-    weightsContainer.style.display = "flex"
-  }
-
-  drawSetupFn()
+  drawSetup()
 }
 
-// Fix 5: Improve resetDraggableWeights to ensure weights are properly reset and visible
-function resetDraggableWeights() {
-  const container = document.getElementById("draggable-weights-container")
-  if (!container) return
+// ============================== Mouse Event Handlers ==============================
 
-  console.log("Resetting draggable weights")
-
-  // Set container visibility based on meter rod visibility
-  if (meterRodVisible) {
-    container.style.display = "none"
-    container.style.visibility = "hidden"
-    container.style.opacity = "0"
-  } else {
-    container.style.display = "flex"
-    container.style.visibility = "visible"
-    container.style.opacity = "1"
-  }
-
-  // Reset all weights
-  draggableWeights.forEach((weight, index) => {
-    if (weight.element) {
-      // Reset position
-      const spacing = 20
-      weight.element.style.position = "static"
-      weight.element.style.left = ""
-      weight.element.style.top = ""
-      weight.element.style.transform = ""
-      weight.element.style.zIndex = ""
-      weight.element.classList.remove("dragging")
-
-      // Set visibility based on meter rod visibility
-      if (meterRodVisible) {
-        weight.element.style.display = "none"
-        weight.element.style.visibility = "hidden"
-        weight.element.style.opacity = "0"
-      } else {
-        weight.element.style.display = "block"
-        weight.element.style.visibility = "visible"
-        weight.element.style.opacity = "1"
-      }
-
-      // Reset state
-      weight.onScale = false
-      weight.element.dataset.onScale = "false"
-      weight.scalePosition = 0
-
-      // Reset position in the array
-      weight.x = container.offsetLeft + index * (weight.width + spacing)
-      weight.y = container.offsetTop
-    }
-  })
-
-  // Force redraw
-  drawSetupFn()
-}
-
-function handleWeightMouseDown(e) {
-  e.preventDefault()
-  const weightElement = e.currentTarget
-  const weightId = weightElement.id
-  const weightIndex = draggableWeights.findIndex((w) => w.id === weightId)
-
-  if (weightIndex >= 0) {
-    currentDraggedWeight = draggableWeights[weightIndex]
-    dragStartX = e.clientX
-    dragStartY = e.clientY
-
-    // Store initial position
-    const rect = weightElement.getBoundingClientRect()
-    elementStartX = rect.left
-    elementStartY = rect.top
-
-    // Set dragging state
-    weightElement.classList.add("dragging")
-    weightElement.style.zIndex = "1000"
-
-    // Store original position if it was on scale
-    currentDraggedWeight.wasOnScale = currentDraggedWeight.onScale
-    currentDraggedWeight.isDragging = true
-
-    // If it was on scale, remove from scale temporarily
-    if (currentDraggedWeight.onScale) {
-      currentDraggedWeight.onScale = false
-      weightElement.dataset.onScale = "false"
-    }
-  }
-}
-// Function to handle weight touch start event
-function handleWeightTouchStart(e) {
-  e.preventDefault()
-  const touch = e.touches[0]
-  const weightElement = e.currentTarget
-  const weightId = weightElement.id
-  const weightIndex = draggableWeights.findIndex((w) => w.id === weightId)
-
-  if (weightIndex >= 0) {
-    currentDraggedWeight = draggableWeights[weightIndex]
-    dragStartX = touch.clientX
-    dragStartY = touch.clientY
-
-    const rect = weightElement.getBoundingClientRect()
-    elementStartX = rect.left
-    elementStartY = rect.top
-
-    // Set dragging visual state
-    weightElement.classList.add("dragging")
-    weightElement.style.zIndex = "1000"
-
-    // Store whether the weight was on the scale before dragging
-    currentDraggedWeight.wasOnScale = currentDraggedWeight.onScale
-    currentDraggedWeight.previousScalePosition = currentDraggedWeight.scalePosition
-
-    // Mark as being dragged but don't remove from scale yet
-    currentDraggedWeight.isDragging = true
-  }
-}
-
-// Fix 1: Modify the handleWeightMouseMove function to ensure weights remain visible during dragging
-function handleWeightMouseMove(e) {
-  if (!currentDraggedWeight || !currentDraggedWeight.element) return
-
-  const dx = e.clientX - dragStartX
-  const dy = e.clientY - dragStartY
-
-  // Update element position
-  currentDraggedWeight.element.style.position = "fixed"
-  currentDraggedWeight.element.style.left = `${elementStartX + dx}px`
-  currentDraggedWeight.element.style.top = `${elementStartY + dy}px`
-  currentDraggedWeight.element.style.transform = "none" // Remove any transforms
-}
-function handleWeightTouchMove(e) {
-  if (!currentDraggedWeight || !currentDraggedWeight.element) return
-  e.preventDefault()
-
-  const touch = e.touches[0]
-  const dx = touch.clientX - dragStartX
-  const dy = touch.clientY - dragStartY
-
-  // Update element position
-  currentDraggedWeight.element.style.position = "fixed"
-  currentDraggedWeight.element.style.left = `${elementStartX + dx}px`
-  currentDraggedWeight.element.style.top = `${elementStartY + dy}px`
-  currentDraggedWeight.element.style.transform = "" // Remove rotation when dragging
-  currentDraggedWeight.element.style.display = "block" // CRITICAL: Ensure visibility during drag
-  currentDraggedWeight.element.style.opacity = "1" // Ensure full opacity
-
-  // Update weight object position
-  currentDraggedWeight.x = touch.clientX
-  currentDraggedWeight.y = touch.clientY
-
-  // If the weight is being dragged and was on the scale, temporarily remove it from torque calculations
-  // but don't make it invisible
-  if (currentDraggedWeight.isDragging && currentDraggedWeight.onScale) {
-    currentDraggedWeight.onScale = false
-    currentDraggedWeight.element.dataset.onScale = "false"
-
-    // Recalculate torque if simulation is running
-    if (simulationRunning) {
-      calculateTorque()
-    }
-  }
-
-  // Force redraw to ensure the weight is visible
-  drawSetupFn()
-}
-
-// Fix 4: Improve handleWeightMouseUp to ensure weights are always visible when returned to container
-function handleWeightMouseUp(e) {
-  if (!currentDraggedWeight || !currentDraggedWeight.element) return
-
-  currentDraggedWeight.element.classList.remove("dragging")
-  currentDraggedWeight.isDragging = false
-
-  // Check if dropped on scale
-  const canvasRect = canvas.getBoundingClientRect()
-  const mouseX = e.clientX || (e.changedTouches && e.changedTouches[0].clientX)
-  const mouseY = e.clientY || (e.changedTouches && e.changedTouches[0].clientY)
-
-  // Convert to canvas coordinates
-  const canvasX = mouseX - canvasRect.left
-  const canvasY = mouseY - canvasRect.top
-
-  // Improved detection for dropping on scale
-  const scaleTop = scaleY - 50
-  const scaleBottom = scaleY + meterRodHeight + 50
-  const scaleLeft = scaleX
-  const scaleRight = scaleX + meterRodLength
-
-  if (canvasX >= scaleLeft && canvasX <= scaleRight && canvasY >= scaleTop && canvasY <= scaleBottom) {
-    // Place on scale
-    currentDraggedWeight.onScale = true
-
-    // Calculate position on scale - limit to scale boundaries
-    currentDraggedWeight.scalePosition = Math.max(scaleLeft, Math.min(scaleRight, canvasX))
-
-    // Store the weight's mass for torque calculation
-    currentDraggedWeight.element.dataset.mass = currentDraggedWeight.mass
-    currentDraggedWeight.element.dataset.onScale = "true"
-    currentDraggedWeight.element.dataset.scalePosition = currentDraggedWeight.scalePosition
-
-    // Position element on scale, accounting for rotation if simulation is running
-    const weightWidth = currentDraggedWeight.element.offsetWidth
-    const weightHeight = currentDraggedWeight.element.offsetHeight
-
-    if (simulationRunning && Math.abs(scaleRotation) > 0.001) {
-      // Calculate rotated position
-      const centerX = fixedGPoint.x
-      const centerY = fixedGPoint.y
-      const distanceFromCenter = currentDraggedWeight.scalePosition - centerX
-
-      // Apply rotation to get new position
-      const rotatedX = centerX + distanceFromCenter * Math.cos(scaleRotation)
-      const rotatedY = centerY + distanceFromCenter * Math.sin(scaleRotation)
-
-      // Update position with proper offset calculation
-      currentDraggedWeight.element.style.position = "absolute"
-      currentDraggedWeight.element.style.left = `${rotatedX - weightWidth / 2 + canvasRect.left}px`
-      currentDraggedWeight.element.style.top = `${rotatedY - weightHeight + canvasRect.top}px`
-      currentDraggedWeight.element.style.transform = `rotate(${scaleRotation}rad)`
-    } else {
-      // Position without rotation
-      currentDraggedWeight.element.style.position = "absolute"
-      currentDraggedWeight.element.style.left = `${canvasRect.left + currentDraggedWeight.scalePosition - weightWidth / 2}px`
-      currentDraggedWeight.element.style.top = `${canvasRect.top + scaleY - weightHeight}px`
-      currentDraggedWeight.element.style.transform = ""
-    }
-
-    if (simulationRunning) {
-      calculateTorque()
-    }
-  } else {
-    // CRITICAL FIX: Return to container with proper positioning and visibility
-    const container = document.getElementById("draggable-weights-container")
-    if (container) {
-      // Find weight index for positioning
-      const index = draggableWeights.findIndex((w) => w.id === currentDraggedWeight.id)
-      const spacing = 20
-
-      // Reset position to container
-      currentDraggedWeight.element.style.position = "static" // Use static instead of relative
-      currentDraggedWeight.element.style.display = "block"
-      currentDraggedWeight.element.style.visibility = "visible"
-      currentDraggedWeight.element.style.opacity = "1"
-      currentDraggedWeight.element.style.transform = "none"
-
-      // Reset the weight's state
-      currentDraggedWeight.onScale = false
-      currentDraggedWeight.element.dataset.onScale = "false"
-
-      // Force redraw of the container
-      container.style.display = "flex"
-
-      // Reset the weight's position in the array
-      draggableWeights[index].x = container.offsetLeft + index * (currentDraggedWeight.width + spacing)
-      draggableWeights[index].y = container.offsetTop
-    }
-  }
-
-  // Force redraw to ensure weights are visible
-  drawSetupFn()
-
-  currentDraggedWeight = null
-}
-
-// Function to set up draggable weights
-function setupDraggableWeights() {
-  console.log("Setting up draggable weights")
-
-  // Get all draggable weight elements
-  const weightElements = document.querySelectorAll(".draggable-weight")
-
-  // Clear existing event listeners if any
-  weightElements.forEach((element) => {
-    element.removeEventListener("mousedown", handleWeightMouseDown)
-    element.removeEventListener("touchstart", handleWeightTouchStart)
-  })
-
-  // Add event listeners to each weight
-  weightElements.forEach((element) => {
-    element.addEventListener("mousedown", handleWeightMouseDown)
-    element.addEventListener("touchstart", handleWeightTouchStart, { passive: false })
-    console.log(`Added listeners to ${element.id}`)
-
-    // Initialize weight object data
-    const weightId = element.id
-    const weightIndex = draggableWeights.findIndex((w) => w.id === weightId)
-
-    if (weightIndex >= 0) {
-      // Update existing weight object
-      draggableWeights[weightIndex].element = element
-
-      // Initialize position based on element's current position
-      const rect = element.getBoundingClientRect()
-      draggableWeights[weightIndex].x = rect.left + rect.width / 2
-      draggableWeights[weightIndex].y = rect.top + rect.height / 2
-
-      // Make sure mass is correctly set
-      const mass = Number.parseFloat(element.getAttribute("data-mass")) || draggableWeights[weightIndex].mass
-      draggableWeights[weightIndex].mass = mass
-
-      // Set the text content for trashcan weights
-      if (draggableWeights[weightIndex].type === "trashcan") {
-        element.textContent = `${mass} kg`
-      }
-
-      // Make sure the element is visible
-      element.style.display = "block"
-    }
-  })
-
-  // Add document-level event listeners for drag and drop
-  document.removeEventListener("mousemove", handleWeightMouseMove)
-  document.removeEventListener("mouseup", handleWeightMouseUp)
-  document.removeEventListener("touchmove", handleWeightTouchMove)
-  document.removeEventListener("touchend", handleWeightMouseUp)
-
-  document.addEventListener("mousemove", handleWeightMouseMove)
-  document.addEventListener("mouseup", handleWeightMouseUp)
-  document.addEventListener("touchmove", handleWeightTouchMove, { passive: false })
-  document.addEventListener("touchend", handleWeightMouseUp)
-}
-
-// Fix 4: Modify the drawSetupFn to ensure weights are always visible
-const drawSetupFn = () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-  drawBackground()
-
-  if (simulationRunning) {
-    calculateTorque()
-  }
-
-  if (scaleVisible) {
-    if (springBalancesVisible) {
-      drawWithoutWedge()
-      if (selectedWeightData.isHanging && selectedWeightData.weight > 0) {
-        drawWeight(hookX, hookY)
-      }
-    } else {
-      if (wedgeVisible) {
-        drawWithWedge()
-      } else {
-        drawScale(scaleX, scaleY, scaleRotation)
-      }
-    }
-  }
-
-  // Always draw weights on scale
-  drawWeightsOnScale()
-
-  // Draw dragged weight with correct shape
-  if (currentDraggedWeight && currentDraggedWeight.isDragging) {
-    const x = currentDraggedWeight.x
-    const y = currentDraggedWeight.y
-    const width = currentDraggedWeight.width
-    const height = currentDraggedWeight.height
-
-    if (currentDraggedWeight.type === "extinguisher") {
-      // Draw extinguisher
-      ctx.fillStyle = "red"
-      ctx.fillRect(x - width / 2, y - height, width, height)
-      ctx.strokeStyle = "black"
-      ctx.lineWidth = 2
-      ctx.strokeRect(x - width / 2, y - height, width, height)
-
-      // Draw nozzle
-      ctx.fillStyle = "black"
-      ctx.fillRect(x - width / 4, y - height - width / 4, width / 2, width / 4)
-
-      // Draw label
-      ctx.fillStyle = "white"
-      ctx.font = "bold " + baseSize / 2 + "px Arial"
-      ctx.textAlign = "center"
-      ctx.fillText(`${currentDraggedWeight.mass} kg`, x, y - height / 2)
-    } else if (currentDraggedWeight.type === "trashcan") {
-      // Draw trashcan
-      ctx.fillStyle = "#888888"
-      ctx.fillRect(x - width / 2, y - height, width, height)
-      ctx.strokeStyle = "black"
-      ctx.lineWidth = 2
-      ctx.strokeRect(x - width / 2, y - height, width, height)
-
-      // Draw lid
-      ctx.fillStyle = "#666666"
-      ctx.fillRect(x - width / 2 - width / 10, y - height, width + width / 5, height / 10)
-
-      // Draw label
-      ctx.fillStyle = "white"
-      ctx.font = "bold " + baseSize / 2 + "px Arial"
-      ctx.textAlign = "center"
-      ctx.fillText(`${currentDraggedWeight.mass} kg`, x, y - height / 2)
-    }
-  }
-
-  // Only draw toggle switch if meter rod is not visible
-  if (!meterRodVisible) {
-    drawToggleSwitch()
-  }
-
-  // Update draggable weights container visibility
-  const weightsContainer = document.getElementById("draggable-weights-container")
-  if (weightsContainer) {
-    if (meterRodVisible) {
-      weightsContainer.style.display = "none"
-      weightsContainer.style.visibility = "hidden"
-      weightsContainer.style.opacity = "0"
-    } else {
-      weightsContainer.style.display = "flex"
-      weightsContainer.style.visibility = "visible"
-      weightsContainer.style.opacity = "1"
-
-      // Force all weights to be visible if not on meter rod mode
-      const weightElements = document.querySelectorAll(".draggable-weight")
-      weightElements.forEach((element) => {
-        if (!element.dataset.onScale || element.dataset.onScale === "false") {
-          element.style.display = "block"
-          element.style.visibility = "visible"
-          element.style.opacity = "1"
-        }
-      })
-    }
-  }
-}
-// Modify placeWeightOnScaleAtIndex to update the DOM element position
-function placeWeightOnScaleAtIndexFn(weightIndex, mouseX) {
-  const weight = draggableWeights[weightIndex]
-  weight.onScale = true
-
-  // FIXED: Calculate position on scale - limit to scale boundaries and ensure it's relative to scale
-  const scaleLeft = scaleX
-  const scaleRight = scaleX + meterRodLength
-
-  // Adjust position to be on the scale
-  if (simulationRunning && scaleRotation !== 0) {
-    // Calculate position on the rotated scale
-    const centerX = fixedGPoint.x
-
-    // Limit the position to be on the scale
-    const limitedX = Math.max(scaleLeft, Math.min(scaleRight, mouseX))
-
-    // Calculate distance from center
-    weight.scalePosition = limitedX
-  } else {
-    weight.scalePosition = Math.max(scaleLeft, Math.min(scaleRight, mouseX))
-  }
-
-  // Set base at scale surface
-  weight.y = scaleY
-
-  // Update the DOM element position if it exists
-  if (weight.element) {
-    const canvasRect = canvas.getBoundingClientRect()
-    const weightWidth = weight.element.offsetWidth
-    const weightHeight = weight.element.offsetHeight
-
-    // Position without rotation initially
-    weight.element.style.position = "absolute"
-    weight.element.style.left = `${canvasRect.left + weight.scalePosition - weightWidth / 2}px`
-    weight.element.style.top = `${canvasRect.top + scaleY - weightHeight}px`
-    weight.element.style.transform = ""
-    weight.element.style.display = "block" // CRITICAL: Ensure visibility
-    weight.element.style.opacity = "1" // Ensure full opacity
-
-    // Store data for torque calculation
-    weight.element.dataset.onScale = "true"
-    weight.element.dataset.scalePosition = weight.scalePosition
-  }
-
-  // Recalculate torque if simulation is running
-  if (simulationRunning) {
-    calculateTorque()
-  }
-
-  drawSetupFn()
-}
-
-// Modify handleMouseDown to prevent interactions when meter rod is visible
 function handleMouseDown(e) {
   // If meter rod is visible, ignore mouse events for simulation and weights
   if (meterRodVisible) {
@@ -1845,54 +1392,43 @@ function handleMouseDown(e) {
     return
   }
 
-  // Check if clicking on a draggable weight
+  // Check if clicking on a weight on the scale
   for (let i = 0; i < draggableWeights.length; i++) {
-    // First check weights that are on the scale
-    if (draggableWeights[i].onScale) {
-      // For weights on the scale, we need to check if the click is within the weight's area
-      const weight = draggableWeights[i]
+    const weight = draggableWeights[i]
+    if (weight.onScale) {
       const weightX = weight.scalePosition
       const weightY = scaleY - weight.height / 2
 
-      // Check if click is within the weight's bounds
       if (
         mouseX >= weightX - weight.width / 2 &&
         mouseX <= weightX + weight.width / 2 &&
         mouseY >= weightY - weight.height / 2 &&
         mouseY <= weightY + weight.height / 2
       ) {
-        isDraggingWeight = true
-        draggedWeightIndex = i
-
-        // Set up dragging state
-        currentDraggedWeight = draggableWeights[i]
+        currentDraggedWeight = weight
         dragStartX = e.clientX
         dragStartY = e.clientY
-
-        if (currentDraggedWeight.element) {
-          const rect = currentDraggedWeight.element.getBoundingClientRect()
-          elementStartX = rect.left
-          elementStartY = rect.top
-
-          // Set dragging visual state
-          currentDraggedWeight.element.classList.add("dragging")
-          currentDraggedWeight.element.style.zIndex = "1000"
-        }
+        weight.isDragging = true
 
         // Store that it was on the scale
-        currentDraggedWeight.wasOnScale = true
-        currentDraggedWeight.previousScalePosition = currentDraggedWeight.scalePosition
-        currentDraggedWeight.isDragging = true
+        weight.wasOnScale = true
+        weight.previousScalePosition = weight.scalePosition
+
+        // Temporarily remove from scale during drag
+        weight.onScale = false
 
         return
       }
     }
-    // Then check weights that are not on the scale
-    else if (isClickOnWeight(i, mouseX, mouseY)) {
-      isDraggingWeight = true
-      draggedWeightIndex = i
-      return
-    }
+  }
+
+  // Check if clicking on a weight not on the scale
+  if (isClickOnWeight(mouseX, mouseY)) {
+    currentDraggedWeight = draggableWeights[draggedWeightIndex]
+    dragStartX = e.clientX
+    dragStartY = e.clientY
+    currentDraggedWeight.isDragging = true
+    return
   }
 
   // Check if clicking on the scale - only allow dragging if not connected to meter rods
@@ -1909,151 +1445,242 @@ function handleMouseDown(e) {
 
 function handleMouseMove(e) {
   const rect = canvas.getBoundingClientRect()
-  const rawMouseX = e.clientX - rect.left
-  const rawMouseY = e.clientY - rect.top
+  mouseX = e.clientX - rect.left
+  mouseY = e.clientY - rect.top
 
-  // Adjust mouse position for weights when they're on the scale
-  if (isDraggingWeight && draggedWeightIndex !== -1) {
-    if (simulationRunning && scaleRotation !== 0 && isMouseOnScale(rawMouseX, rawMouseY)) {
-      // Transform mouse coordinates to account for rotation when near the scale
-      const centerX = fixedGPoint.x
-      const centerY = fixedGPoint.y
-
-      // Translate to origin
-      const translatedX = rawMouseX - centerX
-      const translatedY = rawMouseY - centerY
-
-      // Rotate coordinates in the opposite direction of scale rotation
-      const rotatedX = translatedX * Math.cos(-scaleRotation) - translatedY * Math.sin(-scaleRotation)
-      const rotatedY = translatedX * Math.sin(-scaleRotation) + translatedY * Math.cos(-scaleRotation)
-
-      // Translate back
-      mouseX = rotatedX + centerX
-      mouseY = rotatedY + centerY
-    } else {
-      mouseX = rawMouseX
-      mouseY = rawMouseY
-    }
-
-    // Update the position of the dragged weight
-    draggableWeights[draggedWeightIndex].x = mouseX
-    draggableWeights[draggedWeightIndex].y = mouseY
-  } else {
-    mouseX = rawMouseX
-    mouseY = rawMouseY
+  // Handle dragging a weight
+  if (currentDraggedWeight && currentDraggedWeight.isDragging) {
+    currentDraggedWeight.x = mouseX
+    currentDraggedWeight.y = mouseY
+    drawSetup()
   }
-
-  // Redraw the scene
-  drawSetupFn()
 }
 
-function handleMouseUp() {
-  if (isDraggingWeight && draggedWeightIndex !== -1) {
-    // Check if we're dropping the weight on the scale
-    if (isMouseOnScale(mouseX, mouseY)) {
-      placeWeightOnScaleAtIndexFn(draggedWeightIndex, mouseX)
+function handleMouseUp(e) {
+  // Handle dropping a dragged weight
+  if (currentDraggedWeight && currentDraggedWeight.isDragging) {
+    // Check if dropped on scale
+    if (
+      mouseY >= scaleY - 50 &&
+      mouseY <= scaleY + meterRodHeight + 50 &&
+      mouseX >= scaleX &&
+      mouseX <= scaleX + meterRodLength
+    ) {
+      // Place on scale
+      currentDraggedWeight.onScale = true
+
+      // Calculate position on scale - limit to scale boundaries
+      currentDraggedWeight.scalePosition = Math.max(scaleX, Math.min(scaleX + meterRodLength, mouseX))
+
+      // If simulation is running, recalculate torque
+      if (simulationRunning) {
+        calculateTorque()
+      }
+    } else {
+      // Not dropped on scale, reset to container position
+      currentDraggedWeight.onScale = false
+
+      // Find its index to position it properly in the container area
+      const index = draggableWeights.findIndex((w) => w.id === currentDraggedWeight.id)
+      if (index !== -1) {
+        const canvasWidth = canvas.width
+        const canvasHeight = canvas.height
+        const weightSpacing = canvasWidth * config.weightSpacingPercentage * 3
+        const startX = canvasWidth * config.weightStartXPercentage
+        const startY = canvasHeight * config.weightStartYPercentage
+
+        currentDraggedWeight.x = startX + index * weightSpacing
+        currentDraggedWeight.y = startY
+      }
     }
+
+    // Reset dragging state
+    currentDraggedWeight.isDragging = false
+    currentDraggedWeight = null
   }
 
-  // Reset all dragging states
+  // Reset other dragging states
   isDraggingSpringBalance = false
   isDraggingScale = false
-  isDraggingWeight = false
   draggedSpringBalance = ""
   draggedWeightIndex = -1
+
+  drawSetup()
 }
 
-function placeWeightOnScaleAtIndex(weightIndex, mouseX) {
-  const weight = draggableWeights[weightIndex]
-  weight.onScale = true
+function handleTouchStart(e) {
+  e.preventDefault()
+  const touch = e.touches[0]
+  const rect = canvas.getBoundingClientRect()
+  const touchX = touch.clientX - rect.left
+  const touchY = touch.clientY - rect.top
 
-  // Adjust position to be on the scale
-  if (simulationRunning && scaleRotation !== 0) {
-    // Calculate position on the rotated scale
-    const centerX = fixedGPoint.x
-
-    // Limit the position to be on the scale
-    const limitedX = Math.max(scaleX, Math.min(scaleX + meterRodLength, mouseX))
-
-    // Calculate distance from center
-    weight.scalePosition = limitedX
-  } else {
-    weight.scalePosition = Math.max(scaleX, Math.min(scaleX + meterRodLength, mouseX))
+  // Convert touch to mouse event
+  const mouseEvent = {
+    clientX: touch.clientX,
+    clientY: touch.clientY,
+    preventDefault: () => {},
   }
 
-  // Set base at scale surface
-  weight.y = scaleY
-
-  drawSetupFn()
+  handleMouseDown(mouseEvent)
 }
 
-function handleResize() {
-  resizeCanvas()
-  initializeSizes()
-  initializePositions()
-  drawSetupFn()
+function handleTouchMove(e) {
+  e.preventDefault()
+  const touch = e.touches[0]
+
+  // Convert touch to mouse event
+  const mouseEvent = {
+    clientX: touch.clientX,
+    clientY: touch.clientY,
+    preventDefault: () => {},
+  }
+
+  handleMouseMove(mouseEvent)
 }
 
-// Fix 5: Improve the drawing functions for weights to ensure correct shapes
-// Modify drawExtinguisherFn to scale displayed weights
-function drawExtinguisherFn(x, y, width, height, mass) {
-  // Draw the extinguisher body with black border
-  ctx.fillStyle = "red"
-  ctx.fillRect(x - width / 2, y - height, width, height)
-  ctx.strokeStyle = "black"
-  ctx.lineWidth = 2
-  ctx.strokeRect(x - width / 2, y - height, width, height)
+function handleTouchEnd(e) {
+  e.preventDefault()
 
-  // Draw the nozzle
-  ctx.fillStyle = "black"
-  ctx.fillRect(x - width / 4, y - height - width / 4, width / 2, width / 4)
-
-  // Draw the label if mass labels are enabled
-  if (showMassLabels) {
-    ctx.fillStyle = "white"
-    ctx.font = "bold " + baseSize / 2 + "px Arial"
-    ctx.textAlign = "center"
-
-    // Apply scaling based on spring constant
-    const displayMass = Math.round(mass / displayedWeightScale)
-    ctx.fillText(`${displayMass} kg`, x, y - height / 2)
+  // Convert touch to mouse event
+  const mouseEvent = {
+    clientX: e.changedTouches[0].clientX,
+    clientY: e.changedTouches[0].clientY,
+    preventDefault: () => {},
   }
 
-  // Draw force arrow if forces are enabled
-  if (showAllForces && simulationRunning) {
-    const force = mass * gravity
-    drawForceArrow(x, y - height / 2, "down", `${force.toFixed(1)}N`)
+  handleMouseUp(mouseEvent)
+}
+
+// ============================== Physics Calculations ==============================
+
+function calculateTorque() {
+  let totalTorque = 0
+  const g = 9.8 // Acceleration due to gravity
+  const centerX = fixedGPoint.x // Center point for torque calculation
+
+  // First, check if we have weights on the scale
+  const leftWeights = []
+  const rightWeights = []
+
+  // Collect weights on each side
+  draggableWeights.forEach((weight) => {
+    if (weight.onScale) {
+      if (weight.scalePosition < centerX) {
+        leftWeights.push(weight)
+      } else if (weight.scalePosition > centerX) {
+        rightWeights.push(weight)
+      }
+      // Weights exactly at center contribute no torque
+    }
+  })
+
+  // Calculate torques for each side
+  let leftTorque = 0
+  let rightTorque = 0
+
+  // Add base weight torque (15g on each side at fixed positions)
+  // Convert grams to kg for calculation
+  const baseWeightKg = scaleBaseWeight / 1000
+
+  // Left base weight at 25% of the rod length
+  const leftBaseDistance = (centerX - (scaleX + meterRodLength * 0.25)) / (meterRodLength / 4)
+  leftTorque += baseWeightKg * g * leftBaseDistance
+
+  // Right base weight at 75% of the rod length
+  const rightBaseDistance = (scaleX + meterRodLength * 0.75 - centerX) / (meterRodLength / 4)
+  rightTorque += baseWeightKg * g * rightBaseDistance
+
+  // Calculate left side torque from added weights
+  leftWeights.forEach((weight) => {
+    // Calculate distance from center in meters (convert pixels to meters)
+    // Assuming 1 meter = meterRodLength/4 pixels (since the scale is 4 meters total)
+    const distanceInPixels = centerX - weight.scalePosition
+    const distanceInMeters = distanceInPixels / (meterRodLength / 4)
+
+    // Calculate torque: mass * g * distance
+    const torque = weight.mass * g * distanceInMeters
+    leftTorque += torque
+  })
+
+  // Calculate right side torque from added weights
+  rightWeights.forEach((weight) => {
+    // Calculate distance from center in meters
+    const distanceInPixels = weight.scalePosition - centerX
+    const distanceInMeters = distanceInPixels / (meterRodLength / 4)
+
+    // Calculate torque: mass * g * distance
+    const torque = weight.mass * g * distanceInMeters
+    rightTorque += torque
+  })
+
+  // Total torque (positive = clockwise, negative = counterclockwise)
+  totalTorque = rightTorque - leftTorque
+
+  // Check if the torques are balanced within a small threshold
+  const torqueDifference = Math.abs(rightTorque - leftTorque)
+  const balanceThreshold = 0.5 // Small threshold to account for pixel precision
+
+  if (torqueDifference < balanceThreshold) {
+    scaleRotation = 0
+    return
+  }
+
+  // Calculate the angle of rotation based on the total torque
+  const momentOfInertia = 10 // Increased for more stability
+  const angularAcceleration = totalTorque / momentOfInertia
+  const deltaTime = 0.02 // Time step
+
+  // Apply a smaller change to rotation for more stability
+  scaleRotation += angularAcceleration * deltaTime
+
+  // Apply stronger damping to reduce oscillation
+  const dampingFactor = 0.1 // Increased damping
+  scaleRotation *= 1 - dampingFactor
+
+  // Limit the rotation angle
+  const maxRotation = 0.1
+  scaleRotation = Math.max(-maxRotation, Math.min(maxRotation, scaleRotation))
+
+  // If rotation is very small, just set it to zero
+  if (Math.abs(scaleRotation) < 0.001) {
+    scaleRotation = 0
   }
 }
 
-// Modify drawTrashCanWeightFn to scale displayed weights
-function drawTrashCanWeightFn(x, y, width, height, mass) {
-  // Draw the trashcan body with black border
-  ctx.fillStyle = "#888888"
-  ctx.fillRect(x - width / 2, y - height, width, height)
-  ctx.strokeStyle = "black"
-  ctx.lineWidth = 2
-  ctx.strokeRect(x - width / 2, y - height, width, height)
+// ============================== Main Drawing Function ==============================
 
-  // Draw the lid
-  ctx.fillStyle = "#666666"
-  ctx.fillRect(x - width / 2 - width / 10, y - height, width + width / 5, height / 10)
+function drawSetup() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  drawBackground()
 
-  // Draw the label if mass labels are enabled
-  if (showMassLabels) {
-    ctx.fillStyle = "white"
-    ctx.font = "bold " + baseSize / 2 + "px Arial"
-    ctx.textAlign = "center"
-
-    // Apply scaling based on spring constant
-    const displayMass = Math.round(mass / displayedWeightScale)
-    ctx.fillText(`${displayMass} kg`, x, y - height / 2)
+  if (simulationRunning) {
+    calculateTorque()
   }
 
-  // Draw force arrow if forces are enabled
-  if (showAllForces && simulationRunning) {
-    const force = mass * gravity
-    drawForceArrow(x, y - height / 2, "down", `${force.toFixed(1)}N`)
+  if (scaleVisible) {
+    if (springBalancesVisible) {
+      drawWithoutWedge()
+      if (selectedWeightData.isHanging && selectedWeightData.weight > 0) {
+        drawWeight(hookX, hookY)
+      }
+    } else {
+      if (wedgeVisible) {
+        drawWithWedge()
+      } else {
+        drawScale(scaleX, scaleY, scaleRotation)
+      }
+    }
+  }
+
+  // Draw all draggable weights
+  if (!meterRodVisible) {
+    drawDraggableWeights()
+  }
+
+  // Draw toggle switch if not in meter rod mode
+  if (!meterRodVisible) {
+    drawToggleSwitch()
   }
 }
 
@@ -2064,10 +1691,17 @@ function setupEventListeners() {
   canvas.addEventListener("click", handleCanvasClick)
 
   // Weight buttons
-  document.getElementById("weight1").addEventListener("click", handleWeightClick)
-  document.getElementById("weight2").addEventListener("click", handleWeightClick)
-  document.getElementById("weight3").addEventListener("click", handleWeightClick)
-  document.getElementById("weight4").addEventListener("click", handleWeightClick)
+  const weight1 = document.getElementById("weight1")
+  if (weight1) weight1.addEventListener("click", handleWeightClick)
+
+  const weight2 = document.getElementById("weight2")
+  if (weight2) weight2.addEventListener("click", handleWeightClick)
+
+  const weight3 = document.getElementById("weight3")
+  if (weight3) weight3.addEventListener("click", handleWeightClick)
+
+  const weight4 = document.getElementById("weight4")
+  if (weight4) weight4.addEventListener("click", handleWeightClick)
 
   // Sliders
   const massSlider = document.getElementById("massSlider")
@@ -2132,13 +1766,13 @@ function setupEventListeners() {
   if (addValuesBtn) addValuesBtn.addEventListener("click", toggleTable)
 
   // Window events
-  window.addEventListener("resize", resizeCanvas)
+  window.addEventListener("resize", handleResize)
 
   const showMassLabelsCheckbox = document.getElementById("showMassLabels")
   if (showMassLabelsCheckbox) {
     showMassLabelsCheckbox.addEventListener("change", function () {
       showMassLabels = this.checked
-      drawSetupFn()
+      drawSetup()
     })
   }
 
@@ -2147,6 +1781,11 @@ function setupEventListeners() {
   canvas.addEventListener("mousemove", handleMouseMove)
   canvas.addEventListener("mouseup", handleMouseUp)
   canvas.addEventListener("mouseleave", handleMouseUp)
+
+  // Touch events
+  canvas.addEventListener("touchstart", handleTouchStart, { passive: false })
+  canvas.addEventListener("touchmove", handleTouchMove, { passive: false })
+  canvas.addEventListener("touchend", handleTouchEnd, { passive: false })
 }
 
 function handleCanvasClick(e) {
@@ -2162,323 +1801,15 @@ function handleCanvasClick(e) {
   // Handle other canvas clicks if needed
 }
 
-// Animation loop
-function animate() {
-  drawSetupFn()
-  requestAnimationFrame(animate)
-}
-
-// Function to initialize the canvas
-function initializeCanvas() {
-  canvas = document.getElementById("simulationCanvas")
+function handleResize() {
   resizeCanvas()
-  ctx = canvas.getContext("2d")
-
   initializeSizes()
   initializePositions()
-  setupEventListeners()
-  drawSetupFn()
-}
-
-// Function to reset weight position
-function resetWeightPosition(element) {
-  const canvasWidth = canvas.width
-  const canvasHeight = canvas.height
-  const weightSpacing = canvasWidth * config.weightSpacingPercentage
-  const startX = canvasWidth * config.weightStartXPercentage
-  const startY = canvasHeight * config.weightStartYPercentage
-  const index = Array.from(element.parentNode.children).indexOf(element)
-
-  element.style.left = startX + index * weightSpacing + "px"
-  element.style.top = startY + "px"
-  element.style.position = ""
-  element.style.transform = ""
-  element.dataset.onScale = "false"
-  element.dataset.scalePosition = "0"
-}
-
-// Define anime if it's not available
-if (typeof anime === "undefined") {
-  var anime = (params) => {
-    // Simple animation fallback
-    const obj = params.targets
-    obj[params.springExtension] = params.springExtension
-    if (params.update) params.update()
-    return {
-      pause: () => {},
-    }
-  }
-}
-
-// Modify the initialize function to set initial UI visibility
-function initialize() {
-  canvas = document.getElementById("simulationCanvas")
-  if (!canvas) {
-    console.error("Canvas element not found")
-    return
-  }
-
-  ctx = canvas.getContext("2d")
-
-  // Initialize sizes and positions
-  resizeCanvas()
-
-  // Set up event listeners
-  setupEventListeners()
-
-  // Set up draggable weights
-  setupDraggableWeights()
-
-  // Set initial UI visibility
-  meterRodVisible = springBalancesVisible
-  updateUIVisibility()
-
-  // Start animation loop
-  requestAnimationFrame(animate)
-}
-
-// Initialize on page load
-window.onload = () => {
-  initialize()
-
-  // Verify draggable weights are set up
-  setTimeout(() => {
-    const weights = document.querySelectorAll(".draggable-weight")
-    console.log(`Found ${weights.length} draggable weights`)
-
-    // Force setup again if needed
-    if (weights.length > 0) {
-      console.log("Re-initializing draggable weights")
-      setupDraggableWeights()
-    }
-  }, 500)
-}
-
-// Define startDrag function for HTML weights
-function startDrag(e) {
-  e.preventDefault()
-  const weight = e.target
-
-  // Set up drag state
-  weight.isDragging = true
-  weight.dragStartX = e.clientX || (e.touches && e.touches[0].clientX)
-  weight.dragStartY = e.clientY || (e.touches && e.touches[0].clientY)
-
-  // Store initial position
-  const rect = weight.getBoundingClientRect()
-  weight.startLeft = rect.left
-  weight.startTop = rect.top
-
-  // Add event listeners for drag
-  document.addEventListener("mousemove", dragWeight)
-  document.addEventListener("mouseup", stopDrag)
-  document.addEventListener("touchmove", dragWeight, { passive: false })
-  document.addEventListener("touchend", stopDrag)
-
-  // Set visual state
-  weight.style.zIndex = "1000"
-  weight.style.cursor = "grabbing"
-}
-
-// Define dragWeight function
-function dragWeight(e) {
-  const weight = e.target
-  if (!weight.isDragging) return
-
-  e.preventDefault()
-
-  const clientX = e.clientX || (e.touches && e.touches[0].clientX)
-  const clientY = e.clientY || (e.touches && e.touches[0].clientY)
-
-  const dx = clientX - weight.dragStartX
-  const dy = clientY - weight.dragStartY
-
-  weight.style.left = weight.startLeft + dx + "px"
-  weight.style.top = weight.startTop + dy + "px"
-}
-
-// Define stopDrag function
-function stopDrag(e) {
-  const weight = e.target
-  if (!weight.isDragging) return
-
-  weight.isDragging = false
-  weight.style.zIndex = ""
-  weight.style.cursor = "grab"
-
-  // Remove event listeners
-  document.removeEventListener("mousemove", dragWeight)
-  document.removeEventListener("mouseup", stopDrag)
-  document.removeEventListener("touchmove", dragWeight)
-  document.removeEventListener("touchend", stopDrag)
-
-  // Recalculate torque if simulation is running
-  if (simulationRunning) {
-    // Update the weight's dataset with its new position
-    const rect = weight.getBoundingClientRect()
-    const canvasRect = canvas.getBoundingClientRect()
-    const canvasX = rect.left - canvasRect.left + rect.width / 2
-
-    // Check if the weight is on the scale
-    if (
-      canvasX >= scaleX &&
-      canvasX <= scaleX + meterRodLength &&
-      rect.top - canvasRect.top >= scaleY - rect.height &&
-      rect.top - canvasRect.top <= scaleY + meterRodHeight
-    ) {
-      weight.dataset.onScale = "true"
-      weight.dataset.scalePosition = canvasX
-    } else {
-      weight.dataset.onScale = "false"
-      weight.dataset.scalePosition = "0"
-    }
-
-    calculateTorque()
-  }
-}
-
-// Calculate torque function
-// Modify the calculateTorque function to include the base weight of the scale
-calculateTorque = () => {
-  let totalTorque = 0
-  const g = 9.8 // Acceleration due to gravity
-  const centerX = fixedGPoint.x // Center point for torque calculation
-
-  // First, check if we have weights on the scale
-  const leftWeights = []
-  const rightWeights = []
-
-  // Collect weights on each side
-  draggableWeights.forEach((weight) => {
-    if (weight.onScale) {
-      if (weight.scalePosition < centerX) {
-        leftWeights.push(weight)
-      } else if (weight.scalePosition > centerX) {
-        rightWeights.push(weight)
-      }
-      // Weights exactly at center contribute no torque
-    }
-  })
-
-  // Calculate torques for each side
-  let leftTorque = 0
-  let rightTorque = 0
-
-  // Add base weight torque (15g on each side at fixed positions)
-  // Convert grams to kg for calculation
-  const baseWeightKg = scaleBaseWeight / 1000
-
-  // Left base weight at 25% of the rod length
-  const leftBaseDistance = (centerX - (scaleX + meterRodLength * 0.25)) / (meterRodLength / 4)
-  leftTorque += baseWeightKg * g * leftBaseDistance
-
-  // Right base weight at 75% of the rod length
-  const rightBaseDistance = (scaleX + meterRodLength * 0.75 - centerX) / (meterRodLength / 4)
-  rightTorque += baseWeightKg * g * rightBaseDistance
-
-  // Calculate left side torque from added weights
-  leftWeights.forEach((weight) => {
-    // Calculate distance from center in meters (convert pixels to meters)
-    // Assuming 1 meter = meterRodLength/4 pixels (since the scale is 4 meters total)
-    const distanceInPixels = centerX - weight.scalePosition
-    const distanceInMeters = distanceInPixels / (meterRodLength / 4)
-
-    // Calculate torque: mass * g * distance
-    const torque = weight.mass * g * distanceInMeters
-    leftTorque += torque
-
-    // Log for debugging
-    console.log(`Left weight: ${weight.mass}kg at ${distanceInMeters.toFixed(2)}m, torque: ${torque.toFixed(2)}`)
-  })
-
-  // Calculate right side torque from added weights
-  rightWeights.forEach((weight) => {
-    // Calculate distance from center in meters
-    const distanceInPixels = weight.scalePosition - centerX
-    const distanceInMeters = distanceInPixels / (meterRodLength / 4)
-
-    // Calculate torque: mass * g * distance
-    const torque = weight.mass * g * distanceInMeters
-    rightTorque += torque
-
-    // Log for debugging
-    console.log(`Right weight: ${weight.mass}kg at ${distanceInMeters.toFixed(2)}m, torque: ${torque.toFixed(2)}`)
-  })
-
-  // Log base weight torques
-  console.log(
-    `Base weight torques - Left: ${(baseWeightKg * g * leftBaseDistance).toFixed(2)}, Right: ${(baseWeightKg * g * rightBaseDistance).toFixed(2)}`,
-  )
-
-  // Total torque (positive = clockwise, negative = counterclockwise)
-  totalTorque = rightTorque - leftTorque
-  console.log(`Total torque: ${totalTorque.toFixed(2)}`)
-
-  // Check if the torques are balanced within a small threshold
-  const torqueDifference = Math.abs(rightTorque - leftTorque)
-  const balanceThreshold = 0.5 // Small threshold to account for pixel precision
-
-  if (torqueDifference < balanceThreshold) {
-    console.log("Scale is balanced - torques are equal")
-    scaleRotation = 0
-    updateWeightsPositions()
-    return
-  }
-
-  // Calculate the angle of rotation based on the total torque
-  const momentOfInertia = 10 // Increased for more stability
-  const angularAcceleration = totalTorque / momentOfInertia
-  const deltaTime = 0.02 // Time step
-
-  // Apply a smaller change to rotation for more stability
-  scaleRotation += angularAcceleration * deltaTime
-
-  // Apply stronger damping to reduce oscillation
-  const dampingFactor = 0.1 // Increased damping
-  scaleRotation *= 1 - dampingFactor
-
-  // Limit the rotation angle
-  const maxRotation = 0.1
-  scaleRotation = Math.max(-maxRotation, Math.min(maxRotation, scaleRotation))
-
-  // If rotation is very small, just set it to zero
-  if (Math.abs(scaleRotation) < 0.001) {
-    scaleRotation = 0
-  }
-
-  // Update positions of weights on the scale
-  updateWeightsPositions()
-}
-
-// Improved function to update weights positions
-const updateWeightsPositions = () => {
-  const canvasRect = canvas.getBoundingClientRect()
-  const centerX = fixedGPoint.x
-  const centerY = fixedGPoint.y
-
-  // Update draggable weights
-  draggableWeights.forEach((weight) => {
-    if (weight.onScale && weight.element && !weight.isDragging) {
-      const rect = weight.element.getBoundingClientRect()
-
-      // Calculate distance from center
-      const distanceFromCenter = weight.scalePosition - centerX
-
-      // Apply rotation to get new position
-      const rotatedX = centerX + distanceFromCenter * Math.cos(scaleRotation)
-      const rotatedY = centerY + distanceFromCenter * Math.sin(scaleRotation)
-
-      // Update position with proper offset calculation
-      weight.element.style.position = "absolute"
-      weight.element.style.left = `${rotatedX - rect.width / 2 + canvasRect.left}px`
-      weight.element.style.top = `${rotatedY - rect.height + canvasRect.top}px`
-      weight.element.style.display = "block" // Ensure visibility
-    }
-  })
+  drawSetup()
 }
 
 // Handle weight click function
-handleWeightClick = (event) => {
+function handleWeightClick(event) {
   const weightId = event.target.id
   let weightValue = 0
   let weightWidth = 0
@@ -2520,5 +1851,99 @@ handleWeightClick = (event) => {
     isHanging: true,
   }
 
-  drawSetupFn()
+  drawSetup()
 }
+
+
+
+// Fix the invalid use before declaration error for typeof anime
+// Define anime if it's not available
+if (typeof anime === "undefined") {
+  var anime = (params) => {
+    // Simple animation fallback
+    const obj = params.targets
+    obj[params.springExtension] = params.springExtension
+    if (params.update) params.update()
+    return {
+      pause: () => {},
+    }
+  }
+}
+
+// Modify the initialize function to set initial UI visibility
+function initialize() {
+  canvas = document.getElementById("simulationCanvas")
+  if (!canvas) {
+    console.error("Canvas element not found")
+    return
+  }
+
+  ctx = canvas.getContext("2d")
+
+  // Initialize weights
+  initializeWeights()
+
+  // Initialize sizes and positions
+  resizeCanvas()
+
+  // Set up event listeners
+  setupEventListeners()
+
+  // Set initial UI visibility
+  meterRodVisible = springBalancesVisible
+
+  // Start animation loop
+  requestAnimationFrame(animate)
+}
+
+// Animation loop
+function animate() {
+  drawSetup()
+  requestAnimationFrame(animate)
+}
+
+// Function to initialize the canvas
+function initializeCanvas() {
+  canvas = document.getElementById("simulationCanvas")
+  resizeCanvas()
+  ctx = canvas.getContext("2d")
+
+  initializeSizes()
+  initializePositions()
+  setupEventListeners()
+  drawSetup()
+}
+
+// Function to reset weight position
+function resetWeightPosition(element) {
+  const canvasWidth = canvas.width
+  const canvasHeight = canvas.height
+  const weightSpacing = canvasWidth * config.weightSpacingPercentage
+  const startX = canvasWidth * config.weightStartXPercentage
+  const startY = canvasHeight * config.weightStartYPercentage
+  const index = Array.from(element.parentNode.children).indexOf(element)
+
+  element.style.left = startX + index * weightSpacing + "px"
+  element.style.top = startY + "px"
+  element.style.position = ""
+  element.style.transform = ""
+  element.dataset.onScale = "false"
+  element.dataset.scalePosition = "0"
+}
+
+function checkForDuplicateWeights() {
+  const allWeights = document.querySelectorAll(".draggable-weight")
+  const ids = new Set()
+
+  allWeights.forEach((weight) => {
+    if (ids.has(weight.id)) {
+      console.error(`Duplicate weight found: ${weight.id}`)
+    }
+    ids.add(weight.id)
+  })
+
+  console.log(`Total weights: ${allWeights.length}, Unique IDs: ${ids.size}`)
+}
+
+// Initialize on page load
+window.onload = initialize

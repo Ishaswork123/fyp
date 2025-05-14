@@ -1,0 +1,264 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Physics</title>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/menu.css">
+      <link rel="stylesheet" href="/css-file/grav.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/introjs.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/intro.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="/css-file/model.css" />
+
+    <base target="BoardFrame">
+</head>
+
+<body>
+ <div id="isolatedModal">
+    <div id="modalOverlay"></div>
+    <div id="modalContent">
+      <div id="modalHeader">
+        <div id="modalTitle">
+          <i class="fas fa-balance-scale"></i>
+          Experiment Details
+        </div>
+        <button id="closeModalBtn">&times;</button>
+      </div>
+      <div id="modalBody">
+      <div class="experiment-title">
+  <h2>🔍 Experiment Title:</h2>
+  <h3>Verification of Archimedes' Principle and Buoyant Force</h3>
+</div>
+
+<div class="experiment-section">
+  <h4><i class="fas fa-bullseye me-2"></i>🎯 Learning Objectives:</h4>
+  <ul class="objectives-list">
+    <li>Verify Archimedes' principle that an object immersed in a fluid experiences an upward buoyant force equal to the weight of the fluid displaced.</li>
+    <li>Determine the relationship between an object's density and whether it sinks or floats.</li>
+    <li>Measure the buoyant force acting on objects of different masses and volumes.</li>
+    <li>Calculate the volume of an irregularly shaped object using the principle of water displacement.</li>
+    <li>Understand and apply the formula: <code>F<sub>buoyant</sub> = ρ<sub>fluid</sub> × g × V<sub>object</sub></code>.</li>
+    <li>Observe how the apparent weight of an object changes when submerged in a fluid.</li>
+  </ul>
+</div>
+
+<div class="experiment-section">
+  <h4><i class="fas fa-tools me-2"></i>🛠️ How to Perform the Experiment:</h4>
+  <div class="procedure-steps">
+    <div class="procedure-step">
+      <h5>1. Prepare the Equipment:</h5>
+      <p>Set up a spring balance, a beaker filled with water (or another liquid), and objects of different masses and densities.</p>
+    </div>
+
+    <div class="procedure-step">
+      <h5>2. Measure in Air:</h5>
+      <p>Measure the weight of each object in air using the spring balance and record this as the true weight.</p>
+    </div>
+
+    <div class="procedure-step">
+      <h5>3. Measure in Liquid:</h5>
+      <p>Completely submerge each object in the liquid while still attached to the spring balance. Record this as the apparent weight.</p>
+    </div>
+
+    <div class="procedure-step">
+      <h5>4. Calculate Buoyant Force:</h5>
+      <p>Calculate the buoyant force by finding the difference between the true weight and the apparent weight (F<sub>buoyant</sub> = W<sub>air</sub> - W<sub>liquid</sub>).</p>
+    </div>
+
+    <div class="procedure-step">
+      <h5>5. Measure Displaced Liquid:</h5>
+      <p>For regularly shaped objects, calculate their volume mathematically. For irregular objects, use water displacement to measure their volume.</p>
+    </div>
+
+    <div class="procedure-step">
+      <h5>6. Verify the Principle:</h5>
+      <p>Calculate the expected buoyant force using Archimedes' principle (F<sub>buoyant</sub> = ρ<sub>liquid</sub> × g × V<sub>object</sub>) and compare with your measured value.</p>
+    </div>
+
+    <div class="procedure-step">
+      <h5>7. Vary Parameters:</h5>
+      <p>Change the density of the liquid or use objects of different densities to observe how this affects the buoyant force and whether objects sink or float.</p>
+    </div>
+  </div>
+</div>
+
+<div class="experiment-section">
+  <h4><i class="fas fa-check-circle me-2"></i>✅ What You Will Learn:</h4>
+  <ul class="outcomes-list">
+    <li>An object experiences an upward buoyant force equal to the weight of the fluid it displaces.</li>
+    <li>Objects with density less than the fluid will float; those with greater density will sink.</li>
+    <li>The buoyant force depends on the density of the fluid, not the density of the object.</li>
+    <li>How to calculate the volume of an irregularly shaped object using water displacement.</li>
+    <li>The relationship between an object's weight in air, its apparent weight in liquid, and the buoyant force.</li>
+    <li>How to apply Archimedes' principle to solve practical problems in fluid mechanics.</li>
+  </ul>
+</div>
+      </div>
+      <div id="modalFooter">
+        <button id="startExperimentBtn">Start Experiment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Show modal button (fixed position) -->
+  <button id="showModalBtn" title="Show Experiment Information">
+    <i class="fas fa-info-circle"></i>
+  </button>
+    <div class="grid-container">
+
+        <!-- Header area -->
+        <div class="headerArea" style="margin: 0; padding: 0;">
+            <div class="Title">
+                <p>Physics Simulation for Fluid</p>
+            </div>
+
+            <div class="Title">
+                <p id="ApplicationHeader">Modelling</p>
+            </div>
+        </div>
+
+        <!-- Canvas area -->
+        <div class="contentArea" id="divCanvas">
+            <div id="divCanvasInner">
+                <canvas id="Canvas"></canvas>
+            </div>
+        </div>
+
+        <!-- Menu area -->
+        <div class="menuArea" id="divMenu">
+
+            <div id="divMenuInner">
+                <div id="divMenuBox">
+
+
+                    <!-- <div class="menu-item" id="level1">
+                        <p class="firstLevelMenu">Dynamics</p>
+                        <div hidden class="menu-sub-item">
+                            <div data-topic="1">
+                                <a href="./BoardArea/Forces/ForcesByAngle.html">Addition of forces by an angle</a>
+                            </div>
+
+
+                        </div>
+                    </div> -->
+
+                    <div class="menu-item" id="level2">
+                        <p class="firstLevelMenu">Pressure of liquids</p>
+
+                        <div hidden class="menu-sub-item">
+                                                                                <div data-topic="2"><a href="/FluidMechanics/ArchimedesPrinciple.html">Archimedes’ Principle</a> </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="menu-item" id="level3">
+                        <p class="firstLevelMenu">Mechanical oscillations</p>
+                        <div hidden class="menu-sub-item">
+                            <div data-topic="3"><a href="./BoardArea/MechanicalOscillations/Pendulum.html">Mathematical pendulum</a> </div>
+                        </div>
+                    </div> -->
+
+
+
+
+                    <!-- <div class="menu-item" id="level4">
+                        <p class="firstLevelMenu">Appliances</p>
+                        <div hidden class="menu-sub-item">
+                            <div data-topic="4"><a href="./BoardArea/Appliances/Tools.html">Physical tools</a> </div>
+                        </div>
+                    </div> -->
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Controls area -->
+        <div class="sidebarArea" id="divControls">
+            <div id="divControlsInner">
+                <iframe  name="BoardFrame" id="BoardFrame" width="100%"
+                    height="100%" style="border:0">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Footer area -->
+        <div class="footerArea" style="margin-bottom: 200px;"></div>
+    </div>
+    <br><br>
+ <div class="navigation-bar">
+    <div class="home-button">
+      <a href="/home" target="_top"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+    </div>
+    <div class="tabs">
+   <a href="/exp/Arch" class="tab active" data-section="intro" target="_top">Custom</a>
+<a href="/guided/Arch" class="tab " data-section="balance-lab" target="_top">Guided Lab</a>
+<a href="/resource/6" class="tab" data-section="game" target="_top">Resources</a>
+
+    </div>
+    <div class="phet-logo">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNjAiPgogIDx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiPlBoRVQ8L3RleHQ+Cjwvc3ZnPg==" alt="PhET" />
+    </div>
+  </div>
+
+    <script src="/js_1/Tools/appliance.js"></script>
+    <script src="/js_1/Tools/dynamometer.js"></script>
+    <script src="/js_1/Tools/spring.js"></script>
+    <script src="/js_1/Tools/ruler.js"></script>
+    <script src="/js_1/Tools/springDynamometer.js"></script>
+    <script src="/js_1/Tools/stageElements.js"></script>
+    
+
+    <script src="/js_1/appMethods.js"></script>
+    <script src="/js_1/dragging.js"></script>
+    <script src="/js_1/topicsRender/forcesbyAngleRender.js"></script>
+    <script src="/js_1/topicsRender/archimedesPrincipleRender.js"></script>
+    <script src="/js_1/topicsRender/pendulumRender.js"></script>
+    <script src="/js_1/topicsRender/appliancesRender.js"></script>
+    <script src="/js_1/main.js"></script>
+<script>
+      // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get modal elements
+      const modal = document.getElementById('isolatedModal');
+      const modalOverlay = document.getElementById('modalOverlay');
+      const closeBtn = document.getElementById('closeModalBtn');
+      const startBtn = document.getElementById('startExperimentBtn');
+      const showModalBtn = document.getElementById('showModalBtn');
+      
+      // Function to open modal
+      function openModal() {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+      }
+      
+      // Function to close modal
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+      }
+      
+      // Show modal on page load
+      openModal();
+      
+      // Event listeners
+      closeBtn.addEventListener('click', closeModal);
+      startBtn.addEventListener('click', closeModal);
+      modalOverlay.addEventListener('click', closeModal);
+      showModalBtn.addEventListener('click', openModal);
+      
+      // Prevent clicks inside modal content from closing the modal
+      document.getElementById('modalContent').addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+</script>
+</body>
+
+</html>

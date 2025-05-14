@@ -1,0 +1,236 @@
+  /* Isolated Modal Styles - Won't affect other elements */
+  #isolatedModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  
+  #isolatedModal.active {
+    display: block;
+  }
+  
+  #modalOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  #modalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #modalHeader {
+    background-color: #0c1447;;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  #modalTitle {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  #closeModalBtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+  
+  #closeModalBtn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  #modalBody {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(90vh - 130px);
+  }
+  
+  #modalFooter {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  #startExperimentBtn {
+    background-color: #0c1447;;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  
+  #startExperimentBtn:hover {
+    background-color: #0c1447;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Modal Content Styles */
+  .experiment-title {
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e8eaf6;
+    /* padding-bottom: 15px; */
+  }
+  
+  .experiment-title h2 {
+    color: #0c1447;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .experiment-title h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #283593;
+    margin-top: 0;
+  }
+  
+  .experiment-section {
+    margin-bottom: 5px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .experiment-section h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #3949ab;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .objectives-list,
+  .outcomes-list {
+    padding-left: 25px;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  
+  .objectives-list li,
+  .outcomes-list li {
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  .procedure-step {
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    background-color: #e8eaf6;
+    border-radius: 8px;
+  }
+  
+  .procedure-step:last-child {
+    margin-bottom: 0;
+  }
+  
+  .procedure-step h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #283593;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+  
+  .procedure-step p {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  
+  /* Info Button */
+  #showModalBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #0c1447;;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s;
+  }
+  
+  #showModalBtn:hover {
+    background-color: #283593;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    #modalContent {
+      width: 95%;
+    }
+    
+    .experiment-title h3 {
+      font-size: 18px;
+    }
+    
+    .experiment-section h4 {
+      font-size: 16px;
+    }
+    
+    .procedure-step {
+      padding: 10px;
+    }
+    
+    #showModalBtn {
+      width: 45px;
+      height: 45px;
+      font-size: 20px;
+    }
+  }

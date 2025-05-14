@@ -470,48 +470,40 @@ html {
 	<div class="courses">
 		<h2 style="text-align: center; font-weight: bold; margin-bottom: 20px; color: #0a0647;;">Experiments</h2>
 <br>
-		<div class="row courses_row">
-			<% experiments.forEach(function(exp, index) { %>
-				<div class="col-lg-4 course_col">
-					<div class="course" onclick="openModal('<%= index %>')">
-						<div class="course_image">
-							<img src="<%= exp.image %>" alt="<%= exp.title %>" class="exp_img" />
-						</div>
-						<div class="course_body">
-							<h3 class="course_title"> <%= exp.title %>
-							</h3>
-							
-							<p><%= exp.description %></p>
-						</div>
-					</div>
-				</div>
-			
-				<!-- Modal for Each Experiment -->
-				<div id="expModal<%= index %>" class="modal">
-					<div class="modal-content">
-						<span class="close" onclick="closeModal('<%= index %>')">&times;</span>
-						<h3><%= exp.title %></h3>
-						<div class="modal-links">
-							<a href="/guided/<%= exp.id %>" class="btn btn-primary">Guided Experiment</a>
-							<a href="/exp/<%= exp.id %>" class="btn btn-secondary">Custom Experiment</a>
-							<a href="/resource/<%= exp.exp_no%>" class="btn btn-info">Learning Material</a>
-						</div>
-					</div>
-				</div>
-			<% }) %>
-			
-			
+<div class="row courses_row" id="experimentsContainer">
+	<% experiments.forEach(function(exp, index) { %>
+	  <div class="col-lg-4 course_col">
+		<div class="course" onclick="openModal('<%= index %>')">
+		  <div class="course_image">
+			<img src="<%= exp.image %>" alt="<%= exp.title %>" class="exp_img" />
+		  </div>
+		  <div class="course_body">
+			<h3 class="course_title"><%= exp.title %></h3>
+			<p><%= exp.description %></p>
+		  </div>
 		</div>
-		<!-- View All Experiments Button -->
-		<div class="text-center" style="margin: 20px;">
-			<% if (allExperiments) { %>
-				<!-- Show Less Button -->
-				<a href="/tchr/tchrConsole" class="btn btn-secondary">Show Less</a>
-				<% } else { %>
-					<!-- View All Experiments Button -->
-					<button class="btn btn-primary" onclick="window.location.href='/view-all'">View All Experiments</button>
-					<% } %>
+	  </div>
+	
+	  <!-- Modal for Each Experiment -->
+	  <div id="expModal<%= index %>" class="modal">
+		<div class="modal-content">
+		  <span class="close" onclick="closeModal('<%= index %>')">&times;</span>
+		  <h3><%= exp.title %></h3>
+		  <div class="modal-links">
+			<a href="/guided/<%= exp.id %>" class="btn btn-primary">Guided Experiment</a>
+			<a href="/exp/<%= exp.id %>" class="btn btn-secondary">Custom Experiment</a>
+			<a href="/resource/<%= exp.exp_no%>" class="btn btn-info">Learning Material</a>
+		  </div>
 		</div>
+	  </div>
+	<% }) %>
+  </div>
+  
+  <!-- View All/Less Experiments Button -->
+  <div class="text-center" style="margin: 20px;">
+	<button id="toggleExperimentsBtn" class="btn <%= initiallyShowAll ? 'btn-secondary' : 'btn-primary' %>">
+		<%= initiallyShowAll ? 'Show Less' : 'View All Experiments' %>
+	  </button>  </div>
 		</div>
 	</div>
 
@@ -565,7 +557,7 @@ html {
 						<div class="footer_contact_info">
 							<ul>
 								<li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
-								<li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064 | +92-3019575969</li>
 								<li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
 									fa21-bcs-046@cuiatk.edu.pk</li>
 							</ul>
@@ -586,6 +578,49 @@ html {
 	</footer>
 
 	<script>
+		
+ let showingAllExperiments = false; // force client to show less first
+
+  function toggleExperiments() {
+    const experimentItems = document.querySelectorAll('.course_col');
+    const toggleButton = document.getElementById('toggleExperimentsBtn');
+
+    // Toggle state
+    showingAllExperiments = !showingAllExperiments;
+
+    // Update button text and class
+    toggleButton.textContent = showingAllExperiments ? 'Show Less' : 'View All Experiments';
+    toggleButton.className = showingAllExperiments ? 'btn btn-secondary' : 'btn btn-primary';
+
+    // Show/hide experiments beyond the first three
+    experimentItems.forEach((item, index) => {
+      if (index >= 3) {
+        item.style.display = showingAllExperiments ? '' : 'none';
+      }
+    });
+
+    console.log(`Toggled to ${showingAllExperiments ? 'show all' : 'show less'} experiments`);
+  }
+
+  // Attach click handler and hide extras when DOM is loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    const experimentItems = document.querySelectorAll('.course_col');
+    const toggleButton = document.getElementById('toggleExperimentsBtn');
+
+    // Always start with showing only first 3
+    experimentItems.forEach((item, index) => {
+      if (index >= 3) {
+        item.style.display = 'none';
+      }
+    });
+
+    // Set initial button state
+    toggleButton.textContent = 'View All Experiments';
+    toggleButton.className = 'btn btn-primary';
+
+    // Attach click handler
+    toggleButton.addEventListener('click', toggleExperiments);
+  });
 		function openSideMenu() {
 			document.getElementById("sideMenu").classList.add("open");
 		}

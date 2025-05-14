@@ -16,6 +16,9 @@ router.get('/inclineExp', (req, res) => {
 router.get('/meterExp', (req, res) => {
     res.render("guided-meter");
 });
+router.get('/Arch',(req,res)=>{
+    res.render('guidedArch');
+})
 
 router.get('/forceExp', (req, res) => {
     res.render("guided-grav");

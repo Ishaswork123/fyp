@@ -8,10 +8,96 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <link rel="stylesheet" href="/css-file/equi.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
+<link rel="stylesheet" href="/css-file/model.css">
 </head>
 
 <body>
+
+     <!-- Completely Isolated Modal (no Bootstrap, no external dependencies) -->
+     <div id="isolatedModal">
+        <div id="modalOverlay"></div>
+        <div id="modalContent">
+          <div id="modalHeader">
+            <div id="modalTitle">
+              <i class="fas fa-balance-scale"></i>
+              Experiment Details
+            </div>
+            <button id="closeModalBtn">&times;</button>
+          </div>
+          <div id="modalBody">
+            <div class="experiment-title">
+                <h2>🔍 Experiment Title:</h2>
+                <h3>Verification of the Conditions of Equilibrium Using a Suspended Meter Rod</h3>
+              </div>
+              
+              <div class="experiment-section">
+                <h4><i class="fas fa-cogs me-2"></i>⚙️ Apparatus Required:</h4>
+                <ul class="objectives-list">
+                  <li>Meter rod</li>
+                  <li>Three weights (W₁, W₂, and W₃)</li>
+                  <li>Thread (looped)</li>
+                  <li>Knife-edge or wedge stand</li>
+                  <li>Wooden blocks or clamps</li>
+                </ul>
+              </div>
+              
+              <div class="experiment-section">
+                <h4><i class="fas fa-chalkboard-teacher me-2"></i>📋 Procedure:</h4>
+                <div class="procedure-steps">
+                  <div class="procedure-step">
+                    <h5>1. Find the Centre of Gravity (C.G.):</h5>
+                    <p>Place the meter rod edge-wise on a sharp wedge or knife edge and adjust it until it balances horizontally. Mark and note the balancing point — this is the C.G. of the rod.</p>
+                  </div>
+              
+                  <div class="procedure-step">
+                    <h5>2. Suspend the Weights:</h5>
+                    <p>Using fine thread loops, suspend three weights (W₁, W₂, and W₃) on both sides of the C.G. such that W₂ and W₃ are heavier and placed further from the C.G., while W₁ is lighter and closer. Refer to Figure 8.1 for setup.</p>
+                  </div>
+              
+                  <div class="procedure-step">
+                    <h5>3. Adjust for Equilibrium:</h5>
+                    <p>Carefully shift the positions of the weights until the meter rod balances horizontally again, indicating rotational equilibrium is achieved.</p>
+                  </div>
+              
+                  <div class="procedure-step">
+                    <h5>4. Verify the Conditions:</h5>
+                    <p>Record the positions of each weight and calculate the moment of each force about the center. Confirm that the sum of clockwise moments equals the sum of anticlockwise moments.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="experiment-section">
+                <h4><i class="fas fa-balance-scale me-2"></i>📐 Moment of a Force:</h4>
+                <p>The turning effect of a force about a point is called its <strong>moment</strong>.</p>
+                <p><strong>Moment = Force × Perpendicular distance from the pivot</strong></p>
+                <p>There are two types of moments:</p>
+                <ul class="objectives-list">
+                  <li><strong>Clockwise Moment</strong>: Causes rotation in the clockwise direction.</li>
+                  <li><strong>Anticlockwise Moment</strong>: Causes rotation in the opposite direction.</li>
+                </ul>
+              </div>
+              
+              <div class="experiment-section">
+                <h4><i class="fas fa-check-circle me-2"></i>✅ What You Will Learn:</h4>
+                <ul class="outcomes-list">
+                  <li>How to determine the center of gravity of a meter rod.</li>
+                  <li>The concept of rotational equilibrium.</li>
+                  <li>How to calculate and balance clockwise and anticlockwise moments.</li>
+                  <li>The practical application of the moment of a force.</li>
+                </ul>
+              </div>
+              
+          </div>
+          <div id="modalFooter">
+            <button id="startExperimentBtn">Start Experiment</button>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Show modal button (fixed position) -->
+      <button id="showModalBtn" title="Show Experiment Information">
+        <i class="fas fa-info-circle"></i>
+      </button>
     <canvas id="simulationCanvas"></canvas>
     <div class="controls-container">
         <!-- ... (rest of your controls) ... -->
@@ -117,11 +203,11 @@
     </div>
 
     <!-- Container for the draggable weights -->
-    <div id="draggable-weights-container" >
+    <!-- <div id="draggable-weights-container" >
         <div id="extinguisher1" class="draggable-weight" data-mass="5">5 kg</div>
         <div id="extinguisher2" class="draggable-weight" data-mass="5">5 kg</div>
         <div id="trashcan1" class="draggable-weight" data-mass="10">10 kg</div>
-    </div>
+    </div> -->
 
     <!-- Container for the older static weights (if still needed for spring balance) -->
     <div class="weights" id="static-weights-container">
@@ -132,82 +218,241 @@
     </div>
 
     <div id="tableContainer" style="display: none;">
-        <!-- ... (rest of your table) ... -->
-         <form action="/exp/meterExp" method="POST">
-            <table>
+        <form action="/exp/meterExp" method="POST">
+    
+            <!-- === Table 1: Observations === -->
+            <table id="dataTable1" class="dataTable">
                 <thead>
                     <tr>
-                        <th>Weight suspended at meter rod W₁</th>
-                        <th>R²⁻¹ W₂⁺W₃⁻¹</th>
-                        <th>Observed reading of balance</th>
-                        <th>Corrected reading of balance</th>
-                        <th>Q²⁻¹ R²⁻¹</th>
-                        <th>1st condition of equilibrium ΣF₁=0 P+Q-R=0</th>
-                        <th>Position of loops</th>
-                        <th>Distance</th>
-                        <th>2nd condition of equilibrium Στ=0 P×AG-Q×BG=0</th>
+                        <th rowspan="2" name="t1_header_obs_no">No. of Obs.</th>
+                        <th colspan="2" name="t1_header_reading">Reading of spring balance (g-wt)</th>
+                        <th rowspan="2" name="t1_header_weight_g">Weight suspended at G<br>W (g-wt)</th>
+                        <th rowspan="2" name="t1_header_r_calc">R = W₁ + W<br>(g-wt)</th>
+                        <th colspan="2" name="t1_header_position">Position at (cm)</th>
+                        <th colspan="3" name="t1_header_distances">Distances (cm)</th>
+                    </tr>
+                    <tr>
+                        <!-- Reading -->
+                        <th name="t1_header_p">P</th>
+                        <th name="t1_header_q">Q</th>
+                        <!-- Position -->
+                        <th name="t1_header_pos_a">A</th>
+                        <th name="t1_header_pos_b">B</th>
+                        <!-- Distances -->
+                        <th name="t1_header_dist_ag">AG</th>
+                        <th name="t1_header_dist_bg">BG</th>
+                        <th name="t1_header_dist_ab">AB</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Trial 1 -->
+                    <!-- Row 1 -->
                     <tr>
-                      <td><input type="number" name="weightSuspended1" placeholder="Weight Suspended 1" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="rInverse1" placeholder="1/R 1" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="observedReading1" placeholder="Observed Reading 1" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="correctedReading1" placeholder="Corrected Reading 1" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="qInverseRInverse1" placeholder="q × 1/R 1" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="condition1F1_1" placeholder="F1 Condition 1" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="loopPosition1" placeholder="Loop Position 1" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="distance1" placeholder="Distance 1" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="condition2Tau1" placeholder="Tau Condition 1" min="-1000" max="1000" step="0.01"></td>
-                    </tr>
-                  
-                    <!-- Trial 2 -->
-                    <tr>
-                      <td><input type="number" name="weightSuspended2" placeholder="Weight Suspended 2" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="rInverse2" placeholder="1/R 2" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="observedReading2" placeholder="Observed Reading 2" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="correctedReading2" placeholder="Corrected Reading 2" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="qInverseRInverse2" placeholder="q × 1/R 2" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="condition1F1_2" placeholder="F1 Condition 2" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="loopPosition2" placeholder="Loop Position 2" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="distance2" placeholder="Distance 2" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="condition2Tau2" placeholder="Tau Condition 2" min="-1000" max="1000" step="0.01"></td>
-                    </tr>
-                  
-                    <!-- Trial 3 -->
-                    <tr>
-                      <td><input type="number" name="weightSuspended3" placeholder="Weight Suspended 3" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="rInverse3" placeholder="1/R 3" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="observedReading3" placeholder="Observed Reading 3" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="correctedReading3" placeholder="Corrected Reading 3" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="qInverseRInverse3" placeholder="q × 1/R 3" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="condition1F1_3" placeholder="F1 Condition 3" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="loopPosition3" placeholder="Loop Position 3" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="distance3" placeholder="Distance 3" min="-1000" max="1000" step="0.01"></td>
-                      <td><input type="number" name="condition2Tau3" placeholder="Tau Condition 3" min="-1000" max="1000" step="0.01"></td>
-                    </tr>
-                  </tbody>
-                  
+                        <td><input type="number" name="t1_obs1_no" placeholder="1" min="1" step="1"></td>
+                        <td><input type="number" name="t1_obs1_p" placeholder="P" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs1_q" placeholder="Q" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs1_w" placeholder="W" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs1_r_calc" placeholder="R" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs1_pos_a" placeholder="A" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs1_pos_b" placeholder="B" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs1_dist_ag" placeholder="AG" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs1_dist_bg" placeholder="BG" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs1_dist_ab" placeholder="AB" min="0" max="200" step="0.1"></td>
+                     </tr>
+                     <!-- Row 2 -->
+                     <tr>
+                        <td><input type="number" name="t1_obs2_no" placeholder="2" min="1" step="1"></td>
+                        <td><input type="number" name="t1_obs2_p" placeholder="P" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs2_q" placeholder="Q" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs2_w" placeholder="W" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs2_r_calc" placeholder="R" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs2_pos_a" placeholder="A" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs2_pos_b" placeholder="B" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs2_dist_ag" placeholder="AG" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs2_dist_bg" placeholder="BG" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs2_dist_ab" placeholder="AB" min="0" max="200" step="0.1"></td>
+                     </tr>
+                     <!-- Row 3 -->
+                     <tr>
+                        <td><input type="number" name="t1_obs3_no" placeholder="3" min="1" step="1"></td>
+                        <td><input type="number" name="t1_obs3_p" placeholder="P" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs3_q" placeholder="Q" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs3_w" placeholder="W" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs3_r_calc" placeholder="R" min="-1000" max="1000" step="0.1"></td>
+                        <td><input type="number" name="t1_obs3_pos_a" placeholder="A" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs3_pos_b" placeholder="B" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs3_dist_ag" placeholder="AG" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs3_dist_bg" placeholder="BG" min="0" max="200" step="0.1"></td>
+                        <td><input type="number" name="t1_obs3_dist_ab" placeholder="AB" min="0" max="200" step="0.1"></td>
+                     </tr>
+                </tbody>
             </table>
+    
+            <!-- === Table 2: Verification === -->
+            <table id="dataTable2" class="dataTable">
+                 <thead>
+                     <tr>
+                         <th rowspan="2" name="t2_header_obs_no">No. of Obs.</th>
+                         <th colspan="6" name="t2_header_like_forces">Like parallel forces (g-wt)</th>
+                         <th colspan="6" name="t2_header_unlike_forces">Unlike parallel forces (g-wt)</th>
+                     </tr>
+                     <tr>
+                         <!-- Like Forces -->
+                         <th name="t2_header_like_p_plus_q">P+Q</th>
+                         <th name="t2_header_like_r">R</th>
+                         <th name="t2_header_like_diff1">Difference</th>
+                         <th name="t2_header_like_p_div_q">P/Q</th>
+                         <th name="t2_header_like_bg_div_ag">BG/AG</th>
+                         <th name="t2_header_like_diff2">Difference</th>
+                         <!-- Unlike Forces -->
+                         <th name="t2_header_unlike_r_minus_p">R-P</th>
+                         <th name="t2_header_unlike_q">Q</th>
+                         <th name="t2_header_unlike_diff1">Difference</th>
+                         <th name="t2_header_unlike_p_div_r">P/R</th>
+                         <th name="t2_header_unlike_bg_div_ab">BG/AB</th>
+                         <th name="t2_header_unlike_diff2">Difference</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <!-- Row 1 -->
+                     <tr>
+                         <td><input type="number" name="t2_obs1_no" placeholder="1" min="1" step="1" readonly></td> <!-- Readonly if linked to table 1 -->
+                         <td><input type="number" name="t2_obs1_like_p_plus_q" placeholder="P+Q" min="-2000" max="2000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs1_like_r" placeholder="R" min="-1000" max="1000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs1_like_diff1" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                         <td><input type="number" name="t2_obs1_like_p_div_q" placeholder="P/Q" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs1_like_bg_div_ag" placeholder="BG/AG" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs1_like_diff2" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                         <td><input type="number" name="t2_obs1_unlike_r_minus_p" placeholder="R-P" min="-1000" max="1000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs1_unlike_q" placeholder="Q" min="-1000" max="1000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs1_unlike_diff1" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                         <td><input type="number" name="t2_obs1_unlike_p_div_r" placeholder="P/R" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs1_unlike_bg_div_ab" placeholder="BG/AB" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs1_unlike_diff2" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                     </tr>
+                     <!-- Row 2 -->
+                      <tr>
+                         <td><input type="number" name="t2_obs2_no" placeholder="2" min="1" step="1" readonly></td>
+                         <td><input type="number" name="t2_obs2_like_p_plus_q" placeholder="P+Q" min="-2000" max="2000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs2_like_r" placeholder="R" min="-1000" max="1000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs2_like_diff1" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                         <td><input type="number" name="t2_obs2_like_p_div_q" placeholder="P/Q" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs2_like_bg_div_ag" placeholder="BG/AG" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs2_like_diff2" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                         <td><input type="number" name="t2_obs2_unlike_r_minus_p" placeholder="R-P" min="-1000" max="1000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs2_unlike_q" placeholder="Q" min="-1000" max="1000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs2_unlike_diff1" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                         <td><input type="number" name="t2_obs2_unlike_p_div_r" placeholder="P/R" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs2_unlike_bg_div_ab" placeholder="BG/AB" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs2_unlike_diff2" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                     </tr>
+                     <!-- Row 3 -->
+                      <tr>
+                         <td><input type="number" name="t2_obs3_no" placeholder="3" min="1" step="1" readonly></td>
+                         <td><input type="number" name="t2_obs3_like_p_plus_q" placeholder="P+Q" min="-2000" max="2000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs3_like_r" placeholder="R" min="-1000" max="1000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs3_like_diff1" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                         <td><input type="number" name="t2_obs3_like_p_div_q" placeholder="P/Q" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs3_like_bg_div_ag" placeholder="BG/AG" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs3_like_diff2" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                         <td><input type="number" name="t2_obs3_unlike_r_minus_p" placeholder="R-P" min="-1000" max="1000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs3_unlike_q" placeholder="Q" min="-1000" max="1000" step="0.1"></td>
+                         <td><input type="number" name="t2_obs3_unlike_diff1" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                         <td><input type="number" name="t2_obs3_unlike_p_div_r" placeholder="P/R" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs3_unlike_bg_div_ab" placeholder="BG/AB" min="-100" max="100" step="0.01"></td>
+                         <td><input type="number" name="t2_obs3_unlike_diff2" placeholder="Diff" min="-100" max="100" step="0.1"></td>
+                     </tr>
+                 </tbody>
+            </table>
+    
             <button type="submit" id="saveInDB">Save Data</button>
         </form>
     </div>
-    <br><br>
+
+
+
+
+
     <div class="navigation-bar">
         <div class="home-button">
-          <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
+          <a href="/home"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjkgMjIgOSAxMiAxNSAxMiAxNSAyMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="Home" /></a>
         </div>
         <div class="tabs">
-          <a href="/exp/meterExp" class="tab active" data-section="intro">Custom</a>
-          <a href="/guided/meterExp" class="tab" data-section="balance-lab">Guided Lab</a>
-          <a href="/std/resource/3" class="tab" data-section="game">Resources</a>
+        
+<a href="/exp/meterExp" class="tab active" data-section="intro">Custom</a>
+<a href="/guided/meterExp" class="tab" data-section="balance-lab">Guided Lab</a>
+<a href="/std/resource/3" class="tab" data-section="game">Resources</a>
         </div>
         <div class="logo">
-          <!-- <img src="/images/R.jpeg" alt="CUI logo" /> -->
+          <img src="/images/R.jpeg" alt="CUI logo" />
         </div>
       </div>
 
     <script src="/js/equi.js"></script>
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+          // Get modal elements
+          const modal = document.getElementById('isolatedModal');
+          const modalOverlay = document.getElementById('modalOverlay');
+          const closeBtn = document.getElementById('closeModalBtn');
+          const startBtn = document.getElementById('startExperimentBtn');
+          const showModalBtn = document.getElementById('showModalBtn');
+          
+          // Function to open modal
+          function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+          }
+          
+          // Function to close modal
+          function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+          }
+          
+          // Show modal on page load
+          openModal();
+          
+          // Event listeners
+          closeBtn.addEventListener('click', closeModal);
+          startBtn.addEventListener('click', closeModal);
+          modalOverlay.addEventListener('click', closeModal);
+          showModalBtn.addEventListener('click', openModal);
+          
+          // Prevent clicks inside modal content from closing the modal
+          document.getElementById('modalContent').addEventListener('click', function(e) {
+            e.stopPropagation();
+          });
+        });
+   // Update history only if it's not the home redirection
+   const currentPath = window.location.pathname;
+
+// Avoid updating if this is the fallback ("/") or home route
+if (currentPath !== '/' && currentPath !== '/home') {
+  let routeHistory = JSON.parse(sessionStorage.getItem('routeHistory')) || [];
+  routeHistory.push(currentPath);
+  if (routeHistory.length > 3) routeHistory.shift();
+  sessionStorage.setItem('routeHistory', JSON.stringify(routeHistory));
+}
+
+function handleHomeClick(event) {
+  event.preventDefault(); // Prevent default anchor behavior
+
+  const history = JSON.parse(sessionStorage.getItem('routeHistory')) || [];
+  const hasTchr = history.includes('/tchr/tchrConsole');
+  const hasStd = history.includes('/stdConsole');
+
+  // Optional: Clear storage before redirecting
+  sessionStorage.removeItem('routeHistory');
+
+  if (hasTchr) {
+    window.location.href = '/tchr/tchrConsole';
+  } else if (hasStd) {
+    window.location.href = '/stdConsole';
+  } else {
+    window.location.href = '/'; // fallback only if nothing found
+  }
+}
+      </script>
 </body>
 </html>

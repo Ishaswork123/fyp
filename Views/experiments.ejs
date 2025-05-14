@@ -96,6 +96,8 @@
             <option value="3" <%= exp_no === '3' ? 'selected' : '' %>>Meter Rod</option>
             <option value="4" <%= exp_no === '4' ? 'selected' : '' %>>Force Table</option>
             <option value="5" <%= exp_no === '5' ? 'selected' : '' %>>Resonance Column</option>
+                        <option value="5" <%= exp_no === '6' ? 'selected' : '' %>>Archimedes’ Principle</option>
+
           </select>
         </div>
         <button type="submit" class="btn btn-primary w-100">
@@ -160,7 +162,26 @@
       title: 'Resonance Column',
       headers: ['Frequency', 'Water Level', 'Diameter', 'Air Column', 'Correct Length', 'Wavelength', 'Temp', 'Velocity'],
       keys: ['freq', 'waterLevel', 'diameter', 'airColumn', 'correctLength', 'waveLength', 'temp', 'velocity']
-    }
+    },
+    '6': {
+  title: 'Archimedes\' Principle',
+  headers: [
+    'Trial', 
+    'Weight in Air (N)', 
+    'Weight in Liquid (N)', 
+    'Volume Displaced (m³)', 
+    'Buoyant Force (N)', 
+    'Apparent Weight (N)'
+  ],
+  keys: [
+    'trial', 
+    'weightInAir', 
+    'weightInLiquid', 
+    'volumeDisplaced', 
+    'buoyantForce', 
+    'apparentWeight'
+  ]
+}
   };
 
   const currentExp = experiments[exp_no];
@@ -267,7 +288,7 @@
           <div class="footer_contact_info">
             <ul>
               <li><i class="fa fa-user" aria-hidden="true"></i>Tuba Jabeen | Isha Eman</li>
-              <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064</li>
+              <li><i class="fa fa-phone" aria-hidden="true"></i> +92-3345605064 | +92-3019575969</li>
               <li><i class="fa fa-envelope" aria-hidden="true"></i> fa21-bcs-033@cuiatk.edu.pk |
                 fa21-bcs-046@cuiatk.edu.pk</li>
             </ul>

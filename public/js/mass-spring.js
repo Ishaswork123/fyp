@@ -644,7 +644,7 @@ function setupTooltips() {
 tab.addEventListener("click", function(e) {
   // e.preventDefault(); ❌ remove or comment this line
 
-  tabs.forEach(function(t) {
+  tab.forEach(function(t) {
     t.classList.remove("active");
   });
 
